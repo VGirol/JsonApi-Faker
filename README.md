@@ -58,4 +58,4 @@ VGirol\JsonApiAssert\AssertResponse
 - assertResponse406($response)
 - assertResponse415($response)
 - assertResponseHeaders($headers)
-- 
+
