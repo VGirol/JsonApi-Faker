@@ -1,24 +1,9 @@
-<<<<<<< HEAD
-# JsonApi-Assert-Laravel
-=======
 # JsonApi-Assert
->>>>>>> c1c6d7926d945bca5f8a0a608a032f3d4c51fc0b
 
 ## Installation
 
 ## Documentation
 
-<<<<<<< HEAD
-Illuminate\Foundation\Testing\TestResponse (macros)
-
-- assertJsonApiResponse406
-- assertJsonApiResponse415
-
-VGirol\JsonApiAssert\Laravel\JsonApiAssertResponse
-
-- assertResourceIdentifierObjectEqualsModel($model, $resource)
-- assertResourceObjectEqualsModel($model, $resource)
-=======
 VGirol\JsonApiAssert\Assert
 
 - assertContainsAtLeastOneMember($expected, $actual, $message = '')
@@ -74,4 +59,3 @@ VGirol\JsonApiAssert\AssertResponse
 - assertResponse415($response)
 - assertResponseHeaders($headers)
 - 
->>>>>>> c1c6d7926d945bca5f8a0a608a032f3d4c51fc0b
