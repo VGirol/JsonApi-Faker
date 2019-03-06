@@ -72,7 +72,7 @@ class RelationshipsObjectTest extends TestCase
                     'id' => '9',
                     'anything' => 'not valid'
                 ],
-                null
+                Messages::ONLY_ALLOWED_MEMBERS
             ],
             'not valid array of resource identifier objects' => [
                 [
@@ -86,7 +86,7 @@ class RelationshipsObjectTest extends TestCase
                         'id' => '10'
                     ]
                 ],
-                null
+                Messages::ONLY_ALLOWED_MEMBERS
             ]
         ];
     }
@@ -159,7 +159,7 @@ class RelationshipsObjectTest extends TestCase
                         'not' => 'valid'
                     ]
                 ],
-                null
+                sprintf(Messages::CONTAINS_AT_LEAST_ONE, implode(', ', ['links', 'data', 'meta']))
             ],
             'array of resource identifier objects without pagination' => [
                 [
@@ -180,7 +180,7 @@ class RelationshipsObjectTest extends TestCase
                         ]
                     ]
                 ],
-                null
+                sprintf(Messages::CONTAINS_AT_LEAST_ONE, implode(', ', ['links', 'data', 'meta']))
             ]
         ];
     }
@@ -227,7 +227,7 @@ class RelationshipsObjectTest extends TestCase
                     ['test' => 'not valid'],
                     ['anything' => 'not valid']
                 ],
-                null
+                Messages::MUST_NOT_BE_ARRAY_OF_OBJECTS
             ],
             'no valid member name' => [
                 [
@@ -238,7 +238,7 @@ class RelationshipsObjectTest extends TestCase
                         ]
                     ]
                 ],
-                null
+                Messages::MEMBER_NAME_HAVE_RESERVED_CHARACTERS
             ]
         ];
     }

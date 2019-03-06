@@ -6,6 +6,14 @@ use VGirol\JsonApiAssert\Messages;
 
 trait AssertMemberName
 {
+    /**
+     * Asserts that a member name is valid.
+     *
+     * @param string    $name
+     * @param boolean   $strict
+     * 
+     * @throws PHPUnit\Framework\ExpectationFailedException
+     */
     public static function assertIsValidMemberName($name, $strict = false)
     {
         PHPUnit::assertIsString(
@@ -41,6 +49,13 @@ trait AssertMemberName
         );
     }
 
+    /**
+     * Asserts that a field object has no forbidden member name
+     *
+     * @param array $field
+     * 
+     * @throws PHPUnit\Framework\ExpectationFailedException
+     */
     public static function assertFieldHasNoForbiddenMemberName($field)
     {
         if (!is_array($field)) {
@@ -57,8 +72,17 @@ trait AssertMemberName
         }
     }
 
+    /**
+     * Asserts that a member name is not forbidden
+     *
+     * @param string $name
+     * 
+     * @throws PHPUnit\Framework\ExpectationFailedException
+     */
     public static function assertIsNotForbiddenMemberName($name)
     {
+        PHPUnit::assertIsString($name);
+        
         $forbidden = ['relationships', 'links'];
         PHPUnit::assertNotContains(
             $name,

@@ -6,6 +6,13 @@ use VGirol\JsonApiAssert\Messages;
 
 trait AssertErrorsObject
 {
+    /**
+     * Asserts that an errors object is valid.
+     *
+     * @param array $errors
+     * 
+     * @throws PHPUnit\Framework\ExpectationFailedException
+     */
     public static function assertIsValidErrorsObject($errors)
     {
         static::assertIsArrayOfObjects(
@@ -18,6 +25,13 @@ trait AssertErrorsObject
         }
     }
 
+    /**
+     * Asserts that an error object is valid.
+     *
+     * @param array $error
+     * 
+     * @throws PHPUnit\Framework\ExpectationFailedException
+     */
     public static function assertIsValidErrorObject($error)
     {
         PHPUnit::assertIsArray(
@@ -77,12 +91,26 @@ trait AssertErrorsObject
         }
     }
 
+    /**
+     * Asserts that an error links object is valid.
+     *
+     * @param array $links
+     * 
+     * @throws PHPUnit\Framework\ExpectationFailedException
+     */
     public static function assertIsValidErrorLinksObject($links)
     {
         $allowed = ['about'];
         static::assertIsValidLinksObject($links, $allowed);
     }
 
+    /**
+     * Asserts that an error source object is valid.
+     *
+     * @param array $source
+     * 
+     * @throws PHPUnit\Framework\ExpectationFailedException
+     */
     public static function assertIsValidErrorSourceObject($source)
     {
         PHPUnit::assertIsArray(

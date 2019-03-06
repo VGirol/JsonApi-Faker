@@ -47,20 +47,20 @@ class JsonapiObjectTest extends TestCase
                     'version' => 'jsonapi 1.0',
                     'not' => 'allowed'
                 ],
-                null
+                Messages::ONLY_ALLOWED_MEMBERS
             ],
             'version is not a string' => [
                 [
                     'version' => 123
                 ],
-                null
+                Messages::JSONAPI_VERSION_IS_NOT_STRING
             ],
             'meta not valid' => [
                 [
                     'version' => 'jsonapi 1.0',
                     'meta' => 'not valid'
                 ],
-                null
+                Messages::META_OBJECT_IS_NOT_ARRAY
             ]
         ];
     }

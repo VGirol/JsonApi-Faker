@@ -6,6 +6,13 @@ use VGirol\JsonApiAssert\Messages;
 
 trait AssertResourceObject
 {
+    /**
+     * Asserts that a resource has valid structure.
+     *
+     * @param array $resource
+     * 
+     * @throws PHPUnit\Framework\ExpectationFailedException
+     */
     public static function assertIsValidResourceObject($resource)
     {
         static::assertResourceObjectHasValidTopLevelStructure($resource);
@@ -31,6 +38,13 @@ trait AssertResourceObject
         static::assertValidFields($resource);
     }
 
+    /**
+     * Asserts that a resource object has a valid top-level structure.
+     *
+     * @param array $resource
+     * 
+     * @throws PHPUnit\Framework\ExpectationFailedException
+     */
     public static function assertResourceObjectHasValidTopLevelStructure($resource)
     {
         PHPUnit::assertIsArray(
@@ -56,6 +70,13 @@ trait AssertResourceObject
         static::assertContainsOnlyAllowedMembers($allowed, $resource);
     }
 
+    /**
+     * Asserts that a resource has a valid id member.
+     *
+     * @param array $resource
+     * 
+     * @throws PHPUnit\Framework\ExpectationFailedException
+     */
     public static function assertResourceIdMember($resource)
     {
         PHPUnit::assertNotEmpty(
@@ -69,6 +90,13 @@ trait AssertResourceObject
         );
     }
 
+    /**
+     * Asserts that a resource has a valid type member.
+     *
+     * @param array $resource
+     * 
+     * @throws PHPUnit\Framework\ExpectationFailedException
+     */
     public static function assertResourceTypeMember($resource)
     {
         PHPUnit::assertNotEmpty(
@@ -84,12 +112,26 @@ trait AssertResourceObject
         static::assertIsValidMemberName($resource['type']);
     }
 
+    /**
+     * Asserts that a links object extracted from a resource is valid.
+     *
+     * @param array $data
+     * 
+     * @throws PHPUnit\Framework\ExpectationFailedException
+     */
     public static function assertIsValidResourceLinksObject($data)
     {
         $allowed = ['self'];
         static::assertIsValidLinksObject($data, $allowed);
     }
 
+    /**
+     * Asserts that a resource identifier object is valid.
+     *
+     * @param array $resource
+     * 
+     * @throws PHPUnit\Framework\ExpectationFailedException
+     */
     public static function assertIsValidResourceIdentifierObject($resource)
     {
         PHPUnit::assertIsArray(
@@ -119,6 +161,13 @@ trait AssertResourceObject
         }
     }
 
+    /**
+     * Asserts that a resource object has valid fields.
+     *
+     * @param array $resource
+     * 
+     * @throws PHPUnit\Framework\ExpectationFailedException
+     */
     public static function assertValidFields($resource)
     {
         $bHasAttributes = false;
@@ -144,6 +193,13 @@ trait AssertResourceObject
         }
     }
 
+    /**
+     * Asserts that a field name is not forbidden.
+     *
+     * @param string $name
+     * 
+     * @throws PHPUnit\Framework\ExpectationFailedException
+     */
     public static function assertIsNotForbiddenFieldName($name)
     {
         $forbidden = ['type', 'id'];

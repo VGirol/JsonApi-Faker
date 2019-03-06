@@ -133,7 +133,7 @@ class ErrorsObjectTest extends TestCase
                     'code' => 'E13',
                     'not' => 'not valid',
                 ],
-                null
+                Messages::ONLY_ALLOWED_MEMBERS
             ],
             'status is not a string' => [
                 [
@@ -163,12 +163,39 @@ class ErrorsObjectTest extends TestCase
                 ],
                 Messages::ERROR_DETAILS_IS_NOT_STRING
             ],
-            'source is not valid' => [
+            'source is not an array' => [
                 [
                     'status' => 'ok',
                     'source' => 'not valid'
                 ],
-                null
+                Messages::ERROR_SOURCE_OBJECT_NOT_ARRAY
+            ],
+            'source pointer is not a string' => [
+                [
+                    'status' => 'ok',
+                    'source' => [
+                        'pointer' => 666
+                    ]
+                ],
+                Messages::ERROR_SOURCE_POINTER_IS_NOT_STRING
+            ],
+            'source pointer is not valid' => [
+                [
+                    'status' => 'ok',
+                    'source' => [
+                        'pointer' => 'not valid'
+                    ]
+                ],
+                Messages::ERROR_SOURCE_POINTER_START
+            ],
+            'source parameter is not a string' => [
+                [
+                    'status' => 'ok',
+                    'source' => [
+                        'parameter' => 666
+                    ]
+                ],
+                Messages::ERROR_SOURCE_PARAMETER_IS_NOT_STRING
             ],
             'links is not valid' => [
                 [
@@ -177,7 +204,7 @@ class ErrorsObjectTest extends TestCase
                         'no' => 'not valid'
                     ]
                 ],
-                null
+                Messages::ONLY_ALLOWED_MEMBERS
             ],
             'meta is not valid' => [
                 [
@@ -186,7 +213,7 @@ class ErrorsObjectTest extends TestCase
                         'not+' => 'not valid'
                     ]
                 ],
-                null
+                Messages::MEMBER_NAME_HAVE_RESERVED_CHARACTERS
             ]
         ];
     }

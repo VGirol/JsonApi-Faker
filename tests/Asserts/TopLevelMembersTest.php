@@ -59,7 +59,7 @@ class TopLevelMembersTest extends TestCase
                         'self' => 'http://example.com/articles'
                     ]
                 ],
-                null
+                sprintf(Messages::TOP_LEVEL_MEMBERS, implode('", "', ['data', 'errors', 'meta']))
             ],
             'data and error incompatible' => [
                 [

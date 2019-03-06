@@ -6,6 +6,13 @@ use VGirol\JsonApiAssert\Messages;
 
 trait AssertJsonapiObject
 {
+    /**
+     * Asserts that a jsonapi object is valid.
+     *
+     * @param array $jsonapi
+     * 
+     * @throws PHPUnit\Framework\ExpectationFailedException
+     */
     public static function assertIsValidJsonapiObject($jsonapi)
     {
         static::assertIsNotArrayOfObjects(
@@ -20,7 +27,10 @@ trait AssertJsonapiObject
         );
 
         if (isset($jsonapi['version'])) {
-            PHPUnit::assertIsString($jsonapi['version']);
+            PHPUnit::assertIsString(
+                $jsonapi['version'],
+                Messages::JSONAPI_VERSION_IS_NOT_STRING
+            );
         }
 
         if (isset($jsonapi['meta'])) {

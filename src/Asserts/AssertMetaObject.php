@@ -5,6 +5,13 @@ use VGirol\JsonApiAssert\Messages;
 
 trait AssertMetaObject
 {
+    /**
+     * Asserts that a meta object is valid.
+     *
+     * @param array $meta
+     * 
+     * @throws PHPUnit\Framework\ExpectationFailedException
+     */
     public static function assertIsValidMetaObject($meta)
     {
         static::assertIsNotArrayOfObjects(

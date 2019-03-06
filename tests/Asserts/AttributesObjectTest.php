@@ -35,6 +35,10 @@ class AttributesObjectTest extends TestCase
     public function notValidAttributesObjectProvider()
     {
         return [
+            'null' => [
+                null,
+                Messages::ATTRIBUTES_OBJECT_IS_NOT_ARRAY
+            ],
             'not an array' => [
                 'failed',
                 Messages::ATTRIBUTES_OBJECT_IS_NOT_ARRAY
@@ -43,7 +47,7 @@ class AttributesObjectTest extends TestCase
                 [
                     'key+' => 'value'
                 ],
-                null
+                Messages::MEMBER_NAME_HAVE_RESERVED_CHARACTERS
             ],
             'field has forbidden member' => [
                 [
@@ -52,7 +56,7 @@ class AttributesObjectTest extends TestCase
                         'links' => 'forbidden'
                     ]
                 ],
-                null
+                Messages::MEMBER_NAME_NOT_ALLOWED
             ]
         ];
     }

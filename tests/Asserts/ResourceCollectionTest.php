@@ -83,7 +83,7 @@ class ResourceCollectionTest extends TestCase
                 [
                     'anything' => 'false'
                 ],
-                null
+                Messages::MUST_BE_ARRAY_OF_OBJECTS
             ],
             'not all objects are of same type' => [
                 [

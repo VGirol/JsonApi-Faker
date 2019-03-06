@@ -7,6 +7,13 @@ use PHPUnit\Framework\ExpectationFailedException;
 
 trait AssertStructure
 {
+    /**
+     * Asserts that a json document has valid structure.
+     *
+     * @param array $json
+     * 
+     * @throws PHPUnit\Framework\ExpectationFailedException
+     */
     public static function assertHasValidStructure($json)
     {
         static::assertHasValidTopLevelMembers($json);
@@ -38,6 +45,13 @@ trait AssertStructure
         }
     }
 
+    /**
+     * Asserts that a json document has valid top-level structure.
+     *
+     * @param array $json
+     * 
+     * @throws PHPUnit\Framework\ExpectationFailedException
+     */
     public static function assertHasValidTopLevelMembers($json)
     {
         $expected = ['data', 'errors', 'meta'];
@@ -64,12 +78,26 @@ trait AssertStructure
         );
     }
 
+    /**
+     * Asserts that top-level links member of a json document is valid.
+     *
+     * @param array $links
+     * 
+     * @throws PHPUnit\Framework\ExpectationFailedException
+     */
     public static function assertIsValidTopLevelLinksMember($links)
     {
         $allowed = ['self', 'related', 'first', 'last', 'next', 'prev'];
         static::assertIsValidLinksObject($links, $allowed);
     }
 
+    /**
+     * Asserts that the primary data of a json document is valid.
+     *
+     * @param array] $data
+     * 
+     * @throws PHPUnit\Framework\ExpectationFailedException
+     */
     public static function assertIsValidPrimaryData($data)
     {
         try {
@@ -81,7 +109,10 @@ trait AssertStructure
                 return;
             }
         } catch (ExpectationFailedException $e) {
-            PHPUnit::assertNull($data);
+            PHPUnit::assertNull(
+                $data,
+                Messages::PRIMARY_DATA_NOT_ARRAY
+            );
             return;
         }
 
@@ -94,6 +125,14 @@ trait AssertStructure
         }
     }
 
+    /**
+     * Asserts that a collection of resource object is valid.
+     *
+     * @param array     $list
+     * @param boolean   $checkType  If true, asserts that all resources of the collection are of same type.
+     * 
+     * @throws PHPUnit\Framework\ExpectationFailedException
+     */
     public static function assertIsValidResourceCollection($list, $checkType)
     {
         static::assertIsArrayOfObjects($list);
@@ -101,7 +140,7 @@ trait AssertStructure
         $isResourceObjectCollection = null;
         foreach ($list as $index => $resource) {
             if ($checkType) {
-            // Assert that all resources of the collection are of same type.
+                // Assert that all resources of the collection are of same type.
                 if ($index == 0) {
                     $isResourceObjectCollection = static::dataIsResourceObject($resource);
                 } else {
@@ -118,6 +157,13 @@ trait AssertStructure
         }
     }
 
+    /**
+     * Assert that a single resource object is valid.
+     *
+     * @param array $resource
+     * 
+     * @throws PHPUnit\Framework\ExpectationFailedException
+     */
     public static function assertIsValidSingleResource($resource)
     {
         static::assertIsNotArrayOfObjects($resource);
@@ -129,6 +175,14 @@ trait AssertStructure
         }
     }
 
+    /**
+     * Asserts that a collection of included resources is valid.
+     *
+     * @param array $included   The included top-level member of a json document.
+     * @param array $data       The primary data of a json document.
+     * 
+     * @throws PHPUnit\Framework\ExpectationFailedException
+     */
     public static function assertIsValidIncludedCollection($included, $data)
     {
         static::assertIsArrayOfObjects($included);

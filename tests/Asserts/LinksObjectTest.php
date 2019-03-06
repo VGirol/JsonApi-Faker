@@ -54,7 +54,7 @@ class LinksObjectTest extends TestCase
         return [
             'not an array' => [
                 666,
-                null
+                Messages::LINK_OBJECT_IS_NOT_ARRAY
             ],
             'no "href" member' => [
                 [
@@ -68,14 +68,14 @@ class LinksObjectTest extends TestCase
                     'meta' => 'valid',
                     'test' => 'error'
                 ],
-                null
+                Messages::ONLY_ALLOWED_MEMBERS
             ],
             'meta not valid' => [
                 [
                     'href' => 'valid',
                     'meta' => 666
                 ],
-                null
+                Messages::META_OBJECT_IS_NOT_ARRAY
             ]
         ];
     }
@@ -123,118 +123,15 @@ class LinksObjectTest extends TestCase
                     'test' => 'error'
                 ],
                 ['self', 'related'],
-                null
+                Messages::ONLY_ALLOWED_MEMBERS
             ],
             'link not valid' => [
                 [
                     'self' => 666
                 ],
                 ['self', 'related'],
-                null
+                Messages::LINK_OBJECT_IS_NOT_ARRAY
             ]
         ];
     }
-
-    // /**
-    //  * @note
-    //  * @test
-    //  * @dataProvider validLinksObjectProvider
-    //  */
-    // public function links_object_is_valid($data, $withPagination, $forError)
-    // {
-    //     JsonApiAssert::assertIsValidLinksObject($data, $withPagination, $forError);
-    // }
-
-    // public function validLinksObjectProvider()
-    // {
-    //     return [
-    //         'short' => [
-    //             [
-    //                 'self' => 'url'
-    //             ],
-    //             false,
-    //             false
-    //         ],
-    //         'with pagination' => [
-    //             [
-    //                 'self' => 'url',
-    //                 'related' => 'url',
-    //                 'first' => 'url',
-    //                 'last' => 'url',
-    //                 'next' => 'url',
-    //                 'prev' => 'url'
-    //             ],
-    //             true,
-    //             false
-    //         ],
-    //         'for error' => [
-    //             [
-    //                 'about' => 'url',
-    //             ],
-    //             false,
-    //             true
-    //         ]
-    //     ];
-    // }
-
-    // /**
-    //  * @note
-    //  * @test
-    //  * @dataProvider notValidLinksObjectProvider
-    //  */
-    // public function links_object_is_not_valid($data, $withPagination, $forError, $failureMessage)
-    // {
-    //     $fn = function ($data, $withPagination, $forError) {
-    //         JsonApiAssert::assertIsValidLinksObject($data, $withPagination, $forError);
-    //     };
-
-    //     JsonApiAssert::assertTestFail($fn, $failureMessage, $data, $withPagination, $forError);
-    // }
-
-    // public function notValidLinksObjectProvider()
-    // {
-    //     return [
-    //         'not an array' => [
-    //             'error',
-    //             false,
-    //             false,
-    //             Messages::LINKS_OBJECT_NOT_ARRAY
-    //         ],
-    //         'pagination not allowed' => [
-    //             [
-    //                 'self' => 'valid',
-    //                 'first' => 'valid',
-    //             ],
-    //             false,
-    //             false,
-    //             null
-    //         ],
-    //         'not only allowed members' => [
-    //             [
-    //                 'self' => 'valid',
-    //                 'first' => 'valid',
-    //                 'test' => 'error'
-    //             ],
-    //             true,
-    //             false,
-    //             null
-    //         ],
-    //         'link not valid' => [
-    //             [
-    //                 'self' => 666
-    //             ],
-    //             false,
-    //             false,
-    //             null
-    //         ],
-    //         'link error' => [
-    //             [
-    //                 'error' => 'not about member'
-    //             ],
-    //             false,
-    //             true,
-    //             null
-    //         ]
-    //     ];
-    // }
 }

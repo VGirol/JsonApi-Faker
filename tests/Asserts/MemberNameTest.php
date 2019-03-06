@@ -15,7 +15,7 @@ class MemberNameTest extends TestCase
     {
         $data = 'valid-member';
 
-        JsonApiAssert::assertIsValidMemberName($data);
+        JsonApiAssert::assertIsValidMemberName($data, $strict);
     }
 
     public function validMemberNameProvider()
@@ -116,63 +116,4 @@ class MemberNameTest extends TestCase
             ]
         ];
     }
-
-    // /**
-    //  * @dataProvider validFieldProvider
-    //  */
-    // public function testValidField($data)
-    // {
-    //     JsonApiAssert::assertHasNoForbiddenMemberName($data);
-    // }
-
-    // public function validFieldProvider()
-    // {
-    //     return [
-    //         'an object' => [
-    //             [
-    //                 'validkey' => 'validvalue'
-    //             ]
-    //         ],
-    //         'an array of objects' => [
-    //             [
-    //                 ['validkey' => 'validvalue'],
-    //                 ['validkey2' => 'validvalue2']
-    //             ]
-    //         ]
-    //     ];
-    // }
-
-    // /**
-    //  * @dataProvider notValidFieldProvider
-    //  */
-    // public function testNotValidField($data, $failureMessage)
-    // {
-    //     $fn = function ($data) {
-    //         JsonApiAssert::assertHasNoForbiddenMemberName($data);
-    //     };
-
-    //     JsonApiAssert::assertTestFail($fn, $failureMessage, $data);
-    // }
-
-    // public function notValidFieldProvider()
-    // {
-    //     return [
-    //         'not valid' => [
-    //             [
-    //                 'links' => 'not allowed member name'
-    //             ],
-    //             Messages::MEMBER_NAME_NOT_ALLOWED
-    //         ],
-    //         'not valid (complex)' => [
-    //             [
-    //                 'meta' => 'ok',
-    //                 'obj' => [
-    //                     'safe' => 'ok',
-    //                     'links' => 'not allowed member name'
-    //                 ]
-    //             ],
-    //             Messages::MEMBER_NAME_NOT_ALLOWED
-    //         ]
-    //     ];
-    // }
 }

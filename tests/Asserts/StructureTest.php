@@ -1,8 +1,9 @@
 <?php
 namespace VGirol\JsonApiAssert\Tests\Asserts;
 
-use VGirol\JsonApiAssert\Assert as JsonApiAssert;
+use VGirol\JsonApiAssert\Messages;
 use VGirol\JsonApiAssert\Tests\TestCase;
+use VGirol\JsonApiAssert\Assert as JsonApiAssert;
 
 class StructureTest extends TestCase
 {
@@ -111,7 +112,7 @@ class StructureTest extends TestCase
                         ]
                     ]
                 ],
-                null
+                Messages::ONLY_ALLOWED_MEMBERS
             ]
         ];
     }

@@ -7,6 +7,13 @@ use PHPUnit\Framework\ExpectationFailedException;
 
 trait AssertRelationshipsObject
 {
+    /**
+     * Asserts that a relationships object is valid.
+     *
+     * @param array $relationships
+     * 
+     * @throws PHPUnit\Framework\ExpectationFailedException
+     */
     public static function assertIsValidRelationshipsObject($relationships)
     {
         static::assertIsNotArrayOfObjects($relationships);
@@ -17,6 +24,13 @@ trait AssertRelationshipsObject
         }
     }
 
+    /**
+     * Asserts that a relationship object is valid.
+     *
+     * @param array $relationship
+     * 
+     * @throws PHPUnit\Framework\ExpectationFailedException
+     */
     public static function assertIsValidRelationshipObject($relationship)
     {
         $expected = ['links', 'data', 'meta'];
@@ -39,6 +53,14 @@ trait AssertRelationshipsObject
         }
     }
 
+    /**
+     * Asserts that a link object extracted from a relationship object is valid.
+     *
+     * @param array     $data
+     * @param boolean   $withPagination
+     * 
+     * @throws PHPUnit\Framework\ExpectationFailedException
+     */
     public static function assertIsValidRelationshipLinksObject($data, $withPagination)
     {
         $allowed = ['self', 'related'];
@@ -48,6 +70,13 @@ trait AssertRelationshipsObject
         static::assertIsValidLinksObject($data, $allowed);
     }
 
+    /**
+     * Asserts that a resource linkage object is valid.
+     *
+     * @param array $data
+     * 
+     * @throws PHPUnit\Framework\ExpectationFailedException
+     */
     public static function assertIsValidResourceLinkage($data)
     {
         try {
@@ -61,7 +90,10 @@ trait AssertRelationshipsObject
                 return;
             }
         } catch (ExpectationFailedException $e) {
-            PHPUnit::assertNull($data);
+            PHPUnit::assertNull(
+                $data,
+                Messages::RESOURCE_LINKAGE_NOT_ARRAY
+            );
             return;
         }
 

@@ -69,7 +69,7 @@ class PrimaryDataTest extends TestCase
                         '+not valid' => 'error'
                     ]
                 ],
-                null
+                Messages::MEMBER_NAME_HAVE_RESERVED_CHARACTERS
             ]
         ];
     }
@@ -134,7 +134,7 @@ class PrimaryDataTest extends TestCase
         return [
             'not an array' => [
                 'bad',
-                null
+                Messages::PRIMARY_DATA_NOT_ARRAY
             ],
             'not valid resource collection' => [
                 [
@@ -150,7 +150,7 @@ class PrimaryDataTest extends TestCase
                         ]
                     ]
                 ],
-                null
+                Messages::PRIMARY_DATA_SAME_TYPE
             ]
         ];
     }

@@ -84,15 +84,18 @@ class ResourceObjectTest extends TestCase
                     'id' => '1',
                     'type' => 'test'
                 ],
-                null
+                sprintf(Messages::CONTAINS_AT_LEAST_ONE, implode(', ', ['attributes', 'relationships', 'links', 'meta']))
             ],
             'member not allowed' => [
                 [
                     'id' => '1',
                     'type' => 'test',
+                    'meta' => [
+                        'anything' => 'good'
+                    ],
                     'wrong' => 'wrong'
                 ],
-                null
+                Messages::ONLY_ALLOWED_MEMBERS
             ]
         ];
     }
@@ -264,7 +267,7 @@ class ResourceObjectTest extends TestCase
                     'type' => 'test',
                     'wrong' => 'wrong'
                 ],
-                null
+                Messages::ONLY_ALLOWED_MEMBERS
             ],
             'meta is not valid' => [
                 [
@@ -272,7 +275,7 @@ class ResourceObjectTest extends TestCase
                     'type' => 'test',
                     'meta' => 'wrong'
                 ],
-                null
+                Messages::META_OBJECT_IS_NOT_ARRAY
             ]
         ];
     }
@@ -333,7 +336,7 @@ class ResourceObjectTest extends TestCase
                         ]
                     ]
                 ],
-                null
+                Messages::FIELDS_HAVE_SAME_NAME
             ],
             'attribute named type or id' => [
                 [
@@ -344,7 +347,7 @@ class ResourceObjectTest extends TestCase
                         'id' => 'not valid'
                     ]
                 ],
-                null
+                Messages::FIELDS_NAME_NOT_ALLOWED
             ],
             'relationship named type or id' => [
                 [
@@ -362,7 +365,7 @@ class ResourceObjectTest extends TestCase
                         ]
                     ]
                 ],
-                null
+                Messages::FIELDS_NAME_NOT_ALLOWED
             ]
         ];
     }
@@ -446,7 +449,7 @@ class ResourceObjectTest extends TestCase
                     'id' => '1',
                     'type' => 'test'
                 ],
-                null
+                sprintf(Messages::CONTAINS_AT_LEAST_ONE, implode(', ', ['attributes', 'relationships', 'links', 'meta']))
             ],
             'member not allowed' => [
                 [
@@ -457,7 +460,7 @@ class ResourceObjectTest extends TestCase
                     ],
                     'wrong' => 'wrong'
                 ],
-                null
+                Messages::ONLY_ALLOWED_MEMBERS
             ],
             'fields not valid (attribute and relationship with the same name)' => [
                 [
@@ -475,7 +478,7 @@ class ResourceObjectTest extends TestCase
                         ]
                     ]
                 ],
-                null
+                Messages::FIELDS_HAVE_SAME_NAME
             ],
             'fields not valid (attribute named type or id)' => [
                 [
@@ -486,7 +489,7 @@ class ResourceObjectTest extends TestCase
                         'id' => 'not valid'
                     ]
                 ],
-                null
+                Messages::FIELDS_NAME_NOT_ALLOWED
             ],
             'fields not valid (relationship named type or id)' => [
                 [
@@ -504,7 +507,7 @@ class ResourceObjectTest extends TestCase
                         ]
                     ]
                 ],
-                null
+                Messages::FIELDS_NAME_NOT_ALLOWED
             ]
         ];
     }

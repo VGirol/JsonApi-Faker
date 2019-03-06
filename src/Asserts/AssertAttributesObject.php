@@ -5,6 +5,13 @@ use VGirol\JsonApiAssert\Messages;
 
 trait AssertAttributesObject
 {
+    /**
+     * Asserts that an attributes object is valid.
+     *
+     * @param array $attributes
+     * 
+     * @throws PHPUnit\Framework\ExpectationFailedException
+     */
     public static function assertIsValidAttributesObject($attributes)
     {
         static::assertIsNotArrayOfObjects(

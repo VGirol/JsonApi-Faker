@@ -7,6 +7,14 @@ use PHPUnit\Framework\ExpectationFailedException;
 
 trait AssertLinksObject
 {
+    /**
+     * Asserts that a links object is valid.
+     *
+     * @param array $links
+     * @param array $allowedMembers
+     * 
+     * @throws PHPUnit\Framework\ExpectationFailedException
+     */
     public static function assertIsValidLinksObject($links, $allowedMembers)
     {
         PHPUnit::assertIsArray(
@@ -24,6 +32,13 @@ trait AssertLinksObject
         }
     }
 
+    /**
+     * Asserts that a link object is valid.
+     *
+     * @param array $link
+     * 
+     * @throws PHPUnit\Framework\ExpectationFailedException
+     */
     public static function assertIsValidLinkObject($link)
     {
         try {
@@ -33,7 +48,10 @@ trait AssertLinksObject
                 PHPUnit::assertIsString($link);
                 return;
             } catch (ExpectationFailedException $e) {
-                PHPUnit::assertNull($link);
+                PHPUnit::assertNull(
+                    $link,
+                    Messages::LINK_OBJECT_IS_NOT_ARRAY
+                );
                 return;
             }
         }
