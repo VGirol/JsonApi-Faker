@@ -222,6 +222,7 @@ trait AssertBase
      *
      * @param Closure|callback $fn
      * @param string $expectedFailureMessage
+     * @param mixed $args
      * 
      * @throws PHPUnit\Framework\ExpectationFailedException
      */

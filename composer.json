@@ -1,27 +1,13 @@
 {
     "name": "vgirol/jsonapi-assert-laravel",
-    "description": "RESTfull JSON:Api test assertions for Laravel",
+    "description": "RESTfull JSON:Api test assertions",
     "type": "library",
-    "homepage": "http://github.com/VGirol/JsonApi-Assert-Laravel",
+    "homepage": "http://github.com/VGirol/JsonApi-Assert",
     "license": "MIT",
     "require": {
         "php": "^7.1.3",
-        "phpunit/phpunit": "^7.0",
-        "laravel/laravel": "^5.7",
-        "vgirol/jsonapi-assert": "dev-master"
+        "phpunit/phpunit": "^7.0"
     },
-    "require-dev": {
-        "orchestra/testbench": "^3.7"
-    },
-    "repositories": [
-        {
-            "type": "path",
-            "url": "../JsonApi-Assert",
-            "options": {
-                "symlink": true
-            }
-        }
-    ],
     "authors": [
         {
             "name": "Vincent Girol",
@@ -31,23 +17,18 @@
     "minimum-stability": "dev",
     "autoload": {
         "psr-4": {
-            "VGirol\\JsonApiAssert\\Laravel\\": "src/"
+            "VGirol\\JsonApiAssert\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "VGirol\\JsonApiAssert\\Laravel\\Tests\\": "tests/"
+            "VGirol\\JsonApiAssert\\Tests\\": "tests/"
         }
     },
     "scripts": {
         "test": "./vendor/bin/phpunit tests"
     },
     "extra": {
-        "laravel": {
-            "providers": [
-                "VGirol\\JsonApiAssert\\Laravel\\JsonApiAssertServiceProvider"
-            ]
-        },
         "branch-alias": {
             "dev-master": "1.0-dev"
         }

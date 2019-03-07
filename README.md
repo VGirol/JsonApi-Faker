@@ -1,10 +1,93 @@
 # JsonApi-Assert
 
+Provides a number of assertions to test documents using the JSON:API specification.
+
+## Technologies
+
+- PHP 7
+- PHPUnit 7
+  
 ## Installation
+
+To install through composer, simply put the following in your `composer.json` file:
+
+```json
+{
+    "require-dev": {
+        "vgirol/jsonapi-assert": "dev-master"
+    }
+}
+```
+
+And then run `composer install` from the terminal.
+
+### Quick Installation
+
+Above installation can also be simplified by using the following command:
+
+```sh
+composer require vgirol/jsonapi-assert
+```
+
+## Usage
+
+```php
+use PHPUnit\Framework\TestCase;
+use VGirol\JsonApiAssert\Assert as JsonApiAssert;
+
+class MyTest extends TestCase
+{
+    /**
+     * @test
+     */
+    public function my_first_test()
+    {
+        $json = [
+            'meta' => [
+                'key' => 'value'
+            ],
+            'jsonapi' => [
+                'version' => '1.0'
+            ]
+        ];
+
+        JsonApiAssert::assertHasValidStructure($json);
+    }
+}
+```
+
+```php
+use PHPUnit\Framework\TestCase;
+use VGirol\JsonApiAssert\Assert as JsonApiAssert;
+
+class MyTest extends TestCase
+{
+    /**
+     * @test
+     */
+    public function my_first_test_that_failed()
+    {
+        $json = [
+            'meta' => [
+                'key' => 'value'
+            ],
+            'bad-member' => [
+                'error' => 'not valid'
+            ]
+        ];
+
+        $fn = function ($json) {
+            JsonApiAssert::assertHasValidStructure($json);
+        };
+
+        JsonApiAssert::assertTestFail($fn, $failureMsg, $json);
+    }
+}
+```
 
 ## Documentation
 
-VGirol\JsonApiAssert\Assert
+`VGirol\JsonApiAssert\Assert`
 
 - assertContainsAtLeastOneMember($expected, $actual, $message = '')
 - assertContainsOnlyAllowedMembers($expected, $actual, $message = '')
@@ -52,10 +135,12 @@ VGirol\JsonApiAssert\Assert
 - assertTestFail($fn, $expectedFailureMessage)
 - assertValidFields($resource)
 
+## Authors
 
-VGirol\JsonApiAssert\AssertResponse
+[Vincent Girol](vincent@girol.fr)
 
-- assertResponse406($response)
-- assertResponse415($response)
-- assertResponseHeaders($headers)
+## Contributing
 
+## License
+
+This project is licensed under the [MIT](https://choosealicense.com/licenses/mit/) License.
