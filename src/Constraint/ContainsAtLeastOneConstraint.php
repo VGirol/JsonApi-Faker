@@ -12,8 +12,6 @@ class ContainsAtLeastOneConstraint extends Constraint
 
     public function __construct(array $members)
     {
-        parent::__construct();
-
         $this->members = $members;
     }
 
@@ -47,23 +45,6 @@ class ContainsAtLeastOneConstraint extends Constraint
         }
 
         return false;
-    }
-
-    /**
-     * Returns the description of the failure
-     *
-     * The beginning of failure messages is "Failed asserting that" in most
-     * cases. This method should return the second part of that sentence.
-     *
-     * @param mixed $other evaluated value or object
-     */
-    protected function failureDescription($other) : string
-    {
-        return \sprintf(
-            '%s contains at least one element of "%s"',
-            $this->exporter->shortenedExport($other),
-            \implode(', ', $this->members)
-        );
     }
 
     public function check($other) : bool

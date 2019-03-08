@@ -1,11 +1,11 @@
 # JsonApi-Assert
 
-Provides a number of assertions to test documents using the JSON:API specification.
+This package provides a lot of assertions for testing documents using the [JSON:API specification](https://jsonapi.org/).
 
 ## Technologies
 
-- PHP 7
-- PHPUnit 7
+- PHP 7.0+
+- PHPUnit 8.0+
   
 ## Installation
 
@@ -30,6 +30,8 @@ composer require vgirol/jsonapi-assert
 ```
 
 ## Usage
+
+You can use these assertions in your classes directly as a static call.
 
 ```php
 use PHPUnit\Framework\TestCase;
@@ -58,6 +60,7 @@ class MyTest extends TestCase
 
 ```php
 use PHPUnit\Framework\TestCase;
+use VGirol\JsonApiAssert\Messages;
 use VGirol\JsonApiAssert\Assert as JsonApiAssert;
 
 class MyTest extends TestCase
@@ -65,16 +68,14 @@ class MyTest extends TestCase
     /**
      * @test
      */
-    public function my_first_test_that_failed()
+    public function how_to_assert_that_a_test_failed()
     {
         $json = [
-            'meta' => [
-                'key' => 'value'
-            ],
-            'bad-member' => [
-                'error' => 'not valid'
+            'errors' => [
+                'error' => 'not an array of error objects'
             ]
         ];
+        $failureMsg = Messages::ERRORS_OBJECT_NOT_ARRAY;
 
         $fn = function ($json) {
             JsonApiAssert::assertHasValidStructure($json);
@@ -85,9 +86,7 @@ class MyTest extends TestCase
 }
 ```
 
-## Documentation
-
-`VGirol\JsonApiAssert\Assert`
+## Assertions (`VGirol\JsonApiAssert\Assert`)
 
 - assertContainsAtLeastOneMember($expected, $actual, $message = '')
 - assertContainsOnlyAllowedMembers($expected, $actual, $message = '')
@@ -135,11 +134,23 @@ class MyTest extends TestCase
 - assertTestFail($fn, $expectedFailureMessage)
 - assertValidFields($resource)
 
-## Authors
+## Changelog
 
-[Vincent Girol](vincent@girol.fr)
+Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
+
+## Testing
+
+```sh
+$ composer test
+```
 
 ## Contributing
+
+Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
+
+## Credits
+
+[Vincent Girol](vincent@girol.fr)
 
 ## License
 

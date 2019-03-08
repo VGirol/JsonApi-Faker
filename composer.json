@@ -1,12 +1,12 @@
 {
-    "name": "vgirol/jsonapi-assert-laravel",
+    "name": "vgirol/jsonapi-assert",
     "description": "RESTfull JSON:Api test assertions",
     "type": "library",
     "homepage": "http://github.com/VGirol/JsonApi-Assert",
     "license": "MIT",
     "require": {
-        "php": "^7.1.3",
-        "phpunit/phpunit": "^7.0"
+        "php": "^7.2",
+        "phpunit/phpunit": "^8.0"
     },
     "authors": [
         {

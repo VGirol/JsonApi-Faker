@@ -234,7 +234,7 @@ trait AssertBase
             call_user_func_array($fn, $args);
         } catch(ExpectationFailedException $e) {
             if (!is_null($expectedFailureMessage)) {
-                PHPUnit::assertContains($expectedFailureMessage, $e->getMessage());
+                PHPUnit::assertStringContainsString($expectedFailureMessage, $e->getMessage());
             }
 
             return;
