@@ -150,7 +150,7 @@ Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
 ## Credits
 
-[Vincent Girol](vincent@girol.fr)
+[Vincent Girol](mailto:vincent@girol.fr)
 
 ## License
 
