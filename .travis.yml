@@ -8,12 +8,12 @@ php:
 before_script:
  - composer self-update
  - composer install --prefer-source --no-interaction
+ - mkdir -p build/logs
 # Commands you want to run that will verify your build.
 script:
- - mkdir -p build/logs
  - phpunit --coverage-clover build/logs/clover.xml
 after_script:
- - php vendor/bin/coveralls -v
+ - php vendor/bin/php-coveralls -v
 # allow_failures: Allow this build to fail under the specified environments.
 # fast_finish: If your build fails do not continue trying to build, just stop.
 matrix:
