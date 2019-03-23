@@ -1,5 +1,7 @@
 # JsonApi-Assert
 
+[![Build Status](https://travis-ci.org/VGirol/JsonApi-Assert.svg?branch=master)](https://travis-ci.org/VGirol/JsonApi-Assert)
+
 This package provides a lot of assertions for testing documents using the [JSON:API specification](https://jsonapi.org/).
 
 ## Technologies
