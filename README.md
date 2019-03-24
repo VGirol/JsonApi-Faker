@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/VGirol/JsonApi-Assert.svg?branch=master)](https://travis-ci.org/VGirol/JsonApi-Assert)
 [![Coverage Status](https://coveralls.io/repos/github/VGirol/JsonApi-Assert/badge.svg?branch=master)](https://coveralls.io/github/VGirol/JsonApi-Assert?branch=master)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/VGirol/JsonApi-Assert/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/VGirol/JsonApi-Assert/?branch=master)
 
 This package provides a lot of assertions for testing documents using the [JSON:API specification](https://jsonapi.org/).
 
