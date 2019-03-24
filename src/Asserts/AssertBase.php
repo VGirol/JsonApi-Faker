@@ -14,7 +14,7 @@ trait AssertBase
      *
      * @param array     $json
      * @param string    $key
-     * 
+     *
      * @throws PHPUnit\Framework\ExpectationFailedException
      */
     public static function assertHasMember($json, $key)
@@ -27,7 +27,7 @@ trait AssertBase
      *
      * @param array     $json
      * @param string    $key
-     * 
+     *
      * @throws PHPUnit\Framework\ExpectationFailedException
      */
     public static function assertNotHasMember($json, $key)
@@ -39,7 +39,7 @@ trait AssertBase
      * Asserts that a json object has a "data" member.
      *
      * @param array     $json
-     * 
+     *
      * @throws PHPUnit\Framework\ExpectationFailedException
      */
     public static function assertHasData($json)
@@ -51,7 +51,7 @@ trait AssertBase
      * Asserts that a json object has an "attributes" member.
      *
      * @param array     $json
-     * 
+     *
      * @throws PHPUnit\Framework\ExpectationFailedException
      */
     public static function assertHasAttributes($json)
@@ -63,7 +63,7 @@ trait AssertBase
      * Asserts that a json object has a "links" member.
      *
      * @param array     $json
-     * 
+     *
      * @throws PHPUnit\Framework\ExpectationFailedException
      */
     public static function assertHasLinks($json)
@@ -75,7 +75,7 @@ trait AssertBase
      * Asserts that a json object has a "meta" member.
      *
      * @param array     $json
-     * 
+     *
      * @throws PHPUnit\Framework\ExpectationFailedException
      */
     public static function assertHasMeta($json)
@@ -87,7 +87,7 @@ trait AssertBase
      * Asserts that a json object has an "included" member.
      *
      * @param array     $json
-     * 
+     *
      * @throws PHPUnit\Framework\ExpectationFailedException
      */
     public static function assertHasIncluded($json)
@@ -99,7 +99,7 @@ trait AssertBase
      * Asserts that a json object has a "relationships" member.
      *
      * @param array     $json
-     * 
+     *
      * @throws PHPUnit\Framework\ExpectationFailedException
      */
     public static function assertHasRelationships($json)
@@ -111,7 +111,7 @@ trait AssertBase
      * Asserts that a json object has an "errors" member.
      *
      * @param array     $json
-     * 
+     *
      * @throws PHPUnit\Framework\ExpectationFailedException
      */
     public static function assertHasErrors($json)
@@ -125,7 +125,7 @@ trait AssertBase
      * @param array $expected   The expected members
      * @param array $json       The json object
      * @param string $message   An optional message to explain why the test failed
-     * 
+     *
      * @throws PHPUnit\Framework\ExpectationFailedException
      */
     public static function assertContainsAtLeastOneMember($expected, $json, $message = '')
@@ -137,7 +137,7 @@ trait AssertBase
      * Returns a new instance of the VGirol\JsonApiAssert\Constraint\ContainsAtLeastOneConstraint class.
      *
      * @param array $expected   The expected members
-     * 
+     *
      * @return VGirol\JsonApiAssert\Constraint\ContainsAtLeastOneConstraint
      */
     public static function containsAtLeastOneMemberConstraint($expected)
@@ -150,7 +150,7 @@ trait AssertBase
      *
      * @param array $expected   The expected members
      * @param array $json       The json object
-     * 
+     *
      * @return boolean
      */
     public static function containsAtLeastOneMember($expected, $json)
@@ -166,7 +166,7 @@ trait AssertBase
      * @param array $expected   The expected members
      * @param array $json       The json object
      * @param string $message   An optional message to explain why the test failed
-     * 
+     *
      * @throws PHPUnit\Framework\ExpectationFailedException
      */
     public static function assertContainsOnlyAllowedMembers($expected, $json, $message = '')
@@ -179,7 +179,7 @@ trait AssertBase
      * Returns a new instance of the VGirol\JsonApiAssert\Constraint\ContainsOnlyAllowedMembersConstraint class.
      *
      * @param array $expected   The expected members
-     * 
+     *
      * @return VGirol\JsonApiAssert\Constraint\ContainsOnlyAllowedMembersConstraint
      */
     public static function containsOnlyAllowedMembersConstraint($expected)
@@ -192,7 +192,7 @@ trait AssertBase
      *
      * @param array     $data
      * @param string    $message   An optional message to explain why the test failed
-     * 
+     *
      * @throws PHPUnit\Framework\ExpectationFailedException
      */
     public static function assertIsArrayOfObjects($data, $message = '')
@@ -207,7 +207,7 @@ trait AssertBase
      *
      * @param array     $data
      * @param string    $message   An optional message to explain why the test failed
-     * 
+     *
      * @throws PHPUnit\Framework\ExpectationFailedException
      */
     public static function assertIsNotArrayOfObjects($data, $message = '')
@@ -223,7 +223,7 @@ trait AssertBase
      * @param Closure|callback $fn
      * @param string $expectedFailureMessage
      * @param mixed $args
-     * 
+     *
      * @throws PHPUnit\Framework\ExpectationFailedException
      */
     public static function assertTestFail($fn, $expectedFailureMessage)
@@ -232,7 +232,7 @@ trait AssertBase
 
         try {
             call_user_func_array($fn, $args);
-        } catch(ExpectationFailedException $e) {
+        } catch (ExpectationFailedException $e) {
             if (!is_null($expectedFailureMessage)) {
                 PHPUnit::assertStringContainsString($expectedFailureMessage, $e->getMessage());
             }

@@ -51,7 +51,7 @@ abstract class Messages
     const COMPOUND_DOCUMENT_ONLY_ONE_RESOURCE = 'A compound document MUST NOT include more than one resource object for each "type" and "id" pair.';
     const CONTAINS_AT_LEAST_ONE = 'contains at least one element of "%s"';
     const JSONAPI_VERSION_IS_NOT_STRING = 'If present, the value of the version member MUST be a string.';
-    const LINK_OBJECT_IS_NOT_ARRAY ='A link MUST be represented as either a null value, a string or an object.';
+    const LINK_OBJECT_IS_NOT_ARRAY = 'A link MUST be represented as either a null value, a string or an object.';
     const MUST_NOT_BE_ARRAY_OF_OBJECTS = 'Failed asserting that an array is not an array of objects.';
     const MUST_BE_ARRAY_OF_OBJECTS = 'Failed asserting that an array is an array of objects.';
 }
