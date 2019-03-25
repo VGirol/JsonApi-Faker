@@ -8,7 +8,7 @@ This package provides a lot of assertions for testing documents using the [JSON:
 
 ## Technologies
 
-- PHP 7.0+
+- PHP 7.2+
 - PHPUnit 8.0+
   
 ## Installation
