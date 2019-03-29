@@ -22,6 +22,7 @@ abstract class Messages
     const FIELDS_HAVE_SAME_NAME = 'A resource CAN NOT have an attribute and relationship with the same name.';
     const FIELDS_NAME_NOT_ALLOWED = 'A resource CAN NOT have an attribute or relationship named "type" or "id".';
     const HAS_MEMBER = 'Failed asserting that a JSON object HAS the member "%s".';
+    const HAS_ONLY_MEMBERS = 'Failed asserting that a JSON object HAS ONLY the members "%s".';
     const OBJECT_NOT_ARRAY = 'A resource linkage MUST be an array of resource objects or resource identifier objects.';
     const LINK_OBJECT_MISS_HREF_MEMBER = 'A link object MUST contain an "href" member.';
     const LINKS_OBJECT_NOT_ARRAY = 'A links object MUST be an array.';

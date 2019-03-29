@@ -10,6 +10,21 @@ use VGirol\JsonApiAssert\Constraint\ContainsOnlyAllowedMembersConstraint;
 trait AssertBase
 {
     /**
+     * Asserts that a json object has expected members.
+     *
+     * @param array     $json
+     * @param array     $keys
+     *
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     */
+    public static function assertHasMembers($json, array $keys)
+    {
+        foreach ($keys as $key) {
+            PHPUnit::assertArrayHasKey($key, $json, sprintf(Messages::HAS_MEMBER, $key));
+        }
+    }
+
+    /**
      * Asserts that a json object has an expected member.
      *
      * @param array     $json
@@ -20,6 +35,23 @@ trait AssertBase
     public static function assertHasMember($json, $key)
     {
         PHPUnit::assertArrayHasKey($key, $json, sprintf(Messages::HAS_MEMBER, $key));
+    }
+
+    /**
+     * Asserts that a json object has expected members.
+     *
+     * @param array     $json
+     * @param array     $keys
+     *
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     */
+    public static function assertHasOnlyMembers($json, array $keys)
+    {
+        PHPUnit::assertEquals(
+            $keys,
+            array_keys($json),
+            sprintf(Messages::HAS_ONLY_MEMBERS, implode(', ', $keys))
+        );
     }
 
     /**
