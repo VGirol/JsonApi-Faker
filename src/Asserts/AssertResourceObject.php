@@ -10,7 +10,7 @@ trait AssertResourceObject
      * Asserts that a resource has valid structure.
      *
      * @param array $resource
-     * 
+     *
      * @throws PHPUnit\Framework\ExpectationFailedException
      */
     public static function assertIsValidResourceObject($resource)
@@ -35,14 +35,14 @@ trait AssertResourceObject
             static::assertIsValidMetaObject($resource['meta']);
         }
 
-        static::assertValidFields($resource);
+        static::assertHasValidFields($resource);
     }
 
     /**
      * Asserts that a resource object has a valid top-level structure.
      *
      * @param array $resource
-     * 
+     *
      * @throws PHPUnit\Framework\ExpectationFailedException
      */
     public static function assertResourceObjectHasValidTopLevelStructure($resource)
@@ -74,7 +74,7 @@ trait AssertResourceObject
      * Asserts that a resource has a valid id member.
      *
      * @param array $resource
-     * 
+     *
      * @throws PHPUnit\Framework\ExpectationFailedException
      */
     public static function assertResourceIdMember($resource)
@@ -94,7 +94,7 @@ trait AssertResourceObject
      * Asserts that a resource has a valid type member.
      *
      * @param array $resource
-     * 
+     *
      * @throws PHPUnit\Framework\ExpectationFailedException
      */
     public static function assertResourceTypeMember($resource)
@@ -116,7 +116,7 @@ trait AssertResourceObject
      * Asserts that a links object extracted from a resource is valid.
      *
      * @param array $data
-     * 
+     *
      * @throws PHPUnit\Framework\ExpectationFailedException
      */
     public static function assertIsValidResourceLinksObject($data)
@@ -129,7 +129,7 @@ trait AssertResourceObject
      * Asserts that a resource identifier object is valid.
      *
      * @param array $resource
-     * 
+     *
      * @throws PHPUnit\Framework\ExpectationFailedException
      */
     public static function assertIsValidResourceIdentifierObject($resource)
@@ -165,10 +165,10 @@ trait AssertResourceObject
      * Asserts that a resource object has valid fields.
      *
      * @param array $resource
-     * 
+     *
      * @throws PHPUnit\Framework\ExpectationFailedException
      */
-    public static function assertValidFields($resource)
+    public static function assertHasValidFields($resource)
     {
         $bHasAttributes = false;
         if (isset($resource['attributes'])) {
@@ -197,7 +197,7 @@ trait AssertResourceObject
      * Asserts that a field name is not forbidden.
      *
      * @param string $name
-     * 
+     *
      * @throws PHPUnit\Framework\ExpectationFailedException
      */
     public static function assertIsNotForbiddenFieldName($name)

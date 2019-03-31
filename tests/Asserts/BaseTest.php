@@ -17,7 +17,7 @@ class BaseTest extends TestCase
             'meta' => 'valid'
         ];
 
-        JsonApiAssert::assertHasMember($data, 'data');
+        JsonApiAssert::assertHasMember('data', $data);
     }
 
     /**
@@ -31,7 +31,7 @@ class BaseTest extends TestCase
         $key = 'nothing';
 
         $fn = function ($data, $key) {
-            JsonApiAssert::assertHasMember($data, $key);
+            JsonApiAssert::assertHasMember($key, $data);
         };
 
         JsonApiAssert::assertTestFail(
@@ -45,6 +45,82 @@ class BaseTest extends TestCase
     /**
      * @test
      */
+    public function assert_has_members()
+    {
+        $data = [
+            'data' => 'jsonapi',
+            'meta' => 'valid',
+            'jsonapi' =>'ok'
+        ];
+
+        $expected = ['data', 'meta'];
+        JsonApiAssert::assertHasMembers($expected, $data);
+    }
+
+    /**
+     * @test
+     */
+    public function assert_has_members_failed()
+    {
+        $data = [
+            'meta' => 'test',
+            'anything' => 'else'
+        ];
+        $keys = ['meta', 'nothing'];
+
+        $fn = function ($data, $keys) {
+            JsonApiAssert::assertHasMembers($keys, $data);
+        };
+
+        JsonApiAssert::assertTestFail(
+            $fn,
+            sprintf(Messages::HAS_MEMBER, 'nothing'),
+            $data,
+            $keys
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function assert_has_only_members()
+    {
+        $data = [
+            'data' => 'jsonapi',
+            'meta' => 'valid'
+        ];
+
+        $expected = ['data', 'meta'];
+        JsonApiAssert::assertHasOnlyMembers($expected, $data);
+    }
+
+    /**
+     * @test
+     */
+    public function assert_has_only_members_failed()
+    {
+        $data = [
+            'data' => 'jsonapi',
+            'meta' => 'test',
+            'anything' => 'else'
+        ];
+        $keys = ['meta', 'data'];
+
+        $fn = function ($data, $keys) {
+            JsonApiAssert::assertHasOnlyMembers($keys, $data);
+        };
+
+        JsonApiAssert::assertTestFail(
+            $fn,
+            sprintf(Messages::HAS_ONLY_MEMBERS, implode(', ', $keys)),
+            $data,
+            $keys
+        );
+    }
+
+    /**
+     * @test
+     */
     public function assert_not_has_member()
     {
         $data = [
@@ -52,7 +128,7 @@ class BaseTest extends TestCase
             'meta' => 'valid'
         ];
 
-        JsonApiAssert::assertNotHasMember($data, 'test');
+        JsonApiAssert::assertNotHasMember('test', $data);
     }
 
     /**
@@ -66,7 +142,7 @@ class BaseTest extends TestCase
         $key = 'anything';
 
         $fn = function ($data, $key) {
-            JsonApiAssert::assertNotHasMember($data, $key);
+            JsonApiAssert::assertNotHasMember($key, $data);
         };
 
         JsonApiAssert::assertTestFail(

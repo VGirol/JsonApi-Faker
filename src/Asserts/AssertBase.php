@@ -12,14 +12,14 @@ trait AssertBase
     /**
      * Asserts that a json object has expected members.
      *
+     * @param array     $expected
      * @param array     $json
-     * @param array     $keys
      *
      * @throws \PHPUnit\Framework\ExpectationFailedException
      */
-    public static function assertHasMembers($json, array $keys)
+    public static function assertHasMembers(array $expected, $json)
     {
-        foreach ($keys as $key) {
+        foreach ($expected as $key) {
             PHPUnit::assertArrayHasKey($key, $json, sprintf(Messages::HAS_MEMBER, $key));
         }
     }
@@ -27,44 +27,44 @@ trait AssertBase
     /**
      * Asserts that a json object has an expected member.
      *
+     * @param string    $expected
      * @param array     $json
-     * @param string    $key
      *
      * @throws \PHPUnit\Framework\ExpectationFailedException
      */
-    public static function assertHasMember($json, $key)
+    public static function assertHasMember($expected, $json)
     {
-        PHPUnit::assertArrayHasKey($key, $json, sprintf(Messages::HAS_MEMBER, $key));
+        PHPUnit::assertArrayHasKey($expected, $json, sprintf(Messages::HAS_MEMBER, $expected));
     }
 
     /**
-     * Asserts that a json object has expected members.
+     * Asserts that a json object has only expected members.
      *
+     * @param array     $expected
      * @param array     $json
-     * @param array     $keys
      *
      * @throws \PHPUnit\Framework\ExpectationFailedException
      */
-    public static function assertHasOnlyMembers($json, array $keys)
+    public static function assertHasOnlyMembers(array $expected, $json)
     {
         PHPUnit::assertEquals(
-            $keys,
+            $expected,
             array_keys($json),
-            sprintf(Messages::HAS_ONLY_MEMBERS, implode(', ', $keys))
+            sprintf(Messages::HAS_ONLY_MEMBERS, implode(', ', $expected))
         );
     }
 
     /**
      * Asserts that a json object not has an unexpected member.
      *
+     * @param string    $expected
      * @param array     $json
-     * @param string    $key
      *
      * @throws \PHPUnit\Framework\ExpectationFailedException
      */
-    public static function assertNotHasMember($json, $key)
+    public static function assertNotHasMember($expected, $json)
     {
-        PHPUnit::assertArrayNotHasKey($key, $json, sprintf(Messages::NOT_HAS_MEMBER, $key));
+        PHPUnit::assertArrayNotHasKey($expected, $json, sprintf(Messages::NOT_HAS_MEMBER, $expected));
     }
 
     /**
@@ -76,7 +76,7 @@ trait AssertBase
      */
     public static function assertHasData($json)
     {
-        static::assertHasMember($json, 'data');
+        static::assertHasMember('data', $json);
     }
 
     /**
@@ -88,7 +88,7 @@ trait AssertBase
      */
     public static function assertHasAttributes($json)
     {
-        static::assertHasMember($json, 'attributes');
+        static::assertHasMember('attributes', $json);
     }
 
     /**
@@ -100,7 +100,7 @@ trait AssertBase
      */
     public static function assertHasLinks($json)
     {
-        static::assertHasMember($json, 'links');
+        static::assertHasMember('links', $json);
     }
 
     /**
@@ -112,7 +112,7 @@ trait AssertBase
      */
     public static function assertHasMeta($json)
     {
-        static::assertHasMember($json, 'meta');
+        static::assertHasMember('meta', $json);
     }
 
     /**
@@ -124,7 +124,7 @@ trait AssertBase
      */
     public static function assertHasIncluded($json)
     {
-        static::assertHasMember($json, 'included');
+        static::assertHasMember('included', $json);
     }
 
     /**
@@ -136,7 +136,7 @@ trait AssertBase
      */
     public static function assertHasRelationships($json)
     {
-        static::assertHasMember($json, 'relationships');
+        static::assertHasMember('relationships', $json);
     }
 
     /**
@@ -148,7 +148,7 @@ trait AssertBase
      */
     public static function assertHasErrors($json)
     {
-        static::assertHasMember($json, 'errors');
+        static::assertHasMember('errors', $json);
     }
 
     /**

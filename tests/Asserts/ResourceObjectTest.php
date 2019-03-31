@@ -301,7 +301,7 @@ class ResourceObjectTest extends TestCase
             ]
         ];
 
-        JsonApiAssert::assertValidFields($data);
+        JsonApiAssert::assertHasValidFields($data);
     }
 
     /**
@@ -311,7 +311,7 @@ class ResourceObjectTest extends TestCase
     public function resource_field_is_not_valid($data, $failureMessage)
     {
         $fn = function ($response) {
-            JsonApiAssert::assertValidFields($response);
+            JsonApiAssert::assertHasValidFields($response);
         };
 
         JsonApiAssert::assertTestFail($fn, $failureMessage, $data);
