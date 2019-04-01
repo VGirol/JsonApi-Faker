@@ -1,5 +1,5 @@
 !.gitignore
-report/
+reports/
 vendor/
 composer.lock
 .phpunit.result.cache

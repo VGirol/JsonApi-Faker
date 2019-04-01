@@ -2,23 +2,34 @@
 language: php
 # Versions of PHP you want your project run with.
 php:
- - 7.2
+  - 7.2
 # Commands to be run before your environment runs.
 before_script:
- - composer self-update
- - composer install --prefer-source --no-interaction
- - mkdir -p build/logs
+  ## Composer
+  - composer self-update
+  - composer install --prefer-source --no-interaction
+  ## Create dir build/logs
+  - mkdir -p build/logs
+  ## Infection
+  - wget https://github.com/infection/infection/releases/download/0.12.0/infection.phar
+  - wget https://github.com/infection/infection/releases/download/0.12.0/infection.phar.asc
+  - gpg --keyserver hkps.pool.sks-keyservers.net --recv-keys 493B4AA0
+  - gpg --with-fingerprint --verify infection.phar.asc infection.phar
+  - chmod +x infection.phar
 # Commands you want to run that will verify your build.
 script:
- - ./vendor/bin/phpunit --coverage-clover build/logs/clover.xml
+  ## PHPUnit with code coverage
+  - ./vendor/bin/phpunit --coverage-clover build/logs/clover.xml
+  ## Infection
+  - ./infection.phar --min-msi=48 --threads=4
 after_script:
-## Scrutinizer
+  ## Scrutinizer -> send code coverage results
   - wget https://scrutinizer-ci.com/ocular.phar
   - php ocular.phar code-coverage:upload --format=php-clover ./build/logs/clover.xml
 # fast_finish: If your build fails do not continue trying to build, just stop.
 matrix:
- fast_finish: true
+  fast_finish: true
 # Customize when the notification emails are sent.
 notifications:
-   on_success: never
-   on_failure: always
+  on_success: never
+  on_failure: always

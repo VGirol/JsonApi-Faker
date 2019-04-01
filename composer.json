@@ -8,6 +8,9 @@
         "php": "^7.2",
         "phpunit/phpunit": "^8.0"
     },
+    "require-dev": {
+        "infection/infection": "dev-master"
+    },
     "authors": [
         {
             "name": "Vincent Girol",
