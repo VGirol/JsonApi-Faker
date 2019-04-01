@@ -12,7 +12,9 @@ before_script:
 script:
  - ./vendor/bin/phpunit --coverage-clover build/logs/clover.xml
 after_script:
- - php vendor/bin/php-coveralls -v
+## Scrutinizer
+  - wget https://scrutinizer-ci.com/ocular.phar
+  - php ocular.phar code-coverage:upload --format=php-clover ./build/logs/clover.xml
 # fast_finish: If your build fails do not continue trying to build, just stop.
 matrix:
  fast_finish: true
