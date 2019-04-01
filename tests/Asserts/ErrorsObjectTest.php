@@ -9,6 +9,43 @@ class ErrorsObjectTest extends TestCase
 {
     /**
      * @test
+     */
+    public function error_links_object_is_valid()
+    {
+        $links = [
+            'about' => 'url'
+        ];
+
+        JsonApiAssert::assertIsValidErrorLinksObject($links);
+    }
+
+    /**
+     * @test
+     * @dataProvider notValidErrorLinksObjectProvider
+     */
+    public function error_links_object_is_not_valid($data, $failureMessage)
+    {
+        $fn = function ($data) {
+            JsonApiAssert::assertIsValidErrorLinksObject($data);
+        };
+
+        JsonApiAssert::assertTestFail($fn, $failureMessage, $data);
+    }
+
+    public function notValidErrorLinksObjectProvider()
+    {
+        return [
+            'not allowed member' => [
+                [
+                    'anything' => 'not allowed'
+                ],
+                Messages::ONLY_ALLOWED_MEMBERS
+            ]
+        ];
+    }
+
+    /**
+     * @test
      * @dataProvider validErrorSourceObjectProvider
      */
     public function error_source_object_is_valid($data)
