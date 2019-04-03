@@ -10,12 +10,13 @@ trait AssertLinksObject
     /**
      * Asserts that a links object is valid.
      *
-     * @param array $links
-     * @param array $allowedMembers
-     * 
+     * @param array     $links
+     * @param array     $allowedMembers
+     * @param boolean   $strict         If true, excludes not safe characters when checking members name
+     *
      * @throws PHPUnit\Framework\ExpectationFailedException
      */
-    public static function assertIsValidLinksObject($links, $allowedMembers)
+    public static function assertIsValidLinksObject($links, $allowedMembers, $strict)
     {
         PHPUnit::assertIsArray(
             $links,
@@ -28,18 +29,19 @@ trait AssertLinksObject
         );
 
         foreach ($links as $key => $link) {
-            static::assertIsValidLinkObject($link);
+            static::assertIsValidLinkObject($link, $strict);
         }
     }
 
     /**
      * Asserts that a link object is valid.
      *
-     * @param array $link
-     * 
+     * @param array     $link
+     * @param boolean   $strict         If true, excludes not safe characters when checking members name
+     *
      * @throws PHPUnit\Framework\ExpectationFailedException
      */
-    public static function assertIsValidLinkObject($link)
+    public static function assertIsValidLinkObject($link, $strict)
     {
         try {
             PHPUnit::assertIsArray($link);
@@ -69,7 +71,7 @@ trait AssertLinksObject
         );
 
         if (isset($link['meta'])) {
-            static::assertIsValidMetaObject($link['meta']);
+            static::assertIsValidMetaObject($link['meta'], $strict);
         }
     }
 }

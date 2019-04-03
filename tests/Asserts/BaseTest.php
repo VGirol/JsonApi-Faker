@@ -1,23 +1,71 @@
 <?php
 namespace VGirol\JsonApiAssert\Tests\Asserts;
 
-use VGirol\JsonApiAssert\Assert as JsonApiAssert;
-use VGirol\JsonApiAssert\Tests\TestCase;
+use PHPUnit\Framework\Exception;
 use VGirol\JsonApiAssert\Messages;
+use PHPUnit\Framework\Assert as PHPUnit;
+use VGirol\JsonApiAssert\Tests\TestCase;
+use PHPUnit\Framework\ExpectationFailedException;
+use VGirol\JsonApiAssert\Assert as JsonApiAssert;
 
 class BaseTest extends TestCase
 {
     /**
      * @test
      */
+    public function assert_test_failed_with_success()
+    {
+        $failureMsg = 'Try again !';
+        $fn = function() use ($failureMsg) {
+            PHPUnit::assertTrue(false, $failureMsg);
+        };
+
+        JsonApiAssert::assertTestFail($fn, $failureMsg);
+    }
+
+    /**
+     * @test
+     */
+    public function assert_test_failed_with_error()
+    {
+        $failureMsg = 'Try again !';
+        $fn = function() {
+            PHPUnit::assertTrue(false);
+        };
+
+        $this->expectException(Exception::class);
+
+        JsonApiAssert::assertTestFail($fn, $failureMsg);
+    }
+
+    /**
+     * @test
+     */
+    public function assert_test_failed_but_doesnt_failed()
+    {
+        $failureMsg = 'Try again !';
+        $fn = function() use ($failureMsg) {
+            PHPUnit::assertTrue(true, $failureMsg);
+        };
+
+        $this->expectException(ExpectationFailedException::class);
+        $this->expectExceptionMessage(Messages::TEST_FAILED);
+
+        JsonApiAssert::assertTestFail($fn, $failureMsg);
+    }
+
+    /**
+     * @test
+     */
     public function assert_has_member()
     {
-        $data = [
+        $json = [
             'data' => 'jsonapi',
             'meta' => 'valid'
         ];
+        $expected = 'data';
 
-        JsonApiAssert::assertHasMember('data', $data);
+        JsonApiAssert::assertHasMember($expected, $json);
     }
 
     /**
@@ -25,21 +73,49 @@ class BaseTest extends TestCase
      */
     public function assert_has_member_failed()
     {
-        $data = [
+        $expected = 'member';
+        $json = [
             'anything' => 'else'
         ];
-        $key = 'nothing';
+        $failureMsg = sprintf(Messages::HAS_MEMBER, 'member');
 
-        $fn = function ($data, $key) {
-            JsonApiAssert::assertHasMember($key, $data);
+        $fn = function ($expected, $json) {
+            JsonApiAssert::assertHasMember($expected, $json);
         };
 
-        JsonApiAssert::assertTestFail(
-            $fn,
-            sprintf(Messages::HAS_MEMBER, $key),
-            $data,
-            $key
-        );
+        JsonApiAssert::assertTestFail($fn, $failureMsg, $expected, $json);
+    }
+
+    /**
+     * @test
+     * @dataProvider hasMemberInvalidArgumentsProvider
+     */
+    public function assert_has_member_invalid_arguments($expected, $json, $failureMsg)
+    {
+        $this->expectException(Exception::class);
+        if (!is_null($failureMsg)) {
+            $this->expectExceptionMessageRegExp($failureMsg);
+        }
+
+        JsonApiAssert::assertHasMember($expected, $json);
+    }
+
+    public function hasMemberInvalidArgumentsProvider()
+    {
+        return [
+            '$expected is not a string' => [
+                666,
+                [
+                    'anything' => 'else'
+                ],
+                $this->getPhpunitExceptionText(1, 'string', 666)
+            ],
+            '$json is not an array' => [
+                'anything',
+                'invalid',
+                $this->getPhpunitExceptionText(2, 'array', 'invalid')
+            ]
+        ];
     }
 
     /**
@@ -52,8 +128,8 @@ class BaseTest extends TestCase
             'meta' => 'valid',
             'jsonapi' =>'ok'
         ];
-
         $expected = ['data', 'meta'];
+
         JsonApiAssert::assertHasMembers($expected, $data);
     }
 
@@ -67,17 +143,47 @@ class BaseTest extends TestCase
             'anything' => 'else'
         ];
         $keys = ['meta', 'nothing'];
+        $failureMsg = sprintf(Messages::HAS_MEMBER, 'nothing');
 
         $fn = function ($data, $keys) {
             JsonApiAssert::assertHasMembers($keys, $data);
         };
 
-        JsonApiAssert::assertTestFail(
-            $fn,
-            sprintf(Messages::HAS_MEMBER, 'nothing'),
-            $data,
-            $keys
-        );
+        JsonApiAssert::assertTestFail($fn, $failureMsg, $data, $keys);
+    }
+
+    /**
+     * @test
+     * @dataProvider hasMembersInvalidArgumentsProvider
+     */
+    public function assert_has_members_invalid_arguments($expected, $json, $failureMsg)
+    {
+        $this->expectException(Exception::class);
+        if (!is_null($failureMsg)) {
+            $this->expectExceptionMessageRegExp($failureMsg);
+        }
+
+        JsonApiAssert::assertHasMembers($expected, $json);
+    }
+
+    public function hasMembersInvalidArgumentsProvider()
+    {
+        return [
+            '$expected is not an array' => [
+                'invalid',
+                [
+                    'anything' => 'else'
+                ],
+                $this->getPhpunitExceptionText(1, 'array', 'invalid')
+            ],
+            '$json is not an array' => [
+                [
+                    'anything'
+                ],
+                'invalid',
+                $this->getPhpunitExceptionText(2, 'array', 'invalid')
+            ]
+        ];
     }
 
     /**
@@ -89,8 +195,8 @@ class BaseTest extends TestCase
             'data' => 'jsonapi',
             'meta' => 'valid'
         ];
-
         $expected = ['data', 'meta'];
+
         JsonApiAssert::assertHasOnlyMembers($expected, $data);
     }
 
@@ -105,17 +211,47 @@ class BaseTest extends TestCase
             'anything' => 'else'
         ];
         $keys = ['meta', 'data'];
+        $failureMsg = sprintf(Messages::HAS_ONLY_MEMBERS, implode(', ', $keys));
 
         $fn = function ($data, $keys) {
             JsonApiAssert::assertHasOnlyMembers($keys, $data);
         };
 
-        JsonApiAssert::assertTestFail(
-            $fn,
-            sprintf(Messages::HAS_ONLY_MEMBERS, implode(', ', $keys)),
-            $data,
-            $keys
-        );
+        JsonApiAssert::assertTestFail($fn, $failureMsg, $data, $keys);
+    }
+
+    /**
+     * @test
+     * @dataProvider hasOnlyMembersInvalidArgumentsProvider
+     */
+    public function assert_has_only_members_invalid_arguments($expected, $json, $failureMsg)
+    {
+        $this->expectException(Exception::class);
+        if (!is_null($failureMsg)) {
+            $this->expectExceptionMessageRegExp($failureMsg);
+        }
+
+        JsonApiAssert::assertHasOnlyMembers($expected, $json);
+    }
+
+    public function hasOnlyMembersInvalidArgumentsProvider()
+    {
+        return [
+            '$expected is not an array' => [
+                666,
+                [
+                    'anything' => 'else'
+                ],
+                $this->getPhpunitExceptionText(1, 'array', 666)
+            ],
+            '$json is not an array' => [
+                [
+                    'anything'
+                ],
+                'invalid',
+                $this->getPhpunitExceptionText(2, 'array', 'invalid')
+            ]
+        ];
     }
 
     /**
@@ -127,8 +263,9 @@ class BaseTest extends TestCase
             'data' => 'jsonapi',
             'meta' => 'valid'
         ];
+        $expected = 'test';
 
-        JsonApiAssert::assertNotHasMember('test', $data);
+        JsonApiAssert::assertNotHasMember($expected, $data);
     }
 
     /**
@@ -139,18 +276,120 @@ class BaseTest extends TestCase
         $data = [
             'anything' => 'else'
         ];
-        $key = 'anything';
+        $expected = 'anything';
 
-        $fn = function ($data, $key) {
-            JsonApiAssert::assertNotHasMember($key, $data);
+        $fn = function ($data, $expected) {
+            JsonApiAssert::assertNotHasMember($expected, $data);
         };
 
         JsonApiAssert::assertTestFail(
             $fn,
-            sprintf(Messages::NOT_HAS_MEMBER, $key),
+            sprintf(Messages::NOT_HAS_MEMBER, $expected),
             $data,
-            $key
+            $expected
         );
+    }
+
+    /**
+     * @test
+     * @dataProvider notHasMemberInvalidArgumentsProvider
+     */
+    public function assert_not_has_member_invalid_arguments($expected, $json, $failureMsg)
+    {
+        $this->expectException(Exception::class);
+        if (!is_null($failureMsg)) {
+            $this->expectExceptionMessageRegExp($failureMsg);
+        }
+
+        JsonApiAssert::assertNotHasMember($expected, $json);
+    }
+
+    public function notHasMemberInvalidArgumentsProvider()
+    {
+        return [
+            '$expected is not a string' => [
+                666,
+                [
+                    'anything' => 'else'
+                ],
+                $this->getPhpunitExceptionText(1, 'string', 666)
+            ],
+            '$json is not an array' => [
+                'anything',
+                'invalid',
+                $this->getPhpunitExceptionText(2, 'array', 'invalid')
+            ]
+        ];
+    }
+
+    /**
+     * @test
+     */
+    public function assert_not_has_members()
+    {
+        $data = [
+            'data' => 'jsonapi',
+            'meta' => 'valid'
+        ];
+        $expected = [
+            'test',
+            'something'
+        ];
+
+        JsonApiAssert::assertNotHasMembers($expected, $data);
+    }
+
+    /**
+     * @test
+     */
+    public function assert_not_has_members_failed()
+    {
+        $data = [
+            'anything' => 'else',
+            'meta' => 'test'
+        ];
+        $expected = [
+            'anything',
+            'something'
+        ];
+
+        $fn = function ($data, $expected) {
+            JsonApiAssert::assertNotHasMembers($expected, $data);
+        };
+
+        JsonApiAssert::assertTestFail(
+            $fn,
+            sprintf(Messages::NOT_HAS_MEMBER, 'anything'),
+            $data,
+            $expected
+        );
+    }
+
+    /**
+     * @test
+     * @dataProvider notHasMembersInvalidArgumentsProvider
+     */
+    public function assert_not_has_members_invalid_arguments($expected, $json, $failureMsg)
+    {
+        $this->expectException(Exception::class);
+        if (!is_null($failureMsg)) {
+            $this->expectExceptionMessageRegExp($failureMsg);
+        }
+
+        JsonApiAssert::assertNotHasMembers($expected, $json);
+    }
+
+    public function notHasMembersInvalidArgumentsProvider()
+    {
+        return [
+            '$expected is not an array' => [
+                666,
+                [
+                    'anything' => 'else'
+                ],
+                $this->getPhpunitExceptionText(1, 'array', 666)
+            ]
+        ];
     }
 
     /**
@@ -320,53 +559,85 @@ class BaseTest extends TestCase
 
     /**
      * @test
+     * @dataProvider arrayOfObjectsProvider
      */
-    public function assert_is_array_of_objects()
+    public function assert_is_array_of_objects($json)
     {
-        $data = [
-            [
-                'meta' => 'valid'
+        JsonApiAssert::assertIsArrayOfObjects($json);
+    }
+
+    public function arrayOfObjectsProvider()
+    {
+        return [
+            'empty array' => [
+                []
             ],
-            [
-                'first' => 'jsonapi'
+            'filled array' => [
+                [
+                    [
+                        'meta' => 'valid'
+                    ],
+                    [
+                        'first' => 'jsonapi'
+                    ]
+                ]
             ]
         ];
-
-        JsonApiAssert::assertIsArrayOfObjects($data);
     }
 
     /**
      * @test
      * @dataProvider notArrayOfObjectsProvider
      */
-    public function assert_is_array_of_objects_failed($data, $failureMessage)
+    public function assert_is_array_of_objects_failed($data, $message, $failureMessage)
     {
-        $fn = function ($data) {
-            JsonApiAssert::assertIsArrayOfObjects($data);
+        $fn = function ($data, $message) {
+            JsonApiAssert::assertIsArrayOfObjects($data, $message);
         };
 
         JsonApiAssert::assertTestFail(
             $fn,
             $failureMessage,
-            $data
+            $data,
+            $message
         );
     }
 
     public function notArrayOfObjectsProvider()
     {
         return [
-            'not an array' => [
-                'error',
-                null
-            ],
             'associative array' => [
                 [
                     'meta' => 'valid',
                     'errors' => 'jsonapi'
                 ],
-                null
+                null,
+                Messages::MUST_BE_ARRAY_OF_OBJECTS
+            ],
+            'customized message' => [
+                [
+                    'meta' => 'valid',
+                    'errors' => 'jsonapi'
+                ],
+                'customized message',
+                'customized message'
             ]
         ];
+    }
+
+    /**
+     * @test
+     */
+    public function assert_is_array_of_objects_invalid_arguments()
+    {
+
+        $json = 'invalid';
+        $failureMsg = $this->getPhpunitExceptionText(1, 'array', $json);
+
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessageRegExp($failureMsg);
+
+        JsonApiAssert::assertIsArrayOfObjects($json);
     }
 
     /**

@@ -9,11 +9,12 @@ trait AssertJsonapiObject
     /**
      * Asserts that a jsonapi object is valid.
      *
-     * @param array $jsonapi
-     * 
+     * @param array     $jsonapi
+     * @param boolean   $strict         If true, excludes not safe characters when checking members name
+     *
      * @throws PHPUnit\Framework\ExpectationFailedException
      */
-    public static function assertIsValidJsonapiObject($jsonapi)
+    public static function assertIsValidJsonapiObject($jsonapi, $strict)
     {
         static::assertIsNotArrayOfObjects(
             $jsonapi,
@@ -34,7 +35,7 @@ trait AssertJsonapiObject
         }
 
         if (isset($jsonapi['meta'])) {
-            static::assertIsValidMetaObject($jsonapi['meta']);
+            static::assertIsValidMetaObject($jsonapi['meta'], $strict);
         }
     }
 }

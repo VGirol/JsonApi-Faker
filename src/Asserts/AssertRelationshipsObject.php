@@ -10,46 +10,47 @@ trait AssertRelationshipsObject
     /**
      * Asserts that a relationships object is valid.
      *
-     * @param array $relationships
-     * 
+     * @param array     $relationships
+     * @param boolean   $strict         If true, excludes not safe characters when checking members name
+     *
      * @throws PHPUnit\Framework\ExpectationFailedException
      */
-    public static function assertIsValidRelationshipsObject($relationships)
+    public static function assertIsValidRelationshipsObject($relationships, $strict)
     {
         static::assertIsNotArrayOfObjects($relationships);
 
         foreach ($relationships as $key => $relationship) {
-            static::assertIsValidMemberName($key);
-            static::assertIsValidRelationshipObject($relationship);
+            static::assertIsValidMemberName($key, $strict);
+            static::assertIsValidRelationshipObject($relationship, $strict);
         }
     }
 
     /**
      * Asserts that a relationship object is valid.
      *
-     * @param array $relationship
-     * 
+     * @param array     $relationship
+     * @param boolean   $strict         If true, excludes not safe characters when checking members name
+     *
      * @throws PHPUnit\Framework\ExpectationFailedException
      */
-    public static function assertIsValidRelationshipObject($relationship)
+    public static function assertIsValidRelationshipObject($relationship, $strict)
     {
         $expected = ['links', 'data', 'meta'];
         static::assertContainsAtLeastOneMember($expected, $relationship);
 
-        $withPagination = false;
         if (isset($relationship['data'])) {
             $data = $relationship['data'];
-            static::assertIsValidResourceLinkage($data);
-            $withPagination = static::isToManyResourceLinkage($data);
+            static::assertIsValidResourceLinkage($data, $strict);
         }
 
         if (isset($relationship['links'])) {
             $links = $relationship['links'];
-            static::assertIsValidRelationshipLinksObject($links, $withPagination);
+            $withPagination = isset($relationship['data']) && static::isArrayOfObjects($data);
+            static::assertIsValidRelationshipLinksObject($links, $withPagination, $strict);
         }
 
         if (isset($relationship['meta'])) {
-            static::assertIsValidMetaObject($relationship['meta']);
+            static::assertIsValidMetaObject($relationship['meta'], $strict);
         }
     }
 
@@ -58,35 +59,35 @@ trait AssertRelationshipsObject
      *
      * @param array     $data
      * @param boolean   $withPagination
-     * 
+     * @param boolean   $strict         If true, excludes not safe characters when checking members name
+     *
      * @throws PHPUnit\Framework\ExpectationFailedException
      */
-    public static function assertIsValidRelationshipLinksObject($data, $withPagination)
+    public static function assertIsValidRelationshipLinksObject($data, $withPagination, $strict)
     {
         $allowed = ['self', 'related'];
         if ($withPagination) {
             $allowed = array_merge($allowed, ['first', 'last', 'next', 'prev']);
         }
-        static::assertIsValidLinksObject($data, $allowed);
+        static::assertIsValidLinksObject($data, $allowed, $strict);
     }
 
     /**
      * Asserts that a resource linkage object is valid.
      *
-     * @param array $data
-     * 
+     * @param array     $data
+     * @param boolean   $strict     If true, excludes not safe characters when checking members name
+     *
      * @throws PHPUnit\Framework\ExpectationFailedException
      */
-    public static function assertIsValidResourceLinkage($data)
+    public static function assertIsValidResourceLinkage($data, $strict)
     {
         try {
             PHPUnit::assertIsArray(
                 $data,
                 Messages::RESOURCE_LINKAGE_NOT_ARRAY
             );
-            try {
-                PHPUnit::assertNotEmpty($data);
-            } catch (ExpectationFailedException $e) {
+            if (empty($data)) {
                 return;
             }
         } catch (ExpectationFailedException $e) {
@@ -99,27 +100,10 @@ trait AssertRelationshipsObject
 
         if (static::isArrayOfObjects($data)) {
             foreach ($data as $resource) {
-                static::assertIsValidResourceIdentifierObject($resource);
+                static::assertIsValidResourceIdentifierObject($resource, $strict);
             }
         } else {
-            static::assertIsValidResourceIdentifierObject($data);
+            static::assertIsValidResourceIdentifierObject($data, $strict);
         }
-    }
-
-    private static function isToManyResourceLinkage($data)
-    {
-        if (is_null($data)) {
-            return false;
-        }
-
-        if (!is_array($data)) {
-            return false;
-        }
-
-        if (empty($data)) {
-            return false;
-        }
-
-        return static::isArrayOfObjects($data);
     }
 }

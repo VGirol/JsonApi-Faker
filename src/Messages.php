@@ -55,4 +55,5 @@ abstract class Messages
     const LINK_OBJECT_IS_NOT_ARRAY = 'A link MUST be represented as either a null value, a string or an object.';
     const MUST_NOT_BE_ARRAY_OF_OBJECTS = 'Failed asserting that an array is not an array of objects.';
     const MUST_BE_ARRAY_OF_OBJECTS = 'Failed asserting that an array is an array of objects.';
+    const INCLUDED_RESOURCE_NOT_LINKED = 'An included resource MUST correspond to an existing resource linkage.';
 }

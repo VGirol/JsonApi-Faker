@@ -9,11 +9,12 @@ trait AssertErrorsObject
     /**
      * Asserts that an errors object is valid.
      *
-     * @param array $errors
-     * 
+     * @param array     $errors
+     * @param boolean   $strict         If true, excludes not safe characters when checking members name
+     *
      * @throws PHPUnit\Framework\ExpectationFailedException
      */
-    public static function assertIsValidErrorsObject($errors)
+    public static function assertIsValidErrorsObject($errors, $strict)
     {
         static::assertIsArrayOfObjects(
             $errors,
@@ -21,18 +22,19 @@ trait AssertErrorsObject
         );
 
         foreach ($errors as $error) {
-            static::assertIsValidErrorObject($error);
+            static::assertIsValidErrorObject($error, $strict);
         }
     }
 
     /**
      * Asserts that an error object is valid.
      *
-     * @param array $error
-     * 
+     * @param array     $error
+     * @param boolean   $strict         If true, excludes not safe characters when checking members name
+     *
      * @throws PHPUnit\Framework\ExpectationFailedException
      */
-    public static function assertIsValidErrorObject($error)
+    public static function assertIsValidErrorObject($error, $strict)
     {
         PHPUnit::assertIsArray(
             $error,
@@ -83,32 +85,33 @@ trait AssertErrorsObject
         }
 
         if (isset($error['links'])) {
-            static::assertIsValidErrorLinksObject($error['links']);
+            static::assertIsValidErrorLinksObject($error['links'], $strict);
         }
 
         if (isset($error['meta'])) {
-            static::assertIsValidMetaObject($error['meta']);
+            static::assertIsValidMetaObject($error['meta'], $strict);
         }
     }
 
     /**
      * Asserts that an error links object is valid.
      *
-     * @param array $links
-     * 
+     * @param array     $links
+     * @param boolean   $strict         If true, excludes not safe characters when checking members name
+     *
      * @throws PHPUnit\Framework\ExpectationFailedException
      */
-    public static function assertIsValidErrorLinksObject($links)
+    public static function assertIsValidErrorLinksObject($links, $strict)
     {
         $allowed = ['about'];
-        static::assertIsValidLinksObject($links, $allowed);
+        static::assertIsValidLinksObject($links, $allowed, $strict);
     }
 
     /**
      * Asserts that an error source object is valid.
      *
      * @param array $source
-     * 
+     *
      * @throws PHPUnit\Framework\ExpectationFailedException
      */
     public static function assertIsValidErrorSourceObject($source)
@@ -117,11 +120,6 @@ trait AssertErrorsObject
             $source,
             Messages::ERROR_SOURCE_OBJECT_NOT_ARRAY
         );
-
-        // foreach (array_keys($source) as $name) {
-        //     static::assertIsValidMemberName($name);
-        //     static::assertIsNotForbiddenMemberName($name);
-        // }
 
         if (isset($source['pointer'])) {
             PHPUnit::assertIsString(

@@ -14,7 +14,7 @@ trait AssertMemberName
      *
      * @throws PHPUnit\Framework\ExpectationFailedException
      */
-    public static function assertIsValidMemberName($name, $strict = false)
+    public static function assertIsValidMemberName($name, $strict)
     {
         PHPUnit::assertIsString(
             $name,
@@ -41,53 +41,11 @@ trait AssertMemberName
             Messages::MEMBER_NAME_HAVE_RESERVED_CHARACTERS
         );
 
-        $regex = $strict ? "/^[{$globally}]{1}.*[{$globally}]{1}$/u" : "/^[{$globally}{$globallyNotSafe}]{1}.*[{$globally}{$globallyNotSafe}]{1}$/u";
+        $regex = $strict ? "/^[{$globally}]{1}(?:.*[{$globally}]{1})?$/u" : "/^[{$globally}{$globallyNotSafe}]{1}(?:.*[{$globally}{$globallyNotSafe}]{1})?$/u";
         PHPUnit::assertRegExp(
             $regex,
             $name,
             Messages::MEMBER_NAME_START_AND_END_WITH_ALLOWED_CHARACTERS
-        );
-    }
-
-    /**
-     * Asserts that a field object has no forbidden member name
-     *
-     * @param mixed $field
-     *
-     * @throws PHPUnit\Framework\ExpectationFailedException
-     */
-    public static function assertFieldHasNoForbiddenMemberName($field)
-    {
-        if (!is_array($field)) {
-            return;
-        }
-
-        foreach ($field as $key => $value) {
-            // For objects, $key is a string
-            // For arrays of objects, $key is an integer
-            if (is_string($key)) {
-                static::assertIsNotForbiddenMemberName($key);
-            }
-            static::assertFieldHasNoForbiddenMemberName($value);
-        }
-    }
-
-    /**
-     * Asserts that a member name is not forbidden
-     *
-     * @param string $name
-     *
-     * @throws PHPUnit\Framework\ExpectationFailedException
-     */
-    public static function assertIsNotForbiddenMemberName($name)
-    {
-        PHPUnit::assertIsString($name);
-
-        $forbidden = ['relationships', 'links'];
-        PHPUnit::assertNotContains(
-            $name,
-            $forbidden,
-            Messages::MEMBER_NAME_NOT_ALLOWED
         );
     }
 }

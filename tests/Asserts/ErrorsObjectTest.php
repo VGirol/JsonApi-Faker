@@ -15,21 +15,22 @@ class ErrorsObjectTest extends TestCase
         $links = [
             'about' => 'url'
         ];
+        $strict = false;
 
-        JsonApiAssert::assertIsValidErrorLinksObject($links);
+        JsonApiAssert::assertIsValidErrorLinksObject($links, $strict);
     }
 
     /**
      * @test
      * @dataProvider notValidErrorLinksObjectProvider
      */
-    public function error_links_object_is_not_valid($data, $failureMessage)
+    public function error_links_object_is_not_valid($json, $strict, $failureMessage)
     {
-        $fn = function ($data) {
-            JsonApiAssert::assertIsValidErrorLinksObject($data);
+        $fn = function ($json, $strict) {
+            JsonApiAssert::assertIsValidErrorLinksObject($json, $strict);
         };
 
-        JsonApiAssert::assertTestFail($fn, $failureMessage, $data);
+        JsonApiAssert::assertTestFail($fn, $failureMessage, $json, $strict);
     }
 
     public function notValidErrorLinksObjectProvider()
@@ -39,6 +40,7 @@ class ErrorsObjectTest extends TestCase
                 [
                     'anything' => 'not allowed'
                 ],
+                false,
                 Messages::ONLY_ALLOWED_MEMBERS
             ]
         ];
@@ -134,24 +136,25 @@ class ErrorsObjectTest extends TestCase
                 'pointer' => '/data/type'
             ],
             'meta' => [
-                'anything' => 'valid'
+                'is valid' => 'because $strict is false'
             ]
         ];
+        $strict = false;
 
-        JsonApiAssert::assertIsValidErrorObject($data);
+        JsonApiAssert::assertIsValidErrorObject($data, $strict);
     }
 
     /**
      * @test
      * @dataProvider notValidErrorObjectProvider
      */
-    public function error_object_is_not_valid($data, $failureMessage)
+    public function error_object_is_not_valid($data, $strict, $failureMessage)
     {
-        $fn = function ($data) {
-            JsonApiAssert::assertIsValidErrorObject($data);
+        $fn = function ($data, $strict) {
+            JsonApiAssert::assertIsValidErrorObject($data, $strict);
         };
 
-        JsonApiAssert::assertTestFail($fn, $failureMessage, $data);
+        JsonApiAssert::assertTestFail($fn, $failureMessage, $data, $strict);
     }
 
     public function notValidErrorObjectProvider()
@@ -159,10 +162,12 @@ class ErrorsObjectTest extends TestCase
         return [
             'not an array' => [
                 'error',
+                false,
                 Messages::ERROR_OBJECT_NOT_ARRAY
             ],
             'empty array' => [
                 [],
+                false,
                 Messages::ERROR_OBJECT_NOT_EMPTY
             ],
             'not allowed member' => [
@@ -170,6 +175,7 @@ class ErrorsObjectTest extends TestCase
                     'code' => 'E13',
                     'not' => 'not valid',
                 ],
+                false,
                 Messages::ONLY_ALLOWED_MEMBERS
             ],
             'status is not a string' => [
@@ -177,6 +183,7 @@ class ErrorsObjectTest extends TestCase
                     'code' => 'E13',
                     'status' => 666,
                 ],
+                false,
                 Messages::ERROR_STATUS_IS_NOT_STRING
             ],
             'code is not a string' => [
@@ -184,6 +191,7 @@ class ErrorsObjectTest extends TestCase
                     'code' => 13,
                     'status' => 'ok',
                 ],
+                false,
                 Messages::ERROR_CODE_IS_NOT_STRING
             ],
             'title is not a string' => [
@@ -191,6 +199,7 @@ class ErrorsObjectTest extends TestCase
                     'title' => 13,
                     'status' => 'ok',
                 ],
+                false,
                 Messages::ERROR_TITLE_IS_NOT_STRING
             ],
             'details is not a string' => [
@@ -198,6 +207,7 @@ class ErrorsObjectTest extends TestCase
                     'details' => 13,
                     'status' => 'ok',
                 ],
+                false,
                 Messages::ERROR_DETAILS_IS_NOT_STRING
             ],
             'source is not an array' => [
@@ -205,6 +215,7 @@ class ErrorsObjectTest extends TestCase
                     'status' => 'ok',
                     'source' => 'not valid'
                 ],
+                false,
                 Messages::ERROR_SOURCE_OBJECT_NOT_ARRAY
             ],
             'source pointer is not a string' => [
@@ -214,6 +225,7 @@ class ErrorsObjectTest extends TestCase
                         'pointer' => 666
                     ]
                 ],
+                false,
                 Messages::ERROR_SOURCE_POINTER_IS_NOT_STRING
             ],
             'source pointer is not valid' => [
@@ -223,6 +235,7 @@ class ErrorsObjectTest extends TestCase
                         'pointer' => 'not valid'
                     ]
                 ],
+                false,
                 Messages::ERROR_SOURCE_POINTER_START
             ],
             'source parameter is not a string' => [
@@ -232,6 +245,7 @@ class ErrorsObjectTest extends TestCase
                         'parameter' => 666
                     ]
                 ],
+                false,
                 Messages::ERROR_SOURCE_PARAMETER_IS_NOT_STRING
             ],
             'links is not valid' => [
@@ -241,6 +255,7 @@ class ErrorsObjectTest extends TestCase
                         'no' => 'not valid'
                     ]
                 ],
+                false,
                 Messages::ONLY_ALLOWED_MEMBERS
             ],
             'meta is not valid' => [
@@ -250,6 +265,7 @@ class ErrorsObjectTest extends TestCase
                         'not+' => 'not valid'
                     ]
                 ],
+                false,
                 Messages::MEMBER_NAME_HAVE_RESERVED_CHARACTERS
             ]
         ];
@@ -270,34 +286,32 @@ class ErrorsObjectTest extends TestCase
                 'code' => 'E132',
             ]
         ];
+        $strict = false;
 
-        JsonApiAssert::assertIsValidErrorsObject($data);
+        JsonApiAssert::assertIsValidErrorsObject($data, $strict);
     }
 
     /**
      * @test
      * @dataProvider notValidErrorsObjectProvider
      */
-    public function errors_object_is_not_valid($data, $failureMessage)
+    public function errors_object_is_not_valid($data, $strict, $failureMessage)
     {
-        $fn = function ($data) {
-            JsonApiAssert::assertIsValidErrorsObject($data);
+        $fn = function ($data, $strict) {
+            JsonApiAssert::assertIsValidErrorsObject($data, $strict);
         };
 
-        JsonApiAssert::assertTestFail($fn, $failureMessage, $data);
+        JsonApiAssert::assertTestFail($fn, $failureMessage, $data, $strict);
     }
 
     public function notValidErrorsObjectProvider()
     {
         return [
-            'not an array' => [
-                'error',
-                Messages::ERRORS_OBJECT_NOT_ARRAY
-            ],
             'not an array of objects' => [
                 [
                     'error' => 'not valid'
                 ],
+                false,
                 Messages::ERRORS_OBJECT_NOT_ARRAY
             ],
             'error object not valid' => [
@@ -307,6 +321,17 @@ class ErrorsObjectTest extends TestCase
                         '+not' => 'not valid',
                     ]
                 ],
+                false,
+                null
+            ],
+            'error object not safe' => [
+                [
+                    [
+                        'code' => 'E13',
+                        'not valid' => 'not valid',
+                    ]
+                ],
+                true,
                 null
             ]
         ];

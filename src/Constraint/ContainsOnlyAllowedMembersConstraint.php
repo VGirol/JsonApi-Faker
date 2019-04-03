@@ -2,6 +2,7 @@
 namespace VGirol\JsonApiAssert\Constraint;
 
 use PHPUnit\Framework\Constraint\Constraint;
+use PHPUnit\Framework\ExpectationFailedException;
 
 class ContainsOnlyAllowedMembersConstraint extends Constraint
 {
@@ -38,7 +39,7 @@ class ContainsOnlyAllowedMembersConstraint extends Constraint
             return false;
         }
 
-        foreach ($other as $key => $value) {
+        foreach (array_keys($other) as $key) {
             if (!in_array($key, $this->members)) {
                 return false;
             }

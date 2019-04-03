@@ -10,9 +10,9 @@ class IncludedTest extends TestCase
      * @test
      * @dataProvider validIncludedProvider
      */
-    public function compound_document_is_valid($json)
+    public function compound_document_is_valid($json, $strict)
     {
-        JsonApiAssert::assertIsValidIncludedCollection($json['included'], $json['data']);
+        JsonApiAssert::assertIsValidIncludedCollection($json['included'], $json['data'], $strict);
     }
 
     public function validIncludedProvider()
@@ -59,7 +59,8 @@ class IncludedTest extends TestCase
                             'id' => '12'
                         ]
                     ]
-                ]
+                ],
+                false
             ]
         ];
     }
@@ -68,25 +69,18 @@ class IncludedTest extends TestCase
      * @test
      * @dataProvider notValidIncludedProvider
      */
-    public function compound_document_is_not_valid($json, $failureMessage)
+    public function compound_document_is_not_valid($json, $strict, $failureMessage)
     {
-        $fn = function ($json) {
-            JsonApiAssert::assertIsValidIncludedCollection($json['included'], $json['data']);
+        $fn = function ($json, $strict) {
+            JsonApiAssert::assertIsValidIncludedCollection($json['included'], $json['data'], $strict);
         };
 
-        JsonApiAssert::assertTestFail($fn, $failureMessage, $json);
+        JsonApiAssert::assertTestFail($fn, $failureMessage, $json, $strict);
     }
 
     public function notValidIncludedProvider()
     {
         return [
-            'included member is not an array' => [
-                [
-                    'data' => [],
-                    'included' => 'bad'
-                ],
-                null
-            ],
             'included member is not a resource collection' => [
                 [
                     'data' => [],
@@ -95,6 +89,7 @@ class IncludedTest extends TestCase
                         'type' => 'test'
                     ]
                 ],
+                false,
                 null
             ],
             'one included resource is not identified by a resource identifier object' => [
@@ -122,6 +117,7 @@ class IncludedTest extends TestCase
                         ]
                     ]
                 ],
+                false,
                 null
             ],
             'a resource is included twice' => [
@@ -149,6 +145,7 @@ class IncludedTest extends TestCase
                         ]
                     ]
                 ],
+                false,
                 null
             ]
         ];

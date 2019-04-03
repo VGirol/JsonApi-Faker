@@ -1,8 +1,9 @@
 <?php
 namespace VGirol\JsonApiAssert\Asserts;
 
-use PHPUnit\Framework\Assert as PHPUnit;
 use VGirol\JsonApiAssert\Messages;
+use PHPUnit\Util\InvalidArgumentHelper;
+use PHPUnit\Framework\Assert as PHPUnit;
 use PHPUnit\Framework\ExpectationFailedException;
 use VGirol\JsonApiAssert\Constraint\ContainsAtLeastOneConstraint;
 use VGirol\JsonApiAssert\Constraint\ContainsOnlyAllowedMembersConstraint;
@@ -10,31 +11,61 @@ use VGirol\JsonApiAssert\Constraint\ContainsOnlyAllowedMembersConstraint;
 trait AssertBase
 {
     /**
-     * Asserts that a json object has expected members.
-     *
-     * @param array     $expected
-     * @param array     $json
-     *
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     */
-    public static function assertHasMembers(array $expected, $json)
-    {
-        foreach ($expected as $key) {
-            PHPUnit::assertArrayHasKey($key, $json, sprintf(Messages::HAS_MEMBER, $key));
-        }
-    }
-
-    /**
      * Asserts that a json object has an expected member.
      *
      * @param string    $expected
      * @param array     $json
      *
      * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \PHPUnit\Framework\Exception
      */
     public static function assertHasMember($expected, $json)
     {
+        if (!\is_string($expected)) {
+            throw InvalidArgumentHelper::factory(
+                1,
+                'string',
+                $expected
+            );
+        }
+        if (!\is_array($json)) {
+            throw InvalidArgumentHelper::factory(
+                2,
+                'array',
+                $json
+            );
+        }
         PHPUnit::assertArrayHasKey($expected, $json, sprintf(Messages::HAS_MEMBER, $expected));
+    }
+
+    /**
+     * Asserts that a json object has expected members.
+     *
+     * @param array     $expected
+     * @param array     $json
+     *
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \PHPUnit\Framework\Exception
+     */
+    public static function assertHasMembers($expected, $json)
+    {
+        if (!\is_array($expected)) {
+            throw InvalidArgumentHelper::factory(
+                1,
+                'array',
+                $expected
+            );
+        }
+        if (!\is_array($json)) {
+            throw InvalidArgumentHelper::factory(
+                2,
+                'array',
+                $json
+            );
+        }
+        foreach ($expected as $key) {
+            PHPUnit::assertArrayHasKey($key, $json, sprintf(Messages::HAS_MEMBER, $key));
+        }
     }
 
     /**
@@ -44,9 +75,25 @@ trait AssertBase
      * @param array     $json
      *
      * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \PHPUnit\Framework\Exception
      */
-    public static function assertHasOnlyMembers(array $expected, $json)
+    public static function assertHasOnlyMembers($expected, $json)
     {
+        if (!\is_array($expected)) {
+            throw InvalidArgumentHelper::factory(
+                1,
+                'array',
+                $expected
+            );
+        }
+        if (!\is_array($json)) {
+            throw InvalidArgumentHelper::factory(
+                2,
+                'array',
+                $json
+            );
+        }
+
         PHPUnit::assertEquals(
             $expected,
             array_keys($json),
@@ -61,10 +108,49 @@ trait AssertBase
      * @param array     $json
      *
      * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \PHPUnit\Framework\Exception
      */
     public static function assertNotHasMember($expected, $json)
     {
+        if (!\is_string($expected)) {
+            throw InvalidArgumentHelper::factory(
+                1,
+                'string',
+                $expected
+            );
+        }
+        if (!\is_array($json)) {
+            throw InvalidArgumentHelper::factory(
+                2,
+                'array',
+                $json
+            );
+        }
         PHPUnit::assertArrayNotHasKey($expected, $json, sprintf(Messages::NOT_HAS_MEMBER, $expected));
+    }
+
+    /**
+     * Asserts that a json object not has an unexpected member.
+     *
+     * @param array    $expected
+     * @param array     $json
+     *
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \PHPUnit\Framework\Exception
+     */
+    public static function assertNotHasMembers($expected, $json)
+    {
+        if (!\is_array($expected)) {
+            throw InvalidArgumentHelper::factory(
+                1,
+                'array',
+                $expected
+            );
+        }
+
+        foreach ($expected as $key) {
+            static::assertNotHasMember($key, $json);
+        }
     }
 
     /**
@@ -172,7 +258,7 @@ trait AssertBase
      *
      * @return \VGirol\JsonApiAssert\Constraint\ContainsAtLeastOneConstraint
      */
-    public static function containsAtLeastOneMemberConstraint($expected)
+    private static function containsAtLeastOneMemberConstraint($expected)
     {
         return new ContainsAtLeastOneConstraint($expected);
     }
@@ -185,7 +271,7 @@ trait AssertBase
      *
      * @return boolean
      */
-    public static function containsAtLeastOneMember($expected, $json)
+    private static function containsAtLeastOneMember($expected, $json)
     {
         $constraint = static::containsAtLeastOneMemberConstraint($expected);
 
@@ -214,7 +300,7 @@ trait AssertBase
      *
      * @return \VGirol\JsonApiAssert\Constraint\ContainsOnlyAllowedMembersConstraint
      */
-    public static function containsOnlyAllowedMembersConstraint($expected)
+    private static function containsOnlyAllowedMembersConstraint($expected)
     {
         return new ContainsOnlyAllowedMembersConstraint($expected);
     }
@@ -227,11 +313,18 @@ trait AssertBase
      *
      * @throws \PHPUnit\Framework\ExpectationFailedException
      */
-    public static function assertIsArrayOfObjects($data, $message = '')
+    public static function assertIsArrayOfObjects($json, $message = '')
     {
+        if (!\is_array($json)) {
+            throw InvalidArgumentHelper::factory(
+                1,
+                'array',
+                $json
+            );
+        }
+
         $message = $message ?: Messages::MUST_BE_ARRAY_OF_OBJECTS;
-        PHPUnit::assertIsArray($data, $message);
-        PHPUnit::assertTrue(static::isArrayOfObjects($data), $message);
+        PHPUnit::assertTrue(static::isArrayOfObjects($json), $message);
     }
 
     /**
@@ -242,11 +335,18 @@ trait AssertBase
      *
      * @throws \PHPUnit\Framework\ExpectationFailedException
      */
-    public static function assertIsNotArrayOfObjects($data, $message = '')
+    public static function assertIsNotArrayOfObjects($json, $message = '')
     {
+        if (!\is_array($json)) {
+            throw InvalidArgumentHelper::factory(
+                1,
+                'array',
+                $json
+            );
+        }
+
         $message = $message ?: Messages::MUST_NOT_BE_ARRAY_OF_OBJECTS;
-        PHPUnit::assertIsArray($data, $message);
-        PHPUnit::assertFalse(static::isArrayOfObjects($data), $message);
+        PHPUnit::assertFalse(static::isArrayOfObjects($json), $message);
     }
 
     /**
@@ -277,9 +377,6 @@ trait AssertBase
 
     private static function isArrayOfObjects($arr)
     {
-        if (!is_array($arr)) {
-            return false;
-        }
         if (empty($arr)) {
             return true;
         }

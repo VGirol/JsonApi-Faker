@@ -6,13 +6,19 @@
         ]
     },
     "logs": {
-        "text": "reports/infection.log",
+        "text": "build/infection/infection.log",
+        "summary": "build/infection/summary.log",
+        "perMutator": "build/infection/per-mutator.md",
         "badge": {
             "branch": "master"
         }
     },
     "mutators": {
-        "@default": true,
-        "@removal": false
-    }
+        "@default": true
+    },
+    "testFramework":"phpunit",
+    "phpUnit": {
+        "configDir": "."
+    },
+    "testFrameworkOptions": "-vvv"
 }

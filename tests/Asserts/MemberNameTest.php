@@ -2,8 +2,8 @@
 namespace VGirol\JsonApiAssert\Tests\Asserts;
 
 use VGirol\JsonApiAssert\Assert as JsonApiAssert;
-use VGirol\JsonApiAssert\Tests\TestCase;
 use VGirol\JsonApiAssert\Messages;
+use VGirol\JsonApiAssert\Tests\TestCase;
 
 class MemberNameTest extends TestCase
 {
@@ -13,8 +13,6 @@ class MemberNameTest extends TestCase
      */
     public function member_name_is_valid($data, $strict)
     {
-        $data = 'valid-member';
-
         JsonApiAssert::assertIsValidMemberName($data, $strict);
     }
 
@@ -27,6 +25,10 @@ class MemberNameTest extends TestCase
             ],
             'strict' => [
                 'valid-member',
+                true
+            ],
+            'short' => [
+                'a',
                 true
             ]
         ];
@@ -77,42 +79,6 @@ class MemberNameTest extends TestCase
                 'az_',
                 false,
                 Messages::MEMBER_NAME_START_AND_END_WITH_ALLOWED_CHARACTERS
-            ]
-        ];
-    }
-
-    /**
-     * @test
-     */
-    public function member_name_is_not_forbidden()
-    {
-        $name = 'valid';
-        JsonApiAssert::assertIsNotForbiddenMemberName($name);
-    }
-
-    /**
-     * @test
-     * @dataProvider forbiddenMemberNameProvider
-     */
-    public function member_name_is_forbidden($data, $failureMessage)
-    {
-        $fn = function ($data) {
-            JsonApiAssert::assertIsNotForbiddenMemberName($data);
-        };
-
-        JsonApiAssert::assertTestFail($fn, $failureMessage, $data);
-    }
-
-    public function forbiddenMemberNameProvider()
-    {
-        return [
-            'relationships' => [
-                'relationships',
-                Messages::MEMBER_NAME_NOT_ALLOWED
-            ],
-            'links' => [
-                'links',
-                Messages::MEMBER_NAME_NOT_ALLOWED
             ]
         ];
     }

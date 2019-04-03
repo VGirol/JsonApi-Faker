@@ -11,9 +11,9 @@ class ResourceCollectionTest extends TestCase
      * @test
      * @dataProvider validDataForResourceCollectionProvider
      */
-    public function resource_collection_is_valid($data)
+    public function resource_collection_is_valid($data, $strict)
     {
-        JsonApiAssert::assertIsValidResourceCollection($data, true);
+        JsonApiAssert::assertIsValidResourceCollection($data, true, $strict);
     }
 
     public function validDataForResourceCollectionProvider()
@@ -29,7 +29,8 @@ class ResourceCollectionTest extends TestCase
                         'type' => 'test',
                         'id' => '3'
                     ]
-                ]
+                ],
+                false
             ],
             'resource objects' => [
                 [
@@ -47,7 +48,8 @@ class ResourceCollectionTest extends TestCase
                             'anything' => 'ok'
                         ]
                     ]
-                ]
+                ],
+                false
             ],
             'only one item' => [
                 [
@@ -55,10 +57,12 @@ class ResourceCollectionTest extends TestCase
                         'type' => 'test',
                         'id' => '2'
                     ]
-                ]
+                ],
+                false
             ],
             'empty collection' => [
-                []
+                [],
+                false
             ],
         ];
     }
@@ -67,13 +71,13 @@ class ResourceCollectionTest extends TestCase
      * @test
      * @dataProvider notValidDataForResourceCollectionProvider
      */
-    public function resource_collection_is_not_valid($data, $failureMessage)
+    public function resource_collection_is_not_valid($data, $strict, $failureMessage)
     {
-        $fn = function ($data) {
-            JsonApiAssert::assertIsValidResourceCollection($data, true);
+        $fn = function ($data, $strict) {
+            JsonApiAssert::assertIsValidResourceCollection($data, true, $strict);
         };
 
-        JsonApiAssert::assertTestFail($fn, $failureMessage, $data);
+        JsonApiAssert::assertTestFail($fn, $failureMessage, $data, $strict);
     }
 
     public function notValidDataForResourceCollectionProvider()
@@ -83,6 +87,7 @@ class ResourceCollectionTest extends TestCase
                 [
                     'anything' => 'false'
                 ],
+                false,
                 Messages::MUST_BE_ARRAY_OF_OBJECTS
             ],
             'not all objects are of same type' => [
@@ -99,7 +104,25 @@ class ResourceCollectionTest extends TestCase
                         'id' => '3'
                     ]
                 ],
+                false,
                 Messages::PRIMARY_DATA_SAME_TYPE
+            ],
+            'meta has not safe member name' => [
+                [
+                    [
+                        'type' => 'test',
+                        'id' => '2',
+                        'meta' => [
+                            'not safe' => 'due to the blank character'
+                        ]
+                    ],
+                    [
+                        'type' => 'test',
+                        'id' => '3'
+                    ]
+                ],
+                true,
+                Messages::MEMBER_NAME_HAVE_RESERVED_CHARACTERS
             ]
         ];
     }

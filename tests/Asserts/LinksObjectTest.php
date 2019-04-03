@@ -11,19 +11,21 @@ class LinksObjectTest extends TestCase
      * @test
      * @dataProvider validLinkObjectProvider
      */
-    public function link_object_is_valid($data)
+    public function link_object_is_valid($data, $strict)
     {
-        JsonApiAssert::assertIsValidLinkObject($data);
+        JsonApiAssert::assertIsValidLinkObject($data, $strict);
     }
 
     public function validLinkObjectProvider()
     {
         return [
             'null value' => [
-                null
+                null,
+                false
             ],
             'as string' => [
-                'validLink'
+                'validLink',
+                false
             ],
             'as object' => [
                 [
@@ -31,7 +33,8 @@ class LinksObjectTest extends TestCase
                     'meta' => [
                         'key' => 'value'
                     ]
-                ]
+                ],
+                true
             ]
         ];
     }
@@ -40,13 +43,13 @@ class LinksObjectTest extends TestCase
      * @test
      * @dataProvider notValidLinkObjectProvider
      */
-    public function link_object_is_not_valid($data, $failureMessage)
+    public function link_object_is_not_valid($data, $strict, $failureMessage)
     {
-        $fn = function ($data) {
-            JsonApiAssert::assertIsValidLinkObject($data);
+        $fn = function ($data, $strict) {
+            JsonApiAssert::assertIsValidLinkObject($data, $strict);
         };
 
-        JsonApiAssert::assertTestFail($fn, $failureMessage, $data);
+        JsonApiAssert::assertTestFail($fn, $failureMessage, $data, $strict);
     }
 
     public function notValidLinkObjectProvider()
@@ -54,12 +57,14 @@ class LinksObjectTest extends TestCase
         return [
             'not an array' => [
                 666,
+                false,
                 Messages::LINK_OBJECT_IS_NOT_ARRAY
             ],
             'no "href" member' => [
                 [
                     'meta' => 'error'
                 ],
+                false,
                 Messages::LINK_OBJECT_MISS_HREF_MEMBER
             ],
             'not only allowed members' => [
@@ -68,14 +73,28 @@ class LinksObjectTest extends TestCase
                     'meta' => 'valid',
                     'test' => 'error'
                 ],
+                false,
                 Messages::ONLY_ALLOWED_MEMBERS
             ],
             'meta not valid' => [
                 [
                     'href' => 'valid',
-                    'meta' => 666
+                    'meta' => [
+                        'key+' => 'not valid'
+                    ]
                 ],
-                Messages::META_OBJECT_IS_NOT_ARRAY
+                false,
+                Messages::MEMBER_NAME_HAVE_RESERVED_CHARACTERS
+            ],
+            'meta not safe' => [
+                [
+                    'href' => 'valid',
+                    'meta' => [
+                        'not safe' => 'because of blank character'
+                    ]
+                ],
+                true,
+                Messages::MEMBER_NAME_HAVE_RESERVED_CHARACTERS
             ]
         ];
     }
@@ -89,23 +108,23 @@ class LinksObjectTest extends TestCase
             'self' => 'url',
             'related' => 'url'
         ];
+        $allowed = ['self', 'related'];
+        $strict = false;
 
-        $allowed = [ 'self', 'related' ];
-
-        JsonApiAssert::assertIsValidLinksObject($data, $allowed);
+        JsonApiAssert::assertIsValidLinksObject($data, $allowed, $strict);
     }
 
     /**
      * @test
      * @dataProvider notValidLinksObjectProvider
      */
-    public function links_object_is_not_valid($data, $allowed, $failureMessage)
+    public function links_object_is_not_valid($data, $allowed, $strict, $failureMessage)
     {
-        $fn = function ($data, $allowed) {
-            JsonApiAssert::assertIsValidLinksObject($data, $allowed);
+        $fn = function ($data, $allowed, $strict) {
+            JsonApiAssert::assertIsValidLinksObject($data, $allowed, $strict);
         };
 
-        JsonApiAssert::assertTestFail($fn, $failureMessage, $data, $allowed);
+        JsonApiAssert::assertTestFail($fn, $failureMessage, $data, $allowed, $strict);
     }
 
     public function notValidLinksObjectProvider()
@@ -114,6 +133,7 @@ class LinksObjectTest extends TestCase
             'not an array' => [
                 'error',
                 ['self', 'related'],
+                false,
                 Messages::LINKS_OBJECT_NOT_ARRAY
             ],
             'not only allowed members' => [
@@ -123,6 +143,7 @@ class LinksObjectTest extends TestCase
                     'test' => 'error'
                 ],
                 ['self', 'related'],
+                false,
                 Messages::ONLY_ALLOWED_MEMBERS
             ],
             'link not valid' => [
@@ -130,7 +151,21 @@ class LinksObjectTest extends TestCase
                     'self' => 666
                 ],
                 ['self', 'related'],
+                false,
                 Messages::LINK_OBJECT_IS_NOT_ARRAY
+            ],
+            'link has not safe meta member' => [
+                [
+                    'self' => [
+                        'href' => 'url',
+                        'meta' => [
+                            'not safe' => 'because of blank character'
+                        ]
+                    ]
+                ],
+                ['self', 'related'],
+                true,
+                Messages::MEMBER_NAME_HAVE_RESERVED_CHARACTERS
             ]
         ];
     }

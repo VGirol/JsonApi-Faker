@@ -9,27 +9,108 @@ class RelationshipsObjectTest extends TestCase
 {
     /**
      * @test
+     * @dataProvider validRelationshipLinksObjectProvider
+     */
+    public function relationship_links_object_is_valid($json, $withPagination, $strict)
+    {
+        $links = [
+            'self' => 'url'
+        ];
+        $withPagination = false;
+        $strict = false;
+
+        JsonApiAssert::assertIsValidRelationshipLinksObject($links, $withPagination, $strict);
+    }
+
+    public function validRelationshipLinksObjectProvider()
+    {
+        return [
+            'without pagination' => [
+                [
+                    'self' => 'url'
+                ],
+                false,
+                false
+            ],
+            'with pagination' => [
+                [
+                    'self' => 'url',
+                    'first' => 'url',
+                    'prev' => null,
+                    'next' => null,
+                    'last' => 'url'
+                ],
+                true,
+                false
+            ]
+        ];
+    }
+
+    /**
+     * @test
+     * @dataProvider notValidRelationshipLinksObjectProvider
+     */
+    public function relationship_links_object_is_not_valid($json, $withPagination, $strict, $failureMessage)
+    {
+        $fn = function ($json, $withPagination, $strict) {
+            JsonApiAssert::assertIsValidRelationshipLinksObject($json, $withPagination, $strict);
+        };
+
+        JsonApiAssert::assertTestFail($fn, $failureMessage, $json, $withPagination, $strict);
+    }
+
+    public function notValidRelationshipLinksObjectProvider()
+    {
+        return [
+            'not allowed member' => [
+                [
+                    'self' => 'url',
+                    'anything' => 'not allowed'
+                ],
+                false,
+                false,
+                Messages::ONLY_ALLOWED_MEMBERS
+            ],
+            'with pagination and not allowed member' => [
+                [
+                    'self' => 'url',
+                    'first' => 'url',
+                    'last' => 'url',
+                    'anything' => 'not allowed'
+                ],
+                true,
+                false,
+                Messages::ONLY_ALLOWED_MEMBERS
+            ]
+        ];
+    }
+
+    /**
+     * @test
      * @dataProvider validResourceLinkageProvider
      */
-    public function resource_linkage_is_valid($data)
+    public function resource_linkage_is_valid($data, $strict)
     {
-        JsonApiAssert::assertIsValidResourceLinkage($data);
+        JsonApiAssert::assertIsValidResourceLinkage($data, $strict);
     }
 
     public function validResourceLinkageProvider()
     {
         return [
             'null' => [
-                null
+                null,
+                false
             ],
             'empty array' => [
-                []
+                [],
+                false
             ],
             'single resource identifier object' => [
                 [
                     'type' => 'people',
                     'id' => '9'
-                ]
+                ],
+                false
             ],
             'array of resource identifier objects' => [
                 [
@@ -41,7 +122,8 @@ class RelationshipsObjectTest extends TestCase
                         'type' => 'people',
                         'id' => '10'
                     ]
-                ]
+                ],
+                false
             ]
         ];
     }
@@ -50,13 +132,13 @@ class RelationshipsObjectTest extends TestCase
      * @test
      * @dataProvider notValidResourceLinkageProvider
      */
-    public function resource_linkage_is_not_valid($data, $failureMessage)
+    public function resource_linkage_is_not_valid($data, $strict, $failureMessage)
     {
-        $fn = function ($data) {
-            JsonApiAssert::assertIsValidResourceLinkage($data);
+        $fn = function ($data, $strict) {
+            JsonApiAssert::assertIsValidResourceLinkage($data, $strict);
         };
 
-        JsonApiAssert::assertTestFail($fn, $failureMessage, $data);
+        JsonApiAssert::assertTestFail($fn, $failureMessage, $data, $strict);
     }
 
     public function notValidResourceLinkageProvider()
@@ -64,6 +146,7 @@ class RelationshipsObjectTest extends TestCase
         return [
             'not an array' => [
                 'not valid',
+                false,
                 Messages::RESOURCE_LINKAGE_NOT_ARRAY
             ],
             'not valid single resource identifier object' => [
@@ -72,6 +155,7 @@ class RelationshipsObjectTest extends TestCase
                     'id' => '9',
                     'anything' => 'not valid'
                 ],
+                false,
                 Messages::ONLY_ALLOWED_MEMBERS
             ],
             'not valid array of resource identifier objects' => [
@@ -86,7 +170,19 @@ class RelationshipsObjectTest extends TestCase
                         'id' => '10'
                     ]
                 ],
+                false,
                 Messages::ONLY_ALLOWED_MEMBERS
+            ],
+            'not safe member name' => [
+                [
+                    'type' => 'people',
+                    'id' => '9',
+                    'meta' => [
+                        'not valid' => 'due to the blank character'
+                    ]
+                ],
+                true,
+                Messages::MEMBER_NAME_HAVE_RESERVED_CHARACTERS
             ]
         ];
     }
@@ -95,23 +191,43 @@ class RelationshipsObjectTest extends TestCase
      * @test
      * @dataProvider validRelationshipObjectProvider
      */
-    public function relationship_object_is_valid($data)
+    public function relationship_object_is_valid($data, $strict)
     {
-        JsonApiAssert::assertIsValidRelationshipObject($data);
+        JsonApiAssert::assertIsValidRelationshipObject($data, $strict);
     }
 
     public function validRelationshipObjectProvider()
     {
         return [
-            'short' => [
+            'empty to one relationship' => [
+                [
+                    'data' => null
+                ],
+                false
+            ],
+            'to one relationship' => [
                 [
                     'data' => [
-                        'type' => 'test',
+                        'type' => 'author',
                         'id' => '2'
+                    ],
+                    'links' => [
+                        'self' => 'http://example.com/articles/1/relationships/author',
+                        'related' => 'http://example.com/articles/1/author',
+                    ],
+                    'meta' => [
+                        'anything' => 'valid'
                     ]
-                ]
+                ],
+                false
             ],
-            'long' => [
+            'empty to many relationship' => [
+                [
+                    'data' => []
+                ],
+                false
+            ],
+            'to many relationship' => [
                 [
                     'data' => [
                         [
@@ -132,7 +248,8 @@ class RelationshipsObjectTest extends TestCase
                     'meta' => [
                         'anything' => 'valid'
                     ]
-                ]
+                ],
+                false
             ]
         ];
     }
@@ -141,13 +258,13 @@ class RelationshipsObjectTest extends TestCase
      * @test
      * @dataProvider notValidRelationshipObjectProvider
      */
-    public function relationship_object_is_not_valid($data, $failureMessage)
+    public function relationship_object_is_not_valid($data, $strict, $failureMessage)
     {
-        $fn = function ($data) {
-            JsonApiAssert::assertIsValidRelationshipObject($data);
+        $fn = function ($data, $strict) {
+            JsonApiAssert::assertIsValidRelationshipObject($data, $strict);
         };
 
-        JsonApiAssert::assertTestFail($fn, $failureMessage, $data);
+        JsonApiAssert::assertTestFail($fn, $failureMessage, $data, $strict);
     }
 
     public function notValidRelationshipObjectProvider()
@@ -159,7 +276,47 @@ class RelationshipsObjectTest extends TestCase
                         'not' => 'valid'
                     ]
                 ],
+                false,
                 sprintf(Messages::CONTAINS_AT_LEAST_ONE, implode(', ', ['links', 'data', 'meta']))
+            ],
+            'meta is not valid' => [
+                [
+                    'data' => [
+                        'type' => 'test',
+                        'id' => '2'
+                    ],
+                    'meta' => [
+                        'key+' => 'not valid'
+                    ]
+                ],
+                false,
+                Messages::MEMBER_NAME_HAVE_RESERVED_CHARACTERS
+            ],
+            'links is not valid' => [
+                [
+                    'data' => [
+                        'type' => 'test',
+                        'id' => '2'
+                    ],
+                    'links' => 'not valid'
+                ],
+                false,
+                Messages::LINKS_OBJECT_NOT_ARRAY
+            ],
+            'single resource with pagination' => [
+                [
+                    'data' => [
+                        'type' => 'test',
+                        'id' => '2'
+                    ],
+                    'links' => [
+                        'self' => 'url',
+                        'first' => 'url',
+                        'last' => 'url'
+                    ]
+                ],
+                false,
+                Messages::ONLY_ALLOWED_MEMBERS
             ],
             'array of resource identifier objects without pagination' => [
                 [
@@ -180,6 +337,7 @@ class RelationshipsObjectTest extends TestCase
                         ]
                     ]
                 ],
+                false,
                 sprintf(Messages::CONTAINS_AT_LEAST_ONE, implode(', ', ['links', 'data', 'meta']))
             ]
         ];
@@ -202,21 +360,22 @@ class RelationshipsObjectTest extends TestCase
                 ]
             ]
         ];
+        $strict = false;
 
-        JsonApiAssert::assertIsValidRelationshipsObject($data);
+        JsonApiAssert::assertIsValidRelationshipsObject($data, $strict);
     }
 
     /**
      * @test
      * @dataProvider notValidRelationshipsObjectProvider
      */
-    public function relationships_object_is_not_valid($data, $failureMessage)
+    public function relationships_object_is_not_valid($data, $strict, $failureMessage)
     {
-        $fn = function ($data) {
-            JsonApiAssert::assertIsValidRelationshipsObject($data);
+        $fn = function ($data, $strict) {
+            JsonApiAssert::assertIsValidRelationshipsObject($data, $strict);
         };
 
-        JsonApiAssert::assertTestFail($fn, $failureMessage, $data);
+        JsonApiAssert::assertTestFail($fn, $failureMessage, $data, $strict);
     }
 
     public function notValidRelationshipsObjectProvider()
@@ -227,6 +386,7 @@ class RelationshipsObjectTest extends TestCase
                     ['test' => 'not valid'],
                     ['anything' => 'not valid']
                 ],
+                false,
                 Messages::MUST_NOT_BE_ARRAY_OF_OBJECTS
             ],
             'no valid member name' => [
@@ -238,6 +398,19 @@ class RelationshipsObjectTest extends TestCase
                         ]
                     ]
                 ],
+                false,
+                Messages::MEMBER_NAME_HAVE_RESERVED_CHARACTERS
+            ],
+            'no safe member name' => [
+                [
+                    'author not safe' => [
+                        'data' => [
+                            'type' => 'people',
+                            'id' => '9'
+                        ]
+                    ]
+                ],
+                true,
                 Messages::MEMBER_NAME_HAVE_RESERVED_CHARACTERS
             ]
         ];

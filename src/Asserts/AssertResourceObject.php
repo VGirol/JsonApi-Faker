@@ -13,26 +13,26 @@ trait AssertResourceObject
      *
      * @throws PHPUnit\Framework\ExpectationFailedException
      */
-    public static function assertIsValidResourceObject($resource)
+    public static function assertIsValidResourceObject($resource, $strict)
     {
         static::assertResourceObjectHasValidTopLevelStructure($resource);
         static::assertResourceIdMember($resource);
-        static::assertResourceTypeMember($resource);
+        static::assertResourceTypeMember($resource, $strict);
 
         if (isset($resource['attributes'])) {
-            static::assertIsValidAttributesObject($resource['attributes']);
+            static::assertIsValidAttributesObject($resource['attributes'], $strict);
         }
 
         if (isset($resource['relationships'])) {
-            static::assertIsValidRelationshipsObject($resource['relationships']);
+            static::assertIsValidRelationshipsObject($resource['relationships'], $strict);
         }
 
         if (isset($resource['links'])) {
-            static::assertIsValidResourceLinksObject($resource['links']);
+            static::assertIsValidResourceLinksObject($resource['links'], $strict);
         }
 
         if (isset($resource['meta'])) {
-            static::assertIsValidMetaObject($resource['meta']);
+            static::assertIsValidMetaObject($resource['meta'], $strict);
         }
 
         static::assertHasValidFields($resource);
@@ -93,11 +93,12 @@ trait AssertResourceObject
     /**
      * Asserts that a resource has a valid type member.
      *
-     * @param array $resource
+     * @param array     $resource
+     * @param boolean   $strict         If true, excludes not safe characters when checking members name
      *
      * @throws PHPUnit\Framework\ExpectationFailedException
      */
-    public static function assertResourceTypeMember($resource)
+    public static function assertResourceTypeMember($resource, $strict)
     {
         PHPUnit::assertNotEmpty(
             $resource['type'],
@@ -109,30 +110,32 @@ trait AssertResourceObject
             Messages::RESOURCE_TYPE_MEMBER_IS_NOT_STRING
         );
 
-        static::assertIsValidMemberName($resource['type']);
+        static::assertIsValidMemberName($resource['type'], $strict);
     }
 
     /**
      * Asserts that a links object extracted from a resource is valid.
      *
-     * @param array $data
+     * @param array     $data
+     * @param boolean   $strict         If true, excludes not safe characters when checking members name
      *
      * @throws PHPUnit\Framework\ExpectationFailedException
      */
-    public static function assertIsValidResourceLinksObject($data)
+    public static function assertIsValidResourceLinksObject($data, $strict)
     {
         $allowed = ['self'];
-        static::assertIsValidLinksObject($data, $allowed);
+        static::assertIsValidLinksObject($data, $allowed, $strict);
     }
 
     /**
      * Asserts that a resource identifier object is valid.
      *
-     * @param array $resource
+     * @param array     $resource
+     * @param boolean   $strict         If true, excludes not safe characters when checking members name
      *
      * @throws PHPUnit\Framework\ExpectationFailedException
      */
-    public static function assertIsValidResourceIdentifierObject($resource)
+    public static function assertIsValidResourceIdentifierObject($resource, $strict)
     {
         PHPUnit::assertIsArray(
             $resource,
@@ -151,13 +154,13 @@ trait AssertResourceObject
             $resource,
             Messages::RESOURCE_TYPE_MEMBER_IS_ABSENT
         );
-        static::assertResourceTypeMember($resource);
+        static::assertResourceTypeMember($resource, $strict);
 
         $allowed = ['id', 'type', 'meta'];
         static::assertContainsOnlyAllowedMembers($allowed, $resource);
 
         if (isset($resource['meta'])) {
-            static::assertIsValidMetaObject($resource['meta']);
+            static::assertIsValidMetaObject($resource['meta'], $strict);
         }
     }
 
@@ -174,13 +177,13 @@ trait AssertResourceObject
         if (isset($resource['attributes'])) {
             $bHasAttributes = true;
             foreach (array_keys($resource['attributes']) as $name) {
-                static::assertIsNotForbiddenFieldName($name);
+                static::assertIsNotForbiddenResourceFieldName($name);
             }
         }
 
         if (isset($resource['relationships'])) {
             foreach (array_keys($resource['relationships']) as $name) {
-                static::assertIsNotForbiddenFieldName($name);
+                static::assertIsNotForbiddenResourceFieldName($name);
 
                 if ($bHasAttributes) {
                     PHPUnit::assertArrayNotHasKey(
@@ -200,7 +203,7 @@ trait AssertResourceObject
      *
      * @throws PHPUnit\Framework\ExpectationFailedException
      */
-    public static function assertIsNotForbiddenFieldName($name)
+    public static function assertIsNotForbiddenResourceFieldName($name)
     {
         $forbidden = ['type', 'id'];
         PHPUnit::assertNotContains(

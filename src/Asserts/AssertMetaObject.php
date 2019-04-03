@@ -8,11 +8,12 @@ trait AssertMetaObject
     /**
      * Asserts that a meta object is valid.
      *
-     * @param array $meta
-     * 
+     * @param array     $meta
+     * @param boolean   $strict         If true, excludes not safe characters when checking members name
+     *
      * @throws PHPUnit\Framework\ExpectationFailedException
      */
-    public static function assertIsValidMetaObject($meta)
+    public static function assertIsValidMetaObject($meta, $strict)
     {
         static::assertIsNotArrayOfObjects(
             $meta,
@@ -20,7 +21,7 @@ trait AssertMetaObject
         );
 
         foreach (array_keys($meta) as $key) {
-            static::assertIsValidMemberName($key);
+            static::assertIsValidMemberName($key, $strict);
         }
     }
 }
