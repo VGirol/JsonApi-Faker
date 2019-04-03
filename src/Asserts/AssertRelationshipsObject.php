@@ -45,7 +45,7 @@ trait AssertRelationshipsObject
 
         if (isset($relationship['links'])) {
             $links = $relationship['links'];
-            $withPagination = isset($relationship['data']) && static::isArrayOfObjects($data);
+            $withPagination = isset($relationship['data']) && static::isArrayOfObjects($relationship['data']);
             static::assertIsValidRelationshipLinksObject($links, $withPagination, $strict);
         }
 
