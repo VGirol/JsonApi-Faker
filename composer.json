@@ -30,9 +30,10 @@
         }
     },
     "scripts": {
-        "post-install-cmd": [
-            "bash install/setup.sh"
+        "post-update-cmd": [
+            "@setup"
         ],
+        "setup": "bash install/setup.sh",
         "test": "./vendor/bin/phpunit tests ",
         "coverage": "./vendor/bin/phpunit tests --coverage-xml=build/coverage/coverage-xml --log-junit=build/coverage/phpunit.junit.xml",
         "infection": "./vendor/bin/infection --coverage=build/coverage --threads=$(nproc) --configuration=infection.json.dist",
