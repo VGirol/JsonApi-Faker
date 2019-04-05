@@ -34,14 +34,17 @@ trait AssertMemberName
         $allowed = '\x{002D}\x{005F}';
         $allowedNotSafe = '\x{0020}';
 
-        $regex = $strict ? "/[^{$globally}{$allowed}]+/u" : "/[^{$globally}{$globallyNotSafe}{$allowed}{$allowedNotSafe}]+/u";
+        $regex = $strict ? "/[^{$globally}{$allowed}]+/u" :
+            "/[^{$globally}{$globallyNotSafe}{$allowed}{$allowedNotSafe}]+/u";
+
         PHPUnit::assertNotRegExp(
             $regex,
             $name,
             Messages::MEMBER_NAME_HAVE_RESERVED_CHARACTERS
         );
 
-        $regex = $strict ? "/^[{$globally}]{1}(?:.*[{$globally}]{1})?$/u" : "/^[{$globally}{$globallyNotSafe}]{1}(?:.*[{$globally}{$globallyNotSafe}]{1})?$/u";
+        $regex = $strict ? "/^[{$globally}]{1}(?:.*[{$globally}]{1})?$/u" :
+            "/^[{$globally}{$globallyNotSafe}]{1}(?:.*[{$globally}{$globallyNotSafe}]{1})?$/u";
         PHPUnit::assertRegExp(
             $regex,
             $name,
