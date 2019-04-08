@@ -10,7 +10,7 @@ trait AssertMemberName
      * Asserts that a member name is valid.
      *
      * @param string    $name
-     * @param boolean   $strict
+     * @param boolean   $strict     If true, unsafe characters are not allowed when checking members name.
      *
      * @throws PHPUnit\Framework\ExpectationFailedException
      */

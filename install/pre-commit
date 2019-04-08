@@ -20,7 +20,7 @@ do
 	php -l -d display_errors=0 $PROJECT/$FILE
 	if [ $? != 0 ]
 	then
-		echo "Fix the error before commit."
+		echo "Fix the error (php) before commit."
 		exit 1
 	fi
 	FILES="$FILES $PROJECT/$FILE"
@@ -32,7 +32,7 @@ then
 	./vendor/bin/phpcs --encoding=utf-8 $FILES
 	if [ $? != 0 ]
 	then
-		echo "Fix the error before commit."
+		echo "Fix the error (phpcs) before commit."
 		exit 1
 	fi
 fi

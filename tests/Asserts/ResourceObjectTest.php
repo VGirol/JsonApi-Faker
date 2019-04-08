@@ -290,97 +290,6 @@ class ResourceObjectTest extends TestCase
     /**
      * @test
      */
-    public function resource_identifier_object_is_valid()
-    {
-        $data = [
-            'id' => '1',
-            'type' => 'test',
-            'meta' => [
-                'member' => 'is valid'
-            ]
-        ];
-        $strict = false;
-
-        JsonApiAssert::assertIsValidResourceIdentifierObject($data, $strict);
-    }
-
-    /**
-     * @test
-     * @dataProvider isNotValidResourceIdentifierObjectProvider
-     */
-    public function resource_identifier_object_is_not_valid($json, $strict, $failureMessage)
-    {
-        $fn = function ($json, $strict) {
-            JsonApiAssert::assertIsValidResourceIdentifierObject($json, $strict);
-        };
-
-        JsonApiAssert::assertTestFail($fn, $failureMessage, $json, $strict);
-    }
-
-    public function isNotValidResourceIdentifierObjectProvider()
-    {
-        return [
-            'not an array' => [
-                'failed',
-                false,
-                Messages::RESOURCE_IDENTIFIER_IS_NOT_ARRAY
-            ],
-            'id is missing' => [
-                [
-                    'type' => 'test'
-                ],
-                false,
-                Messages::RESOURCE_ID_MEMBER_IS_ABSENT
-            ],
-            'id is not valid' => [
-                [
-                    'id' => 1,
-                    'type' => 'test'
-                ],
-                false,
-                Messages::RESOURCE_ID_MEMBER_IS_NOT_STRING
-            ],
-            'type is missing' => [
-                [
-                    'id' => '1'
-                ],
-                false,
-                Messages::RESOURCE_TYPE_MEMBER_IS_ABSENT
-            ],
-            'type is not valid' => [
-                [
-                    'id' => '1',
-                    'type' => 404
-                ],
-                false,
-                Messages::RESOURCE_TYPE_MEMBER_IS_NOT_STRING
-            ],
-            'member not allowed' => [
-                [
-                    'id' => '1',
-                    'type' => 'test',
-                    'wrong' => 'wrong'
-                ],
-                false,
-                Messages::ONLY_ALLOWED_MEMBERS
-            ],
-            'meta has not valid member name' => [
-                [
-                    'id' => '1',
-                    'type' => 'test',
-                    'meta' => [
-                        'not valid' => 'due to the blank character'
-                    ]
-                ],
-                true,
-                Messages::MEMBER_NAME_HAVE_RESERVED_CHARACTERS
-            ]
-        ];
-    }
-
-    /**
-     * @test
-     */
     public function resource_field_is_valid()
     {
         $data = [
@@ -565,6 +474,18 @@ class ResourceObjectTest extends TestCase
                 ],
                 false,
                 Messages::ONLY_ALLOWED_MEMBERS
+            ],
+            'attributes not valid' => [
+                [
+                    'id' => '1',
+                    'type' => 'test',
+                    'attributes' => [
+                        'title' => 'test',
+                        'key+' => 'wrong'
+                    ]
+                ],
+                false,
+                Messages::MEMBER_NAME_HAVE_RESERVED_CHARACTERS
             ],
             'fields not valid (attribute and relationship with the same name)' => [
                 [

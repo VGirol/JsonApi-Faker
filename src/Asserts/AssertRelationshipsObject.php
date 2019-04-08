@@ -2,108 +2,71 @@
 namespace VGirol\JsonApiAssert\Asserts;
 
 use PHPUnit\Framework\Assert as PHPUnit;
-use VGirol\JsonApiAssert\Messages;
-use PHPUnit\Framework\ExpectationFailedException;
 
 trait AssertRelationshipsObject
 {
     /**
-     * Asserts that a relationships object is valid.
+     * Asserts that a json fragment is a valid relationships object.
      *
-     * @param array     $relationships
-     * @param boolean   $strict         If true, excludes not safe characters when checking members name
+     * @param array     $json
+     * @param boolean   $strict         If true, unsafe characters are not allowed when checking members name.
      *
      * @throws PHPUnit\Framework\ExpectationFailedException
      */
-    public static function assertIsValidRelationshipsObject($relationships, $strict)
+    public static function assertIsValidRelationshipsObject($json, $strict)
     {
-        static::assertIsNotArrayOfObjects($relationships);
+        static::assertIsNotArrayOfObjects($json);
 
-        foreach ($relationships as $key => $relationship) {
+        foreach ($json as $key => $relationship) {
             static::assertIsValidMemberName($key, $strict);
             static::assertIsValidRelationshipObject($relationship, $strict);
         }
     }
 
     /**
-     * Asserts that a relationship object is valid.
+     * Asserts that a json fragment is a valid relationship object.
      *
-     * @param array     $relationship
-     * @param boolean   $strict         If true, excludes not safe characters when checking members name
+     * @param array     $json
+     * @param boolean   $strict         If true, unsafe characters are not allowed when checking members name.
      *
      * @throws PHPUnit\Framework\ExpectationFailedException
      */
-    public static function assertIsValidRelationshipObject($relationship, $strict)
+    public static function assertIsValidRelationshipObject($json, $strict)
     {
         $expected = ['links', 'data', 'meta'];
-        static::assertContainsAtLeastOneMember($expected, $relationship);
+        static::assertContainsAtLeastOneMember($expected, $json);
 
-        if (isset($relationship['data'])) {
-            $data = $relationship['data'];
+        if (isset($json['data'])) {
+            $data = $json['data'];
             static::assertIsValidResourceLinkage($data, $strict);
         }
 
-        if (isset($relationship['links'])) {
-            $links = $relationship['links'];
-            $withPagination = isset($relationship['data']) && static::isArrayOfObjects($relationship['data']);
+        if (isset($json['links'])) {
+            $links = $json['links'];
+            $withPagination = isset($json['data']) && static::isArrayOfObjects($json['data']);
             static::assertIsValidRelationshipLinksObject($links, $withPagination, $strict);
         }
 
-        if (isset($relationship['meta'])) {
-            static::assertIsValidMetaObject($relationship['meta'], $strict);
+        if (isset($json['meta'])) {
+            static::assertIsValidMetaObject($json['meta'], $strict);
         }
     }
 
     /**
-     * Asserts that a link object extracted from a relationship object is valid.
+     * Asserts that a json fragment is a valid link object extracted from a relationship object.
      *
-     * @param array     $data
+     * @param array     $json
      * @param boolean   $withPagination
-     * @param boolean   $strict         If true, excludes not safe characters when checking members name
+     * @param boolean   $strict         If true, unsafe characters are not allowed when checking members name.
      *
      * @throws PHPUnit\Framework\ExpectationFailedException
      */
-    public static function assertIsValidRelationshipLinksObject($data, $withPagination, $strict)
+    public static function assertIsValidRelationshipLinksObject($json, $withPagination, $strict)
     {
         $allowed = ['self', 'related'];
         if ($withPagination) {
             $allowed = array_merge($allowed, ['first', 'last', 'next', 'prev']);
         }
-        static::assertIsValidLinksObject($data, $allowed, $strict);
-    }
-
-    /**
-     * Asserts that a resource linkage object is valid.
-     *
-     * @param array     $data
-     * @param boolean   $strict     If true, excludes not safe characters when checking members name
-     *
-     * @throws PHPUnit\Framework\ExpectationFailedException
-     */
-    public static function assertIsValidResourceLinkage($data, $strict)
-    {
-        try {
-            PHPUnit::assertIsArray(
-                $data,
-                Messages::RESOURCE_LINKAGE_NOT_ARRAY
-            );
-            if (empty($data)) {
-                return;
-            }
-        } catch (ExpectationFailedException $e) {
-            PHPUnit::assertNull(
-                $data,
-                Messages::RESOURCE_LINKAGE_NOT_ARRAY
-            );
-            return;
-        }
-
-        if (static::isArrayOfObjects($data)) {
-            foreach ($data as $resource) {
-                static::assertIsValidResourceIdentifierObject($resource, $strict);
-            }
-        } else {
-            static::assertIsValidResourceIdentifierObject($data, $strict);
-        }
+        static::assertIsValidLinksObject($json, $allowed, $strict);
     }
 }

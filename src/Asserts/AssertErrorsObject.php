@@ -7,135 +7,135 @@ use VGirol\JsonApiAssert\Messages;
 trait AssertErrorsObject
 {
     /**
-     * Asserts that an errors object is valid.
+     * Asserts that a json fragment is a valid errors object.
      *
-     * @param array     $errors
-     * @param boolean   $strict         If true, excludes not safe characters when checking members name
+     * @param array     $json
+     * @param boolean   $strict         If true, unsafe characters are not allowed when checking members name.
      *
      * @throws PHPUnit\Framework\ExpectationFailedException
      */
-    public static function assertIsValidErrorsObject($errors, $strict)
+    public static function assertIsValidErrorsObject($json, $strict)
     {
         static::assertIsArrayOfObjects(
-            $errors,
+            $json,
             Messages::ERRORS_OBJECT_NOT_ARRAY
         );
 
-        foreach ($errors as $error) {
+        foreach ($json as $error) {
             static::assertIsValidErrorObject($error, $strict);
         }
     }
 
     /**
-     * Asserts that an error object is valid.
+     * Asserts that a json fragment is a valid error object.
      *
-     * @param array     $error
-     * @param boolean   $strict         If true, excludes not safe characters when checking members name
+     * @param array     $json
+     * @param boolean   $strict         If true, unsafe characters are not allowed when checking members name.
      *
      * @throws PHPUnit\Framework\ExpectationFailedException
      */
-    public static function assertIsValidErrorObject($error, $strict)
+    public static function assertIsValidErrorObject($json, $strict)
     {
         PHPUnit::assertIsArray(
-            $error,
+            $json,
             Messages::ERROR_OBJECT_NOT_ARRAY
         );
 
         PHPUnit::assertNotEmpty(
-            $error,
+            $json,
             Messages::ERROR_OBJECT_NOT_EMPTY
         );
 
         $allowed = ['id', 'links', 'status', 'code', 'title', 'details', 'source', 'meta'];
         static::assertContainsOnlyAllowedMembers(
             $allowed,
-            $error
+            $json
         );
 
-        if (isset($error['status'])) {
+        if (isset($json['status'])) {
             PHPUnit::assertIsString(
-                $error['status'],
+                $json['status'],
                 Messages::ERROR_STATUS_IS_NOT_STRING
             );
         }
 
-        if (isset($error['code'])) {
+        if (isset($json['code'])) {
             PHPUnit::assertIsString(
-                $error['code'],
+                $json['code'],
                 Messages::ERROR_CODE_IS_NOT_STRING
             );
         }
 
-        if (isset($error['title'])) {
+        if (isset($json['title'])) {
             PHPUnit::assertIsString(
-                $error['title'],
+                $json['title'],
                 Messages::ERROR_TITLE_IS_NOT_STRING
             );
         }
 
-        if (isset($error['details'])) {
+        if (isset($json['details'])) {
             PHPUnit::assertIsString(
-                $error['details'],
+                $json['details'],
                 Messages::ERROR_DETAILS_IS_NOT_STRING
             );
         }
 
-        if (isset($error['source'])) {
-            static::assertIsValidErrorSourceObject($error['source']);
+        if (isset($json['source'])) {
+            static::assertIsValidErrorSourceObject($json['source']);
         }
 
-        if (isset($error['links'])) {
-            static::assertIsValidErrorLinksObject($error['links'], $strict);
+        if (isset($json['links'])) {
+            static::assertIsValidErrorLinksObject($json['links'], $strict);
         }
 
-        if (isset($error['meta'])) {
-            static::assertIsValidMetaObject($error['meta'], $strict);
+        if (isset($json['meta'])) {
+            static::assertIsValidMetaObject($json['meta'], $strict);
         }
     }
 
     /**
-     * Asserts that an error links object is valid.
+     * Asserts that a json fragment is a valid error links object.
      *
-     * @param array     $links
-     * @param boolean   $strict         If true, excludes not safe characters when checking members name
+     * @param array     $json
+     * @param boolean   $strict         If true, unsafe characters are not allowed when checking members name.
      *
      * @throws PHPUnit\Framework\ExpectationFailedException
      */
-    public static function assertIsValidErrorLinksObject($links, $strict)
+    public static function assertIsValidErrorLinksObject($json, $strict)
     {
         $allowed = ['about'];
-        static::assertIsValidLinksObject($links, $allowed, $strict);
+        static::assertIsValidLinksObject($json, $allowed, $strict);
     }
 
     /**
-     * Asserts that an error source object is valid.
+     * Asserts that a json fragment is a valid error source object.
      *
-     * @param array $source
+     * @param array $json
      *
      * @throws PHPUnit\Framework\ExpectationFailedException
      */
-    public static function assertIsValidErrorSourceObject($source)
+    public static function assertIsValidErrorSourceObject($json)
     {
         PHPUnit::assertIsArray(
-            $source,
+            $json,
             Messages::ERROR_SOURCE_OBJECT_NOT_ARRAY
         );
 
-        if (isset($source['pointer'])) {
+        if (isset($json['pointer'])) {
             PHPUnit::assertIsString(
-                $source['pointer'],
+                $json['pointer'],
                 Messages::ERROR_SOURCE_POINTER_IS_NOT_STRING
             );
             PHPUnit::assertStringStartsWith(
                 '/',
-                $source['pointer'],
+                $json['pointer'],
                 Messages::ERROR_SOURCE_POINTER_START
             );
         }
 
-        if (isset($source['parameter'])) {
+        if (isset($json['parameter'])) {
             PHPUnit::assertIsString(
-                $source['parameter'],
+                $json['parameter'],
                 Messages::ERROR_SOURCE_PARAMETER_IS_NOT_STRING
             );
         }

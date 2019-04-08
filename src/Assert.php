@@ -11,6 +11,7 @@ use VGirol\JsonApiAssert\Asserts\AssertJsonapiObject;
 use VGirol\JsonApiAssert\Asserts\AssertResourceObject;
 use VGirol\JsonApiAssert\Asserts\AssertAttributesObject;
 use VGirol\JsonApiAssert\Asserts\AssertRelationshipsObject;
+use VGirol\JsonApiAssert\Asserts\AssertResourceLinkage;
 
 class Assert
 {
@@ -22,6 +23,7 @@ class Assert
     use AssertMemberName;
     use AssertMetaObject;
     use AssertRelationshipsObject;
+    use AssertResourceLinkage;
     use AssertResourceObject;
     use AssertStructure;
 }

@@ -130,7 +130,7 @@ trait AssertBase
     }
 
     /**
-     * Asserts that a json object not has an unexpected member.
+     * Asserts that a json object not has unexpected members.
      *
      * @param array    $expected
      * @param array     $json
@@ -279,7 +279,7 @@ trait AssertBase
     }
 
     /**
-     * Asserts that a json object contains only members from the list provided.
+     * Asserts that a json object contains only members from the provided list.
      *
      * @param array $expected   The expected members
      * @param array $json       The json object

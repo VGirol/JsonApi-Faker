@@ -11,7 +11,7 @@ trait AssertStructure
      * Asserts that a json document has valid structure.
      *
      * @param array     $json
-     * @param boolean   $strict     If true, excludes not safe characters when checking members name
+     * @param boolean   $strict     If true, unsafe characters are not allowed when checking members name.
      *
      * @throws PHPUnit\Framework\ExpectationFailedException
      */
@@ -78,24 +78,24 @@ trait AssertStructure
     }
 
     /**
-     * Asserts that top-level links member of a json document is valid.
+     * Asserts that a json fragment is a valid top-level links member.
      *
-     * @param array     $links
-     * @param boolean   $strict     If true, excludes not safe characters when checking members name
+     * @param array     $json
+     * @param boolean   $strict     If true, unsafe characters are not allowed when checking members name.
      *
      * @throws PHPUnit\Framework\ExpectationFailedException
      */
-    public static function assertIsValidTopLevelLinksMember($links, $strict)
+    public static function assertIsValidTopLevelLinksMember($json, $strict)
     {
         $allowed = ['self', 'related', 'first', 'last', 'next', 'prev'];
-        static::assertIsValidLinksObject($links, $allowed, $strict);
+        static::assertIsValidLinksObject($json, $allowed, $strict);
     }
 
     /**
-     * Asserts that the primary data of a json document is valid.
+     * Asserts a json fragment is a valid primary data object.
      *
      * @param array     $data
-     * @param boolean   $strict     If true, excludes not safe characters when checking members name
+     * @param boolean   $strict     If true, unsafe characters are not allowed when checking members name.
      *
      * @throws PHPUnit\Framework\ExpectationFailedException
      */
@@ -119,10 +119,10 @@ trait AssertStructure
 
         if (static::isArrayOfObjects($data)) {
             // Resource collection (Resource Objects or Resource Identifier Objects)
-            static::assertIsValidResourceCollection($data, true, $strict);
+            static::assertIsValidPrimaryCollection($data, true, $strict);
         } else {
             // Single Resource (Resource Object or Resource Identifier Object)
-            static::assertIsValidSingleResource($data, $strict);
+            static::assertIsValidPrimarySingle($data, $strict);
         }
     }
 
@@ -135,10 +135,8 @@ trait AssertStructure
      *
      * @throws PHPUnit\Framework\ExpectationFailedException
      */
-    public static function assertIsValidResourceCollection($list, $checkType, $strict)
+    private static function assertIsValidPrimaryCollection($list, $checkType, $strict)
     {
-        static::assertIsArrayOfObjects($list);
-
         $isResourceObjectCollection = null;
         foreach ($list as $index => $resource) {
             if ($checkType) {
@@ -155,7 +153,7 @@ trait AssertStructure
             }
 
             // Check the resource
-            static::assertIsValidSingleResource($resource, $strict);
+            static::assertIsValidPrimarySingle($resource, $strict);
         }
     }
 
@@ -167,10 +165,8 @@ trait AssertStructure
      *
      * @throws PHPUnit\Framework\ExpectationFailedException
      */
-    public static function assertIsValidSingleResource($resource, $strict)
+    private static function assertIsValidPrimarySingle($resource, $strict)
     {
-        static::assertIsNotArrayOfObjects($resource);
-
         if (static::dataIsResourceObject($resource)) {
             static::assertIsValidResourceObject($resource, $strict);
         } else {
@@ -183,13 +179,16 @@ trait AssertStructure
      *
      * @param array     $included   The included top-level member of a json document.
      * @param array     $data       The primary data of a json document.
-     * @param boolean   $strict     If true, excludes not safe characters when checking members name
+     * @param boolean   $strict     If true, unsafe characters are not allowed when checking members name.
      *
      * @throws PHPUnit\Framework\ExpectationFailedException
      */
     public static function assertIsValidIncludedCollection($included, $data, $strict)
     {
-        static::assertIsValidResourceCollection($included, false, $strict);
+        static::assertIsArrayOfObjects($included);
+        foreach ($included as $resource) {
+            static::assertIsValidResourceObject($resource, $strict);
+        }
 
         $resIdentifiers = array_merge(
             static::getAllResourceIdentifierObjects($data),

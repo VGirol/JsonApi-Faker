@@ -2,56 +2,56 @@
 namespace VGirol\JsonApiAssert\Asserts;
 
 use PHPUnit\Framework\Assert as PHPUnit;
-use VGirol\JsonApiAssert\Messages;
 use PHPUnit\Framework\ExpectationFailedException;
+use VGirol\JsonApiAssert\Messages;
 
 trait AssertLinksObject
 {
     /**
-     * Asserts that a links object is valid.
+     * Asserts that a json fragment is a valid links object.
      *
-     * @param array     $links
+     * @param array     $json
      * @param array     $allowedMembers
-     * @param boolean   $strict         If true, excludes not safe characters when checking members name
+     * @param boolean   $strict         If true, unsafe characters are not allowed when checking members name.
      *
      * @throws PHPUnit\Framework\ExpectationFailedException
      */
-    public static function assertIsValidLinksObject($links, $allowedMembers, $strict)
+    public static function assertIsValidLinksObject($json, $allowedMembers, $strict)
     {
         PHPUnit::assertIsArray(
-            $links,
+            $json,
             Messages::LINKS_OBJECT_NOT_ARRAY
         );
 
         static::assertContainsOnlyAllowedMembers(
             $allowedMembers,
-            $links
+            $json
         );
 
-        foreach ($links as $key => $link) {
+        foreach ($json as $link) {
             static::assertIsValidLinkObject($link, $strict);
         }
     }
 
     /**
-     * Asserts that a link object is valid.
+     * Asserts that a json fragment is a valid link object.
      *
-     * @param array     $link
-     * @param boolean   $strict         If true, excludes not safe characters when checking members name
+     * @param array     $json
+     * @param boolean   $strict         If true, unsafe characters are not allowed when checking members name.
      *
      * @throws PHPUnit\Framework\ExpectationFailedException
      */
-    public static function assertIsValidLinkObject($link, $strict)
+    public static function assertIsValidLinkObject($json, $strict)
     {
         try {
-            PHPUnit::assertIsArray($link);
+            PHPUnit::assertIsArray($json);
         } catch (ExpectationFailedException $e) {
             try {
-                PHPUnit::assertIsString($link);
+                PHPUnit::assertIsString($json);
                 return;
             } catch (ExpectationFailedException $e) {
                 PHPUnit::assertNull(
-                    $link,
+                    $json,
                     Messages::LINK_OBJECT_IS_NOT_ARRAY
                 );
                 return;
@@ -60,18 +60,18 @@ trait AssertLinksObject
 
         PHPUnit::assertArrayHasKey(
             'href',
-            $link,
+            $json,
             Messages::LINK_OBJECT_MISS_HREF_MEMBER
         );
 
         $allowed = ['href', 'meta'];
         static::assertContainsOnlyAllowedMembers(
             $allowed,
-            $link
+            $json
         );
 
-        if (isset($link['meta'])) {
-            static::assertIsValidMetaObject($link['meta'], $strict);
+        if (isset($json['meta'])) {
+            static::assertIsValidMetaObject($json['meta'], $strict);
         }
     }
 }

@@ -9,102 +9,6 @@ class PrimaryDataTest extends TestCase
 {
     /**
      * @test
-     * @dataProvider validDataForSingleResourceProvider
-     */
-    public function single_resource_is_valid($data)
-    {
-        JsonApiAssert::assertIsValidSingleResource($data, true);
-    }
-
-    public function validDataForSingleResourceProvider()
-    {
-        return [
-            'resource identifier object' => [
-                [
-                    'type' => 'test',
-                    'id' => '2'
-                ]
-            ],
-            'resource object' => [
-                [
-                    'type' => 'test',
-                    'id' => '2',
-                    'attributes' => [
-                        'anything' => 'ok'
-                    ]
-                ]
-            ]
-        ];
-    }
-
-    /**
-     * @test
-     * @dataProvider notValidDataForSingleResourceProvider
-     */
-    public function single_resource_is_not_valid($data, $strict, $failureMessage)
-    {
-        $fn = function ($data, $strict) {
-            JsonApiAssert::assertIsValidSingleResource($data, $strict);
-        };
-
-        JsonApiAssert::assertTestFail($fn, $failureMessage, $data, $strict);
-    }
-
-    public function notValidDataForSingleResourceProvider()
-    {
-        return [
-            'resource identifier not valid' => [
-                [
-                    'id' => 666,
-                    'type' => 'test'
-                ],
-                false,
-                Messages::RESOURCE_ID_MEMBER_IS_NOT_STRING
-            ],
-            'resource object not valid' => [
-                [
-                    'type' => 'test',
-                    'id' => '2',
-                    'attributes' => [
-                        'anything' => 'ok',
-                        '+not valid' => 'error'
-                    ]
-                ],
-                false,
-                Messages::MEMBER_NAME_HAVE_RESERVED_CHARACTERS
-            ],
-            'meta object has not safe member' => [
-                [
-                    'type' => 'test',
-                    'id' => '2',
-                    'attributes' => [
-                        'anything' => 'ok',
-                    ],
-                    'meta' => [
-                        'not safe' => 'due to blank character'
-                    ]
-                ],
-                true,
-                Messages::MEMBER_NAME_HAVE_RESERVED_CHARACTERS
-            ],
-            'not an associative array' => [
-                [
-                    [
-                        'type' => 'test',
-                        'id' => '2',
-                        'attributes' => [
-                            'anything' => 'ok',
-                        ]
-                    ]
-                ],
-                true,
-                Messages::MUST_NOT_BE_ARRAY_OF_OBJECTS
-            ]
-        ];
-    }
-
-    /**
-     * @test
      * @dataProvider validPrimaryDataProvider
      */
     public function primary_data_is_valid($data, $strict)
@@ -123,7 +27,7 @@ class PrimaryDataTest extends TestCase
                 [],
                 false
             ],
-            'resource collection' => [
+            'resource identifier collection' => [
                 [
                     [
                         'type' => 'test',
@@ -136,7 +40,33 @@ class PrimaryDataTest extends TestCase
                 ],
                 false
             ],
-            'unique resource' => [
+            'resource object collection' => [
+                [
+                    [
+                        'type' => 'test',
+                        'id' => '2',
+                        'attributes' => [
+                            'title' => 'test'
+                        ]
+                    ],
+                    [
+                        'type' => 'test',
+                        'id' => '3',
+                        'attributes' => [
+                            'title' => 'another'
+                        ]
+                    ]
+                ],
+                false
+            ],
+            'unique resource identifier' => [
+                [
+                    'type' => 'test',
+                    'id' => '2'
+                ],
+                false
+            ],
+            'unique resource object' => [
                 [
                     'type' => 'test',
                     'id' => '2',
@@ -170,7 +100,7 @@ class PrimaryDataTest extends TestCase
                 false,
                 Messages::PRIMARY_DATA_NOT_ARRAY
             ],
-            'not valid resource collection' => [
+            'collection with different type of resource objects' => [
                 [
                     [
                         'type' => 'test',
@@ -186,6 +116,21 @@ class PrimaryDataTest extends TestCase
                 ],
                 false,
                 Messages::PRIMARY_DATA_SAME_TYPE
+            ],
+            'collection with not valid resource identifier objects' => [
+                [
+                    [
+                        'type' => 'test',
+                        'id' => '1'
+                    ],
+                    [
+                        'type' => 'test',
+                        'id' => '2',
+                        'unvalid' => 'wrong'
+                    ]
+                ],
+                false,
+                Messages::ONLY_ALLOWED_MEMBERS
             ],
             'not safe meta member' => [
                 [

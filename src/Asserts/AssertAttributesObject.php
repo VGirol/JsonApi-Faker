@@ -8,29 +8,29 @@ use VGirol\JsonApiAssert\Messages;
 trait AssertAttributesObject
 {
     /**
-     * Asserts that an attributes object is valid.
+     * Asserts that a json fragment is a valid attributes object.
      *
-     * @param array     $attributes
-     * @param boolean   $strict         If true, excludes not safe characters when checking members name
+     * @param array     $json
+     * @param boolean   $strict         If true, unsafe characters are not allowed when checking members name.
      *
      * @throws PHPUnit\Framework\ExpectationFailedException
      */
-    public static function assertIsValidAttributesObject($attributes, $strict)
+    public static function assertIsValidAttributesObject($json, $strict)
     {
         static::assertIsNotArrayOfObjects(
-            $attributes,
+            $json,
             Messages::ATTRIBUTES_OBJECT_IS_NOT_ARRAY
         );
 
-        static::assertFieldHasNoForbiddenMemberName($attributes);
+        static::assertFieldHasNoForbiddenMemberName($json);
 
-        foreach (array_keys($attributes) as $key) {
+        foreach (array_keys($json) as $key) {
             static::assertIsValidMemberName($key, $strict);
         }
     }
 
     /**
-     * Asserts that a field object has no forbidden member name
+     * Asserts that a field object has no forbidden member name.
      *
      * @param mixed $field
      *
@@ -53,7 +53,7 @@ trait AssertAttributesObject
     }
 
     /**
-     * Asserts that a member name is not forbidden
+     * Asserts that a member name is not forbidden.
      *
      * @param string $name
      *

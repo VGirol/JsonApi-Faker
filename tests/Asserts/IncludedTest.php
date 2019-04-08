@@ -1,8 +1,9 @@
 <?php
 namespace VGirol\JsonApiAssert\Tests\Asserts;
 
-use VGirol\JsonApiAssert\Assert as JsonApiAssert;
+use VGirol\JsonApiAssert\Messages;
 use VGirol\JsonApiAssert\Tests\TestCase;
+use VGirol\JsonApiAssert\Assert as JsonApiAssert;
 
 class IncludedTest extends TestCase
 {
@@ -45,6 +46,9 @@ class IncludedTest extends TestCase
                         [
                             'type' => 'first',
                             'id' => '10',
+                            'attributes' => [
+                                'title' => 'test'
+                            ],
                             'relationships' => [
                                 'test' => [
                                     'data' => [
@@ -56,7 +60,10 @@ class IncludedTest extends TestCase
                         ],
                         [
                             'type' => 'second',
-                            'id' => '12'
+                            'id' => '12',
+                            'attributes' => [
+                                'title' => 'another test'
+                            ]
                         ]
                     ]
                 ],
@@ -90,7 +97,7 @@ class IncludedTest extends TestCase
                     ]
                 ],
                 false,
-                null
+                Messages::MUST_BE_ARRAY_OF_OBJECTS
             ],
             'one included resource is not identified by a resource identifier object' => [
                 [
@@ -109,16 +116,22 @@ class IncludedTest extends TestCase
                     'included' => [
                         [
                             'type' => 'first',
-                            'id' => '10'
+                            'id' => '10',
+                            'attributes' => [
+                                'title' => 'test'
+                            ]
                         ],
                         [
                             'type' => 'second',
-                            'id' => '12'
+                            'id' => '12',
+                            'attributes' => [
+                                'title' => 'another'
+                            ]
                         ]
                     ]
                 ],
                 false,
-                null
+                Messages::INCLUDED_RESOURCE_NOT_LINKED
             ],
             'a resource is included twice' => [
                 [
@@ -137,8 +150,38 @@ class IncludedTest extends TestCase
                     'included' => [
                         [
                             'type' => 'first',
-                            'id' => '10'
+                            'id' => '10',
+                            'attributes' => [
+                                'title' => 'test'
+                            ]
                         ],
+                        [
+                            'type' => 'first',
+                            'id' => '10',
+                            'attributes' => [
+                                'title' => 'test'
+                            ]
+                        ]
+                    ]
+                ],
+                false,
+                Messages::COMPOUND_DOCUMENT_ONLY_ONE_RESOURCE
+            ],
+            'an included resource is not valid' => [
+                [
+                    'data' => [
+                        'type' => 'articles',
+                        'id' => '1',
+                        'relationships' => [
+                            'test' => [
+                                'data' => [
+                                    'type' => 'first',
+                                    'id' => '10'
+                                ]
+                            ]
+                        ]
+                    ],
+                    'included' => [
                         [
                             'type' => 'first',
                             'id' => '10'
@@ -146,7 +189,7 @@ class IncludedTest extends TestCase
                     ]
                 ],
                 false,
-                null
+                sprintf(Messages::CONTAINS_AT_LEAST_ONE, implode(', ', ['attributes', 'relationships', 'links', 'meta']))
             ]
         ];
     }

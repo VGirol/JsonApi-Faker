@@ -6,21 +6,21 @@ use VGirol\JsonApiAssert\Messages;
 trait AssertMetaObject
 {
     /**
-     * Asserts that a meta object is valid.
+     * Asserts that a json fragment is a valid meta object.
      *
-     * @param array     $meta
-     * @param boolean   $strict         If true, excludes not safe characters when checking members name
+     * @param array     $json
+     * @param boolean   $strict         If true, unsafe characters are not allowed when checking members name.
      *
      * @throws PHPUnit\Framework\ExpectationFailedException
      */
-    public static function assertIsValidMetaObject($meta, $strict)
+    public static function assertIsValidMetaObject($json, $strict)
     {
         static::assertIsNotArrayOfObjects(
-            $meta,
+            $json,
             Messages::META_OBJECT_IS_NOT_ARRAY
         );
 
-        foreach (array_keys($meta) as $key) {
+        foreach (array_keys($json) as $key) {
             static::assertIsValidMemberName($key, $strict);
         }
     }

@@ -7,35 +7,36 @@ use VGirol\JsonApiAssert\Messages;
 trait AssertResourceObject
 {
     /**
-     * Asserts that a resource has valid structure.
+     * Asserts that a json fragment is a valid resource.
      *
-     * @param array $resource
+     * @param array     $json
+     * @param boolean   $strict         If true, unsafe characters are not allowed when checking members name.
      *
      * @throws PHPUnit\Framework\ExpectationFailedException
      */
-    public static function assertIsValidResourceObject($resource, $strict)
+    public static function assertIsValidResourceObject($json, $strict)
     {
-        static::assertResourceObjectHasValidTopLevelStructure($resource);
-        static::assertResourceIdMember($resource);
-        static::assertResourceTypeMember($resource, $strict);
+        static::assertResourceObjectHasValidTopLevelStructure($json);
+        static::assertResourceIdMember($json);
+        static::assertResourceTypeMember($json, $strict);
 
-        if (isset($resource['attributes'])) {
-            static::assertIsValidAttributesObject($resource['attributes'], $strict);
+        if (isset($json['attributes'])) {
+            static::assertIsValidAttributesObject($json['attributes'], $strict);
         }
 
-        if (isset($resource['relationships'])) {
-            static::assertIsValidRelationshipsObject($resource['relationships'], $strict);
+        if (isset($json['relationships'])) {
+            static::assertIsValidRelationshipsObject($json['relationships'], $strict);
         }
 
-        if (isset($resource['links'])) {
-            static::assertIsValidResourceLinksObject($resource['links'], $strict);
+        if (isset($json['links'])) {
+            static::assertIsValidResourceLinksObject($json['links'], $strict);
         }
 
-        if (isset($resource['meta'])) {
-            static::assertIsValidMetaObject($resource['meta'], $strict);
+        if (isset($json['meta'])) {
+            static::assertIsValidMetaObject($json['meta'], $strict);
         }
 
-        static::assertHasValidFields($resource);
+        static::assertHasValidFields($json);
     }
 
     /**
@@ -71,7 +72,7 @@ trait AssertResourceObject
     }
 
     /**
-     * Asserts that a resource has a valid id member.
+     * Asserts that a resource id member is valid.
      *
      * @param array $resource
      *
@@ -91,7 +92,7 @@ trait AssertResourceObject
     }
 
     /**
-     * Asserts that a resource has a valid type member.
+     * Asserts that a resource type member is valid.
      *
      * @param array     $resource
      * @param boolean   $strict         If true, excludes not safe characters when checking members name
@@ -114,54 +115,17 @@ trait AssertResourceObject
     }
 
     /**
-     * Asserts that a links object extracted from a resource is valid.
+     * Asserts that a json fragment is a valid resource links object.
      *
-     * @param array     $data
+     * @param array     $json
      * @param boolean   $strict         If true, excludes not safe characters when checking members name
      *
      * @throws PHPUnit\Framework\ExpectationFailedException
      */
-    public static function assertIsValidResourceLinksObject($data, $strict)
+    public static function assertIsValidResourceLinksObject($json, $strict)
     {
         $allowed = ['self'];
-        static::assertIsValidLinksObject($data, $allowed, $strict);
-    }
-
-    /**
-     * Asserts that a resource identifier object is valid.
-     *
-     * @param array     $resource
-     * @param boolean   $strict         If true, excludes not safe characters when checking members name
-     *
-     * @throws PHPUnit\Framework\ExpectationFailedException
-     */
-    public static function assertIsValidResourceIdentifierObject($resource, $strict)
-    {
-        PHPUnit::assertIsArray(
-            $resource,
-            Messages::RESOURCE_IDENTIFIER_IS_NOT_ARRAY
-        );
-
-        PHPUnit::assertArrayHasKey(
-            'id',
-            $resource,
-            Messages::RESOURCE_ID_MEMBER_IS_ABSENT
-        );
-        static::assertResourceIdMember($resource);
-
-        PHPUnit::assertArrayHasKey(
-            'type',
-            $resource,
-            Messages::RESOURCE_TYPE_MEMBER_IS_ABSENT
-        );
-        static::assertResourceTypeMember($resource, $strict);
-
-        $allowed = ['id', 'type', 'meta'];
-        static::assertContainsOnlyAllowedMembers($allowed, $resource);
-
-        if (isset($resource['meta'])) {
-            static::assertIsValidMetaObject($resource['meta'], $strict);
-        }
+        static::assertIsValidLinksObject($json, $allowed, $strict);
     }
 
     /**
@@ -173,9 +137,7 @@ trait AssertResourceObject
      */
     public static function assertHasValidFields($resource)
     {
-        $bHasAttributes = false;
         if (isset($resource['attributes'])) {
-            $bHasAttributes = true;
             foreach (array_keys($resource['attributes']) as $name) {
                 static::assertIsNotForbiddenResourceFieldName($name);
             }
@@ -185,7 +147,7 @@ trait AssertResourceObject
             foreach (array_keys($resource['relationships']) as $name) {
                 static::assertIsNotForbiddenResourceFieldName($name);
 
-                if ($bHasAttributes) {
+                if (isset($resource['attributes'])) {
                     PHPUnit::assertArrayNotHasKey(
                         $name,
                         $resource['attributes'],

@@ -7,35 +7,35 @@ use VGirol\JsonApiAssert\Messages;
 trait AssertJsonapiObject
 {
     /**
-     * Asserts that a jsonapi object is valid.
+     * Asserts that a json fragment is a valid jsonapi object.
      *
-     * @param array     $jsonapi
-     * @param boolean   $strict         If true, excludes not safe characters when checking members name
+     * @param array     $json
+     * @param boolean   $strict         If true, unsafe characters are not allowed when checking members name.
      *
      * @throws PHPUnit\Framework\ExpectationFailedException
      */
-    public static function assertIsValidJsonapiObject($jsonapi, $strict)
+    public static function assertIsValidJsonapiObject($json, $strict)
     {
         static::assertIsNotArrayOfObjects(
-            $jsonapi,
+            $json,
             Messages::OBJECT_NOT_ARRAY
         );
 
         $allowed = ['version', 'meta'];
         static::assertContainsOnlyAllowedMembers(
             $allowed,
-            $jsonapi
+            $json
         );
 
-        if (isset($jsonapi['version'])) {
+        if (isset($json['version'])) {
             PHPUnit::assertIsString(
-                $jsonapi['version'],
+                $json['version'],
                 Messages::JSONAPI_VERSION_IS_NOT_STRING
             );
         }
 
-        if (isset($jsonapi['meta'])) {
-            static::assertIsValidMetaObject($jsonapi['meta'], $strict);
+        if (isset($json['meta'])) {
+            static::assertIsValidMetaObject($json['meta'], $strict);
         }
     }
 }
