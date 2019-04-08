@@ -2,15 +2,15 @@
 namespace VGirol\JsonApiAssert\Tests\Asserts;
 
 use VGirol\JsonApiAssert\Assert as JsonApiAssert;
-use VGirol\JsonApiAssert\Tests\TestCase;
 use VGirol\JsonApiAssert\Messages;
+use VGirol\JsonApiAssert\Tests\TestCase;
 
 class JsonapiObjectTest extends TestCase
 {
     /**
      * @test
      */
-    public function jsonapi_object_is_valid()
+    public function jsonapiObjectIsValid()
     {
         $data = [
             'version' => 'jsonapi v1.1',
@@ -27,7 +27,7 @@ class JsonapiObjectTest extends TestCase
      * @test
      * @dataProvider notValidJsonapiObjectProvider
      */
-    public function jsonapi_object_is_not_valid($data, $strict, $failureMessage)
+    public function jsonapiObjectIsNotValid($data, $strict, $failureMessage)
     {
         $fn = function ($data, $strict) {
             JsonApiAssert::assertIsValidJsonapiObject($data, $strict);

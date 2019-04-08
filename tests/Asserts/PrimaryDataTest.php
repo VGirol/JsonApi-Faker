@@ -2,8 +2,8 @@
 namespace VGirol\JsonApiAssert\Tests\Asserts;
 
 use VGirol\JsonApiAssert\Assert as JsonApiAssert;
-use VGirol\JsonApiAssert\Tests\TestCase;
 use VGirol\JsonApiAssert\Messages;
+use VGirol\JsonApiAssert\Tests\TestCase;
 
 class PrimaryDataTest extends TestCase
 {
@@ -11,7 +11,7 @@ class PrimaryDataTest extends TestCase
      * @test
      * @dataProvider validPrimaryDataProvider
      */
-    public function primary_data_is_valid($data, $strict)
+    public function primaryDataIsValid($data, $strict)
     {
         JsonApiAssert::assertIsValidPrimaryData($data, $strict);
     }
@@ -83,7 +83,7 @@ class PrimaryDataTest extends TestCase
      * @test
      * @dataProvider notValidPrimaryDataProvider
      */
-    public function primary_data_is_not_valid($data, $strict, $failureMessage)
+    public function primaryDataIsNotValid($data, $strict, $failureMessage)
     {
         $fn = function ($data, $strict) {
             JsonApiAssert::assertIsValidPrimaryData($data, $strict);

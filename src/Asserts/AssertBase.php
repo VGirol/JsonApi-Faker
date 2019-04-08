@@ -1,12 +1,12 @@
 <?php
 namespace VGirol\JsonApiAssert\Asserts;
 
-use VGirol\JsonApiAssert\Messages;
-use PHPUnit\Util\InvalidArgumentHelper;
 use PHPUnit\Framework\Assert as PHPUnit;
 use PHPUnit\Framework\ExpectationFailedException;
+use PHPUnit\Util\InvalidArgumentHelper;
 use VGirol\JsonApiAssert\Constraint\ContainsAtLeastOneConstraint;
 use VGirol\JsonApiAssert\Constraint\ContainsOnlyAllowedMembersConstraint;
+use VGirol\JsonApiAssert\Messages;
 
 trait AssertBase
 {

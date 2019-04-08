@@ -3,4 +3,5 @@
     <description>The PSR2 coding standard.</description>
     <rule ref="PSR2"/>
     <file>src</file>
+    <file>tests</file>
 </ruleset>

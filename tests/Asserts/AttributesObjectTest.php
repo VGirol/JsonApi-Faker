@@ -1,17 +1,17 @@
 <?php
 namespace VGirol\JsonApiAssert\Tests\Asserts;
 
-use VGirol\JsonApiAssert\Assert as JsonApiAssert;
-use VGirol\JsonApiAssert\Tests\TestCase;
-use VGirol\JsonApiAssert\Messages;
 use PHPUnit\Framework\Exception;
+use VGirol\JsonApiAssert\Assert as JsonApiAssert;
+use VGirol\JsonApiAssert\Messages;
+use VGirol\JsonApiAssert\Tests\TestCase;
 
 class AttributesObjectTest extends TestCase
 {
     /**
      * @test
      */
-    public function member_name_is_not_forbidden()
+    public function memberNameIsNotForbidden()
     {
         $name = 'valid';
         JsonApiAssert::assertIsNotForbiddenMemberName($name);
@@ -21,7 +21,7 @@ class AttributesObjectTest extends TestCase
      * @test
      * @dataProvider forbiddenMemberNameProvider
      */
-    public function member_name_is_forbidden($data, $failureMessage)
+    public function memberNameIsForbidden($data, $failureMessage)
     {
         $fn = function ($data) {
             JsonApiAssert::assertIsNotForbiddenMemberName($data);
@@ -47,7 +47,7 @@ class AttributesObjectTest extends TestCase
     /**
      * @test
      */
-    public function member_name_is_not_forbidden_invalid_arguments()
+    public function assertIsNotForbiddenMemberNameWithInvalidArguments()
     {
         $data = 666;
         $failureMsg = $this->getPhpunitExceptionText(1, 'string', $data);
@@ -63,7 +63,7 @@ class AttributesObjectTest extends TestCase
     /**
      * @test
      */
-    public function field_has_no_forbidden_member_name()
+    public function fieldHasNoForbiddenMemberName()
     {
         $field = [
             'field' => 'valid'
@@ -76,7 +76,7 @@ class AttributesObjectTest extends TestCase
      * @test
      * @dataProvider fieldHasForbiddenMemberNameProvider
      */
-    public function field_has_forbidden_member_name($data, $failureMessage)
+    public function fieldHasForbiddenMemberName($data, $failureMessage)
     {
         $fn = function ($data) {
             JsonApiAssert::assertFieldHasNoForbiddenMemberName($data);
@@ -111,7 +111,7 @@ class AttributesObjectTest extends TestCase
      * @test
      * @dataProvider validAttributesObjectProvider
      */
-    public function attributes_object_is_valid($json, $strict)
+    public function attributesObjectIsValid($json, $strict)
     {
         JsonApiAssert::assertIsValidAttributesObject($json, $strict);
     }
@@ -138,7 +138,7 @@ class AttributesObjectTest extends TestCase
      * @test
      * @dataProvider notValidAttributesObjectProvider
      */
-    public function attributes_object_is_not_valid($json, $strict, $failureMessage)
+    public function attributesObjectIsNotValid($json, $strict, $failureMessage)
     {
         $fn = function ($json, $strict) {
             JsonApiAssert::assertIsValidAttributesObject($json, $strict);
@@ -181,7 +181,7 @@ class AttributesObjectTest extends TestCase
      * @test
      * @dataProvider assertIsValidAttributesObjectInvalidArgumentsProvider
      */
-    public function assert_is_valid_attributes_object_invalid_arguments($attributes, $strict, $failureMsg)
+    public function assertIsValidAttributesObjectWithInvalidArguments($attributes, $strict, $failureMsg)
     {
         $this->expectException(Exception::class);
         if (!is_null($failureMsg)) {

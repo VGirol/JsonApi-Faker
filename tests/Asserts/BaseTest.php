@@ -1,22 +1,22 @@
 <?php
 namespace VGirol\JsonApiAssert\Tests\Asserts;
 
-use PHPUnit\Framework\Exception;
-use VGirol\JsonApiAssert\Messages;
 use PHPUnit\Framework\Assert as PHPUnit;
-use VGirol\JsonApiAssert\Tests\TestCase;
+use PHPUnit\Framework\Exception;
 use PHPUnit\Framework\ExpectationFailedException;
 use VGirol\JsonApiAssert\Assert as JsonApiAssert;
+use VGirol\JsonApiAssert\Messages;
+use VGirol\JsonApiAssert\Tests\TestCase;
 
 class BaseTest extends TestCase
 {
     /**
      * @test
      */
-    public function assert_test_failed_with_success()
+    public function assertTestFailedWithSuccess()
     {
         $failureMsg = 'Try again !';
-        $fn = function() use ($failureMsg) {
+        $fn = function () use ($failureMsg) {
             PHPUnit::assertTrue(false, $failureMsg);
         };
 
@@ -26,10 +26,10 @@ class BaseTest extends TestCase
     /**
      * @test
      */
-    public function assert_test_failed_with_error()
+    public function assertTestFailedWithError()
     {
         $failureMsg = 'Try again !';
-        $fn = function() {
+        $fn = function () {
             PHPUnit::assertTrue(false);
         };
 
@@ -41,10 +41,10 @@ class BaseTest extends TestCase
     /**
      * @test
      */
-    public function assert_test_failed_but_doesnt_failed()
+    public function assertTestFailedButDoesntFailed()
     {
         $failureMsg = 'Try again !';
-        $fn = function() use ($failureMsg) {
+        $fn = function () use ($failureMsg) {
             PHPUnit::assertTrue(true, $failureMsg);
         };
 
@@ -57,7 +57,7 @@ class BaseTest extends TestCase
     /**
      * @test
      */
-    public function assert_has_member()
+    public function assertHasMember()
     {
         $json = [
             'data' => 'jsonapi',
@@ -71,7 +71,7 @@ class BaseTest extends TestCase
     /**
      * @test
      */
-    public function assert_has_member_failed()
+    public function assertHasMemberFailed()
     {
         $expected = 'member';
         $json = [
@@ -90,7 +90,7 @@ class BaseTest extends TestCase
      * @test
      * @dataProvider hasMemberInvalidArgumentsProvider
      */
-    public function assert_has_member_invalid_arguments($expected, $json, $failureMsg)
+    public function assertHasMemberInvalidArguments($expected, $json, $failureMsg)
     {
         $this->expectException(Exception::class);
         if (!is_null($failureMsg)) {
@@ -121,7 +121,7 @@ class BaseTest extends TestCase
     /**
      * @test
      */
-    public function assert_has_members()
+    public function assertHasMembers()
     {
         $data = [
             'data' => 'jsonapi',
@@ -136,7 +136,7 @@ class BaseTest extends TestCase
     /**
      * @test
      */
-    public function assert_has_members_failed()
+    public function assertHasMembersFailed()
     {
         $data = [
             'meta' => 'test',
@@ -156,7 +156,7 @@ class BaseTest extends TestCase
      * @test
      * @dataProvider hasMembersInvalidArgumentsProvider
      */
-    public function assert_has_members_invalid_arguments($expected, $json, $failureMsg)
+    public function assertHasMembersWithInvalidArguments($expected, $json, $failureMsg)
     {
         $this->expectException(Exception::class);
         if (!is_null($failureMsg)) {
@@ -189,7 +189,7 @@ class BaseTest extends TestCase
     /**
      * @test
      */
-    public function assert_has_only_members()
+    public function assertHasOnlyMembers()
     {
         $data = [
             'data' => 'jsonapi',
@@ -203,7 +203,7 @@ class BaseTest extends TestCase
     /**
      * @test
      */
-    public function assert_has_only_members_failed()
+    public function assertHasOnlyMembersFailed()
     {
         $data = [
             'data' => 'jsonapi',
@@ -224,7 +224,7 @@ class BaseTest extends TestCase
      * @test
      * @dataProvider hasOnlyMembersInvalidArgumentsProvider
      */
-    public function assert_has_only_members_invalid_arguments($expected, $json, $failureMsg)
+    public function assertHasOnlyMembersWithInvalidArguments($expected, $json, $failureMsg)
     {
         $this->expectException(Exception::class);
         if (!is_null($failureMsg)) {
@@ -257,7 +257,7 @@ class BaseTest extends TestCase
     /**
      * @test
      */
-    public function assert_not_has_member()
+    public function assertNotHasMember()
     {
         $data = [
             'data' => 'jsonapi',
@@ -271,7 +271,7 @@ class BaseTest extends TestCase
     /**
      * @test
      */
-    public function assert_not_has_member_failed()
+    public function assertNotHasMemberFailed()
     {
         $data = [
             'anything' => 'else'
@@ -294,7 +294,7 @@ class BaseTest extends TestCase
      * @test
      * @dataProvider notHasMemberInvalidArgumentsProvider
      */
-    public function assert_not_has_member_invalid_arguments($expected, $json, $failureMsg)
+    public function assertNotHasMemberWithInvalidArguments($expected, $json, $failureMsg)
     {
         $this->expectException(Exception::class);
         if (!is_null($failureMsg)) {
@@ -325,7 +325,7 @@ class BaseTest extends TestCase
     /**
      * @test
      */
-    public function assert_not_has_members()
+    public function assertNotHasMembers()
     {
         $data = [
             'data' => 'jsonapi',
@@ -342,7 +342,7 @@ class BaseTest extends TestCase
     /**
      * @test
      */
-    public function assert_not_has_members_failed()
+    public function assertNotHasMembersFailed()
     {
         $data = [
             'anything' => 'else',
@@ -369,7 +369,7 @@ class BaseTest extends TestCase
      * @test
      * @dataProvider notHasMembersInvalidArgumentsProvider
      */
-    public function assert_not_has_members_invalid_arguments($expected, $json, $failureMsg)
+    public function assertNotHasMembersWithInvalidArguments($expected, $json, $failureMsg)
     {
         $this->expectException(Exception::class);
         if (!is_null($failureMsg)) {
@@ -395,7 +395,7 @@ class BaseTest extends TestCase
     /**
      * @test
      */
-    public function assert_has_data()
+    public function assertHasData()
     {
         $data = [
             'meta' => 'valid',
@@ -408,7 +408,7 @@ class BaseTest extends TestCase
     /**
      * @test
      */
-    public function assert_has_attributes()
+    public function assertHasAttributes()
     {
         $data = [
             'meta' => 'valid',
@@ -421,7 +421,7 @@ class BaseTest extends TestCase
     /**
      * @test
      */
-    public function assert_has_links()
+    public function assertHasLinks()
     {
         $data = [
             'meta' => 'valid',
@@ -434,7 +434,7 @@ class BaseTest extends TestCase
     /**
      * @test
      */
-    public function assert_has_meta()
+    public function assertHasMeta()
     {
         $data = [
             'meta' => 'valid',
@@ -447,7 +447,7 @@ class BaseTest extends TestCase
     /**
      * @test
      */
-    public function assert_has_included()
+    public function assertHasIncluded()
     {
         $data = [
             'meta' => 'valid',
@@ -460,7 +460,7 @@ class BaseTest extends TestCase
     /**
      * @test
      */
-    public function assert_has_relationships()
+    public function assertHasRelationships()
     {
         $data = [
             'meta' => 'valid',
@@ -473,7 +473,7 @@ class BaseTest extends TestCase
     /**
      * @test
      */
-    public function assert_has_errors()
+    public function assertHasErrors()
     {
         $data = [
             'meta' => 'valid',
@@ -486,7 +486,7 @@ class BaseTest extends TestCase
     /**
      * @test
      */
-    public function assert_contains_at_least_one_member()
+    public function assertContainsAtLeastOneMember()
     {
         $expected = ['first', 'second', 'meta'];
         $data = [
@@ -500,7 +500,7 @@ class BaseTest extends TestCase
     /**
      * @test
      */
-    public function assert_contains_at_least_one_member_failed()
+    public function assertContainsAtLeastOneMemberFailed()
     {
         $expected = ['first', 'second'];
         $data = [
@@ -523,7 +523,7 @@ class BaseTest extends TestCase
     /**
      * @test
      */
-    public function assert_contains_only_allowed_members()
+    public function assertContainsOnlyAllowedMembers()
     {
         $expected = ['first', 'second', 'meta'];
         $data = [
@@ -537,7 +537,7 @@ class BaseTest extends TestCase
     /**
      * @test
      */
-    public function assert_contains_only_allowed_members_failed()
+    public function assertContainsOnlyAllowedMembersFailed()
     {
         $expected = ['first', 'second', 'meta'];
         $data = [
@@ -561,7 +561,7 @@ class BaseTest extends TestCase
      * @test
      * @dataProvider arrayOfObjectsProvider
      */
-    public function assert_is_array_of_objects($json)
+    public function assertIsArrayOfObjects($json)
     {
         JsonApiAssert::assertIsArrayOfObjects($json);
     }
@@ -589,7 +589,7 @@ class BaseTest extends TestCase
      * @test
      * @dataProvider notArrayOfObjectsProvider
      */
-    public function assert_is_array_of_objects_failed($data, $message, $failureMessage)
+    public function assertIsArrayOfObjectsFailed($data, $message, $failureMessage)
     {
         $fn = function ($data, $message) {
             JsonApiAssert::assertIsArrayOfObjects($data, $message);
@@ -628,7 +628,7 @@ class BaseTest extends TestCase
     /**
      * @test
      */
-    public function assert_is_array_of_objects_invalid_arguments()
+    public function assertIsArrayOfObjectsWithInvalidArguments()
     {
 
         $json = 'invalid';
@@ -643,7 +643,7 @@ class BaseTest extends TestCase
     /**
      * @test
      */
-    public function assert_is_not_array_of_objects()
+    public function assertIsNotArrayOfObjects()
     {
         $data = [
             'meta' => 'valid',
@@ -656,7 +656,7 @@ class BaseTest extends TestCase
     /**
      * @test
      */
-    public function assert_is_not_array_of_objects_failed()
+    public function assertIsNotArrayOfObjectsFailed()
     {
         $data = [
             [

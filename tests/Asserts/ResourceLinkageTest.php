@@ -2,8 +2,8 @@
 namespace VGirol\JsonApiAssert\Tests\Asserts;
 
 use VGirol\JsonApiAssert\Assert as JsonApiAssert;
-use VGirol\JsonApiAssert\Tests\TestCase;
 use VGirol\JsonApiAssert\Messages;
+use VGirol\JsonApiAssert\Tests\TestCase;
 
 class ResourceLinkageTest extends TestCase
 {
@@ -11,7 +11,7 @@ class ResourceLinkageTest extends TestCase
      * @test
      * @dataProvider validResourceLinkageProvider
      */
-    public function resource_linkage_is_valid($data, $strict)
+    public function resourceLinkageIsValid($data, $strict)
     {
         JsonApiAssert::assertIsValidResourceLinkage($data, $strict);
     }
@@ -54,7 +54,7 @@ class ResourceLinkageTest extends TestCase
      * @test
      * @dataProvider notValidResourceLinkageProvider
      */
-    public function resource_linkage_is_not_valid($data, $strict, $failureMessage)
+    public function resourceLinkageIsNotValid($data, $strict, $failureMessage)
     {
         $fn = function ($data, $strict) {
             JsonApiAssert::assertIsValidResourceLinkage($data, $strict);
@@ -112,7 +112,7 @@ class ResourceLinkageTest extends TestCase
     /**
      * @test
      */
-    public function resource_identifier_object_is_valid()
+    public function resourceIdentifierObjectIsValid()
     {
         $data = [
             'id' => '1',
@@ -130,7 +130,7 @@ class ResourceLinkageTest extends TestCase
      * @test
      * @dataProvider isNotValidResourceIdentifierObjectProvider
      */
-    public function resource_identifier_object_is_not_valid($json, $strict, $failureMessage)
+    public function resourceIdentifierObjectIsNotValid($json, $strict, $failureMessage)
     {
         $fn = function ($json, $strict) {
             JsonApiAssert::assertIsValidResourceIdentifierObject($json, $strict);

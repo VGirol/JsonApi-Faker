@@ -2,15 +2,15 @@
 namespace VGirol\JsonApiAssert\Tests\Asserts;
 
 use VGirol\JsonApiAssert\Assert as JsonApiAssert;
-use VGirol\JsonApiAssert\Tests\TestCase;
 use VGirol\JsonApiAssert\Messages;
+use VGirol\JsonApiAssert\Tests\TestCase;
 
 class ErrorsObjectTest extends TestCase
 {
     /**
      * @test
      */
-    public function error_links_object_is_valid()
+    public function errorLinksObjectIsValid()
     {
         $links = [
             'about' => 'url'
@@ -24,7 +24,7 @@ class ErrorsObjectTest extends TestCase
      * @test
      * @dataProvider notValidErrorLinksObjectProvider
      */
-    public function error_links_object_is_not_valid($json, $strict, $failureMessage)
+    public function errorLinksObjectIsNotValid($json, $strict, $failureMessage)
     {
         $fn = function ($json, $strict) {
             JsonApiAssert::assertIsValidErrorLinksObject($json, $strict);
@@ -50,7 +50,7 @@ class ErrorsObjectTest extends TestCase
      * @test
      * @dataProvider validErrorSourceObjectProvider
      */
-    public function error_source_object_is_valid($data)
+    public function errorSourceObjectIsValid($data)
     {
         JsonApiAssert::assertIsValidErrorSourceObject($data);
     }
@@ -77,7 +77,7 @@ class ErrorsObjectTest extends TestCase
      * @test
      * @dataProvider notValidErrorSourceObjectProvider
      */
-    public function error_source_object_is_not_valid($data, $failureMessage)
+    public function errorSourceObjectIsNotValid($data, $failureMessage)
     {
         $fn = function ($data) {
             JsonApiAssert::assertIsValidErrorSourceObject($data);
@@ -120,7 +120,7 @@ class ErrorsObjectTest extends TestCase
     /**
      * @test
      */
-    public function error_object_is_valid()
+    public function errorObjectIsValid()
     {
         $data = [
             'id' => 15,
@@ -148,7 +148,7 @@ class ErrorsObjectTest extends TestCase
      * @test
      * @dataProvider notValidErrorObjectProvider
      */
-    public function error_object_is_not_valid($data, $strict, $failureMessage)
+    public function errorObjectIsNotValid($data, $strict, $failureMessage)
     {
         $fn = function ($data, $strict) {
             JsonApiAssert::assertIsValidErrorObject($data, $strict);
@@ -274,7 +274,7 @@ class ErrorsObjectTest extends TestCase
     /**
      * @test
      */
-    public function errors_object_is_valid()
+    public function errorsObjectIsValid()
     {
         $data = [
             [
@@ -295,7 +295,7 @@ class ErrorsObjectTest extends TestCase
      * @test
      * @dataProvider notValidErrorsObjectProvider
      */
-    public function errors_object_is_not_valid($data, $strict, $failureMessage)
+    public function errorsObjectIsNotValid($data, $strict, $failureMessage)
     {
         $fn = function ($data, $strict) {
             JsonApiAssert::assertIsValidErrorsObject($data, $strict);

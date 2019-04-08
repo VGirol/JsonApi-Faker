@@ -11,7 +11,7 @@ class MemberNameTest extends TestCase
      * @test
      * @dataProvider validMemberNameProvider
      */
-    public function member_name_is_valid($data, $strict)
+    public function memberNameIsValid($data, $strict)
     {
         JsonApiAssert::assertIsValidMemberName($data, $strict);
     }
@@ -38,7 +38,7 @@ class MemberNameTest extends TestCase
      * @test
      * @dataProvider notValidMemberNameProvider
      */
-    public function member_name_is_not_valid($data, $strict, $failureMessage)
+    public function memberNameIsNotValid($data, $strict, $failureMessage)
     {
         $fn = function ($data, $strict) {
             JsonApiAssert::assertIsValidMemberName($data, $strict);

@@ -1,82 +1,82 @@
 <?php
 namespace VGirol\JsonApiAssert\Tests\Asserts;
 
+use VGirol\JsonApiAssert\Assert as JsonApiAssert;
 use VGirol\JsonApiAssert\Messages;
 use VGirol\JsonApiAssert\Tests\TestCase;
-use VGirol\JsonApiAssert\Assert as JsonApiAssert;
 
 class IncludedTest extends TestCase
 {
     /**
      * @test
-     * @dataProvider validIncludedProvider
      */
-    public function compound_document_is_valid($json, $strict)
+    public function compoundDocumentIsValid()
     {
-        JsonApiAssert::assertIsValidIncludedCollection($json['included'], $json['data'], $strict);
-    }
-
-    public function validIncludedProvider()
-    {
-        return [
-            'with data' => [
+        $json = [
+            'data' => [
                 [
-                    'data' => [
-                        [
-                            'type' => 'articles',
-                            'id' => '1',
-                            'relationships' => [
-                                'test' => [
-                                    'data' => [
-                                        'type' => 'first',
-                                        'id' => '10'
-                                    ]
-                                ]
-                            ]
-                        ],
-                        [
-                            'type' => 'articles',
-                            'id' => '2',
-                            'attributes' => [
-                                'title' => 'Rails is Omakase'
-                            ]
-                        ]
+                    'type' => 'articles',
+                    'id' => '1',
+                    'attributes' => [
+                        'title' => 'test'
                     ],
-                    'included' => [
-                        [
-                            'type' => 'first',
-                            'id' => '10',
-                            'attributes' => [
-                                'title' => 'test'
-                            ],
-                            'relationships' => [
-                                'test' => [
-                                    'data' => [
-                                        'type' => 'second',
-                                        'id' => '12'
-                                    ]
-                                ]
+                    'relationships' => [
+                        'anonymous' => [
+                            'meta' => [
+                                'key' => 'value'
                             ]
                         ],
-                        [
-                            'type' => 'second',
-                            'id' => '12',
-                            'attributes' => [
-                                'title' => 'another test'
+                        'test' => [
+                            'data' => [
+                                'type' => 'first',
+                                'id' => '10'
                             ]
                         ]
                     ]
                 ],
-                false
+                [
+                    'type' => 'articles',
+                    'id' => '2',
+                    'attributes' => [
+                        'title' => 'another'
+                    ]
+                ]
+            ],
+            'included' => [
+                [
+                    'type' => 'first',
+                    'id' => '10',
+                    'attributes' => [
+                        'title' => 'test'
+                    ],
+                    'relationships' => [
+                        'test' => [
+                            'data' => [
+                                'type' => 'second',
+                                'id' => '12'
+                            ]
+                        ]
+                    ]
+                ],
+                [
+                    'type' => 'second',
+                    'id' => '12',
+                    'attributes' => [
+                        'title' => 'another test'
+                    ]
+                ]
             ]
         ];
+        $strict = false;
+
+        JsonApiAssert::assertIsValidIncludedCollection($json['included'], $json['data'], $strict);
     }
 
     /**
      * @test
      * @dataProvider notValidIncludedProvider
      */
-    public function compound_document_is_not_valid($json, $strict, $failureMessage)
+    public function compoundDocumentIsNotValid($json, $strict, $failureMessage)
     {
         $fn = function ($json, $strict) {
             JsonApiAssert::assertIsValidIncludedCollection($json['included'], $json['data'], $strict);
@@ -122,7 +122,7 @@ class IncludedTest extends TestCase
                             ]
                         ],
                         [
-                            'type' => 'second',
+                            'type' => 'first',
                             'id' => '12',
                             'attributes' => [
                                 'title' => 'another'
@@ -189,7 +189,10 @@ class IncludedTest extends TestCase
                     ]
                 ],
                 false,
-                sprintf(Messages::CONTAINS_AT_LEAST_ONE, implode(', ', ['attributes', 'relationships', 'links', 'meta']))
+                sprintf(
+                    Messages::CONTAINS_AT_LEAST_ONE,
+                    implode(', ', ['attributes', 'relationships', 'links', 'meta'])
+                )
             ]
         ];
     }

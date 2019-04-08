@@ -1,16 +1,16 @@
 <?php
 namespace VGirol\JsonApiAssert\Tests\Asserts;
 
-use VGirol\JsonApiAssert\Tests\TestCase;
 use PHPUnit\Framework\ExpectationFailedException;
 use VGirol\JsonApiAssert\Constraint\ContainsAtLeastOneConstraint;
+use VGirol\JsonApiAssert\Tests\TestCase;
 
 class ContainsAtLeastOneTest extends TestCase
 {
     /**
      * @test
      */
-    public function assert_contains_at_least_one()
+    public function assertContainsAtLeastOne()
     {
         $allowed = ['anything', 'something'];
 
@@ -27,7 +27,7 @@ class ContainsAtLeastOneTest extends TestCase
      * @test
      * @dataProvider assertContainsAtLeastOneFailedProvider
      */
-    public function assert_contains_at_least_one_failed($json)
+    public function assertContainsAtLeastOneFailed($json)
     {
         $allowed = ['anything', 'something'];
 
@@ -53,7 +53,7 @@ class ContainsAtLeastOneTest extends TestCase
     /**
      * @test
      */
-    public function assert_contains_at_least_one_failed_and_throw_exception()
+    public function assertContainsAtLeastOneFailedAndThrowException()
     {
         $allowed = ['anything', 'something'];
         $json = [

@@ -2,8 +2,8 @@
 namespace VGirol\JsonApiAssert\Asserts;
 
 use PHPUnit\Framework\Assert as PHPUnit;
-use VGirol\JsonApiAssert\Messages;
 use PHPUnit\Framework\ExpectationFailedException;
+use VGirol\JsonApiAssert\Messages;
 
 trait AssertStructure
 {

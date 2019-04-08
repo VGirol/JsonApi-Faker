@@ -2,7 +2,6 @@
 namespace VGirol\JsonApiAssert\Constraint;
 
 use PHPUnit\Framework\Constraint\Constraint;
-use PHPUnit\Framework\ExpectationFailedException;
 
 class ContainsOnlyAllowedMembersConstraint extends Constraint
 {

@@ -11,7 +11,7 @@ class StructureTest extends TestCase
      * @test
      * @dataProvider validStructureProvider
      */
-    public function document_has_valid_structure($data, $strict)
+    public function documentHasValidStructure($data, $strict)
     {
         JsonApiAssert::assertHasValidStructure($data, $strict);
     }
@@ -88,7 +88,7 @@ class StructureTest extends TestCase
      * @test
      * @dataProvider notValidStructureProvider
      */
-    public function document_has_not_valid_structure($data, $strict, $failureMessage)
+    public function documentHasNotValidStructure($data, $strict, $failureMessage)
     {
         $fn = function ($data, $strict) {
             JsonApiAssert::assertHasValidStructure($data, $strict);
@@ -213,7 +213,7 @@ class StructureTest extends TestCase
     /**
      * @test
      */
-    public function top_level_links_object_is_valid()
+    public function topLevelLinksObjectIsValid()
     {
         $links = [
             'self' => 'url'
@@ -227,7 +227,7 @@ class StructureTest extends TestCase
      * @test
      * @dataProvider notValidTopLevelLinksObjectProvider
      */
-    public function top_level_links_object_is_not_valid($json, $strict, $failureMessage)
+    public function topLevelLinksObjectIsNotValid($json, $strict, $failureMessage)
     {
         $fn = function ($json, $strict) {
             JsonApiAssert::assertIsValidTopLevelLinksMember($json, $strict);
@@ -245,114 +245,6 @@ class StructureTest extends TestCase
                 ],
                 false,
                 Messages::ONLY_ALLOWED_MEMBERS
-            ]
-        ];
-    }
-
-    /**
-     * @test
-     */
-    public function included_collection_is_valid()
-    {
-        $included = [
-            [
-                'type' => 'relation',
-                'id' => '12',
-                'attributes' => [
-                    'subtitle' => 'world'
-                ]
-            ]
-        ];
-        $data = [
-            'type' => 'test',
-            'id' => '1',
-            'attributes' => [
-                'title' => 'hello'
-            ],
-            'relationships' => [
-                'anonymous' => [
-                    'meta' => [
-                        'key' => 'value'
-                    ]
-                ],
-                'relatedToTest' => [
-                    'data' => [
-                        'type' => 'relation',
-                        'id' => '12'
-                    ]
-                ]
-            ]
-        ];
-        $strict = false;
-
-        JsonApiAssert::assertIsValidIncludedCollection($included, $data, $strict);
-    }
-
-    /**
-     * @test
-     * @dataProvider notValidIncludedCollectionProvider
-     */
-    public function included_collection_is_not_valid($included, $data, $strict, $failureMessage)
-    {
-        $fn = function ($included, $data, $strict) {
-            JsonApiAssert::assertIsValidIncludedCollection($included, $data, $strict);
-        };
-
-        JsonApiAssert::assertTestFail($fn, $failureMessage, $included, $data, $strict);
-    }
-
-    public function notValidIncludedCollectionProvider()
-    {
-        return [
-            'include is not an array of objects' => [
-                [
-                    'key' => 'not valid'
-                ],
-                [
-                    'type' => 'test',
-                    'id' => '1',
-                    'attributes' => [
-                        'title' => 'hello'
-                    ],
-                    'relationships' => [
-                        'relatedToTest' => [
-                            'data' => [
-                                'type' => 'relation',
-                                'id' => '13'
-                            ]
-                        ]
-                    ]
-                ],
-                false,
-                Messages::MUST_BE_ARRAY_OF_OBJECTS
-            ],
-            'included resource not linked' => [
-                [
-                    [
-                        'type' => 'relation',
-                        'id' => '12',
-                        'attributes' => [
-                            'subtitle' => 'world'
-                        ]
-                    ]
-                ],
-                [
-                    'type' => 'test',
-                    'id' => '1',
-                    'attributes' => [
-                        'title' => 'hello'
-                    ],
-                    'relationships' => [
-                        'relatedToTest' => [
-                            'data' => [
-                                'type' => 'relation',
-                                'id' => '13'
-                            ]
-                        ]
-                    ]
-                ],
-                false,
-                Messages::INCLUDED_RESOURCE_NOT_LINKED
             ]
         ];
     }

@@ -2,15 +2,15 @@
 namespace VGirol\JsonApiAssert\Tests\Asserts;
 
 use VGirol\JsonApiAssert\Assert as JsonApiAssert;
-use VGirol\JsonApiAssert\Tests\TestCase;
 use VGirol\JsonApiAssert\Messages;
+use VGirol\JsonApiAssert\Tests\TestCase;
 
 class MetaObjectTest extends TestCase
 {
     /**
      * @test
      */
-    public function meta_object_is_valid()
+    public function metaObjectIsValid()
     {
         $data = [
             'key' => 'value',
@@ -25,7 +25,7 @@ class MetaObjectTest extends TestCase
      * @test
      * @dataProvider notValidMetaObjectProvider
      */
-    public function meta_object_is_not_valid($json, $strict, $failureMessage)
+    public function metaObjectIsNotValid($json, $strict, $failureMessage)
     {
         $fn = function ($json, $strict) {
             JsonApiAssert::assertIsValidMetaObject($json, $strict);

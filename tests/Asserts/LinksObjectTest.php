@@ -2,8 +2,8 @@
 namespace VGirol\JsonApiAssert\Tests\Asserts;
 
 use VGirol\JsonApiAssert\Assert as JsonApiAssert;
-use VGirol\JsonApiAssert\Tests\TestCase;
 use VGirol\JsonApiAssert\Messages;
+use VGirol\JsonApiAssert\Tests\TestCase;
 
 class LinksObjectTest extends TestCase
 {
@@ -11,7 +11,7 @@ class LinksObjectTest extends TestCase
      * @test
      * @dataProvider validLinkObjectProvider
      */
-    public function link_object_is_valid($data, $strict)
+    public function linkObjectIsValid($data, $strict)
     {
         JsonApiAssert::assertIsValidLinkObject($data, $strict);
     }
@@ -43,7 +43,7 @@ class LinksObjectTest extends TestCase
      * @test
      * @dataProvider notValidLinkObjectProvider
      */
-    public function link_object_is_not_valid($data, $strict, $failureMessage)
+    public function linkObjectIsNotValid($data, $strict, $failureMessage)
     {
         $fn = function ($data, $strict) {
             JsonApiAssert::assertIsValidLinkObject($data, $strict);
@@ -102,7 +102,7 @@ class LinksObjectTest extends TestCase
     /**
      * @test
      */
-    public function links_object_is_valid()
+    public function linksObjectIsValid()
     {
         $data = [
             'self' => 'url',
@@ -118,7 +118,7 @@ class LinksObjectTest extends TestCase
      * @test
      * @dataProvider notValidLinksObjectProvider
      */
-    public function links_object_is_not_valid($data, $allowed, $strict, $failureMessage)
+    public function linksObjectIsNotValid($data, $allowed, $strict, $failureMessage)
     {
         $fn = function ($data, $allowed, $strict) {
             JsonApiAssert::assertIsValidLinksObject($data, $allowed, $strict);

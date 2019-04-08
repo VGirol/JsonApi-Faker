@@ -2,15 +2,15 @@
 namespace VGirol\JsonApiAssert\Tests\Asserts;
 
 use VGirol\JsonApiAssert\Assert as JsonApiAssert;
-use VGirol\JsonApiAssert\Tests\TestCase;
 use VGirol\JsonApiAssert\Messages;
+use VGirol\JsonApiAssert\Tests\TestCase;
 
 class ResourceObjectTest extends TestCase
 {
     /**
      * @test
      */
-    public function resource_field_name_is_not_forbidden()
+    public function resourceFieldNameIsNotForbidden()
     {
         $name = 'test';
 
@@ -21,7 +21,7 @@ class ResourceObjectTest extends TestCase
      * @test
      * @dataProvider resourceFieldNameIsForbiddenProvider
      */
-    public function resource_field_name_is_forbidden($name, $failureMessage)
+    public function resourceFieldNameIsForbidden($name, $failureMessage)
     {
         $fn = function ($name) {
             JsonApiAssert::assertIsNotForbiddenResourceFieldName($name);
@@ -47,7 +47,7 @@ class ResourceObjectTest extends TestCase
     /**
      * @test
      */
-    public function resource_links_object_is_valid()
+    public function resourceLinksObjectIsValid()
     {
         $links = [
             'self' => 'url'
@@ -61,7 +61,7 @@ class ResourceObjectTest extends TestCase
      * @test
      * @dataProvider notValidResourceLinksObjectProvider
      */
-    public function resource_links_object_is_not_valid($json, $strict, $failureMessage)
+    public function resourceLinksObjectIsNotValid($json, $strict, $failureMessage)
     {
         $fn = function ($json, $strict) {
             JsonApiAssert::assertIsValidResourceLinksObject($json, $strict);
@@ -86,7 +86,7 @@ class ResourceObjectTest extends TestCase
     /**
      * @test
      */
-    public function resource_has_valid_top_level_structure()
+    public function resourceHasValidTopLevelStructure()
     {
         $data = [
             'id' => '1',
@@ -121,7 +121,7 @@ class ResourceObjectTest extends TestCase
      * @test
      * @dataProvider hasotValidTopLevelStructureProvider
      */
-    public function resource_has_not_valid_top_level_structure($data, $failureMessage)
+    public function resourceHasNotValidTopLevelStructure($data, $failureMessage)
     {
         $fn = function ($response) {
             JsonApiAssert::assertResourceObjectHasValidTopLevelStructure($response);
@@ -160,7 +160,10 @@ class ResourceObjectTest extends TestCase
                     'id' => '1',
                     'type' => 'test'
                 ],
-                sprintf(Messages::CONTAINS_AT_LEAST_ONE, implode(', ', ['attributes', 'relationships', 'links', 'meta']))
+                sprintf(
+                    Messages::CONTAINS_AT_LEAST_ONE,
+                    implode(', ', ['attributes', 'relationships', 'links', 'meta'])
+                )
             ],
             'member not allowed' => [
                 [
@@ -179,7 +182,7 @@ class ResourceObjectTest extends TestCase
     /**
      * @test
      */
-    public function resource_id_member_is_valid()
+    public function resourceIdMemberIsValid()
     {
         $data = [
             'id' => '1',
@@ -193,7 +196,7 @@ class ResourceObjectTest extends TestCase
      * @test
      * @dataProvider notValidResourceIdMemberProvider
      */
-    public function resource_id_member_is_not_valid($data, $failureMessage)
+    public function resourceIdMemberIsNotValid($data, $failureMessage)
     {
         $fn = function ($response) {
             JsonApiAssert::assertResourceIdMember($response);
@@ -225,7 +228,7 @@ class ResourceObjectTest extends TestCase
     /**
      * @test
      */
-    public function resource_type_member_is_valid()
+    public function resourceTypeMemberIsValid()
     {
         $data = [
             'id' => '1',
@@ -240,7 +243,7 @@ class ResourceObjectTest extends TestCase
      * @test
      * @dataProvider notValidResourceTypeMemberProvider
      */
-    public function resource_type_member_is_not_valid($json, $strict, $failureMessage)
+    public function resourceTypeMemberIsNotValid($json, $strict, $failureMessage)
     {
         $fn = function ($json, $strict) {
             JsonApiAssert::assertResourceTypeMember($json, $strict);
@@ -290,7 +293,7 @@ class ResourceObjectTest extends TestCase
     /**
      * @test
      */
-    public function resource_field_is_valid()
+    public function resourceFieldIsValid()
     {
         $data = [
             'id' => '1',
@@ -315,7 +318,7 @@ class ResourceObjectTest extends TestCase
      * @test
      * @dataProvider isNotValidResourceFieldProvider
      */
-    public function resource_field_is_not_valid($data, $failureMessage)
+    public function resourceFieldIsNotValid($data, $failureMessage)
     {
         $fn = function ($response) {
             JsonApiAssert::assertHasValidFields($response);
@@ -380,7 +383,7 @@ class ResourceObjectTest extends TestCase
     /**
      * @test
      */
-    public function resource_object_is_valid()
+    public function resourceObjectIsValid()
     {
         $data = [
             'id' => '1',
@@ -416,7 +419,7 @@ class ResourceObjectTest extends TestCase
      * @test
      * @dataProvider isNotValidResourceObjectProvider
      */
-    public function resource_object_is_not_valid($json, $strict, $failureMessage)
+    public function resourceObjectIsNotValid($json, $strict, $failureMessage)
     {
         $fn = function ($json, $strict) {
             JsonApiAssert::assertIsValidResourceObject($json, $strict);
@@ -461,7 +464,10 @@ class ResourceObjectTest extends TestCase
                     'type' => 'test'
                 ],
                 false,
-                sprintf(Messages::CONTAINS_AT_LEAST_ONE, implode(', ', ['attributes', 'relationships', 'links', 'meta']))
+                sprintf(
+                    Messages::CONTAINS_AT_LEAST_ONE,
+                    implode(', ', ['attributes', 'relationships', 'links', 'meta'])
+                )
             ],
             'member not allowed' => [
                 [

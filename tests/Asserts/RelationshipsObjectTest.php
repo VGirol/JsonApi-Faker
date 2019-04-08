@@ -2,8 +2,8 @@
 namespace VGirol\JsonApiAssert\Tests\Asserts;
 
 use VGirol\JsonApiAssert\Assert as JsonApiAssert;
-use VGirol\JsonApiAssert\Tests\TestCase;
 use VGirol\JsonApiAssert\Messages;
+use VGirol\JsonApiAssert\Tests\TestCase;
 
 class RelationshipsObjectTest extends TestCase
 {
@@ -11,7 +11,7 @@ class RelationshipsObjectTest extends TestCase
      * @test
      * @dataProvider validRelationshipLinksObjectProvider
      */
-    public function relationship_links_object_is_valid($json, $withPagination, $strict)
+    public function relationshipLinksObjectIsValid($json, $withPagination, $strict)
     {
         $links = [
             'self' => 'url'
@@ -50,7 +50,7 @@ class RelationshipsObjectTest extends TestCase
      * @test
      * @dataProvider notValidRelationshipLinksObjectProvider
      */
-    public function relationship_links_object_is_not_valid($json, $withPagination, $strict, $failureMessage)
+    public function relationshipLinksObjectIsNotValid($json, $withPagination, $strict, $failureMessage)
     {
         $fn = function ($json, $withPagination, $strict) {
             JsonApiAssert::assertIsValidRelationshipLinksObject($json, $withPagination, $strict);
@@ -89,7 +89,7 @@ class RelationshipsObjectTest extends TestCase
      * @test
      * @dataProvider validRelationshipObjectProvider
      */
-    public function relationship_object_is_valid($data, $strict)
+    public function relationshipObjectIsValid($data, $strict)
     {
         JsonApiAssert::assertIsValidRelationshipObject($data, $strict);
     }
@@ -156,7 +156,7 @@ class RelationshipsObjectTest extends TestCase
      * @test
      * @dataProvider notValidRelationshipObjectProvider
      */
-    public function relationship_object_is_not_valid($data, $strict, $failureMessage)
+    public function relationshipObjectIsNotValid($data, $strict, $failureMessage)
     {
         $fn = function ($data, $strict) {
             JsonApiAssert::assertIsValidRelationshipObject($data, $strict);
@@ -244,7 +244,7 @@ class RelationshipsObjectTest extends TestCase
     /**
      * @test
      */
-    public function relationships_object_is_valid()
+    public function relationshipsObjectIsValid()
     {
         $data = [
             'author' => [
@@ -267,7 +267,7 @@ class RelationshipsObjectTest extends TestCase
      * @test
      * @dataProvider notValidRelationshipsObjectProvider
      */
-    public function relationships_object_is_not_valid($data, $strict, $failureMessage)
+    public function relationshipsObjectIsNotValid($data, $strict, $failureMessage)
     {
         $fn = function ($data, $strict) {
             JsonApiAssert::assertIsValidRelationshipsObject($data, $strict);

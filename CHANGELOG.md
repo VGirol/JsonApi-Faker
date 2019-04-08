@@ -8,3 +8,7 @@ All notable changes to `jsonapi-assert` will be documented in this file.
 ## 1.0.1 - 2019-04-04
 - Updated many unit test thanks to mutation testing
 
+## 1.0.2 - 2019-04-08
+- Linted many files
+- Refactored some unit tests
+- Updated the README file

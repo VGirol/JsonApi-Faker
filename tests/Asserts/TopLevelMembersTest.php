@@ -2,15 +2,15 @@
 namespace VGirol\JsonApiAssert\Tests\Asserts;
 
 use VGirol\JsonApiAssert\Assert as JsonApiAssert;
-use VGirol\JsonApiAssert\Tests\TestCase;
 use VGirol\JsonApiAssert\Messages;
+use VGirol\JsonApiAssert\Tests\TestCase;
 
 class TopLevelMembersTest extends TestCase
 {
     /**
      * @test
      */
-    public function document_has_valid_top_level_members()
+    public function documentHasValidTopLevelMembers()
     {
         $data = [
             'links' => [
@@ -41,7 +41,7 @@ class TopLevelMembersTest extends TestCase
      * @test
      * @dataProvider notValidTopLevelMembersProvider
      */
-    public function document_has_not_valid_top_level_members($data, $failureMessage)
+    public function documentHasNotValidTopLevelMembers($data, $failureMessage)
     {
         $fn = function ($data) {
             JsonApiAssert::assertHasValidTopLevelMembers($data);

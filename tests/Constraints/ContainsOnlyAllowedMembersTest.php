@@ -1,16 +1,16 @@
 <?php
 namespace VGirol\JsonApiAssert\Tests\Asserts;
 
-use VGirol\JsonApiAssert\Tests\TestCase;
 use PHPUnit\Framework\ExpectationFailedException;
 use VGirol\JsonApiAssert\Constraint\ContainsOnlyAllowedMembersConstraint;
+use VGirol\JsonApiAssert\Tests\TestCase;
 
 class ContainsOnlyAllowedMembersTest extends TestCase
 {
     /**
      * @test
      */
-    public function assert_contains_only_allowed_members()
+    public function assertContainsOnlyAllowedMembers()
     {
         $allowed = ['anything', 'something'];
 
@@ -26,7 +26,7 @@ class ContainsOnlyAllowedMembersTest extends TestCase
      * @test
      * @dataProvider assertContainsOnlyAllowedMembersFailedProvider
      */
-    public function assert_contains_only_allowed_members_failed($json)
+    public function assertContainsOnlyAllowedMembersFailed($json)
     {
         $allowed = ['anything', 'something'];
 
@@ -53,7 +53,7 @@ class ContainsOnlyAllowedMembersTest extends TestCase
     /**
      * @test
      */
-    public function assert_contains_only_allowed_members_failed_and_throw_exception()
+    public function assertContainsOnlyAllowedMembersThrowsException()
     {
         $allowed = ['anything', 'something'];
         $json = [
