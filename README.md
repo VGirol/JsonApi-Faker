@@ -425,7 +425,7 @@ Asserts a json fragment is a valid primary data object.
 \$strict (boolean) : if true, unsafe characters are not allowed when checking members name.
 
 It will do the following checks :
-- asserts that th primary data is either an object, an array of objects or the `null` value.
+- asserts that the primary data is either an object, an array of objects or the `null` value.
 - if the primary data is not null, checks if it is a valid single resource or a valid resource collection ([assertIsValidResourceObject](#assertIsValidResourceObject) or [assertIsValidResourceIdentifierObject](#assertIsValidResourceIdentifierObject)).
 
 

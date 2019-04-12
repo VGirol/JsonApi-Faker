@@ -50,7 +50,7 @@ class AttributesObjectTest extends TestCase
     public function assertIsNotForbiddenMemberNameWithInvalidArguments()
     {
         $data = 666;
-        $failureMsg = $this->getPhpunitExceptionText(1, 'string', $data);
+        $failureMsg = JsonApiAssert::getInvalidArgumentExceptionRegex(1, 'string', $data);
 
         $this->expectException(Exception::class);
         if (!is_null($failureMsg)) {
@@ -197,7 +197,7 @@ class AttributesObjectTest extends TestCase
             'not an array' => [
                 'failed',
                 false,
-                $this->getPhpunitExceptionText(1, 'array', 'failed')
+                JsonApiAssert::getInvalidArgumentExceptionRegex(1, 'array', 'failed')
             ]
         ];
     }

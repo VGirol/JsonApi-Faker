@@ -26,4 +26,16 @@ class Assert
     use AssertResourceLinkage;
     use AssertResourceObject;
     use AssertStructure;
+
+    public static function getInvalidArgumentExceptionRegex(int $argument, string $type, $value = null)
+    {
+        return \sprintf(
+            '/Argument #%d%sof %s::%s\(\) must be a %s/',
+            $argument,
+            is_null($value) ? '.*' : ' \(' . \gettype($value) . '#' . $value . '\)',
+            '.*',
+            '.*',
+            $type
+        );
+    }
 }

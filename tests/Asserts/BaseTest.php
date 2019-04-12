@@ -108,12 +108,12 @@ class BaseTest extends TestCase
                 [
                     'anything' => 'else'
                 ],
-                $this->getPhpunitExceptionText(1, 'string', 666)
+                JsonApiAssert::getInvalidArgumentExceptionRegex(1, 'string', 666)
             ],
             '$json is not an array' => [
                 'anything',
                 'invalid',
-                $this->getPhpunitExceptionText(2, 'array', 'invalid')
+                JsonApiAssert::getInvalidArgumentExceptionRegex(2, 'array', 'invalid')
             ]
         ];
     }
@@ -174,14 +174,14 @@ class BaseTest extends TestCase
                 [
                     'anything' => 'else'
                 ],
-                $this->getPhpunitExceptionText(1, 'array', 'invalid')
+                JsonApiAssert::getInvalidArgumentExceptionRegex(1, 'array', 'invalid')
             ],
             '$json is not an array' => [
                 [
                     'anything'
                 ],
                 'invalid',
-                $this->getPhpunitExceptionText(2, 'array', 'invalid')
+                JsonApiAssert::getInvalidArgumentExceptionRegex(2, 'array', 'invalid')
             ]
         ];
     }
@@ -242,14 +242,14 @@ class BaseTest extends TestCase
                 [
                     'anything' => 'else'
                 ],
-                $this->getPhpunitExceptionText(1, 'array', 666)
+                JsonApiAssert::getInvalidArgumentExceptionRegex(1, 'array', 666)
             ],
             '$json is not an array' => [
                 [
                     'anything'
                 ],
                 'invalid',
-                $this->getPhpunitExceptionText(2, 'array', 'invalid')
+                JsonApiAssert::getInvalidArgumentExceptionRegex(2, 'array', 'invalid')
             ]
         ];
     }
@@ -312,12 +312,12 @@ class BaseTest extends TestCase
                 [
                     'anything' => 'else'
                 ],
-                $this->getPhpunitExceptionText(1, 'string', 666)
+                JsonApiAssert::getInvalidArgumentExceptionRegex(1, 'string', 666)
             ],
             '$json is not an array' => [
                 'anything',
                 'invalid',
-                $this->getPhpunitExceptionText(2, 'array', 'invalid')
+                JsonApiAssert::getInvalidArgumentExceptionRegex(2, 'array', 'invalid')
             ]
         ];
     }
@@ -387,7 +387,7 @@ class BaseTest extends TestCase
                 [
                     'anything' => 'else'
                 ],
-                $this->getPhpunitExceptionText(1, 'array', 666)
+                JsonApiAssert::getInvalidArgumentExceptionRegex(1, 'array', 666)
             ]
         ];
     }
@@ -632,7 +632,7 @@ class BaseTest extends TestCase
     {
 
         $json = 'invalid';
-        $failureMsg = $this->getPhpunitExceptionText(1, 'array', $json);
+        $failureMsg = JsonApiAssert::getInvalidArgumentExceptionRegex(1, 'array', $json);
 
         $this->expectException(Exception::class);
         $this->expectExceptionMessageRegExp($failureMsg);
