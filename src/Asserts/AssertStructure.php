@@ -137,15 +137,15 @@ trait AssertStructure
      */
     private static function assertIsValidPrimaryCollection($list, $checkType, $strict)
     {
-        $isResourceObjectCollection = null;
+        $isResourceObject = null;
         foreach ($list as $index => $resource) {
             if ($checkType) {
                 // Assert that all resources of the collection are of same type.
                 if ($index == 0) {
-                    $isResourceObjectCollection = static::dataIsResourceObject($resource);
+                    $isResourceObject = static::dataIsResourceObject($resource);
                 } else {
                     PHPUnit::assertEquals(
-                        $isResourceObjectCollection,
+                        $isResourceObject,
                         static::dataIsResourceObject($resource),
                         Messages::PRIMARY_DATA_SAME_TYPE
                     );
