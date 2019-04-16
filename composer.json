@@ -1,6 +1,6 @@
 {
     "name": "vgirol/jsonapi-assert",
-    "description": "RESTfull JSON:Api test assertions",
+    "description": "This package provides a set of assertions to test documents using the JSON:API specification.",
     "type": "library",
     "homepage": "http://github.com/VGirol/JsonApi-Assert",
     "license": "MIT",

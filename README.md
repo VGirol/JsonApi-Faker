@@ -5,7 +5,7 @@
 [![Infection MSI](https://badge.stryker-mutator.io/github.com/VGirol/JsonApi-Assert/master)](https://infection.github.io)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/VGirol/JsonApi-Assert/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/VGirol/JsonApi-Assert/?branch=master)
 
-This package provides a lot of assertions for testing documents using the [JSON:API specification](https://jsonapi.org/).
+This package provides a set of assertions to test documents using the [JSON:API specification](https://jsonapi.org/).
 
 ## Technologies
 
