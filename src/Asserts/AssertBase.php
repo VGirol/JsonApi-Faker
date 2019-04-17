@@ -308,7 +308,7 @@ trait AssertBase
     /**
      * Asserts that an array is an array of objects.
      *
-     * @param array     $data
+     * @param array     $json
      * @param string    $message   An optional message to explain why the test failed
      *
      * @throws \PHPUnit\Framework\ExpectationFailedException

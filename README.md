@@ -97,10 +97,10 @@ class MyTest extends TestCase
 
 Asserts that a json object contains at least one member from the provided list.
 
-\$expected (array)  
-\$json (array)  
-\$message (string)
-
+Parameters :
+- `$expected` (array)
+- `$json` (array)
+- `$message` (string)
 
 ### assertContainsOnlyAllowedMembers
 

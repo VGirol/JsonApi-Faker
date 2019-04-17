@@ -234,7 +234,7 @@ trait AssertStructure
             if (!isset($obj['relationships'])) {
                 continue;
             }
-            foreach ($obj['relationships'] as $key => $relationship) {
+            foreach ($obj['relationships'] as $relationship) {
                 if (!isset($relationship['data'])) {
                     continue;
                 }
