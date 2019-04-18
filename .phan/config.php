@@ -71,19 +71,22 @@ return [
     // If enabled, Phan will warn if **any** type in the argument's type
     // cannot be cast to a type in the parameter's expected type.
     // Setting this to true will introduce a large number of false positives (and some bugs).
-    // (For self-analysis, Phan has a large number of suppressions and file-level suppressions, due to \ast\Node being difficult to type check)
+    // (For self-analysis, Phan has a large number of suppressions and file-level suppressions,
+    // due to \ast\Node being difficult to type check)
     'strict_param_checking' => true,
 
     // If enabled, Phan will warn if **any** type in a property assignment's type
     // cannot be cast to a type in the property's expected type.
     // Setting this to true will introduce a large number of false positives (and some bugs).
-    // (For self-analysis, Phan has a large number of suppressions and file-level suppressions, due to \ast\Node being difficult to type check)
+    // (For self-analysis, Phan has a large number of suppressions and file-level suppressions,
+    // due to \ast\Node being difficult to type check)
     'strict_property_checking' => true,
 
     // If enabled, Phan will warn if **any** type in the return statement's union type
     // cannot be cast to a type in the method's declared return type.
     // Setting this to true will introduce a large number of false positives (and some bugs).
-    // (For self-analysis, Phan has a large number of suppressions and file-level suppressions, due to \ast\Node being difficult to type check)
+    // (For self-analysis, Phan has a large number of suppressions and file-level suppressions,
+    // due to \ast\Node being difficult to type check)
     'strict_return_checking' => true,
 
     // If enabled, scalars (int, float, bool, string, null)
@@ -162,11 +165,14 @@ return [
 
     // This setting maps case insensitive strings to union types.
     // This is useful if a project uses phpdoc that differs from the phpdoc2 standard.
-    // If the corresponding value is the empty string, Phan will ignore that union type (E.g. can ignore 'the' in `@return the value`)
-    // If the corresponding value is not empty, Phan will act as though it saw the corresponding union type when the keys show up in a UnionType of @param, @return, @var, @property, etc.
+    // If the corresponding value is the empty string, Phan will ignore that union type
+    // (E.g. can ignore 'the' in `@return the value`)
+    // If the corresponding value is not empty, Phan will act as though it saw the corresponding union type
+    // when the keys show up in a UnionType of @param, @return, @var, @property, etc.
     //
     // This matches the **entire string**, not parts of the string.
-    // (E.g. `@return the|null` will still look for a class with the name `the`, but `@return the` will be ignored with the below setting)
+    // (E.g. `@return the|null` will still look for a class with the name `the`,
+    //but `@return the` will be ignored with the below setting)
     //
     // (These are not aliases, this setting is ignored outside of doc comments).
     // (Phan does not check if classes with these names exist)
@@ -193,7 +199,8 @@ return [
     // to be tracked.
     'force_tracking_references' => false,
 
-    // Enable this to warn about harmless redundant use for classes and namespaces such as `use Foo\bar` in namespace Foo.
+    // Enable this to warn about harmless redundant use for classes and namespaces
+    // such as `use Foo\bar` in namespace Foo.
     //
     // Note: This does not affect warnings about redundant uses in the global namespace.
     'warn_about_redundant_use_namespaced_class' => true,
@@ -271,7 +278,7 @@ return [
     // Add any issue types (such as 'PhanUndeclaredMethod')
     // here to inhibit them from being reported
     'suppress_issue_types' => [
-        'PhanUnreferencedClosure',  // False positives seen with closures in arrays, TODO: move closure checks closer to what is done by unused variable plugin
+        'PhanUnreferencedClosure',
         'PhanPluginNoCommentOnProtectedMethod',
         'PhanPluginDescriptionlessCommentOnProtectedMethod',
         'PhanPluginNoCommentOnPrivateMethod',
@@ -356,7 +363,8 @@ return [
     'skip_slow_php_options_warning' => false,
 
     // Set this to false to emit PhanUndeclaredFunction issues for internal functions that Phan has signatures for,
-    // but aren't available in the codebase, or the internal functions used to run phan (may lead to false positives if an extension isn't loaded)
+    // but aren't available in the codebase, or the internal functions used to run phan
+    // (may lead to false positives if an extension isn't loaded)
     // If this is true(default), then Phan will not warn.
     // Also see 'autoload_internal_extension_signatures' for an alternative way to fix this type of issue.
     'ignore_undeclared_functions_with_known_signatures' => false,
@@ -413,12 +421,15 @@ return [
         // End plugins for Phan's self-analysis
         ////////////////////////////////////////////////////////////////////////
 
-        // 'SleepCheckerPlugin' is useful for projects which heavily use the __sleep() method. Phan doesn't use __sleep().
-        // InvokePHPNativeSyntaxCheckPlugin invokes 'php --no-php-ini --syntax-check ${abs_path_to_analyzed_file}.php' and reports any error messages.
+        // 'SleepCheckerPlugin' is useful for projects which heavily use the __sleep() method.
+        // InvokePHPNativeSyntaxCheckPlugin invokes 'php --no-php-ini --syntax-check ${abs_path_to_analyzed_file}.php'
+        // and reports any error messages.
         // Using this can cause phan's overall analysis time to more than double.
         // 'InvokePHPNativeSyntaxCheckPlugin',
 
-        'PHPUnitNotDeadCodePlugin',  // Marks PHPUnit test case subclasses and test cases as referenced code. This is only useful for runs when dead code detection is enabled.
+        // Marks PHPUnit test case subclasses and test cases as referenced code.
+        // This is only useful for runs when dead code detection is enabled.
+        'PHPUnitNotDeadCodePlugin',
 
         // NOTE: This plugin only produces correct results when
         //       Phan is run on a single core (-j1).
