@@ -48,6 +48,10 @@
             "@php-linting",
             "@coverage",
             "@infection"
+        ],
+        "travis": [
+            "@coverage",
+            "@infection"
         ]
     },
     "extra": {
