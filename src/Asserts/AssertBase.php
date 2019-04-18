@@ -349,32 +349,6 @@ trait AssertBase
         PHPUnit::assertFalse(static::isArrayOfObjects($json), $message);
     }
 
-    /**
-     * Asserts that a test failed.
-     *
-     * @param \Closure|callback $fn
-     * @param string $expectedFailureMessage
-     * @param mixed $args
-     *
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     */
-    public static function assertTestFail($fn, $expectedFailureMessage)
-    {
-        $args = array_slice(func_get_args(), 2);
-
-        try {
-            call_user_func_array($fn, $args);
-        } catch (ExpectationFailedException $e) {
-            if (!is_null($expectedFailureMessage)) {
-                PHPUnit::assertStringContainsString($expectedFailureMessage, $e->getMessage());
-            }
-
-            return;
-        }
-
-        throw new ExpectationFailedException(Messages::TEST_FAILED);
-    }
-
     private static function isArrayOfObjects($arr)
     {
         if (empty($arr)) {

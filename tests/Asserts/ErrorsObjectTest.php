@@ -26,11 +26,8 @@ class ErrorsObjectTest extends TestCase
      */
     public function errorLinksObjectIsNotValid($json, $strict, $failureMessage)
     {
-        $fn = function ($json, $strict) {
-            JsonApiAssert::assertIsValidErrorLinksObject($json, $strict);
-        };
-
-        JsonApiAssert::assertTestFail($fn, $failureMessage, $json, $strict);
+        $this->setFailureException($failureMessage);
+        JsonApiAssert::assertIsValidErrorLinksObject($json, $strict);
     }
 
     public function notValidErrorLinksObjectProvider()
@@ -79,11 +76,8 @@ class ErrorsObjectTest extends TestCase
      */
     public function errorSourceObjectIsNotValid($data, $failureMessage)
     {
-        $fn = function ($data) {
-            JsonApiAssert::assertIsValidErrorSourceObject($data);
-        };
-
-        JsonApiAssert::assertTestFail($fn, $failureMessage, $data);
+        $this->setFailureException($failureMessage);
+        JsonApiAssert::assertIsValidErrorSourceObject($data);
     }
 
     public function notValidErrorSourceObjectProvider()
@@ -150,11 +144,8 @@ class ErrorsObjectTest extends TestCase
      */
     public function errorObjectIsNotValid($data, $strict, $failureMessage)
     {
-        $fn = function ($data, $strict) {
-            JsonApiAssert::assertIsValidErrorObject($data, $strict);
-        };
-
-        JsonApiAssert::assertTestFail($fn, $failureMessage, $data, $strict);
+        $this->setFailureException($failureMessage);
+        JsonApiAssert::assertIsValidErrorObject($data, $strict);
     }
 
     public function notValidErrorObjectProvider()
@@ -297,11 +288,8 @@ class ErrorsObjectTest extends TestCase
      */
     public function errorsObjectIsNotValid($data, $strict, $failureMessage)
     {
-        $fn = function ($data, $strict) {
-            JsonApiAssert::assertIsValidErrorsObject($data, $strict);
-        };
-
-        JsonApiAssert::assertTestFail($fn, $failureMessage, $data, $strict);
+        $this->setFailureException($failureMessage);
+        JsonApiAssert::assertIsValidErrorsObject($data, $strict);
     }
 
     public function notValidErrorsObjectProvider()

@@ -1,9 +1,9 @@
 <?php
 namespace VGirol\JsonApiAssert\Tests\Asserts;
 
+use VGirol\JsonApiAssert\Assert as JsonApiAssert;
 use VGirol\JsonApiAssert\Messages;
 use VGirol\JsonApiAssert\Tests\TestCase;
-use VGirol\JsonApiAssert\Assert as JsonApiAssert;
 
 class StructureTest extends TestCase
 {
@@ -90,11 +90,8 @@ class StructureTest extends TestCase
      */
     public function documentHasNotValidStructure($data, $strict, $failureMessage)
     {
-        $fn = function ($data, $strict) {
-            JsonApiAssert::assertHasValidStructure($data, $strict);
-        };
-
-        JsonApiAssert::assertTestFail($fn, $failureMessage, $data, $strict);
+        $this->setFailureException($failureMessage);
+        JsonApiAssert::assertHasValidStructure($data, $strict);
     }
 
     public function notValidStructureProvider()
@@ -229,11 +226,8 @@ class StructureTest extends TestCase
      */
     public function topLevelLinksObjectIsNotValid($json, $strict, $failureMessage)
     {
-        $fn = function ($json, $strict) {
-            JsonApiAssert::assertIsValidTopLevelLinksMember($json, $strict);
-        };
-
-        JsonApiAssert::assertTestFail($fn, $failureMessage, $json, $strict);
+        $this->setFailureException($failureMessage);
+        JsonApiAssert::assertIsValidTopLevelLinksMember($json, $strict);
     }
 
     public function notValidTopLevelLinksObjectProvider()

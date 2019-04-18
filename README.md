@@ -80,13 +80,11 @@ class MyTest extends TestCase
                 'error' => 'not an array of error objects'
             ]
         ];
-        $failureMsg = Messages::ERRORS_OBJECT_NOT_ARRAY;
+        $failureMessage = Messages::ERRORS_OBJECT_NOT_ARRAY;
 
-        $fn = function ($json) {
-            JsonApiAssert::assertHasValidStructure($json);
-        };
+        $this->setFailureException($failureMessage);
 
-        JsonApiAssert::assertTestFail($fn, $failureMsg, $json);
+        JsonApiAssert::assertHasValidStructure($json);
     }
 }
 ```
@@ -98,6 +96,7 @@ class MyTest extends TestCase
 Asserts that a json object contains at least one member from the provided list.
 
 Parameters :
+
 - `$expected` (array)
 - `$json` (array)
 - `$message` (string)
@@ -110,7 +109,6 @@ Asserts that a json object contains only members from the provided list.
 \$json (array)  
 \$message (string)
 
-
 ### assertFieldHasNoForbiddenMemberName
 
 Asserts that a field object has no forbidden member name.
@@ -118,6 +116,7 @@ Asserts that a field object has no forbidden member name.
 \$field (array)
 
 It will do the following checks :
+
 - asserts that each member name of the field is not a forbidden name ([assertIsNotForbiddenMemberName](#assertIsNotForbiddenMemberName)).
 - if the field has nested objects, it will checks each all.
 
@@ -584,16 +583,6 @@ It will do the following checks :
 - asserts that the "type" member is a string.
 - asserts that the "type" member has a valid value ([assertIsValidMemberName](#assertIsValidMemberName)).
 
-
-### assertTestFail
-
-Asserts that a test failed.
-
-\$fn (Closure|callback)  
-\$expectedFailureMessage (string)  
-\$args ...
-
-
 ## Changelog
 
 Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
@@ -601,7 +590,7 @@ Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recen
 ## Testing
 
 ```sh
-$ composer test
+composer test
 ```
 
 ## Contributing

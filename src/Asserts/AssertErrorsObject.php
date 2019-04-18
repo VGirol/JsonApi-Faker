@@ -47,37 +47,19 @@ trait AssertErrorsObject
         );
 
         $allowed = ['id', 'links', 'status', 'code', 'title', 'details', 'source', 'meta'];
-        static::assertContainsOnlyAllowedMembers(
-            $allowed,
-            $json
-        );
+        static::assertContainsOnlyAllowedMembers($allowed, $json);
 
-        if (isset($json['status'])) {
-            PHPUnit::assertIsString(
-                $json['status'],
-                Messages::ERROR_STATUS_IS_NOT_STRING
-            );
-        }
+        $checks = [
+            'status' => Messages::ERROR_STATUS_IS_NOT_STRING,
+            'code' => Messages::ERROR_CODE_IS_NOT_STRING,
+            'title' => Messages::ERROR_TITLE_IS_NOT_STRING,
+            'details' => Messages::ERROR_DETAILS_IS_NOT_STRING
+        ];
 
-        if (isset($json['code'])) {
-            PHPUnit::assertIsString(
-                $json['code'],
-                Messages::ERROR_CODE_IS_NOT_STRING
-            );
-        }
-
-        if (isset($json['title'])) {
-            PHPUnit::assertIsString(
-                $json['title'],
-                Messages::ERROR_TITLE_IS_NOT_STRING
-            );
-        }
-
-        if (isset($json['details'])) {
-            PHPUnit::assertIsString(
-                $json['details'],
-                Messages::ERROR_DETAILS_IS_NOT_STRING
-            );
+        foreach ($checks as $member => $failureMsg) {
+            if (isset($json[$member])) {
+                PHPUnit::assertIsString($json[$member], $failureMsg);
+            }
         }
 
         if (isset($json['source'])) {

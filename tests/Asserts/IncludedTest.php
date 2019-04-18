@@ -78,11 +78,8 @@ class IncludedTest extends TestCase
      */
     public function compoundDocumentIsNotValid($json, $strict, $failureMessage)
     {
-        $fn = function ($json, $strict) {
-            JsonApiAssert::assertIsValidIncludedCollection($json['included'], $json['data'], $strict);
-        };
-
-        JsonApiAssert::assertTestFail($fn, $failureMessage, $json, $strict);
+        $this->setFailureException($failureMessage);
+        JsonApiAssert::assertIsValidIncludedCollection($json['included'], $json['data'], $strict);
     }
 
     public function notValidIncludedProvider()

@@ -27,11 +27,8 @@ class MetaObjectTest extends TestCase
      */
     public function metaObjectIsNotValid($json, $strict, $failureMessage)
     {
-        $fn = function ($json, $strict) {
-            JsonApiAssert::assertIsValidMetaObject($json, $strict);
-        };
-
-        JsonApiAssert::assertTestFail($fn, $failureMessage, $json, $strict);
+        $this->setFailureException($failureMessage);
+        JsonApiAssert::assertIsValidMetaObject($json, $strict);
     }
 
     public function notValidMetaObjectProvider()

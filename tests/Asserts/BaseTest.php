@@ -1,59 +1,13 @@
 <?php
 namespace VGirol\JsonApiAssert\Tests\Asserts;
 
-use PHPUnit\Framework\Assert as PHPUnit;
 use PHPUnit\Framework\Exception;
-use PHPUnit\Framework\ExpectationFailedException;
 use VGirol\JsonApiAssert\Assert as JsonApiAssert;
 use VGirol\JsonApiAssert\Messages;
 use VGirol\JsonApiAssert\Tests\TestCase;
 
 class BaseTest extends TestCase
 {
-    /**
-     * @test
-     */
-    public function assertTestFailedWithSuccess()
-    {
-        $failureMsg = 'Try again !';
-        $fn = function () use ($failureMsg) {
-            PHPUnit::assertTrue(false, $failureMsg);
-        };
-
-        JsonApiAssert::assertTestFail($fn, $failureMsg);
-    }
-
-    /**
-     * @test
-     */
-    public function assertTestFailedWithError()
-    {
-        $failureMsg = 'Try again !';
-        $fn = function () {
-            PHPUnit::assertTrue(false);
-        };
-
-        $this->expectException(Exception::class);
-
-        JsonApiAssert::assertTestFail($fn, $failureMsg);
-    }
-
-    /**
-     * @test
-     */
-    public function assertTestFailedButDoesntFailed()
-    {
-        $failureMsg = 'Try again !';
-        $fn = function () use ($failureMsg) {
-            PHPUnit::assertTrue(true, $failureMsg);
-        };
-
-        $this->expectException(ExpectationFailedException::class);
-        $this->expectExceptionMessage(Messages::TEST_FAILED);
-
-        JsonApiAssert::assertTestFail($fn, $failureMsg);
-    }
-
     /**
      * @test
      */
@@ -77,13 +31,10 @@ class BaseTest extends TestCase
         $json = [
             'anything' => 'else'
         ];
-        $failureMsg = sprintf(Messages::HAS_MEMBER, 'member');
+        $failureMessage = sprintf(Messages::HAS_MEMBER, 'member');
 
-        $fn = function ($expected, $json) {
-            JsonApiAssert::assertHasMember($expected, $json);
-        };
-
-        JsonApiAssert::assertTestFail($fn, $failureMsg, $expected, $json);
+        $this->setFailureException($failureMessage);
+        JsonApiAssert::assertHasMember($expected, $json);
     }
 
     /**
@@ -143,13 +94,10 @@ class BaseTest extends TestCase
             'anything' => 'else'
         ];
         $keys = ['meta', 'nothing'];
-        $failureMsg = sprintf(Messages::HAS_MEMBER, 'nothing');
+        $failureMessage = sprintf(Messages::HAS_MEMBER, 'nothing');
 
-        $fn = function ($data, $keys) {
-            JsonApiAssert::assertHasMembers($keys, $data);
-        };
-
-        JsonApiAssert::assertTestFail($fn, $failureMsg, $data, $keys);
+        $this->setFailureException($failureMessage);
+        JsonApiAssert::assertHasMembers($keys, $data);
     }
 
     /**
@@ -211,13 +159,10 @@ class BaseTest extends TestCase
             'anything' => 'else'
         ];
         $keys = ['meta', 'data'];
-        $failureMsg = sprintf(Messages::HAS_ONLY_MEMBERS, implode(', ', $keys));
+        $failureMessage = sprintf(Messages::HAS_ONLY_MEMBERS, implode(', ', $keys));
 
-        $fn = function ($data, $keys) {
-            JsonApiAssert::assertHasOnlyMembers($keys, $data);
-        };
-
-        JsonApiAssert::assertTestFail($fn, $failureMsg, $data, $keys);
+        $this->setFailureException($failureMessage);
+        JsonApiAssert::assertHasOnlyMembers($keys, $data);
     }
 
     /**
@@ -277,17 +222,10 @@ class BaseTest extends TestCase
             'anything' => 'else'
         ];
         $expected = 'anything';
+        $failureMessage = sprintf(Messages::NOT_HAS_MEMBER, $expected);
 
-        $fn = function ($data, $expected) {
-            JsonApiAssert::assertNotHasMember($expected, $data);
-        };
-
-        JsonApiAssert::assertTestFail(
-            $fn,
-            sprintf(Messages::NOT_HAS_MEMBER, $expected),
-            $data,
-            $expected
-        );
+        $this->setFailureException($failureMessage);
+        JsonApiAssert::assertNotHasMember($expected, $data);
     }
 
     /**
@@ -352,17 +290,10 @@ class BaseTest extends TestCase
             'anything',
             'something'
         ];
+        $failureMessage = sprintf(Messages::NOT_HAS_MEMBER, 'anything');
 
-        $fn = function ($data, $expected) {
-            JsonApiAssert::assertNotHasMembers($expected, $data);
-        };
-
-        JsonApiAssert::assertTestFail(
-            $fn,
-            sprintf(Messages::NOT_HAS_MEMBER, 'anything'),
-            $data,
-            $expected
-        );
+        $this->setFailureException($failureMessage);
+        JsonApiAssert::assertNotHasMembers($expected, $data);
     }
 
     /**
@@ -507,17 +438,10 @@ class BaseTest extends TestCase
             'meta' => 'valid',
             'errors' => 'jsonapi'
         ];
+        $failureMessage = sprintf(Messages::CONTAINS_AT_LEAST_ONE, implode(', ', $expected));
 
-        $fn = function ($expected, $data) {
-            JsonApiAssert::assertContainsAtLeastOneMember($expected, $data);
-        };
-
-        JsonApiAssert::assertTestFail(
-            $fn,
-            sprintf(Messages::CONTAINS_AT_LEAST_ONE, implode(', ', $expected)),
-            $expected,
-            $data
-        );
+        $this->setFailureException($failureMessage);
+        JsonApiAssert::assertContainsAtLeastOneMember($expected, $data);
     }
 
     /**
@@ -544,17 +468,10 @@ class BaseTest extends TestCase
             'meta' => 'valid',
             'errors' => 'jsonapi'
         ];
+        $failureMessage = Messages::ONLY_ALLOWED_MEMBERS;
 
-        $fn = function ($expected, $data) {
-            JsonApiAssert::assertContainsOnlyAllowedMembers($expected, $data);
-        };
-
-        JsonApiAssert::assertTestFail(
-            $fn,
-            Messages::ONLY_ALLOWED_MEMBERS,
-            $expected,
-            $data
-        );
+        $this->setFailureException($failureMessage);
+        JsonApiAssert::assertContainsOnlyAllowedMembers($expected, $data);
     }
 
     /**
@@ -591,16 +508,8 @@ class BaseTest extends TestCase
      */
     public function assertIsArrayOfObjectsFailed($data, $message, $failureMessage)
     {
-        $fn = function ($data, $message) {
-            JsonApiAssert::assertIsArrayOfObjects($data, $message);
-        };
-
-        JsonApiAssert::assertTestFail(
-            $fn,
-            $failureMessage,
-            $data,
-            $message
-        );
+        $this->setFailureException($failureMessage);
+        JsonApiAssert::assertIsArrayOfObjects($data, $message);
     }
 
     public function notArrayOfObjectsProvider()
@@ -666,15 +575,9 @@ class BaseTest extends TestCase
                 'first' => 'jsonapi'
             ]
         ];
+        $failureMessage = null;
 
-        $fn = function ($data) {
-            JsonApiAssert::assertIsNotArrayOfObjects($data);
-        };
-
-        JsonApiAssert::assertTestFail(
-            $fn,
-            null,
-            $data
-        );
+        $this->setFailureException($failureMessage);
+        JsonApiAssert::assertIsNotArrayOfObjects($data);
     }
 }

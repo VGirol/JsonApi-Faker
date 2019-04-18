@@ -33,12 +33,11 @@ trait AssertResourceLinkage
             return;
         }
 
-        if (static::isArrayOfObjects($json)) {
-            foreach ($json as $resource) {
-                static::assertIsValidResourceIdentifierObject($resource, $strict);
-            }
-        } else {
-            static::assertIsValidResourceIdentifierObject($json, $strict);
+        if (!static::isArrayOfObjects($json)) {
+            $json = [$json];
+        }
+        foreach ($json as $resource) {
+            static::assertIsValidResourceIdentifierObject($resource, $strict);
         }
     }
 

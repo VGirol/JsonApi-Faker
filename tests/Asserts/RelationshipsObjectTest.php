@@ -52,11 +52,8 @@ class RelationshipsObjectTest extends TestCase
      */
     public function relationshipLinksObjectIsNotValid($json, $withPagination, $strict, $failureMessage)
     {
-        $fn = function ($json, $withPagination, $strict) {
-            JsonApiAssert::assertIsValidRelationshipLinksObject($json, $withPagination, $strict);
-        };
-
-        JsonApiAssert::assertTestFail($fn, $failureMessage, $json, $withPagination, $strict);
+        $this->setFailureException($failureMessage);
+        JsonApiAssert::assertIsValidRelationshipLinksObject($json, $withPagination, $strict);
     }
 
     public function notValidRelationshipLinksObjectProvider()
@@ -158,11 +155,8 @@ class RelationshipsObjectTest extends TestCase
      */
     public function relationshipObjectIsNotValid($data, $strict, $failureMessage)
     {
-        $fn = function ($data, $strict) {
-            JsonApiAssert::assertIsValidRelationshipObject($data, $strict);
-        };
-
-        JsonApiAssert::assertTestFail($fn, $failureMessage, $data, $strict);
+        $this->setFailureException($failureMessage);
+        JsonApiAssert::assertIsValidRelationshipObject($data, $strict);
     }
 
     public function notValidRelationshipObjectProvider()
@@ -269,11 +263,8 @@ class RelationshipsObjectTest extends TestCase
      */
     public function relationshipsObjectIsNotValid($data, $strict, $failureMessage)
     {
-        $fn = function ($data, $strict) {
-            JsonApiAssert::assertIsValidRelationshipsObject($data, $strict);
-        };
-
-        JsonApiAssert::assertTestFail($fn, $failureMessage, $data, $strict);
+        $this->setFailureException($failureMessage);
+        JsonApiAssert::assertIsValidRelationshipsObject($data, $strict);
     }
 
     public function notValidRelationshipsObjectProvider()

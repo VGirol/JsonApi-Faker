@@ -23,11 +23,8 @@ class ResourceObjectTest extends TestCase
      */
     public function resourceFieldNameIsForbidden($name, $failureMessage)
     {
-        $fn = function ($name) {
-            JsonApiAssert::assertIsNotForbiddenResourceFieldName($name);
-        };
-
-        JsonApiAssert::assertTestFail($fn, $failureMessage, $name);
+        $this->setFailureException($failureMessage);
+        JsonApiAssert::assertIsNotForbiddenResourceFieldName($name);
     }
 
     public function resourceFieldNameIsForbiddenProvider()
@@ -63,11 +60,8 @@ class ResourceObjectTest extends TestCase
      */
     public function resourceLinksObjectIsNotValid($json, $strict, $failureMessage)
     {
-        $fn = function ($json, $strict) {
-            JsonApiAssert::assertIsValidResourceLinksObject($json, $strict);
-        };
-
-        JsonApiAssert::assertTestFail($fn, $failureMessage, $json, $strict);
+        $this->setFailureException($failureMessage);
+        JsonApiAssert::assertIsValidResourceLinksObject($json, $strict);
     }
 
     public function notValidResourceLinksObjectProvider()
@@ -119,18 +113,15 @@ class ResourceObjectTest extends TestCase
 
     /**
      * @test
-     * @dataProvider hasotValidTopLevelStructureProvider
+     * @dataProvider hasNotValidTopLevelStructureProvider
      */
-    public function resourceHasNotValidTopLevelStructure($data, $failureMessage)
+    public function resourceHasNotValidTopLevelStructure($json, $failureMessage)
     {
-        $fn = function ($response) {
-            JsonApiAssert::assertResourceObjectHasValidTopLevelStructure($response);
-        };
-
-        JsonApiAssert::assertTestFail($fn, $failureMessage, $data);
+        $this->setFailureException($failureMessage);
+        JsonApiAssert::assertResourceObjectHasValidTopLevelStructure($json);
     }
 
-    public function hasotValidTopLevelStructureProvider()
+    public function hasNotValidTopLevelStructureProvider()
     {
         return [
             'not an array' => [
@@ -196,13 +187,10 @@ class ResourceObjectTest extends TestCase
      * @test
      * @dataProvider notValidResourceIdMemberProvider
      */
-    public function resourceIdMemberIsNotValid($data, $failureMessage)
+    public function resourceIdMemberIsNotValid($json, $failureMessage)
     {
-        $fn = function ($response) {
-            JsonApiAssert::assertResourceIdMember($response);
-        };
-
-        JsonApiAssert::assertTestFail($fn, $failureMessage, $data);
+        $this->setFailureException($failureMessage);
+        JsonApiAssert::assertResourceIdMember($json);
     }
 
     public function notValidResourceIdMemberProvider()
@@ -245,11 +233,8 @@ class ResourceObjectTest extends TestCase
      */
     public function resourceTypeMemberIsNotValid($json, $strict, $failureMessage)
     {
-        $fn = function ($json, $strict) {
-            JsonApiAssert::assertResourceTypeMember($json, $strict);
-        };
-
-        JsonApiAssert::assertTestFail($fn, $failureMessage, $json, $strict);
+        $this->setFailureException($failureMessage);
+        JsonApiAssert::assertResourceTypeMember($json, $strict);
     }
 
     public function notValidResourceTypeMemberProvider()
@@ -318,13 +303,10 @@ class ResourceObjectTest extends TestCase
      * @test
      * @dataProvider isNotValidResourceFieldProvider
      */
-    public function resourceFieldIsNotValid($data, $failureMessage)
+    public function resourceFieldIsNotValid($json, $failureMessage)
     {
-        $fn = function ($response) {
-            JsonApiAssert::assertHasValidFields($response);
-        };
-
-        JsonApiAssert::assertTestFail($fn, $failureMessage, $data);
+        $this->setFailureException($failureMessage);
+        JsonApiAssert::assertHasValidFields($json);
     }
 
     public function isNotValidResourceFieldProvider()
@@ -421,11 +403,8 @@ class ResourceObjectTest extends TestCase
      */
     public function resourceObjectIsNotValid($json, $strict, $failureMessage)
     {
-        $fn = function ($json, $strict) {
-            JsonApiAssert::assertIsValidResourceObject($json, $strict);
-        };
-
-        JsonApiAssert::assertTestFail($fn, $failureMessage, $json, $strict);
+        $this->setFailureException($failureMessage);
+        JsonApiAssert::assertIsValidResourceObject($json, $strict);
     }
 
     public function isNotValidResourceObjectProvider()

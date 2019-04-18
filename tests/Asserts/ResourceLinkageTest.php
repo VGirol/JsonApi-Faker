@@ -56,11 +56,8 @@ class ResourceLinkageTest extends TestCase
      */
     public function resourceLinkageIsNotValid($data, $strict, $failureMessage)
     {
-        $fn = function ($data, $strict) {
-            JsonApiAssert::assertIsValidResourceLinkage($data, $strict);
-        };
-
-        JsonApiAssert::assertTestFail($fn, $failureMessage, $data, $strict);
+        $this->setFailureException($failureMessage);
+        JsonApiAssert::assertIsValidResourceLinkage($data, $strict);
     }
 
     public function notValidResourceLinkageProvider()
@@ -132,11 +129,8 @@ class ResourceLinkageTest extends TestCase
      */
     public function resourceIdentifierObjectIsNotValid($json, $strict, $failureMessage)
     {
-        $fn = function ($json, $strict) {
-            JsonApiAssert::assertIsValidResourceIdentifierObject($json, $strict);
-        };
-
-        JsonApiAssert::assertTestFail($fn, $failureMessage, $json, $strict);
+        $this->setFailureException($failureMessage);
+        JsonApiAssert::assertIsValidResourceIdentifierObject($json, $strict);
     }
 
     public function isNotValidResourceIdentifierObjectProvider()
