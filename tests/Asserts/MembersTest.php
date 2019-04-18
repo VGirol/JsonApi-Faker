@@ -1,12 +1,11 @@
 <?php
 namespace VGirol\JsonApiAssert\Tests\Asserts;
 
-use PHPUnit\Framework\Exception;
 use VGirol\JsonApiAssert\Assert as JsonApiAssert;
 use VGirol\JsonApiAssert\Messages;
 use VGirol\JsonApiAssert\Tests\TestCase;
 
-class BaseTest extends TestCase
+class MembersTest extends TestCase
 {
     /**
      * @test
@@ -41,12 +40,9 @@ class BaseTest extends TestCase
      * @test
      * @dataProvider hasMemberInvalidArgumentsProvider
      */
-    public function assertHasMemberInvalidArguments($expected, $json, $failureMsg)
+    public function assertHasMemberInvalidArguments($expected, $json, $arg, $type)
     {
-        $this->expectException(Exception::class);
-        if (!is_null($failureMsg)) {
-            $this->expectExceptionMessageRegExp($failureMsg);
-        }
+        $this->setInvalidArgumentException($arg, $type, $arg == 1 ? $expected : $json);
 
         JsonApiAssert::assertHasMember($expected, $json);
     }
@@ -59,12 +55,14 @@ class BaseTest extends TestCase
                 [
                     'anything' => 'else'
                 ],
-                JsonApiAssert::getInvalidArgumentExceptionRegex(1, 'string', 666)
+                1,
+                'string'
             ],
             '$json is not an array' => [
                 'anything',
                 'invalid',
-                JsonApiAssert::getInvalidArgumentExceptionRegex(2, 'array', 'invalid')
+                2,
+                'array'
             ]
         ];
     }
@@ -77,7 +75,7 @@ class BaseTest extends TestCase
         $data = [
             'data' => 'jsonapi',
             'meta' => 'valid',
-            'jsonapi' =>'ok'
+            'jsonapi' => 'ok'
         ];
         $expected = ['data', 'meta'];
 
@@ -104,12 +102,9 @@ class BaseTest extends TestCase
      * @test
      * @dataProvider hasMembersInvalidArgumentsProvider
      */
-    public function assertHasMembersWithInvalidArguments($expected, $json, $failureMsg)
+    public function assertHasMembersWithInvalidArguments($expected, $json, $arg, $type)
     {
-        $this->expectException(Exception::class);
-        if (!is_null($failureMsg)) {
-            $this->expectExceptionMessageRegExp($failureMsg);
-        }
+        $this->setInvalidArgumentException($arg, $type, $arg == 1 ? $expected : $json);
 
         JsonApiAssert::assertHasMembers($expected, $json);
     }
@@ -122,14 +117,16 @@ class BaseTest extends TestCase
                 [
                     'anything' => 'else'
                 ],
-                JsonApiAssert::getInvalidArgumentExceptionRegex(1, 'array', 'invalid')
+                1,
+                'array'
             ],
             '$json is not an array' => [
                 [
                     'anything'
                 ],
                 'invalid',
-                JsonApiAssert::getInvalidArgumentExceptionRegex(2, 'array', 'invalid')
+                2,
+                'array'
             ]
         ];
     }
@@ -169,12 +166,9 @@ class BaseTest extends TestCase
      * @test
      * @dataProvider hasOnlyMembersInvalidArgumentsProvider
      */
-    public function assertHasOnlyMembersWithInvalidArguments($expected, $json, $failureMsg)
+    public function assertHasOnlyMembersWithInvalidArguments($expected, $json, $arg, $type)
     {
-        $this->expectException(Exception::class);
-        if (!is_null($failureMsg)) {
-            $this->expectExceptionMessageRegExp($failureMsg);
-        }
+        $this->setInvalidArgumentException($arg, $type, $arg == 1 ? $expected : $json);
 
         JsonApiAssert::assertHasOnlyMembers($expected, $json);
     }
@@ -187,14 +181,16 @@ class BaseTest extends TestCase
                 [
                     'anything' => 'else'
                 ],
-                JsonApiAssert::getInvalidArgumentExceptionRegex(1, 'array', 666)
+                1,
+                'array'
             ],
             '$json is not an array' => [
                 [
                     'anything'
                 ],
                 'invalid',
-                JsonApiAssert::getInvalidArgumentExceptionRegex(2, 'array', 'invalid')
+                2,
+                'array'
             ]
         ];
     }
@@ -232,12 +228,9 @@ class BaseTest extends TestCase
      * @test
      * @dataProvider notHasMemberInvalidArgumentsProvider
      */
-    public function assertNotHasMemberWithInvalidArguments($expected, $json, $failureMsg)
+    public function assertNotHasMemberWithInvalidArguments($expected, $json, $arg, $type)
     {
-        $this->expectException(Exception::class);
-        if (!is_null($failureMsg)) {
-            $this->expectExceptionMessageRegExp($failureMsg);
-        }
+        $this->setInvalidArgumentException($arg, $type, $arg == 1 ? $expected : $json);
 
         JsonApiAssert::assertNotHasMember($expected, $json);
     }
@@ -250,12 +243,14 @@ class BaseTest extends TestCase
                 [
                     'anything' => 'else'
                 ],
-                JsonApiAssert::getInvalidArgumentExceptionRegex(1, 'string', 666)
+                1,
+                'string'
             ],
             '$json is not an array' => [
                 'anything',
                 'invalid',
-                JsonApiAssert::getInvalidArgumentExceptionRegex(2, 'array', 'invalid')
+                2,
+                'array'
             ]
         ];
     }
@@ -298,29 +293,16 @@ class BaseTest extends TestCase
 
     /**
      * @test
-     * @dataProvider notHasMembersInvalidArgumentsProvider
      */
-    public function assertNotHasMembersWithInvalidArguments($expected, $json, $failureMsg)
+    public function assertNotHasMembersWithInvalidArguments()
     {
-        $this->expectException(Exception::class);
-        if (!is_null($failureMsg)) {
-            $this->expectExceptionMessageRegExp($failureMsg);
-        }
+        $expected = 666;
+        $json = [
+            'anything' => 'else'
+        ];
+        $this->setInvalidArgumentException(1, 'array', $expected);
 
         JsonApiAssert::assertNotHasMembers($expected, $json);
-    }
-
-    public function notHasMembersInvalidArgumentsProvider()
-    {
-        return [
-            '$expected is not an array' => [
-                666,
-                [
-                    'anything' => 'else'
-                ],
-                JsonApiAssert::getInvalidArgumentExceptionRegex(1, 'array', 666)
-            ]
-        ];
     }
 
     /**
@@ -472,112 +454,5 @@ class BaseTest extends TestCase
 
         $this->setFailureException($failureMessage);
         JsonApiAssert::assertContainsOnlyAllowedMembers($expected, $data);
-    }
-
-    /**
-     * @test
-     * @dataProvider arrayOfObjectsProvider
-     */
-    public function assertIsArrayOfObjects($json)
-    {
-        JsonApiAssert::assertIsArrayOfObjects($json);
-    }
-
-    public function arrayOfObjectsProvider()
-    {
-        return [
-            'empty array' => [
-                []
-            ],
-            'filled array' => [
-                [
-                    [
-                        'meta' => 'valid'
-                    ],
-                    [
-                        'first' => 'jsonapi'
-                    ]
-                ]
-            ]
-        ];
-    }
-
-    /**
-     * @test
-     * @dataProvider notArrayOfObjectsProvider
-     */
-    public function assertIsArrayOfObjectsFailed($data, $message, $failureMessage)
-    {
-        $this->setFailureException($failureMessage);
-        JsonApiAssert::assertIsArrayOfObjects($data, $message);
-    }
-
-    public function notArrayOfObjectsProvider()
-    {
-        return [
-            'associative array' => [
-                [
-                    'meta' => 'valid',
-                    'errors' => 'jsonapi'
-                ],
-                null,
-                Messages::MUST_BE_ARRAY_OF_OBJECTS
-            ],
-            'customized message' => [
-                [
-                    'meta' => 'valid',
-                    'errors' => 'jsonapi'
-                ],
-                'customized message',
-                'customized message'
-            ]
-        ];
-    }
-
-    /**
-     * @test
-     */
-    public function assertIsArrayOfObjectsWithInvalidArguments()
-    {
-
-        $json = 'invalid';
-        $failureMsg = JsonApiAssert::getInvalidArgumentExceptionRegex(1, 'array', $json);
-
-        $this->expectException(Exception::class);
-        $this->expectExceptionMessageRegExp($failureMsg);
-
-        JsonApiAssert::assertIsArrayOfObjects($json);
-    }
-
-    /**
-     * @test
-     */
-    public function assertIsNotArrayOfObjects()
-    {
-        $data = [
-            'meta' => 'valid',
-            'first' => 'jsonapi'
-        ];
-
-        JsonApiAssert::assertIsNotArrayOfObjects($data);
-    }
-
-    /**
-     * @test
-     */
-    public function assertIsNotArrayOfObjectsFailed()
-    {
-        $data = [
-            [
-                'meta' => 'valid'
-            ],
-            [
-                'first' => 'jsonapi'
-            ]
-        ];
-        $failureMessage = null;
-
-        $this->setFailureException($failureMessage);
-        JsonApiAssert::assertIsNotArrayOfObjects($data);
     }
 }

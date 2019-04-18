@@ -12,7 +12,7 @@ trait AssertResourceObject
      * @param array     $json
      * @param boolean   $strict         If true, unsafe characters are not allowed when checking members name.
      *
-     * @throws PHPUnit\Framework\ExpectationFailedException
+     * @throws \PHPUnit\Framework\ExpectationFailedException
      */
     public static function assertIsValidResourceObject($json, $strict)
     {
@@ -44,7 +44,7 @@ trait AssertResourceObject
      *
      * @param array $resource
      *
-     * @throws PHPUnit\Framework\ExpectationFailedException
+     * @throws \PHPUnit\Framework\ExpectationFailedException
      */
     public static function assertResourceObjectHasValidTopLevelStructure($resource)
     {
@@ -76,7 +76,7 @@ trait AssertResourceObject
      *
      * @param array $resource
      *
-     * @throws PHPUnit\Framework\ExpectationFailedException
+     * @throws \PHPUnit\Framework\ExpectationFailedException
      */
     public static function assertResourceIdMember($resource)
     {
@@ -97,7 +97,7 @@ trait AssertResourceObject
      * @param array     $resource
      * @param boolean   $strict         If true, excludes not safe characters when checking members name
      *
-     * @throws PHPUnit\Framework\ExpectationFailedException
+     * @throws \PHPUnit\Framework\ExpectationFailedException
      */
     public static function assertResourceTypeMember($resource, $strict)
     {
@@ -120,7 +120,7 @@ trait AssertResourceObject
      * @param array     $json
      * @param boolean   $strict         If true, excludes not safe characters when checking members name
      *
-     * @throws PHPUnit\Framework\ExpectationFailedException
+     * @throws \PHPUnit\Framework\ExpectationFailedException
      */
     public static function assertIsValidResourceLinksObject($json, $strict)
     {
@@ -133,7 +133,7 @@ trait AssertResourceObject
      *
      * @param array $resource
      *
-     * @throws PHPUnit\Framework\ExpectationFailedException
+     * @throws \PHPUnit\Framework\ExpectationFailedException
      */
     public static function assertHasValidFields($resource)
     {
@@ -163,7 +163,7 @@ trait AssertResourceObject
      *
      * @param string $name
      *
-     * @throws PHPUnit\Framework\ExpectationFailedException
+     * @throws \PHPUnit\Framework\ExpectationFailedException
      */
     public static function assertIsNotForbiddenResourceFieldName($name)
     {

@@ -13,13 +13,7 @@ class RelationshipsObjectTest extends TestCase
      */
     public function relationshipLinksObjectIsValid($json, $withPagination, $strict)
     {
-        $links = [
-            'self' => 'url'
-        ];
-        $withPagination = false;
-        $strict = false;
-
-        JsonApiAssert::assertIsValidRelationshipLinksObject($links, $withPagination, $strict);
+        JsonApiAssert::assertIsValidRelationshipLinksObject($json, $withPagination, $strict);
     }
 
     public function validRelationshipLinksObjectProvider()

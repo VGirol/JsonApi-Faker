@@ -1,5 +1,5 @@
 <?php
-declare(strict_types=1);
+declare (strict_types = 1);
 
 use Phan\Issue;
 
@@ -178,7 +178,7 @@ return [
     // (Phan does not check if classes with these names exist)
     //
     // Example setting: ['unknown' => '', 'number' => 'int|float', 'char' => 'string', 'long' => 'int', 'the' => '']
-    'phpdoc_type_mapping' => [ ],
+    'phpdoc_type_mapping' => [],
 
     // Set to true in order to attempt to detect dead
     // (unreferenced) code. Keep in mind that the
@@ -335,7 +335,7 @@ return [
     // your application should be included in this list.
     'directory_list' => [
         'src',
-        'tests',
+        // 'tests',
         'vendor'
     ],
 
@@ -355,6 +355,7 @@ return [
     //       should be added to the `directory_list` as
     //       to `exclude_analysis_directory_list`.
     'exclude_analysis_directory_list' => [
+        'tests/',
         'vendor/'
     ],
 
@@ -409,7 +410,6 @@ return [
         // Plugins for Phan's self-analysis
         ////////////////////////////////////////////////////////////////////////
 
-        // TODO: warn about the usage of assert() for Phan's self-analysis. See https://github.com/phan/phan/issues/288
         'NoAssertPlugin',
 
         'HasPHPDocPlugin',

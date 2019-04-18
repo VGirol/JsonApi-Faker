@@ -93,7 +93,7 @@ class MyTest extends TestCase
 
 ### assertContainsAtLeastOneMember
 
-Asserts that a json object contains at least one member from the provided list.
+Asserts that a json object contains at least one member from the expected list.
 
 Parameters :
 

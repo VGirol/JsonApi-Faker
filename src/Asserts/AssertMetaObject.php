@@ -11,7 +11,7 @@ trait AssertMetaObject
      * @param array     $json
      * @param boolean   $strict         If true, unsafe characters are not allowed when checking members name.
      *
-     * @throws PHPUnit\Framework\ExpectationFailedException
+     * @throws \PHPUnit\Framework\ExpectationFailedException
      */
     public static function assertIsValidMetaObject($json, $strict)
     {

@@ -1,5 +1,5 @@
 <?php
-namespace VGirol\JsonApiAssert\Tests\Asserts;
+namespace VGirol\JsonApiAssert\Tests\Constraints;
 
 use PHPUnit\Framework\ExpectationFailedException;
 use VGirol\JsonApiAssert\Constraint\ContainsOnlyAllowedMembersConstraint;

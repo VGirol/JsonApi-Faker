@@ -1,7 +1,6 @@
 <?php
 namespace VGirol\JsonApiAssert\Tests\Asserts;
 
-use PHPUnit\Framework\Exception;
 use VGirol\JsonApiAssert\Assert as JsonApiAssert;
 use VGirol\JsonApiAssert\Messages;
 use VGirol\JsonApiAssert\Tests\TestCase;
@@ -47,12 +46,8 @@ class AttributesObjectTest extends TestCase
     public function assertIsNotForbiddenMemberNameWithInvalidArguments()
     {
         $data = 666;
-        $failureMsg = JsonApiAssert::getInvalidArgumentExceptionRegex(1, 'string', $data);
 
-        $this->expectException(Exception::class);
-        if (!is_null($failureMsg)) {
-            $this->expectExceptionMessageRegExp($failureMsg);
-        }
+        $this->setInvalidArgumentException(1, 'string', $data);
 
         JsonApiAssert::assertIsNotForbiddenMemberName($data);
     }
@@ -170,26 +165,14 @@ class AttributesObjectTest extends TestCase
 
     /**
      * @test
-     * @dataProvider assertIsValidAttributesObjectInvalidArgumentsProvider
      */
-    public function assertIsValidAttributesObjectWithInvalidArguments($attributes, $strict, $failureMsg)
+    public function assertIsValidAttributesObjectWithInvalidArguments()
     {
-        $this->expectException(Exception::class);
-        if (!is_null($failureMsg)) {
-            $this->expectExceptionMessageRegExp($failureMsg);
-        }
+        $attributes = 'failed';
+        $strict = false;
+
+        $this->setInvalidArgumentException(1, 'array', $attributes);
 
         JsonApiAssert::assertIsValidAttributesObject($attributes, $strict);
-    }
-
-    public function assertIsValidAttributesObjectInvalidArgumentsProvider()
-    {
-        return [
-            'not an array' => [
-                'failed',
-                false,
-                JsonApiAssert::getInvalidArgumentExceptionRegex(1, 'array', 'failed')
-            ]
-        ];
     }
 }

@@ -2,7 +2,7 @@
 
 namespace VGirol\JsonApiAssert\Tests;
 
-use \PHPUnit\Framework\Exception;
+use PHPUnit\Framework\Exception;
 use PHPUnit\Framework\ExpectationFailedException;
 
 trait SetExceptionsTrait
@@ -22,7 +22,7 @@ trait SetExceptionsTrait
             \sprintf(
                 '/Argument #%d%sof %s::%s\(\) must be a %s/',
                 $arg,
-                '[\s\S]*',
+                is_null($value) ? '[\s\S]*' : ' \(' . \gettype($value) . '#' . $value . '\)',
                 '.*',
                 '.*',
                 \preg_quote($type)

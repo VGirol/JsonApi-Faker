@@ -12,7 +12,7 @@ trait AssertMemberName
      * @param string    $name
      * @param boolean   $strict     If true, unsafe characters are not allowed when checking members name.
      *
-     * @throws PHPUnit\Framework\ExpectationFailedException
+     * @throws \PHPUnit\Framework\ExpectationFailedException
      */
     public static function assertIsValidMemberName($name, $strict)
     {
@@ -34,19 +34,19 @@ trait AssertMemberName
         $allowed = '\x{002D}\x{005F}';
         $allowedNotSafe = '\x{0020}';
 
-        $regex = $strict ? "/[^{$globally}{$allowed}]+/u" :
-            "/[^{$globally}{$globallyNotSafe}{$allowed}{$allowedNotSafe}]+/u";
+        $regex = "/[^{$globally}{$globallyNotSafe}{$allowed}{$allowedNotSafe}]+/u";
+        $safeRegex = "/[^{$globally}{$allowed}]+/u";
 
         PHPUnit::assertNotRegExp(
-            $regex,
+            $strict ? $safeRegex : $regex,
             $name,
             Messages::MEMBER_NAME_HAVE_RESERVED_CHARACTERS
         );
 
-        $regex = $strict ? "/^[{$globally}]{1}(?:.*[{$globally}]{1})?$/u" :
-            "/^[{$globally}{$globallyNotSafe}]{1}(?:.*[{$globally}{$globallyNotSafe}]{1})?$/u";
+        $regex = "/^[{$globally}{$globallyNotSafe}]{1}(?:.*[{$globally}{$globallyNotSafe}]{1})?$/u";
+        $safeRegex = "/^[{$globally}]{1}(?:.*[{$globally}]{1})?$/u";
         PHPUnit::assertRegExp(
-            $regex,
+            $strict ? $safeRegex : $regex,
             $name,
             Messages::MEMBER_NAME_START_AND_END_WITH_ALLOWED_CHARACTERS
         );
