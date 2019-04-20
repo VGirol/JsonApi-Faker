@@ -5,6 +5,9 @@ use PHPUnit\Framework\Assert as PHPUnit;
 use PHPUnit\Util\InvalidArgumentHelper;
 use VGirol\JsonApiAssert\Messages;
 
+/**
+ * Assertions relating to the arrays
+ */
 trait AssertArrays
 {
     /**
@@ -12,10 +15,10 @@ trait AssertArrays
      *
      * @param array     $json
      * @param string    $message   An optional message to explain why the test failed
-     *
+     * @return void
      * @throws \PHPUnit\Framework\ExpectationFailedException
      */
-    public static function assertIsArrayOfObjects($json, $message = '')
+    public static function assertIsArrayOfObjects($json, $message = ''): void
     {
         if (!\is_array($json)) {
             throw InvalidArgumentHelper::factory(
@@ -34,10 +37,10 @@ trait AssertArrays
      *
      * @param array     $json
      * @param string    $message   An optional message to explain why the test failed
-     *
+     * @return void
      * @throws \PHPUnit\Framework\ExpectationFailedException
      */
-    public static function assertIsNotArrayOfObjects($json, $message = '')
+    public static function assertIsNotArrayOfObjects($json, $message = ''): void
     {
         if (!\is_array($json)) {
             throw InvalidArgumentHelper::factory(
@@ -51,7 +54,13 @@ trait AssertArrays
         PHPUnit::assertFalse(static::isArrayOfObjects($json), $message);
     }
 
-    private static function isArrayOfObjects($arr)
+    /**
+     * Checks if the given array is an array of objects.
+     *
+     * @param array $arr
+     * @return boolean
+     */
+    protected static function isArrayOfObjects(array $arr): bool
     {
         if (empty($arr)) {
             return true;
@@ -60,7 +69,7 @@ trait AssertArrays
         return !static::arrayIsAssociative($arr);
     }
 
-    private static function arrayIsAssociative($arr)
+    private static function arrayIsAssociative(array $arr): bool
     {
         return (array_keys($arr) !== range(0, count($arr) - 1));
     }

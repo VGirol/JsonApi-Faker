@@ -3,6 +3,9 @@ namespace VGirol\JsonApiAssert\Constraint;
 
 use PHPUnit\Framework\Constraint\Constraint;
 
+/**
+ * A constraint class to assert that a json object contains only members from the provided list.
+ */
 class ContainsOnlyAllowedMembersConstraint extends Constraint
 {
     /**
@@ -10,6 +13,11 @@ class ContainsOnlyAllowedMembersConstraint extends Constraint
      */
     private $members;
 
+    /**
+     * Class constructor.
+     *
+     * @param array $members
+     */
     public function __construct(array $members)
     {
         $this->members = $members;

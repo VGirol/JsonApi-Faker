@@ -3,6 +3,9 @@ namespace VGirol\JsonApiAssert\Asserts;
 
 use VGirol\JsonApiAssert\Messages;
 
+/**
+ * Assertions relating to the meta object
+ */
 trait AssertMetaObject
 {
     /**
@@ -10,10 +13,10 @@ trait AssertMetaObject
      *
      * @param array     $json
      * @param boolean   $strict         If true, unsafe characters are not allowed when checking members name.
-     *
+     * @return void
      * @throws \PHPUnit\Framework\ExpectationFailedException
      */
-    public static function assertIsValidMetaObject($json, $strict)
+    public static function assertIsValidMetaObject($json, bool $strict): void
     {
         static::assertIsNotArrayOfObjects(
             $json,

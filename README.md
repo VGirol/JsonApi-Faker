@@ -39,7 +39,6 @@ composer require vgirol/jsonapi-assert
 You can use these assertions in your classes directly as a static call.
 
 ```php
-use PHPUnit\Framework\TestCase;
 use VGirol\JsonApiAssert\Assert as JsonApiAssert;
 
 class MyTest extends TestCase
@@ -64,13 +63,15 @@ class MyTest extends TestCase
 ```
 
 ```php
-use PHPUnit\Framework\TestCase;
-use VGirol\JsonApiAssert\Messages;
 use VGirol\JsonApiAssert\Assert as JsonApiAssert;
+use VGirol\JsonApiAssert\Messages;
+use VGirol\JsonApiAssert\SetExceptionsTrait;
 
 class MyTest extends TestCase
 {
-    /**
+    use SetExceptionsTrait;
+
+/**
      * @test
      */
     public function how_to_assert_that_a_test_failed()
@@ -95,126 +96,219 @@ class MyTest extends TestCase
 
 Asserts that a json object contains at least one member from the expected list.
 
+Definition:
+
+`assertContainsAtLeastOneMember($expected, $json, $message = '')`
+
 Parameters :
 
-- `$expected` (array)
-- `$json` (array)
-- `$message` (string)
+- `array<string>` `$expected`
+- `array` `$json`
+- `string` `$message` (optional)
 
 ### assertContainsOnlyAllowedMembers
 
-Asserts that a json object contains only members from the provided list.
+Asserts that a json object contains only members from the expected list.
 
-\$expected (array)  
-\$json (array)  
-\$message (string)
+Definition :
+
+`assertContainsOnlyAllowedMembers($expected, $json, $message = '')`
+
+Parameters :
+
+- `array<string>` `$expected`
+- `array` `$json`
+- `string` `$message` (optional)
 
 ### assertFieldHasNoForbiddenMemberName
 
-Asserts that a field object has no forbidden member name.
+Asserts that a field object (i.e., a resource object’s attributes or one of its relationships) has no forbidden member name.
 
-\$field (array)
+Definition :
+
+`assertFieldHasNoForbiddenMemberName($field)`
+
+Parameters :
+
+- `array` `$field`
 
 It will do the following checks :
 
 - asserts that each member name of the field is not a forbidden name ([assertIsNotForbiddenMemberName](#assertIsNotForbiddenMemberName)).
 - if the field has nested objects, it will checks each all.
 
-
 ### assertHasAttributes
 
 Asserts that a json object has an "attributes" member.
 
-\$json (array)
+Definition :
 
+`assertHasAttributes($json)`
+
+Parameters :
+
+- `array` `$json`
+
+See [`assertHasMember`](#assertHasMember).
 
 ### assertHasData
 
 Asserts that a json object has a "data" member.
 
-\$json (array)
+Definition :
 
+`assertHasData($json)`
+
+Parameters :
+
+- `array` `$json`
+
+See [`assertHasMember`](#assertHasMember).
 
 ### assertHasErrors
 
 Asserts that a json object has an "errors" member.
 
-\$json (array)
+Definition :
 
+`assertHasErrors($json)`
+
+Parameters :
+
+- `array` `$json`
+
+See [`assertHasMember`](#assertHasMember).
 
 ### assertHasIncluded
 
 Asserts that a json object has an "included" member.
 
-\$json (array)
+Definition :
 
+`assertHasIncluded($json)`
+
+Parameters :
+
+- `array` `$json`
+
+See [`assertHasMember`](#assertHasMember).
 
 ### assertHasLinks
 
 Asserts that a json object has a "links" member.
 
-\$json (array)
+Definition :
 
+`assertHasLinks($json)`
+
+Parameters :
+
+- `array` `$json`
+
+See [`assertHasMember`](#assertHasMember).
 
 ### assertHasMember
 
 Asserts that a json object has an expected member.
 
-\$expected (string)  
-\$json (array)
+Definition :
 
+`assertHasMember($expected, $json)`
+
+Parameters :
+
+- `string` `$expected`
+- `array` `$json`
 
 ### assertHasMembers
 
 Asserts that a json object has expected members.
 
-\$expected (array)  
-\$json (array)
+Definition :
 
+`assertHasMembers($expected, $json)`
+
+Parameters :
+
+- `array<string>` `$expected`
+- `array` `$json`
 
 ### assertHasMeta
 
 Asserts that a json object has a "meta" member.
 
-\$json (array)
+Definition :
 
+`assertHasMeta($json)`
+
+Parameters :
+
+- `array` `$json`
+
+See [`assertHasMember`](#assertHasMember).
 
 ### assertHasOnlyMembers
 
 Asserts that a json object has only expected members.
 
-\$expected (string)  
-\$json (array)
+Definition :
 
+`assertHasOnlyMembers($expected, $json)`
+
+Parameters :
+
+- `array<string>` `$expected`
+- `array` `$json`
 
 ### assertHasRelationships
 
 Asserts that a json object has a "relationships" member.
 
-\$json (array)
+Definition :
 
+`assertHasRelationships($json)`
+
+Parameters :
+
+- `array` `$json`
+
+See [`assertHasMember`](#assertHasMember).
 
 ### assertHasValidFields
 
-Asserts that a resource object has valid fields.
+Asserts that a resource object has valid fields (i.e., a resource object’s attributes and its relationships).
 
-\$resource (array)
+Definition :
+
+`assertHasValidFields($resource)`
+
+Parameters :
+
+- `array` `$resource`
 
 It will do the following checks :
-- asserts that each attributes member and each relationship name is valid ([assertIsNotForbiddenResourceFieldName](#assertIsNotForbiddenResourceFieldName)).
 
+- asserts that each attributes member and each relationship name is valid ([assertIsNotForbiddenResourceFieldName](#assertIsNotForbiddenResourceFieldName)).
 
 ### assertHasValidStructure
 
 Asserts that a json document has valid structure.
 
-\$json (array)  
-\$strict (boolean) : if true, unsafe characters are not allowed when checking members name.
+Definition :
+
+`assertHasValidStructure($json, $strict)`
+
+Parameters :
+
+- `array` `$json`
+- `boolean` `$strict` if true, unsafe characters are not allowed when checking members name.
 
 It will do the following checks :
+
 - checks top-level members ([assertHasValidTopLevelMembers](#assertHasValidTopLevelMembers))
 
 Optionaly, if presents, it will checks :
+
 - primary data ([assertIsValidPrimaryData](#assertIsValidPrimaryData))
 - errors object ([assertIsValidErrorsObject](#assertIsValidErrorsObject))
 - meta object ([assertIsValidMetaObject](#assertIsValidMetaObject))
@@ -222,86 +316,126 @@ Optionaly, if presents, it will checks :
 - top-level links object ([assertIsValidTopLevelLinksMember](#assertIsValidTopLevelLinksMember))
 - included object ([assertIsValidIncludedCollection](#assertIsValidIncludedCollection))
 
-
 ### assertHasValidTopLevelMembers
 
 Asserts that a json document has valid top-level structure.
 
-\$json (array)
+Definition :
+
+`assertHasValidTopLevelMembers($json)`
+
+Parameters :
+
+- `array` `$json`
 
 It will do the following checks :
+
 - asserts that the json document contains at least one of the following top-level members : "data", "meta" or "errors" ([assertContainsAtLeastOneMember](#assertContainsAtLeastOneMember)).
 - asserts that the members "data" and "errors" does not coexist in the same document.
 - asserts that the json document contains only the following members : "data", "errors", "meta", "jsonapi", "links", "included" ([assertContainsOnlyAllowedMembers](#assertContainsOnlyAllowedMembers)).
 - if the json document does not contain a top-level "data" member, the "included" member must not be present either.
 
-
 ### assertIsArrayOfObjects
 
 Asserts that an array is an array of objects.
 
-\$data (array)  
-\$message (string)
+Definition :
 
+`assertIsArrayOfObjects($json, $message = '')`
+
+Parameters :
+
+- `array` `$json`
+- `string` `$message` (optional)
 
 ### assertIsNotArrayOfObjects
 
 Asserts that an array is not an array of objects.
 
-\$data (array)  
-\$message (string)
+Definition :
 
+`assertIsNotArrayOfObjects($json, $message = '')`
+
+Parameters :
+
+- `array` `$json`
+- `string` `$message` (optional)
 
 ### assertIsNotForbiddenMemberName
 
-Asserts that a member name is not forbidden.
+Asserts that a member name is not a forbidden name like "relationships" or "links".
 
-\$name (string)
+Definition :
 
-It will do the following checks :
-- asserts that the member name is not a forbidden name like "relationships" and "links".
+`assertIsNotForbiddenMemberName($name)`
 
+Parameters :
+
+- `string` `$name`
 
 ### assertIsNotForbiddenResourceFieldName
 
-\$name (string)
+Asserts that a resource field name is not a forbidden name (like "type" or "id").
 
-It will do the following checks :
-- asserts that the field name is not a forbidden name like "type" and "id".
+Definition :
 
+`assertIsNotForbiddenResourceFieldName(string $name)`
+
+Parameters :
+
+- `string` `$name`
 
 ### assertIsValidAttributesObject
 
 Asserts that a json fragment is a valid attributes object.
 
-\$json (array)  
-\$strict (boolean) : if true, unsafe characters are not allowed when checking members name.
+Definition :
+
+`assertIsValidAttributesObject($json, $strict)`
+
+Parameters :
+
+- `array` `$json`
+- `boolean` `$strict` if true, unsafe characters are not allowed when checking members name.
 
 It will do the following checks :
+
 - asserts that attributes object is not an array of objects ([assertIsNotArrayOfObjects](#assertIsNotArrayOfObjects)).
 - asserts that attributes object has no member with forbidden name ([assertFieldHasNoForbiddenMemberName](#assertFieldHasNoForbiddenMemberName)).
--  asserts that each member name of the attributes object is valid ([assertIsValidMemberName](#assertIsValidMemberName)).
-
+- asserts that each member name of the attributes object is valid ([assertIsValidMemberName](#assertIsValidMemberName)).
 
 ### assertIsValidErrorLinksObject
 
 Asserts that a json fragment is a valid error links object.
 
-\$json (array)  
-\$strict (boolean) : if true, unsafe characters are not allowed when checking members name.
+Definition :
+
+`assertIsValidErrorLinksObject($json, $strict)`
+
+Parameters :
+
+- `array` `$json`
+- `boolean` `$strict` if true, unsafe characters are not allowed when checking members name.
 
 It will do the following checks :
-- asserts that le links object is valid ([assertIsValidLinksObject](#assertIsValidLinksObject) with only "about" member allowed).
 
+- asserts that le links object is valid ([assertIsValidLinksObject](#assertIsValidLinksObject) with only "about" member allowed).
 
 ### assertIsValidErrorObject
 
 Asserts that a json fragment is a valid error object.
 
-\$json (array)  
-\$strict (boolean) : if true, unsafe characters are not allowed when checking members name.
+Definition :
+
+`assertIsValidErrorObject($json, $strict)`
+
+Parameters :
+
+- `array` `$json`
+- `boolean` `$strict` if true, unsafe characters are not allowed when checking members name.
 
 It will do the following checks :
+
 - asserts that the error object is not empty.
 - asserts it contains only the following allowed members : "id", "links", "status", "code", "title", "details", "source", "meta" ([assertContainsOnlyAllowedMembers](#assertContainsOnlyAllowedMembers)).
 - if present, asserts that the "status" member is a string.
@@ -312,204 +446,302 @@ It will do the following checks :
 - if present, asserts that the "links" member is valid([assertIsValidErrorLinksObject](#assertIsValidErrorLinksObject)).
 - if present, asserts that the "meta" member is valid([assertIsValidMetaObject](#assertIsValidMetaObject)).
 
-
 ### assertIsValidErrorsObject
 
 Asserts that a json fragment is a valid errors object.
 
-\$json (array)  
-\$strict (boolean) : if true, unsafe characters are not allowed when checking members name.
+Definition :
+
+`assertIsValidErrorsObject($json, $strict)`
+
+Parameters :
+
+- `array` `$json`
+- `boolean` `$strict` if true, unsafe characters are not allowed when checking members name.
 
 It will do the following checks :
+
 - asserts that the errors object is an array of objects ([assertIsArrayOfObjects](#assertIsArrayOfObjects)).
 - asserts that each error object of the collection is valid ([assertIsValidErrorObject](#assertIsValidErrorObject)).
-
 
 ### assertIsValidErrorSourceObject
 
 Asserts that a json fragment is a valid error source object.
 
-\$json (array)
+Definition :
+
+`assertIsValidErrorSourceObject($json)`
+
+Parameters :
+
+- `array` `$json`
 
 It will do the following checks :
-- if the "pointer" member is present, asserts it is a string stating with a "/" character.
-- if the "parameter" member is present, asserts that it is a string.
 
+- if the "pointer" member is present, asserts it is a string starting with a "/" character.
+- if the "parameter" member is present, asserts that it is a string.
 
 ### assertIsValidIncludedCollection
 
-\$included (array)  
-\$data (array)  
-\$strict (boolean) : if true, unsafe characters are not allowed when checking members name.
+Asserts that a collection of included resources is valid.
+
+Definition :
+
+`assertIsValidIncludedCollection($included, $data, $strict)`
+
+Parameters :
+
+- `array` `$included` The included top-level member of the json document.
+- `array` `$data` The primary data of the json document.
+- `boolean` `$strict` if true, unsafe characters are not allowed when checking members name.
 
 It will do the following checks :
+
 - asserts that it is an array of objects ([assertIsArrayOfObjects](#assertIsArrayOfObjects)).
 - asserts that each resource of the collection is valid ([assertIsValidResourceObject](#assertIsValidResourceObject)).
 - asserts that each resource in the collection corresponds to an existing resource linkage present in either primary data, primary data relationships or another included resource.
 - asserts that each resource in the collection is unique (i.e. each couple id-type is unique).
 
-
 ### assertIsValidJsonapiObject
 
 Asserts that a json fragment is a valid jsonapi object.
 
-\$json (array)  
-\$strict (boolean) : if true, unsafe characters are not allowed when checking members name.
+Definition :
+
+`assertIsValidJsonapiObject($json, $strict)`
+
+Parameters :
+
+- `array` `$json`
+- `boolean` `$strict` if true, unsafe characters are not allowed when checking members name.
 
 It will do the following checks :
+
 - asserts that the jsonapi object is not an array of objects ([assertIsNotArrayOfObjects](#assertIsNotArrayOfObjects)).
 - asserts that the jsonapi object contains only the following allowed members : "version" and "meta" ([assertContainsOnlyAllowedMembers](#assertContainsOnlyAllowedMembers)).
 - if present, asserts that the version member is a string.
 - if present, asserts that meta member is valid ([assertIsValidMetaObject](#assertIsValidMetaObject)).
 
-
 ### assertIsValidLinkObject
 
 Asserts that a json fragment is a valid link object.
 
-\$json (array)  
-\$strict (boolean) : if true, unsafe characters are not allowed when checking members name.
+Definition :
+
+`assertIsValidLinkObject($json, $strict)`
+
+Parameters :
+
+- `array` `$json`
+- `boolean` `$strict` if true, unsafe characters are not allowed when checking members name.
 
 It will do the following checks :
+
 - asserts that the link object is a string, an array or the `null` value.
 - in case it is an array :
   - asserts that it has the "href" member.
   - asserts that it contains only the following allowed members : "href" and "meta" ([assertContainsOnlyAllowedMembers](#assertContainsOnlyAllowedMembers)).
-  - if present, asserts that the meta object is valid ([assertIsValidMetaObject](#assertIsValidMetaObject)).
- 
+  - if present, asserts that the "meta" object is valid ([assertIsValidMetaObject](#assertIsValidMetaObject)).
 
 ### assertIsValidLinksObject
 
 Asserts that a json fragment is a valid links object.
 
-\$json (array)  
-\$allowedMembers (array)  
-\$strict (boolean) : if true, unsafe characters are not allowed when checking members name.
+Definition :
+
+`assertIsValidLinksObject($json, $allowedMembers, $strict)`
+
+Parameters :
+
+- `array` `$json`
+- `array<string>` `$allowedMembers`
+- `boolean` `$strict` if true, unsafe characters are not allowed when checking members name.
 
 It will do the following checks :
+
 - asserts that it contains only allowed members ([assertContainsOnlyAllowedMembers](#assertContainsOnlyAllowedMembers)).
 - asserts that each member of the links object is a valid link object ([assertIsValidLinkObject](#assertIsValidLinkObject)).
-
 
 ### assertIsValidMemberName
 
 Asserts that a member name is valid.
 
-\$name (string)  
-\$strict (boolean) : if true, unsafe characters are not allowed when checking members name.
+Definition :
+
+`assertIsValidMemberName($name, $strict)`
+
+Parameters :
+
+- `string` `$name`
+- `boolean` `$strict` if true, unsafe characters are not allowed when checking members name.
 
 It will do the following checks :
+
 - asserts that the name is a string with at least one character.
 - asserts that the name has only allowed characters (see the list [here](https://jsonapi.org/format/#document-member-names-allowed-characters)).
 - asserts that it starts and ends with a globally allowed character (see the list [here](https://jsonapi.org/format/#document-member-names-allowed-characters)).
-
 
 ### assertIsValidMetaObject
 
 Asserts that a json fragment is a valid meta object.
 
-\$json (array)  
-\$strict (boolean) : if true, unsafe characters are not allowed when checking members name.
+Definition :
+
+`assertIsValidMetaObject($json, $strict)`
+
+Parameters :
+
+- `array` `$json`
+- `boolean` `$strict` if true, unsafe characters are not allowed when checking members name.
 
 It will do the following checks :
+
 - asserts that the meta object is not an array of objects ([assertIsNotArrayOfObjects](#assertIsNotArrayOfObjects)).
 - asserts that each member of the meta object is valid ([assertIsValidMemberName](#assertIsValidMemberName)).
-
 
 ### assertIsValidPrimaryData
 
 Asserts a json fragment is a valid primary data object.
 
-\$json (array)  
-\$strict (boolean) : if true, unsafe characters are not allowed when checking members name.
+Definition :
+
+`assertIsValidPrimaryData($json, $strict)`
+
+Parameters :
+
+- `array` `$json`
+- `boolean` `$strict` if true, unsafe characters are not allowed when checking members name.
 
 It will do the following checks :
+
 - asserts that the primary data is either an object, an array of objects or the `null` value.
 - if the primary data is not null, checks if it is a valid single resource or a valid resource collection ([assertIsValidResourceObject](#assertIsValidResourceObject) or [assertIsValidResourceIdentifierObject](#assertIsValidResourceIdentifierObject)).
-
 
 ### assertIsValidRelationshipLinksObject
 
 Asserts that a json fragment is a valid link object extracted from a relationship object.
 
-\$json (array)  
-\$withPagination (boolean)  
-\$strict (boolean) : if true, unsafe characters are not allowed when checking members name.
+Definition :
+
+`assertIsValidRelationshipLinksObject($json, $withPagination, $strict)`
+
+Parameters :
+
+- `array` `$json`
+- `boolean` `$withPagination`
+- `boolean` `$strict` if true, unsafe characters are not allowed when checking members name.
 
 It will do the following checks :
-- asserts that the links object is valid ([assertIsValidLinksObject](#assertIsValidLinksObject)) with the following allowed members : "self", "related" and eventually pagination links ("first", "last", "prev" and "next").
 
+- asserts that the links object is valid ([assertIsValidLinksObject](#assertIsValidLinksObject)) with the following allowed members : "self", "related" and eventually pagination links ("first", "last", "prev" and "next").
 
 ### assertIsValidRelationshipObject
 
 Asserts that a json fragment is a valid relationship object.
 
-\$json (array)  
-\$strict (boolean) : if true, unsafe characters are not allowed when checking members name.
+Definition :
+
+`assertIsValidRelationshipObject($json, $strict)`
+
+Parameters :
+
+- `array` `$json`
+- `boolean` `$strict` if true, unsafe characters are not allowed when checking members name.
 
 It will do the following checks :
+
 - asserts that the relationship object contains at least one of the following member : "links", "data", "meta" ([assertContainsAtLeastOneMember](#assertContainsAtLeastOneMember)).
 - if present, asserts that the data member is valid ([assertIsValidResourceLinkage](#assertIsValidResourceLinkage)).
 - if present, asserts that the links member is valid ([assertIsValidRelationshipLinksObject](#assertIsValidRelationshipLinksObject)).
 - if present, asserts that the meta object is valid ([assertIsValidMetaObject](#assertIsValidMetaObject)).
 
-
 ### assertIsValidRelationshipsObject
 
 Asserts that a json fragment is a valid relationships object.
 
-\$json (array)  
-\$strict (boolean) : if true, unsafe characters are not allowed when checking members name.
+Definition :
+
+`assertIsValidRelationshipsObject($json, $strict)`
+
+Parameters :
+
+- `array` `$json`
+- `boolean` `$strict` if true, unsafe characters are not allowed when checking members name.
 
 It will do the following checks :
+
 - asserts that the relationships object is not an array of objects ([assertIsNotArrayOfObjects](#assertIsNotArrayOfObjects)).
 - asserts that each relationship of the collection has a valid name ([assertIsValidMemberName](#assertIsValidMemberName)) and is a valid relationship object ([assertIsValidRelationshipObject](#assertIsValidRelationshipObject)).
-
 
 ### assertIsValidResourceIdentifierObject
 
 Asserts that a json fragment is a valid resource identifier object.
 
-\$resource (object)  
-\$strict (boolean) : if true, unsafe characters are not allowed when checking members name.
+Definition :
+
+`assertIsValidResourceIdentifierObject($resource, $strict)`
+
+Parameters :
+
+- `array` `$resource`
+- `boolean` `$strict` if true, unsafe characters are not allowed when checking members name.
 
 It will do the following checks :
+
 - asserts that the resource as "id" ([assertResourceIdMember](#assertResourceIdMember)) and "type" ([assertResourceTypeMember](#assertResourceTypeMember)) members.
 - asserts that it contains only the following allowed members : "id", "type" and "meta" ([assertContainsOnlyAllowedMembers](#assertContainsOnlyAllowedMembers)).
 - if present, asserts that the meta object is valid ([assertIsValidMetaObject](#assertIsValidMetaObject)).
-
 
 ### assertIsValidResourceLinkage
 
 Asserts that a json fragment is a valid resource linkage object.
 
-\$data (mixed)  
-\$strict (boolean) : if true, unsafe characters are not allowed when checking members name.
+Definition :
+
+`assertIsValidResourceLinkage($json, $strict)`
+
+Parameters :
+
+- `array` `$json`
+- `boolean` `$strict` if true, unsafe characters are not allowed when checking members name.
 
 It will do the following checks :
+
 - asserts that the provided resource linkage is either an object, an array of objects or the `null` value.
 - asserts that the resource linkage or the collection of resource linkage is valid ([assertIsValidResourceIdentifierObject](#assertIsValidResourceIdentifierObject)).
-
 
 ### assertIsValidResourceLinksObject
 
 Asserts that a json fragment is a valid resource links object.
 
-\$json (mixed)  
-\$strict (boolean) : if true, unsafe characters are not allowed when checking members name.
+Definition :
+
+`assertIsValidResourceLinksObject($json, $strict)`
+
+Parameters :
+
+- `array` `$json`
+- `boolean` `$strict` if true, unsafe characters are not allowed when checking members name.
 
 It will do the following checks :
-- asserts that le links object is valid ([assertIsValidLinksObject](#assertIsValidLinksObject) with only "self" member allowed).
 
+- asserts that le links object is valid ([assertIsValidLinksObject](#assertIsValidLinksObject) with only "self" member allowed).
 
 ### assertIsValidResourceObject
 
 Asserts that a json fragment is a valid resource.
 
-\$json (mixed)  
-\$strict (boolean) : if true, unsafe characters are not allowed when checking members name.
+Definition :
+
+`assertIsValidResourceObject($json, $strict)`
+
+Parameters :
+
+- `array` `$json`
+- `boolean` `$strict` if true, unsafe characters are not allowed when checking members name.
 
 It will do the following checks :
+
 - asserts that the resource has valid top-level structure ([assertResourceObjectHasValidTopLevelStructure](#assertResourceObjectHasValidTopLevelStructure)).
 - asserts that the "id" member is valid ([assertResourceIdMember](#assertResourceIdMember)).
 - asserts that the "type" member is valid ([assertResourceTypeMember](#assertResourceTypeMember)).
@@ -519,66 +751,100 @@ It will do the following checks :
 - if presents, asserts that the "meta" member is valid ([assertIsValidMetaObject](#assertIsValidMetaObject)).
 - asserts that the resource has valid fields ([assertHasValidFields](#assertHasValidFields)).
 
-
 ### assertIsValidTopLevelLinksMember
 
 Asserts that a json fragment is a valid top-level links member.
 
-\$json (array)  
-\$strict (boolean) : if true, unsafe characters are not allowed when checking members name.
+Definition :
+
+`assertIsValidTopLevelLinksMember($json, $strict)`
+
+Parameters :
+
+- `array` `$json`
+- `boolean` `$strict` if true, unsafe characters are not allowed when checking members name.
 
 It will do the following checks :
-- asserts that the top-level "links" member contains only the following allowed members : "self", "related", "first", "last", "next", "prev" ([assertIsValidLinksObject](#assertIsValidLinksObject)).
 
+- asserts that the top-level "links" member contains only the following allowed members : "self", "related", "first", "last", "next", "prev" ([assertIsValidLinksObject](#assertIsValidLinksObject)).
 
 ### assertNotHasMember
 
 Asserts that a json object not has an unexpected member.
 
-\$expected (string)  
-\$json (array)
+Definition :
 
+`assertNotHasMember($expected, $json)`
+
+Parameters :
+
+- `string` `$expected`
+- `array` `$json`
 
 ### assertNotHasMembers
 
 Asserts that a json object not has unexpected members.
 
-\$expected (string)  
-\$json (array)
+Definition :
 
+`assertNotHasMembers($expected, $json)`
+
+Parameters :
+
+- `array<string>` `$expected`
+- `array` `$json`
 
 ### assertResourceIdMember
 
 Asserts that a resource id member is valid.
 
-\$resource (array)
+Definition :
+
+`assertResourceIdMember($resource)`
+
+Parameters :
+
+- `array` `$resource`
 
 It will do the following checks :
+
 - asserts that the "id" member is not empty.
 - asserts that the "id" member is a string.
-
 
 ### assertResourceObjectHasValidTopLevelStructure
 
 Asserts that a resource object has a valid top-level structure.
 
-\$resource (aray)
+Definition :
+
+`assertResourceObjectHasValidTopLevelStructure($resource)`
+
+Parameters :
+
+- `array` `$resource`
 
 It will do the following checks :
+
 - asserts that the resource has an "id" member.
 - asserts that the resource has a "type" member.
 - asserts that the resource contains at least one of the following members : "attributes", "relationships", "links", "meta" ([assertContainsAtLeastOneMember](#assertContainsAtLeastOneMember)).
 - asserts that the resource contains only the following allowed members : "id", "type", "meta", "attributes", "links", "relationships" ([assertContainsOnlyAllowedMembers](#assertContainsOnlyAllowedMembers)).
 
-
 ### assertResourceTypeMember
 
 Asserts that a resource type member is valid.
 
-\$resource (array)  
-\$strict (boolean) : if true, unsafe characters are not allowed when checking members name.
+Definition :
+
+`assertResourceTypeMember($resource, $strict)`
+
+Parameters :
+
+- `array` `$resource`
+- `boolean` `$strict` if true, unsafe characters are not allowed when checking members name.
 
 It will do the following checks :
+
 - asserts that the "type" member is not empty.
 - asserts that the "type" member is a string.
 - asserts that the "type" member has a valid value ([assertIsValidMemberName](#assertIsValidMemberName)).

@@ -5,6 +5,9 @@ use PHPUnit\Framework\Assert as PHPUnit;
 use PHPUnit\Util\InvalidArgumentHelper;
 use VGirol\JsonApiAssert\Messages;
 
+/**
+ * Assertions relating to the attributes object
+ */
 trait AssertAttributesObject
 {
     /**
@@ -15,7 +18,7 @@ trait AssertAttributesObject
      * @return void
      * @throws \PHPUnit\Framework\ExpectationFailedException
      */
-    public static function assertIsValidAttributesObject($json, $strict): void
+    public static function assertIsValidAttributesObject($json, bool $strict): void
     {
         static::assertIsNotArrayOfObjects(
             $json,
@@ -30,13 +33,14 @@ trait AssertAttributesObject
     }
 
     /**
-     * Asserts that a field object has no forbidden member name.
+     * Asserts that a field object (i.e., a resource object’s attributes or one of its relationships)
+     * has no forbidden member name.
      *
      * @param mixed $field
-     *
+     * @return void
      * @throws \PHPUnit\Framework\ExpectationFailedException
      */
-    public static function assertFieldHasNoForbiddenMemberName($field)
+    public static function assertFieldHasNoForbiddenMemberName($field): void
     {
         if (!is_array($field)) {
             return;
@@ -56,10 +60,10 @@ trait AssertAttributesObject
      * Asserts that a member name is not forbidden.
      *
      * @param string $name
-     *
+     * @return void
      * @throws \PHPUnit\Framework\ExpectationFailedException
      */
-    public static function assertIsNotForbiddenMemberName($name)
+    public static function assertIsNotForbiddenMemberName($name): void
     {
         if (!\is_string($name)) {
             throw InvalidArgumentHelper::factory(

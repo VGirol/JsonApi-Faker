@@ -3,6 +3,9 @@ namespace VGirol\JsonApiAssert\Constraint;
 
 use PHPUnit\Framework\Constraint\Constraint;
 
+/**
+ * A constraint class to assert that a json object contains at least one member from the provided list.
+ */
 class ContainsAtLeastOneConstraint extends Constraint
 {
     /**
@@ -10,6 +13,11 @@ class ContainsAtLeastOneConstraint extends Constraint
      */
     private $members;
 
+    /**
+     * Class constructor.
+     *
+     * @param array $members
+     */
     public function __construct(array $members)
     {
         $this->members = $members;
@@ -18,7 +26,7 @@ class ContainsAtLeastOneConstraint extends Constraint
     /**
      * Returns a string representation of the constraint.
      */
-    public function toString() : string
+    public function toString(): string
     {
         return \sprintf(
             'contains at least one element of "%s"',
@@ -32,7 +40,7 @@ class ContainsAtLeastOneConstraint extends Constraint
      *
      * @param mixed $other value or object to evaluate
      */
-    protected function matches($other) : bool
+    protected function matches($other): bool
     {
         if (!is_array($other)) {
             return false;
@@ -47,7 +55,14 @@ class ContainsAtLeastOneConstraint extends Constraint
         return false;
     }
 
-    public function check($other) : bool
+    /**
+     * Evaluates the constraint for parameter $other. Returns true if the
+     * constraint is met, false otherwise.
+     *
+     * @param mixed $other value or object to evaluate
+     * @return boolean
+     */
+    public function check($other): bool
     {
         return $this->matches($other);
     }

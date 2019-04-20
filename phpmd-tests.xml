@@ -14,7 +14,7 @@
     <rule ref="rulesets/cleancode.xml/ElseExpression" />
     <rule ref="rulesets/cleancode.xml/StaticAccess">
         <properties>
-            <property name="exceptions" value="\PHPUnit\Framework\Assert,\PHPUnit\Util\InvalidArgumentHelper,\VGirol\JsonApiAssert\Assert" />
+            <property name="exceptions" value="\PHPUnit\Framework\Assert,\VGirol\JsonApiAssert\InvalidArgumentHelper,\VGirol\JsonApiAssert\Assert" />
         </properties>
     </rule>
 

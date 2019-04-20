@@ -4,6 +4,9 @@ namespace VGirol\JsonApiAssert\Asserts;
 use PHPUnit\Framework\Assert as PHPUnit;
 use VGirol\JsonApiAssert\Messages;
 
+/**
+ * Assertions relating to the member name
+ */
 trait AssertMemberName
 {
     /**
@@ -11,10 +14,10 @@ trait AssertMemberName
      *
      * @param string    $name
      * @param boolean   $strict     If true, unsafe characters are not allowed when checking members name.
-     *
+     * @return void
      * @throws \PHPUnit\Framework\ExpectationFailedException
      */
-    public static function assertIsValidMemberName($name, $strict)
+    public static function assertIsValidMemberName($name, bool $strict): void
     {
         PHPUnit::assertIsString(
             $name,

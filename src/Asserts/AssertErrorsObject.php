@@ -4,6 +4,9 @@ namespace VGirol\JsonApiAssert\Asserts;
 use PHPUnit\Framework\Assert as PHPUnit;
 use VGirol\JsonApiAssert\Messages;
 
+/**
+ * Assertions relating to the errors object
+ */
 trait AssertErrorsObject
 {
     /**
@@ -11,10 +14,10 @@ trait AssertErrorsObject
      *
      * @param array     $json
      * @param boolean   $strict         If true, unsafe characters are not allowed when checking members name.
-     *
+     * @return void
      * @throws \PHPUnit\Framework\ExpectationFailedException
      */
-    public static function assertIsValidErrorsObject($json, $strict)
+    public static function assertIsValidErrorsObject($json, bool $strict): void
     {
         static::assertIsArrayOfObjects(
             $json,
@@ -31,10 +34,10 @@ trait AssertErrorsObject
      *
      * @param array     $json
      * @param boolean   $strict         If true, unsafe characters are not allowed when checking members name.
-     *
+     * @return void
      * @throws \PHPUnit\Framework\ExpectationFailedException
      */
-    public static function assertIsValidErrorObject($json, $strict)
+    public static function assertIsValidErrorObject($json, bool $strict): void
     {
         PHPUnit::assertIsArray(
             $json,
@@ -80,10 +83,10 @@ trait AssertErrorsObject
      *
      * @param array     $json
      * @param boolean   $strict         If true, unsafe characters are not allowed when checking members name.
-     *
+     * @return void
      * @throws \PHPUnit\Framework\ExpectationFailedException
      */
-    public static function assertIsValidErrorLinksObject($json, $strict)
+    public static function assertIsValidErrorLinksObject($json, bool $strict): void
     {
         $allowed = ['about'];
         static::assertIsValidLinksObject($json, $allowed, $strict);
@@ -93,10 +96,10 @@ trait AssertErrorsObject
      * Asserts that a json fragment is a valid error source object.
      *
      * @param array $json
-     *
+     * @return void
      * @throws \PHPUnit\Framework\ExpectationFailedException
      */
-    public static function assertIsValidErrorSourceObject($json)
+    public static function assertIsValidErrorSourceObject($json): void
     {
         PHPUnit::assertIsArray(
             $json,

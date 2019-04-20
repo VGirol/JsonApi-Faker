@@ -5,18 +5,21 @@ use PHPUnit\Framework\Assert as PHPUnit;
 use PHPUnit\Framework\ExpectationFailedException;
 use VGirol\JsonApiAssert\Messages;
 
+/**
+ * Assertions relating to the links object
+ */
 trait AssertLinksObject
 {
     /**
      * Asserts that a json fragment is a valid links object.
      *
-     * @param array     $json
-     * @param array     $allowedMembers
-     * @param boolean   $strict         If true, unsafe characters are not allowed when checking members name.
-     *
+     * @param array         $json
+     * @param array<string> $allowedMembers
+     * @param boolean       $strict         If true, unsafe characters are not allowed when checking members name.
+     * @return void
      * @throws \PHPUnit\Framework\ExpectationFailedException
      */
-    public static function assertIsValidLinksObject($json, $allowedMembers, $strict)
+    public static function assertIsValidLinksObject($json, array $allowedMembers, bool $strict): void
     {
         PHPUnit::assertIsArray(
             $json,
@@ -38,10 +41,10 @@ trait AssertLinksObject
      *
      * @param array     $json
      * @param boolean   $strict         If true, unsafe characters are not allowed when checking members name.
-     *
+     * @return void
      * @throws \PHPUnit\Framework\ExpectationFailedException
      */
-    public static function assertIsValidLinkObject($json, $strict)
+    public static function assertIsValidLinkObject($json, bool $strict): void
     {
         try {
             PHPUnit::assertIsArray($json);

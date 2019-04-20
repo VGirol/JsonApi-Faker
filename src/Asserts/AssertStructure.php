@@ -3,8 +3,12 @@ namespace VGirol\JsonApiAssert\Asserts;
 
 use PHPUnit\Framework\Assert as PHPUnit;
 use PHPUnit\Framework\ExpectationFailedException;
+use VGirol\JsonApiAssert\Members;
 use VGirol\JsonApiAssert\Messages;
 
+/**
+ * Assertions relating to the overall structure of the document
+ */
 trait AssertStructure
 {
     /**
@@ -12,35 +16,35 @@ trait AssertStructure
      *
      * @param array     $json
      * @param boolean   $strict     If true, unsafe characters are not allowed when checking members name.
-     *
+     * @return void
      * @throws \PHPUnit\Framework\ExpectationFailedException
      */
-    public static function assertHasValidStructure($json, $strict)
+    public static function assertHasValidStructure($json, bool $strict): void
     {
         static::assertHasValidTopLevelMembers($json);
 
-        if (isset($json['data'])) {
-            static::assertIsValidPrimaryData($json['data'], $strict);
+        if (isset($json[Members::DATA])) {
+            static::assertIsValidPrimaryData($json[Members::DATA], $strict);
+
+            if (isset($json[Members::INCLUDED])) {
+                static::assertIsValidIncludedCollection($json[Members::INCLUDED], $json[Members::DATA], $strict);
+            }
         }
 
-        if (isset($json['errors'])) {
-            static::assertIsValidErrorsObject($json['errors'], $strict);
+        if (isset($json[Members::ERRORS])) {
+            static::assertIsValidErrorsObject($json[Members::ERRORS], $strict);
         }
 
-        if (isset($json['meta'])) {
-            static::assertIsValidMetaObject($json['meta'], $strict);
+        if (isset($json[Members::META])) {
+            static::assertIsValidMetaObject($json[Members::META], $strict);
         }
 
-        if (isset($json['jsonapi'])) {
-            static::assertIsValidJsonapiObject($json['jsonapi'], $strict);
+        if (isset($json[Members::JSONAPI])) {
+            static::assertIsValidJsonapiObject($json[Members::JSONAPI], $strict);
         }
 
-        if (isset($json['links'])) {
-            static::assertIsValidTopLevelLinksMember($json['links'], $strict);
-        }
-
-        if (isset($json['included'])) {
-            static::assertIsValidIncludedCollection($json['included'], $json['data'], $strict);
+        if (isset($json[Members::LINKS])) {
+            static::assertIsValidTopLevelLinksMember($json[Members::LINKS], $strict);
         }
     }
 
@@ -48,10 +52,10 @@ trait AssertStructure
      * Asserts that a json document has valid top-level structure.
      *
      * @param array $json
-     *
+     * @return void
      * @throws \PHPUnit\Framework\ExpectationFailedException
      */
-    public static function assertHasValidTopLevelMembers($json)
+    public static function assertHasValidTopLevelMembers($json): void
     {
         $expected = ['data', 'errors', 'meta'];
         static::assertContainsAtLeastOneMember(
@@ -82,10 +86,10 @@ trait AssertStructure
      *
      * @param array     $json
      * @param boolean   $strict     If true, unsafe characters are not allowed when checking members name.
-     *
+     * @return void
      * @throws \PHPUnit\Framework\ExpectationFailedException
      */
-    public static function assertIsValidTopLevelLinksMember($json, $strict)
+    public static function assertIsValidTopLevelLinksMember($json, bool $strict): void
     {
         $allowed = ['self', 'related', 'first', 'last', 'next', 'prev'];
         static::assertIsValidLinksObject($json, $allowed, $strict);
@@ -94,38 +98,38 @@ trait AssertStructure
     /**
      * Asserts a json fragment is a valid primary data object.
      *
-     * @param array     $data
+     * @param array     $json
      * @param boolean   $strict     If true, unsafe characters are not allowed when checking members name.
-     *
+     * @return void
      * @throws \PHPUnit\Framework\ExpectationFailedException
      */
-    public static function assertIsValidPrimaryData($data, $strict)
+    public static function assertIsValidPrimaryData($json, bool $strict): void
     {
         try {
             PHPUnit::assertIsArray(
-                $data,
+                $json,
                 Messages::PRIMARY_DATA_NOT_ARRAY
             );
-            if (empty($data)) {
+            if (empty($json)) {
                 return;
             }
         } catch (ExpectationFailedException $e) {
             PHPUnit::assertNull(
-                $data,
+                $json,
                 Messages::PRIMARY_DATA_NOT_ARRAY
             );
             return;
         }
 
-        if (static::isArrayOfObjects($data)) {
+        if (static::isArrayOfObjects($json)) {
             // Resource collection (Resource Objects or Resource Identifier Objects)
-            static::assertIsValidPrimaryCollection($data, true, $strict);
+            static::assertIsValidPrimaryCollection($json, true, $strict);
 
             return;
         }
 
         // Single Resource (Resource Object or Resource Identifier Object)
-        static::assertIsValidPrimarySingle($data, $strict);
+        static::assertIsValidPrimarySingle($json, $strict);
     }
 
     /**
@@ -134,10 +138,10 @@ trait AssertStructure
      * @param array     $list
      * @param boolean   $checkType      If true, asserts that all resources of the collection are of same type.
      * @param boolean   $strict         If true, excludes not safe characters when checking members name
-     *
+     * @return void
      * @throws \PHPUnit\Framework\ExpectationFailedException
      */
-    private static function assertIsValidPrimaryCollection($list, $checkType, $strict)
+    private static function assertIsValidPrimaryCollection($list, bool $checkType, bool $strict): void
     {
         $isResourceObject = null;
         foreach ($list as $index => $resource) {
@@ -165,10 +169,10 @@ trait AssertStructure
      *
      * @param array     $resource
      * @param boolean   $strict     If true, excludes not safe characters when checking members name
-     *
+     * @return void
      * @throws \PHPUnit\Framework\ExpectationFailedException
      */
-    private static function assertIsValidPrimarySingle($resource, $strict)
+    private static function assertIsValidPrimarySingle($resource, bool $strict): void
     {
         if (static::dataIsResourceObject($resource)) {
             static::assertIsValidResourceObject($resource, $strict);
@@ -182,13 +186,13 @@ trait AssertStructure
     /**
      * Asserts that a collection of included resources is valid.
      *
-     * @param array     $included   The included top-level member of a json document.
-     * @param array     $data       The primary data of a json document.
+     * @param array     $included   The included top-level member of the json document.
+     * @param array     $data       The primary data of the json document.
      * @param boolean   $strict     If true, unsafe characters are not allowed when checking members name.
-     *
+     * @return void
      * @throws \PHPUnit\Framework\ExpectationFailedException
      */
-    public static function assertIsValidIncludedCollection($included, $data, $strict)
+    public static function assertIsValidIncludedCollection($included, $data, bool $strict): void
     {
         static::assertIsArrayOfObjects($included);
         foreach ($included as $resource) {

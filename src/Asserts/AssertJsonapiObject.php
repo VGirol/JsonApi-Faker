@@ -4,6 +4,9 @@ namespace VGirol\JsonApiAssert\Asserts;
 use PHPUnit\Framework\Assert as PHPUnit;
 use VGirol\JsonApiAssert\Messages;
 
+/**
+ * Assertions relating to the jsonapi object
+ */
 trait AssertJsonapiObject
 {
     /**
@@ -11,10 +14,10 @@ trait AssertJsonapiObject
      *
      * @param array     $json
      * @param boolean   $strict         If true, unsafe characters are not allowed when checking members name.
-     *
+     * @return void
      * @throws \PHPUnit\Framework\ExpectationFailedException
      */
-    public static function assertIsValidJsonapiObject($json, $strict)
+    public static function assertIsValidJsonapiObject($json, bool $strict): void
     {
         static::assertIsNotArrayOfObjects(
             $json,

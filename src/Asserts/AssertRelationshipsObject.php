@@ -1,8 +1,9 @@
 <?php
 namespace VGirol\JsonApiAssert\Asserts;
 
-use PHPUnit\Framework\Assert as PHPUnit;
-
+/**
+ * Assertions relating to the relationships object
+ */
 trait AssertRelationshipsObject
 {
     /**
@@ -10,10 +11,10 @@ trait AssertRelationshipsObject
      *
      * @param array     $json
      * @param boolean   $strict         If true, unsafe characters are not allowed when checking members name.
-     *
+     * @return void
      * @throws \PHPUnit\Framework\ExpectationFailedException
      */
-    public static function assertIsValidRelationshipsObject($json, $strict)
+    public static function assertIsValidRelationshipsObject($json, bool $strict): void
     {
         static::assertIsNotArrayOfObjects($json);
 
@@ -28,10 +29,10 @@ trait AssertRelationshipsObject
      *
      * @param array     $json
      * @param boolean   $strict         If true, unsafe characters are not allowed when checking members name.
-     *
+     * @return void
      * @throws \PHPUnit\Framework\ExpectationFailedException
      */
-    public static function assertIsValidRelationshipObject($json, $strict)
+    public static function assertIsValidRelationshipObject($json, bool $strict): void
     {
         $expected = ['links', 'data', 'meta'];
         static::assertContainsAtLeastOneMember($expected, $json);
@@ -58,10 +59,10 @@ trait AssertRelationshipsObject
      * @param array     $json
      * @param boolean   $withPagination
      * @param boolean   $strict         If true, unsafe characters are not allowed when checking members name.
-     *
+     * @return void
      * @throws \PHPUnit\Framework\ExpectationFailedException
      */
-    public static function assertIsValidRelationshipLinksObject($json, $withPagination, $strict)
+    public static function assertIsValidRelationshipLinksObject($json, bool $withPagination, bool $strict): void
     {
         $allowed = ['self', 'related'];
         if ($withPagination) {

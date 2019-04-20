@@ -5,6 +5,9 @@ use PHPUnit\Framework\Assert as PHPUnit;
 use PHPUnit\Framework\ExpectationFailedException;
 use VGirol\JsonApiAssert\Messages;
 
+/**
+ * Assertions relating to the resource linkage
+ */
 trait AssertResourceLinkage
 {
     /**
@@ -12,10 +15,10 @@ trait AssertResourceLinkage
      *
      * @param array     $json
      * @param boolean   $strict     If true, unsafe characters are not allowed when checking members name.
-     *
+     * @return void
      * @throws \PHPUnit\Framework\ExpectationFailedException
      */
-    public static function assertIsValidResourceLinkage($json, $strict)
+    public static function assertIsValidResourceLinkage($json, bool $strict): void
     {
         try {
             PHPUnit::assertIsArray(
@@ -46,10 +49,10 @@ trait AssertResourceLinkage
      *
      * @param array     $resource
      * @param boolean   $strict         If true, unsafe characters are not allowed when checking members name.
-     *
+     * @return void
      * @throws \PHPUnit\Framework\ExpectationFailedException
      */
-    public static function assertIsValidResourceIdentifierObject($resource, $strict)
+    public static function assertIsValidResourceIdentifierObject($resource, bool $strict): void
     {
         PHPUnit::assertIsArray(
             $resource,

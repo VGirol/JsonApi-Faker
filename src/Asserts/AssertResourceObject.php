@@ -4,6 +4,9 @@ namespace VGirol\JsonApiAssert\Asserts;
 use PHPUnit\Framework\Assert as PHPUnit;
 use VGirol\JsonApiAssert\Messages;
 
+/**
+ * Assertions relating to the resource object
+ */
 trait AssertResourceObject
 {
     /**
@@ -11,10 +14,10 @@ trait AssertResourceObject
      *
      * @param array     $json
      * @param boolean   $strict         If true, unsafe characters are not allowed when checking members name.
-     *
+     * @return void
      * @throws \PHPUnit\Framework\ExpectationFailedException
      */
-    public static function assertIsValidResourceObject($json, $strict)
+    public static function assertIsValidResourceObject($json, bool $strict): void
     {
         static::assertResourceObjectHasValidTopLevelStructure($json);
         static::assertResourceIdMember($json);
@@ -43,10 +46,10 @@ trait AssertResourceObject
      * Asserts that a resource object has a valid top-level structure.
      *
      * @param array $resource
-     *
+     * @return void
      * @throws \PHPUnit\Framework\ExpectationFailedException
      */
-    public static function assertResourceObjectHasValidTopLevelStructure($resource)
+    public static function assertResourceObjectHasValidTopLevelStructure($resource): void
     {
         PHPUnit::assertIsArray(
             $resource,
@@ -75,10 +78,10 @@ trait AssertResourceObject
      * Asserts that a resource id member is valid.
      *
      * @param array $resource
-     *
+     * @return void
      * @throws \PHPUnit\Framework\ExpectationFailedException
      */
-    public static function assertResourceIdMember($resource)
+    public static function assertResourceIdMember($resource): void
     {
         PHPUnit::assertNotEmpty(
             $resource['id'],
@@ -96,10 +99,10 @@ trait AssertResourceObject
      *
      * @param array     $resource
      * @param boolean   $strict         If true, excludes not safe characters when checking members name
-     *
+     * @return void
      * @throws \PHPUnit\Framework\ExpectationFailedException
      */
-    public static function assertResourceTypeMember($resource, $strict)
+    public static function assertResourceTypeMember($resource, bool $strict): void
     {
         PHPUnit::assertNotEmpty(
             $resource['type'],
@@ -119,23 +122,23 @@ trait AssertResourceObject
      *
      * @param array     $json
      * @param boolean   $strict         If true, excludes not safe characters when checking members name
-     *
+     * @return void
      * @throws \PHPUnit\Framework\ExpectationFailedException
      */
-    public static function assertIsValidResourceLinksObject($json, $strict)
+    public static function assertIsValidResourceLinksObject($json, bool $strict): void
     {
         $allowed = ['self'];
         static::assertIsValidLinksObject($json, $allowed, $strict);
     }
 
     /**
-     * Asserts that a resource object has valid fields.
+     * Asserts that a resource object has valid fields (i.e., a resource object’s attributes and its relationships).
      *
      * @param array $resource
-     *
+     * @return void
      * @throws \PHPUnit\Framework\ExpectationFailedException
      */
-    public static function assertHasValidFields($resource)
+    public static function assertHasValidFields($resource): void
     {
         if (isset($resource['attributes'])) {
             foreach (array_keys($resource['attributes']) as $name) {
@@ -159,13 +162,13 @@ trait AssertResourceObject
     }
 
     /**
-     * Asserts that a field name is not forbidden.
+     * Asserts that a resource field name is not a forbidden name (like "type" or "id").
      *
      * @param string $name
-     *
+     * @return void
      * @throws \PHPUnit\Framework\ExpectationFailedException
      */
-    public static function assertIsNotForbiddenResourceFieldName($name)
+    public static function assertIsNotForbiddenResourceFieldName(string $name): void
     {
         $forbidden = ['type', 'id'];
         PHPUnit::assertNotContains(
