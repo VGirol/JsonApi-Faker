@@ -278,11 +278,11 @@ return [
     // Add any issue types (such as 'PhanUndeclaredMethod')
     // here to inhibit them from being reported
     'suppress_issue_types' => [
-        'PhanUnreferencedClosure',
-        'PhanPluginNoCommentOnProtectedMethod',
-        'PhanPluginDescriptionlessCommentOnProtectedMethod',
-        'PhanPluginNoCommentOnPrivateMethod',
-        'PhanPluginDescriptionlessCommentOnPrivateMethod',
+        // 'PhanUnreferencedClosure',
+        // 'PhanPluginNoCommentOnProtectedMethod',
+        // 'PhanPluginDescriptionlessCommentOnProtectedMethod',
+        // 'PhanPluginNoCommentOnPrivateMethod',
+        // 'PhanPluginDescriptionlessCommentOnPrivateMethod',
     ],
 
     // If empty, no filter against issues types will be applied.

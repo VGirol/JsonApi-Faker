@@ -11,7 +11,7 @@ This package provides a set of assertions to test documents using the [JSON:API 
 
 - PHP 7.2+
 - PHPUnit 8.0+
-  
+
 ## Installation
 
 To install through composer, simply put the following in your `composer.json` file:

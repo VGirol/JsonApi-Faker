@@ -10,6 +10,12 @@ use PHPUnit\Framework\ExpectationFailedException;
  */
 trait SetExceptionsTrait
 {
+    abstract public function expectException(string $exception): void;
+
+    abstract public function expectExceptionMessage(string $message): void;
+
+    abstract public function expectExceptionMessageRegExp(string $messageRegExp): void;
+
     /**
      * Set the expected exception and message when defining a test that will fail.
      *
