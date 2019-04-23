@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace VGirol\JsonApiAssert\Asserts;
 
 use PHPUnit\Framework\Assert as PHPUnit;

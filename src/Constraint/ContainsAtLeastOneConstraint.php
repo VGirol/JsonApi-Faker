@@ -1,4 +1,6 @@
 <?php
+declare (strict_types = 1);
+
 namespace VGirol\JsonApiAssert\Constraint;
 
 use PHPUnit\Framework\Constraint\Constraint;
@@ -9,14 +11,14 @@ use PHPUnit\Framework\Constraint\Constraint;
 class ContainsAtLeastOneConstraint extends Constraint
 {
     /**
-     * @var array
+     * @var array<string>
      */
     private $members;
 
     /**
      * Class constructor.
      *
-     * @param array $members
+     * @param array<string> $members
      */
     public function __construct(array $members)
     {

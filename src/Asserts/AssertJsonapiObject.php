@@ -1,7 +1,10 @@
 <?php
+declare (strict_types = 1);
+
 namespace VGirol\JsonApiAssert\Asserts;
 
 use PHPUnit\Framework\Assert as PHPUnit;
+use VGirol\JsonApiAssert\Members;
 use VGirol\JsonApiAssert\Messages;
 
 /**
@@ -24,21 +27,24 @@ trait AssertJsonapiObject
             Messages::OBJECT_NOT_ARRAY
         );
 
-        $allowed = ['version', 'meta'];
+        $allowed = [
+            Members::VERSION,
+            Members::META
+        ];
         static::assertContainsOnlyAllowedMembers(
             $allowed,
             $json
         );
 
-        if (isset($json['version'])) {
+        if (isset($json[Members::VERSION])) {
             PHPUnit::assertIsString(
-                $json['version'],
+                $json[Members::VERSION],
                 Messages::JSONAPI_VERSION_IS_NOT_STRING
             );
         }
 
-        if (isset($json['meta'])) {
-            static::assertIsValidMetaObject($json['meta'], $strict);
+        if (isset($json[Members::META])) {
+            static::assertIsValidMetaObject($json[Members::META], $strict);
         }
     }
 }

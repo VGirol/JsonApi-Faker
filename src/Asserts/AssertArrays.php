@@ -1,8 +1,9 @@
 <?php
+declare (strict_types = 1);
+
 namespace VGirol\JsonApiAssert\Asserts;
 
 use PHPUnit\Framework\Assert as PHPUnit;
-use PHPUnit\Util\InvalidArgumentHelper;
 use VGirol\JsonApiAssert\Messages;
 
 /**
@@ -21,11 +22,7 @@ trait AssertArrays
     public static function assertIsArrayOfObjects($json, $message = ''): void
     {
         if (!\is_array($json)) {
-            throw InvalidArgumentHelper::factory(
-                1,
-                'array',
-                $json
-            );
+            static::invalidArgument(1, 'array', $json);
         }
 
         $message = $message ?: Messages::MUST_BE_ARRAY_OF_OBJECTS;
@@ -43,11 +40,7 @@ trait AssertArrays
     public static function assertIsNotArrayOfObjects($json, $message = ''): void
     {
         if (!\is_array($json)) {
-            throw InvalidArgumentHelper::factory(
-                1,
-                'array',
-                $json
-            );
+            static::invalidArgument(1, 'array', $json);
         }
 
         $message = $message ?: Messages::MUST_NOT_BE_ARRAY_OF_OBJECTS;
@@ -69,6 +62,12 @@ trait AssertArrays
         return !static::arrayIsAssociative($arr);
     }
 
+    /**
+     * Checks if the given array is an associative array.
+     *
+     * @param array $arr
+     * @return boolean
+     */
     private static function arrayIsAssociative(array $arr): bool
     {
         return (array_keys($arr) !== range(0, count($arr) - 1));

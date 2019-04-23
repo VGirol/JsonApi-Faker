@@ -1,6 +1,9 @@
 !.gitignore
 build/
 vendor/
+.phan/
 composer.lock
 .phpunit.result.cache
 .php_cs.cache
+.editorconfig
+phpcs.xml

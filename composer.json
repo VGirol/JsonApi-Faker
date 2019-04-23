@@ -33,23 +33,6 @@
         "post-update-cmd": [
             "@setup"
         ],
-        "phpstan": "phpstan analyse src --level=7 & php -v",
-        "phpcs": "phpcs --encoding=utf-8 --report-full=build/phpcs/phpcs.txt",
-        "phpmd": [
-            "phpmd src text phpmd.xml --reportfile build/phpmd/src.txt --ignore-violations-on-exit",
-            "phpmd tests text phpmd-tests.xml --reportfile build/phpmd/tests.txt --ignore-violations-on-exit"
-        ],
-        "phan": "phan -m text -o build/phan/phan.txt & php -v",
-        "phpcpd": "phpcpd src/",
-        "phpmnd": "phpmnd src/ --extensions=all --strings --include-numeric-string --allow-array-mapping --xml-output=build/phpmnd/phpmnd.xml",
-        "lint": [
-            "@phpstan",
-            "@phpcs",
-            "@phpmd",
-            "@phan",
-            "@phpcpd",
-            "@phpmnd"
-        ],
         "test": "./vendor/bin/phpunit tests ",
         "coverage": "./vendor/bin/phpunit tests --coverage-xml=build/coverage/coverage-xml --log-junit=build/coverage/phpunit.junit.xml",
         "infection": "./vendor/bin/infection --coverage=build/coverage --threads=$(nproc) --configuration=infection.json.dist",
@@ -57,13 +40,8 @@
             "@coverage",
             "@infection"
         ],
-        "crap": "./vendor/bin/phpunit tests --coverage-html=build/coverage/html",
-        "phpmetrics": "phpmetrics --report-html=build/phpmetrics --junit=build/coverage/phpunit.junit.xml src/,tests/",
         "build": [
-            "@lint",
-            "@travis",
-            "@crap",
-            "@phpmetrics"
+            "@travis"
         ]
     },
     "extra": {

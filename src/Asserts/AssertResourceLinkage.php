@@ -1,8 +1,10 @@
 <?php
+declare (strict_types = 1);
+
 namespace VGirol\JsonApiAssert\Asserts;
 
 use PHPUnit\Framework\Assert as PHPUnit;
-use PHPUnit\Framework\ExpectationFailedException;
+use VGirol\JsonApiAssert\Members;
 use VGirol\JsonApiAssert\Messages;
 
 /**
@@ -13,28 +15,21 @@ trait AssertResourceLinkage
     /**
      * Asserts that a json fragment is a valid resource linkage object.
      *
-     * @param array     $json
-     * @param boolean   $strict     If true, unsafe characters are not allowed when checking members name.
+     * @param array|null    $json
+     * @param boolean       $strict     If true, unsafe characters are not allowed when checking members name.
      * @return void
      * @throws \PHPUnit\Framework\ExpectationFailedException
      */
     public static function assertIsValidResourceLinkage($json, bool $strict): void
     {
-        try {
-            PHPUnit::assertIsArray(
-                $json,
-                Messages::RESOURCE_LINKAGE_NOT_ARRAY
-            );
-            if (empty($json)) {
-                return;
-            }
-        } catch (ExpectationFailedException $e) {
-            PHPUnit::assertNull(
-                $json,
-                Messages::RESOURCE_LINKAGE_NOT_ARRAY
-            );
-            return;
+        if (\is_null($json)) {
+            $json = [];
         }
+
+        PHPUnit::assertIsArray(
+            $json,
+            Messages::RESOURCE_LINKAGE_NOT_ARRAY
+        );
 
         if (!static::isArrayOfObjects($json)) {
             $json = [$json];
@@ -60,24 +55,28 @@ trait AssertResourceLinkage
         );
 
         PHPUnit::assertArrayHasKey(
-            'id',
+            Members::ID,
             $resource,
             Messages::RESOURCE_ID_MEMBER_IS_ABSENT
         );
         static::assertResourceIdMember($resource);
 
         PHPUnit::assertArrayHasKey(
-            'type',
+            Members::TYPE,
             $resource,
             Messages::RESOURCE_TYPE_MEMBER_IS_ABSENT
         );
         static::assertResourceTypeMember($resource, $strict);
 
-        $allowed = ['id', 'type', 'meta'];
+        $allowed = [
+            Members::ID,
+            Members::TYPE,
+            Members::META
+        ];
         static::assertContainsOnlyAllowedMembers($allowed, $resource);
 
-        if (isset($resource['meta'])) {
-            static::assertIsValidMetaObject($resource['meta'], $strict);
+        if (isset($resource[Members::META])) {
+            static::assertIsValidMetaObject($resource[Members::META], $strict);
         }
     }
 }

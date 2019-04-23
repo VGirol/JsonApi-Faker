@@ -1,8 +1,10 @@
 <?php
+declare (strict_types = 1);
+
 namespace VGirol\JsonApiAssert\Asserts;
 
 use PHPUnit\Framework\Assert as PHPUnit;
-use PHPUnit\Util\InvalidArgumentHelper;
+use VGirol\JsonApiAssert\Members;
 use VGirol\JsonApiAssert\Messages;
 
 /**
@@ -66,14 +68,13 @@ trait AssertAttributesObject
     public static function assertIsNotForbiddenMemberName($name): void
     {
         if (!\is_string($name)) {
-            throw InvalidArgumentHelper::factory(
-                1,
-                'string',
-                $name
-            );
+            static::invalidArgument(1, 'string', $name);
         }
 
-        $forbidden = ['relationships', 'links'];
+        $forbidden = [
+            Members::RELATIONSHIPS,
+            Members::LINKS
+        ];
         PHPUnit::assertNotContains(
             $name,
             $forbidden,

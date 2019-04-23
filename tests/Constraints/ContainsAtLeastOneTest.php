@@ -1,12 +1,14 @@
 <?php
 namespace VGirol\JsonApiAssert\Tests\Constraints;
 
-use PHPUnit\Framework\ExpectationFailedException;
 use VGirol\JsonApiAssert\Constraint\ContainsAtLeastOneConstraint;
+use VGirol\JsonApiAssert\SetExceptionsTrait;
 use VGirol\JsonApiAssert\Tests\TestCase;
 
 class ContainsAtLeastOneTest extends TestCase
 {
+    use SetExceptionsTrait;
+
     /**
      * @test
      */
@@ -62,13 +64,10 @@ class ContainsAtLeastOneTest extends TestCase
 
         $constraint = new ContainsAtLeastOneConstraint($allowed);
 
-        $this->expectException(ExpectationFailedException::class);
-        $this->expectExceptionMessageRegExp(
-            sprintf(
-                '/Failed asserting that [\S\s]* %s\./',
-                $constraint->toString()
-            )
-        );
+        $this->setFailureExceptionRegex(sprintf(
+            '/Failed asserting that [\S\s]* %s\./',
+            $constraint->toString()
+        ));
 
         $constraint->evaluate($json);
     }

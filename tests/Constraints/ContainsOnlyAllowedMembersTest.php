@@ -1,12 +1,14 @@
 <?php
 namespace VGirol\JsonApiAssert\Tests\Constraints;
 
-use PHPUnit\Framework\ExpectationFailedException;
 use VGirol\JsonApiAssert\Constraint\ContainsOnlyAllowedMembersConstraint;
+use VGirol\JsonApiAssert\SetExceptionsTrait;
 use VGirol\JsonApiAssert\Tests\TestCase;
 
 class ContainsOnlyAllowedMembersTest extends TestCase
 {
+    use SetExceptionsTrait;
+
     /**
      * @test
      */
@@ -63,8 +65,7 @@ class ContainsOnlyAllowedMembersTest extends TestCase
 
         $constraint = new ContainsOnlyAllowedMembersConstraint($allowed);
 
-        $this->expectException(ExpectationFailedException::class);
-        $this->expectExceptionMessageRegExp(
+        $this->setFailureExceptionRegex(
             sprintf(
                 '/Failed asserting that [\S\s]* %s\./',
                 $constraint->toString()

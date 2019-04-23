@@ -1,8 +1,9 @@
 <?php
+declare (strict_types = 1);
+
 namespace VGirol\JsonApiAssert\Asserts;
 
 use PHPUnit\Framework\Assert as PHPUnit;
-use PHPUnit\Framework\ExpectationFailedException;
 use VGirol\JsonApiAssert\Members;
 use VGirol\JsonApiAssert\Messages;
 
@@ -57,7 +58,11 @@ trait AssertStructure
      */
     public static function assertHasValidTopLevelMembers($json): void
     {
-        $expected = ['data', 'errors', 'meta'];
+        $expected = [
+            Members::DATA,
+            Members::ERRORS,
+            Members::META
+        ];
         static::assertContainsAtLeastOneMember(
             $expected,
             $json,
@@ -65,18 +70,25 @@ trait AssertStructure
         );
 
         PHPUnit::assertFalse(
-            isset($json['data']) && isset($json['errors']),
+            isset($json[Members::DATA]) && isset($json[Members::ERRORS]),
             Messages::TOP_LEVEL_DATA_AND_ERROR
         );
 
-        $allowed = ['data', 'errors', 'meta', 'jsonapi', 'links', 'included'];
+        $allowed = [
+            Members::DATA,
+            Members::ERRORS,
+            Members::META,
+            Members::JSONAPI,
+            Members::LINKS,
+            Members::INCLUDED
+        ];
         static::assertContainsOnlyAllowedMembers(
             $allowed,
             $json
         );
 
         PHPUnit::assertFALSE(
-            !isset($json['data']) && isset($json['included']),
+            !isset($json[Members::DATA]) && isset($json[Members::INCLUDED]),
             Messages::TOP_LEVEL_DATA_AND_INCLUDED
         );
     }
@@ -91,33 +103,37 @@ trait AssertStructure
      */
     public static function assertIsValidTopLevelLinksMember($json, bool $strict): void
     {
-        $allowed = ['self', 'related', 'first', 'last', 'next', 'prev'];
+        $allowed = [
+            Members::SELF,
+            Members::RELATED,
+            Members::FIRST,
+            Members::LAST,
+            Members::NEXT,
+            Members::PREV
+        ];
         static::assertIsValidLinksObject($json, $allowed, $strict);
     }
 
     /**
      * Asserts a json fragment is a valid primary data object.
      *
-     * @param array     $json
-     * @param boolean   $strict     If true, unsafe characters are not allowed when checking members name.
+     * @param array|null    $json
+     * @param boolean       $strict     If true, unsafe characters are not allowed when checking members name.
      * @return void
      * @throws \PHPUnit\Framework\ExpectationFailedException
      */
     public static function assertIsValidPrimaryData($json, bool $strict): void
     {
-        try {
-            PHPUnit::assertIsArray(
-                $json,
-                Messages::PRIMARY_DATA_NOT_ARRAY
-            );
-            if (empty($json)) {
-                return;
-            }
-        } catch (ExpectationFailedException $e) {
-            PHPUnit::assertNull(
-                $json,
-                Messages::PRIMARY_DATA_NOT_ARRAY
-            );
+        if (\is_null($json)) {
+            $json = [];
+        }
+
+        PHPUnit::assertIsArray(
+            $json,
+            Messages::PRIMARY_DATA_NOT_ARRAY
+        );
+
+        if (empty($json)) {
             return;
         }
 
@@ -211,26 +227,42 @@ trait AssertStructure
                 Messages::INCLUDED_RESOURCE_NOT_LINKED
             );
 
-            if (!isset($present[$inc['type']])) {
-                $present[$inc['type']] = [];
+            if (!isset($present[$inc[Members::TYPE]])) {
+                $present[$inc[Members::TYPE]] = [];
             }
             PHPUnit::assertNotContains(
-                $inc['id'],
-                $present[$inc['type']],
+                $inc[Members::ID],
+                $present[$inc[Members::TYPE]],
                 Messages::COMPOUND_DOCUMENT_ONLY_ONE_RESOURCE
             );
-            array_push($present[$inc['type']], $inc['id']);
+            array_push($present[$inc[Members::TYPE]], $inc[Members::ID]);
         }
     }
 
-    private static function dataIsResourceObject($resource)
+    /**
+     * Checks if a given json fragment is a resource object.
+     *
+     * @param array $resource
+     * @return bool
+     */
+    private static function dataIsResourceObject($resource): bool
     {
-        $expected = ['attributes', 'relationships', 'links'];
+        $expected = [
+            Members::ATTRIBUTES,
+            Members::RELATIONSHIPS,
+            Members::LINKS
+        ];
 
         return static::containsAtLeastOneMember($expected, $resource);
     }
 
-    private static function getAllResourceIdentifierObjects($data)
+    /**
+     * Get all the resource identifier objects (resource linkage) presents in a collection of resource.
+     *
+     * @param array $data
+     * @return array
+     */
+    private static function getAllResourceIdentifierObjects($data): array
     {
         $arr = [];
         if (empty($data)) {
@@ -240,16 +272,17 @@ trait AssertStructure
             $data = [$data];
         }
         foreach ($data as $obj) {
-            if (!isset($obj['relationships'])) {
+            if (!isset($obj[Members::RELATIONSHIPS])) {
                 continue;
             }
-            foreach ($obj['relationships'] as $relationship) {
-                if (!isset($relationship['data'])) {
+            foreach ($obj[Members::RELATIONSHIPS] as $relationship) {
+                if (!isset($relationship[Members::DATA])) {
                     continue;
                 }
                 $arr = array_merge(
                     $arr,
-                    static::isArrayOfObjects($relationship['data']) ? $relationship['data'] : [$relationship['data']]
+                    static::isArrayOfObjects($relationship[Members::DATA]) ?
+                        $relationship[Members::DATA] : [$relationship[Members::DATA]]
                 );
             }
         }
@@ -257,10 +290,19 @@ trait AssertStructure
         return $arr;
     }
 
-    private static function existsInArray($needle, $arr)
+    /**
+     * Checks if a resource is present in a given array.
+     *
+     * @param array $needle
+     * @param array $arr
+     * @return bool
+     */
+    private static function existsInArray($needle, $arr): bool
     {
         foreach ($arr as $resIdentifier) {
-            if (($resIdentifier['type'] === $needle['type']) && ($resIdentifier['id'] === $needle['id'])) {
+            $test = $resIdentifier[Members::TYPE] === $needle[Members::TYPE]
+                && $resIdentifier[Members::ID] === $needle[Members::ID];
+            if ($test) {
                 return true;
             }
         }

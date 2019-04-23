@@ -1,4 +1,6 @@
 <?php
+declare (strict_types = 1);
+
 namespace VGirol\JsonApiAssert;
 
 use VGirol\JsonApiAssert\Asserts\AssertArrays;
@@ -31,4 +33,20 @@ class Assert
     use AssertResourceLinkage;
     use AssertResourceObject;
     use AssertStructure;
+
+    /**
+     * Throws an Exception because of an invalid argument passed to a method.
+     *
+     * @param integer $argument
+     * @param string $type
+     * @param mixed $value
+     * @return void
+     * @throws \VGirol\JsonApiAssert\Exception
+     *
+     * @SuppressWarnings(PHPMD.StaticAccess)
+     */
+    protected static function invalidArgument(int $argument, string $type, $value = null): void
+    {
+        throw InvalidArgumentHelper::factory($argument, $type, $value);
+    }
 }
