@@ -1,7 +1,7 @@
 <?php
 namespace VGirol\JsonApiAssert\Tests\Exceptions;
 
-use VGirol\JsonApiAssert\Exception;
+use VGirol\JsonApiAssert\InvalidArgumentException;
 use VGirol\JsonApiAssert\InvalidArgumentHelper;
 use VGirol\JsonApiAssert\Tests\TestCase;
 
@@ -16,7 +16,7 @@ class InvalidargumentHelperTest extends TestCase
         $type = 'string';
         $value = 666;
         $expected = \sprintf(
-            Exception::INVALID_ARGUMENT,
+            InvalidArgumentException::MESSAGE,
             $arg,
             ' (' . \gettype($value) . '#' . $value . ')',
             'VGirol\JsonApiAssert\Tests\Exceptions\InvalidargumentHelperTest',

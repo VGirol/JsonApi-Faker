@@ -14,20 +14,20 @@ namespace VGirol\JsonApiAssert;
 final class InvalidArgumentHelper
 {
     /**
-     * Creates a new instance of VGirol\JsonApiAssert\Exception with customized message.
+     * Creates a new instance of VGirol\JsonApiAssert\InvalidArgumentException with customized message.
      *
      * @param integer $argument
      * @param string $type
      * @param mixed $value
-     * @return Exception
+     * @return InvalidArgumentException
      */
-    public static function factory(int $argument, string $type, $value = null): Exception
+    public static function factory(int $argument, string $type, $value = null): InvalidArgumentException
     {
         $stack = \debug_backtrace();
 
-        return new Exception(
+        return new InvalidArgumentException(
             \sprintf(
-                Exception::INVALID_ARGUMENT,
+                InvalidArgumentException::MESSAGE,
                 $argument,
                 $value !== null ? ' (' . \gettype($value) . '#' . $value . ')' : ' (No Value)',
                 $stack[1]['class'],

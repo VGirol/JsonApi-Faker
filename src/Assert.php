@@ -35,13 +35,13 @@ class Assert
     use AssertStructure;
 
     /**
-     * Throws an Exception because of an invalid argument passed to a method.
+     * Throws an InvalidArgumentException because of an invalid argument passed to a method.
      *
      * @param integer $argument
      * @param string $type
      * @param mixed $value
      * @return void
-     * @throws \VGirol\JsonApiAssert\Exception
+     * @throws \VGirol\JsonApiAssert\InvalidArgumentException
      *
      * @SuppressWarnings(PHPMD.StaticAccess)
      */
