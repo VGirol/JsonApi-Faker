@@ -77,7 +77,7 @@ trait SetExceptionsTrait
      */
     protected function setInvalidArgumentException(int $arg, string $type, $value = null)
     {
-        $this->expectException(Exception::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessageRegExp(
             \sprintf(
                 '/' . InvalidArgumentException::MESSAGE . '/',
