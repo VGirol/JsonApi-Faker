@@ -82,7 +82,8 @@ trait SetExceptionsTrait
             \sprintf(
                 '/' . \preg_quote(InvalidArgumentException::MESSAGE) . '/',
                 $arg,
-                is_null($value) ? '[\s\S]*' : ' \(' . \gettype($value) . '#' . \preg_quote(\var_export($value, true)) . '\)',
+                is_null($value) ?
+                    '[\s\S]*' : ' \(' . \gettype($value) . '#' . \preg_quote(\var_export($value, true)) . '\)',
                 '.*',
                 '.*',
                 \preg_quote($type)
