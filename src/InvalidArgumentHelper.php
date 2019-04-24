@@ -29,7 +29,7 @@ final class InvalidArgumentHelper
             \sprintf(
                 InvalidArgumentException::MESSAGE,
                 $argument,
-                $value !== null ? ' (' . \gettype($value) . '#' . $value . ')' : ' (No Value)',
+                $value !== null ? ' (' . \gettype($value) . '#' . \var_export($value, true) . ')' : ' (No Value)',
                 $stack[1]['class'],
                 $stack[1]['function'],
                 $type

@@ -80,9 +80,9 @@ trait SetExceptionsTrait
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessageRegExp(
             \sprintf(
-                '/' . InvalidArgumentException::MESSAGE . '/',
+                '/' . \preg_quote(InvalidArgumentException::MESSAGE) . '/',
                 $arg,
-                is_null($value) ? '[\s\S]*' : ' \(' . \gettype($value) . '#' . $value . '\)',
+                is_null($value) ? '[\s\S]*' : ' \(' . \gettype($value) . '#' . \preg_quote(\var_export($value, true)) . '\)',
                 '.*',
                 '.*',
                 \preg_quote($type)
