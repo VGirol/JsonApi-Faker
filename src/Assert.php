@@ -3,24 +3,30 @@ declare (strict_types = 1);
 
 namespace VGirol\JsonApiAssert;
 
-use VGirol\JsonApiAssert\Asserts\AssertArrays;
-use VGirol\JsonApiAssert\Asserts\AssertAttributesObject;
-use VGirol\JsonApiAssert\Asserts\AssertErrorsObject;
-use VGirol\JsonApiAssert\Asserts\AssertJsonapiObject;
-use VGirol\JsonApiAssert\Asserts\AssertLinksObject;
-use VGirol\JsonApiAssert\Asserts\AssertMemberName;
-use VGirol\JsonApiAssert\Asserts\AssertMembers;
-use VGirol\JsonApiAssert\Asserts\AssertMetaObject;
-use VGirol\JsonApiAssert\Asserts\AssertRelationshipsObject;
-use VGirol\JsonApiAssert\Asserts\AssertResourceLinkage;
-use VGirol\JsonApiAssert\Asserts\AssertResourceObject;
-use VGirol\JsonApiAssert\Asserts\AssertStructure;
+use VGirol\JsonApiAssert\Asserts\Content\AssertJsonapi;
+use VGirol\JsonApiAssert\Asserts\Content\AssertLinks;
+use VGirol\JsonApiAssert\Asserts\Content\AssertPagination;
+use VGirol\JsonApiAssert\Asserts\Content\AssertResource;
+use VGirol\JsonApiAssert\Asserts\Content\AssertResourceLinkage as AssertLinkage;
+use VGirol\JsonApiAssert\Asserts\Structure\AssertArrays;
+use VGirol\JsonApiAssert\Asserts\Structure\AssertAttributesObject;
+use VGirol\JsonApiAssert\Asserts\Structure\AssertErrorsObject;
+use VGirol\JsonApiAssert\Asserts\Structure\AssertJsonapiObject;
+use VGirol\JsonApiAssert\Asserts\Structure\AssertLinksObject;
+use VGirol\JsonApiAssert\Asserts\Structure\AssertMemberName;
+use VGirol\JsonApiAssert\Asserts\Structure\AssertMembers;
+use VGirol\JsonApiAssert\Asserts\Structure\AssertMetaObject;
+use VGirol\JsonApiAssert\Asserts\Structure\AssertRelationshipsObject;
+use VGirol\JsonApiAssert\Asserts\Structure\AssertResourceLinkage;
+use VGirol\JsonApiAssert\Asserts\Structure\AssertResourceObject;
+use VGirol\JsonApiAssert\Asserts\Structure\AssertStructure;
 
 /**
  * This class provide a set of assertions to test documents using the JSON:API specification.
  */
 class Assert
 {
+    // Structure
     use AssertArrays;
     use AssertAttributesObject;
     use AssertErrorsObject;
@@ -33,6 +39,13 @@ class Assert
     use AssertResourceLinkage;
     use AssertResourceObject;
     use AssertStructure;
+
+    // Content
+    use AssertLinks;
+    use AssertJsonapi;
+    use AssertPagination;
+    use AssertResource;
+    use AssertLinkage;
 
     /**
      * Throws an InvalidArgumentException because of an invalid argument passed to a method.

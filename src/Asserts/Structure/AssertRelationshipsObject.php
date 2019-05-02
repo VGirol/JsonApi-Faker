@@ -1,7 +1,7 @@
 <?php
 declare (strict_types = 1);
 
-namespace VGirol\JsonApiAssert\Asserts;
+namespace VGirol\JsonApiAssert\Asserts\Structure;
 
 use PHPUnit\Framework\Assert as PHPUnit;
 use VGirol\JsonApiAssert\Members;

@@ -1,7 +1,7 @@
 <?php
 declare (strict_types=1);
 
-namespace VGirol\JsonApiAssert\Asserts;
+namespace VGirol\JsonApiAssert\Asserts\Structure;
 
 use VGirol\JsonApiAssert\Messages;
 
