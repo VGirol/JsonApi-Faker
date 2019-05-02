@@ -10,10 +10,9 @@ class ResourceObjectFactory extends BaseFactory
     use HasIdentification;
     use HasMeta;
     use HasLinks;
+    use HasRelationships;
 
     protected $attributes;
-
-    protected $relationships;
 
     public function setAttributes(array $attributes): self
     {
@@ -38,13 +37,6 @@ class ResourceObjectFactory extends BaseFactory
         return $this;
     }
 
-    public function addRelationship(string $name, $relationship): self
-    {
-        $this->addMemberToObject('relationships', $name, $relationship);
-
-        return $this;
-    }
-
     public function toArray(): array
     {
         $resource = $this->getIdentification();
@@ -58,12 +50,13 @@ class ResourceObjectFactory extends BaseFactory
             $resource[Members::LINKS] = $this->links;
         }
         if (isset($this->relationships)) {
-            $resource[Members::RELATIONSHIPS] = array_map(
-                function ($relationship) {
-                    return $relationship->toArray();
-                },
-                $this->relationships
-            );
+            // $resource[Members::RELATIONSHIPS] = array_map(
+            //     function ($relationship) {
+            //         return $relationship->toArray();
+            //     },
+            //     $this->relationships
+            // );
+            $resource[Members::RELATIONSHIPS] = $this->relationships;
         }
 
         return $resource;

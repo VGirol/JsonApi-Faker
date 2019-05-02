@@ -14,7 +14,7 @@ trait HasMeta
         return $this;
     }
 
-    public static function addMemberToMeta(string $name, $value): self
+    public function addMemberToMeta(string $name, $value): self
     {
         $this->addMemberToObject('meta', $name, $value);
 
