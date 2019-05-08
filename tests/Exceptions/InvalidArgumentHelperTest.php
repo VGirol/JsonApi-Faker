@@ -5,12 +5,12 @@ use VGirol\JsonApiAssert\InvalidArgumentException;
 use VGirol\JsonApiAssert\InvalidArgumentHelper;
 use VGirol\JsonApiAssert\Tests\TestCase;
 
-class InvalidargumentHelperTest extends TestCase
+class InvalidArgumentHelperTest extends TestCase
 {
     /**
      * @test
      */
-    public function invalidargumentHelper()
+    public function invalidArgumentHelper()
     {
         $arg = 3;
         $type = 'string';
@@ -19,8 +19,8 @@ class InvalidargumentHelperTest extends TestCase
             InvalidArgumentException::MESSAGE,
             $arg,
             ' (' . \gettype($value) . '#' . $value . ')',
-            'VGirol\JsonApiAssert\Tests\Exceptions\InvalidargumentHelperTest',
-            'invalidargumentHelper',
+            'VGirol\JsonApiAssert\Tests\Exceptions\InvalidArgumentHelperTest',
+            'invalidArgumentHelper',
             $type
         );
 

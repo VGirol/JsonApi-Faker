@@ -3,24 +3,24 @@ declare (strict_types = 1);
 
 namespace VGirol\JsonApiAssert\Factory;
 
-trait HasMeta
+trait HasErrors
 {
     /**
      * Undocumented variable
      *
      * @var array
      */
-    protected $meta;
+    protected $errors;
 
     /**
      * Undocumented function
      *
-     * @param array $meta
+     * @param array $errors
      * @return static
      */
-    public function setMeta(array $meta)
+    public function setErrors(array $errors)
     {
-        $this->meta = $meta;
+        $this->errors = $errors;
 
         return $this;
     }
@@ -28,13 +28,12 @@ trait HasMeta
     /**
      * Undocumented function
      *
-     * @param string $name
-     * @param mixed $value
+     * @param [type] $error
      * @return static
      */
-    public function addToMeta(string $name, $value)
+    public function addError($error)
     {
-        $this->addToObject('meta', $name, $value);
+        $this->addToObject('errors', $error);
 
         return $this;
     }

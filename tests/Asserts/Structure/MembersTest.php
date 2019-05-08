@@ -1,5 +1,5 @@
 <?php
-namespace VGirol\JsonApiAssert\Tests\Asserts;
+namespace VGirol\JsonApiAssert\Tests\Asserts\Structure;
 
 use VGirol\JsonApiAssert\Assert as JsonApiAssert;
 use VGirol\JsonApiAssert\Messages;
@@ -303,6 +303,19 @@ class MembersTest extends TestCase
         $this->setInvalidArgumentException(1, 'array', $expected);
 
         JsonApiAssert::assertNotHasMembers($expected, $json);
+    }
+
+    /**
+     * @test
+     */
+    public function assertHasJsonapi()
+    {
+        $data = [
+            'jsonapi' => 'valid',
+            'another' => 'member'
+        ];
+
+        JsonApiAssert::assertHasJsonapi($data);
     }
 
     /**

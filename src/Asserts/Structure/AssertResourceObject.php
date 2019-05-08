@@ -103,14 +103,14 @@ trait AssertResourceObject
      */
     public static function assertResourceIdMember($resource): void
     {
-        PHPUnit::assertNotEmpty(
-            $resource[Members::ID],
-            Messages::RESOURCE_ID_MEMBER_IS_EMPTY
-        );
-
         PHPUnit::assertIsString(
             $resource[Members::ID],
             Messages::RESOURCE_ID_MEMBER_IS_NOT_STRING
+        );
+
+        PHPUnit::assertNotEmpty(
+            $resource[Members::ID],
+            Messages::RESOURCE_ID_MEMBER_IS_EMPTY
         );
     }
 

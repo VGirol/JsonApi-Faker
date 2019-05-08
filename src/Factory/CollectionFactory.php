@@ -6,36 +6,45 @@ namespace VGirol\JsonApiAssert\Factory;
 class CollectionFactory extends BaseFactory
 {
     /**
-     * Undocumented variable
+     * Array of ResourceObjectFactory or ResourceIdentifierFactory objects
      *
-     * @var array<ResourceObjectFactory>|array<ResourceIdentifierFactory>
+     * @var array
      */
-    protected $collection;
+    protected $array;
 
-    public function setCollection(array $collection): self
+    /**
+     * Undocumented function
+     *
+     * @param array<ResourceObjectFactory>|array<ResourceObjectFactory> $collection
+     * @return static
+     */
+    public function setCollection($collection)
     {
-        $this->collection = $collection;
+        $this->array = $collection;
 
         return $this;
     }
 
-    public function toArray(): array
+    public function toArray(): ?array
     {
+        if (!isset($this->array)) {
+            return null;
+        }
+
         return $this->map(
             function ($resource) {
                 return $resource->toArray();
-            },
-            $this->collection
+            }
         );
     }
 
     public function each($callback): void
     {
-        array_walk($this->collection, $callback);
+        array_walk($this->array, $callback);
     }
 
     public function map($callback): array
     {
-        return array_map($callback, $this->collection);
+        return array_map($callback, $this->array);
     }
 }

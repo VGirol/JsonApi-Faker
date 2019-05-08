@@ -206,6 +206,18 @@ trait AssertMembers
     }
 
     /**
+     * Asserts that a json object has a "jsonapi" member.
+     *
+     * @param array     $json
+     * @return void
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     */
+    public static function assertHasJsonapi($json): void
+    {
+        static::assertHasMember(Members::JSONAPI, $json);
+    }
+
+    /**
      * Asserts that a json object contains at least one member from the list provided.
      *
      * @param array<string> $expected   The expected members

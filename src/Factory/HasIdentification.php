@@ -11,22 +11,38 @@ trait HasIdentification
 
     protected $resourceType;
 
-    public function setId($id): self
+    /**
+     * Undocumented function
+     *
+     * @param int|string|null $id
+     * @return static
+     */
+    public function setId($id)
     {
         $this->id = $id;
 
         return $this;
     }
 
-    public function setResourceType($resourceType): self
+    /**
+     * Undocumented function
+     *
+     * @param string|null $resourceType
+     * @return static
+     */
+    public function setResourceType(?string $resourceType)
     {
         $this->resourceType = $resourceType;
 
         return $this;
     }
 
-    protected function getIdentification(): array
+    protected function getIdentification(): ?array
     {
+        if (!isset($this->id) && !isset($this->resourceType)) {
+            return null;
+        }
+
         return [
             Members::TYPE => $this->resourceType,
             Members::ID => strval($this->id)

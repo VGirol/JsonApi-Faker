@@ -5,20 +5,31 @@ namespace VGirol\JsonApiAssert\Factory;
 
 use VGirol\JsonApiAssert\Members;
 
-class JsonapiFactory
+class JsonapiFactory extends BaseFactory
 {
     use HasMeta;
 
+    /**
+     * Undocumented variable
+     *
+     * @var string
+     */
     protected $version;
 
-    public function setVersion($version): self
+    /**
+     * Undocumented function
+     *
+     * @param string $version
+     * @return static
+     */
+    public function setVersion(string $version)
     {
         $this->version = $version;
 
         return $this;
     }
 
-    public function toArray(): array
+    public function toArray(): ?array
     {
         $json = [];
 

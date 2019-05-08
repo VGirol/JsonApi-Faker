@@ -193,6 +193,20 @@ Parameters :
 
 See [`assertHasMember`](#assertHasMember).
 
+### assertHasJsonapi
+
+Asserts that a json object has a "jsonapi" member.
+
+Definition :
+
+`assertHasJsonapi($json)`
+
+Parameters :
+
+- `array` `$json`
+
+See [`assertHasMember`](#assertHasMember).
+
 ### assertHasLinks
 
 Asserts that a json object has a "links" member.

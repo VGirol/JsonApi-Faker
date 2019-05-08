@@ -1,5 +1,5 @@
 <?php
-namespace VGirol\JsonApiAssert\Tests\Asserts;
+namespace VGirol\JsonApiAssert\Tests\Asserts\Structure;
 
 use VGirol\JsonApiAssert\Assert as JsonApiAssert;
 use VGirol\JsonApiAssert\Messages;

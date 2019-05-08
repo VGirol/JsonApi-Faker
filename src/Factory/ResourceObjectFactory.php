@@ -12,16 +12,33 @@ class ResourceObjectFactory extends BaseFactory
     use HasLinks;
     use HasRelationships;
 
+    /**
+     * Undocumented variable
+     *
+     * @var array
+     */
     protected $attributes;
 
-    public function setAttributes(array $attributes): self
+    /**
+     * Undocumented function
+     *
+     * @param array $attributes
+     * @return static
+     */
+    public function setAttributes(array $attributes)
     {
         $this->attributes = $attributes;
 
         return $this;
     }
 
-    public function addAttributes(array $attributes): self
+    /**
+     * Undocumented function
+     *
+     * @param array $attributes
+     * @return static
+     */
+    public function addAttributes(array $attributes)
     {
         foreach ($attributes as $name => $value) {
             $this->addAttribute($name, $value);
@@ -30,7 +47,14 @@ class ResourceObjectFactory extends BaseFactory
         return $this;
     }
 
-    public function addAttribute(string $name, $value): self
+    /**
+     * Undocumented function
+     *
+     * @param string $name
+     * @param mixed $value
+     * @return static
+     */
+    public function addAttribute(string $name, $value)
     {
         $this->addMemberToObject('attributes', $name, $value);
 
@@ -50,13 +74,12 @@ class ResourceObjectFactory extends BaseFactory
             $resource[Members::LINKS] = $this->links;
         }
         if (isset($this->relationships)) {
-            // $resource[Members::RELATIONSHIPS] = array_map(
-            //     function ($relationship) {
-            //         return $relationship->toArray();
-            //     },
-            //     $this->relationships
-            // );
-            $resource[Members::RELATIONSHIPS] = $this->relationships;
+            $resource[Members::RELATIONSHIPS] = array_map(
+                function ($relationship) {
+                    return $relationship->toArray();
+                },
+                $this->relationships
+            );
         }
 
         return $resource;

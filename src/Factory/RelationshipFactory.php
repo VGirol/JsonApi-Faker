@@ -17,7 +17,13 @@ class RelationshipFactory extends BaseFactory
      */
     protected $data = null;
 
-    public function setData($data): self
+    /**
+     * Undocumented function
+     *
+     * @param ResourceIdentifierFactory|CollectionFactory|null $data
+     * @return static
+     */
+    public function setData($data)
     {
         $this->data = $data;
 

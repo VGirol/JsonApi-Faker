@@ -10,7 +10,7 @@ class ResourceIdentifierFactory extends BaseFactory
     use HasIdentification;
     use HasMeta;
 
-    public function toArray(): array
+    public function toArray(): ?array
     {
         $resource = $this->getIdentification();
 

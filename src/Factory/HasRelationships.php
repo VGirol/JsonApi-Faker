@@ -5,11 +5,23 @@ namespace VGirol\JsonApiAssert\Factory;
 
 trait HasRelationships
 {
+    /**
+     * Undocumented variable
+     *
+     * @var array<string, RelationshipFactory>
+     */
     protected $relationships;
 
-    public function addRelationship(string $name, $relationship): self
+    /**
+     * Undocumented function
+     *
+     * @param string $name
+     * @param RelationshipFactory $relationship
+     * @return static
+     */
+    public function addRelationship(string $name, $relationship)
     {
-        $this->addMemberToObject('relationships', $name, $relationship);
+        $this->addToObject('relationships', $name, $relationship);
 
         return $this;
     }

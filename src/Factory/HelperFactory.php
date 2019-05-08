@@ -5,7 +5,7 @@ namespace VGirol\JsonApiAssert\Factory;
 
 class HelperFactory
 {
-    protected function getAliases()
+    public static function getAliases(): array
     {
         return [
             'collection' => CollectionFactory::class,
@@ -16,7 +16,7 @@ class HelperFactory
         ];
     }
 
-    public function getClassName(string $key)
+    public static function getClassName(string $key): string
     {
         $aliases = static::getAliases();
         if (!isset($aliases[$key])) {
@@ -26,5 +26,12 @@ class HelperFactory
         }
 
         return $aliases[$key];
+    }
+
+    public static function create($alias, ...$args)
+    {
+        $className = static::getClassName($alias);
+
+        return new $className(...$args);
     }
 }

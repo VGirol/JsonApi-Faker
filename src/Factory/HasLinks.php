@@ -7,14 +7,26 @@ trait HasLinks
 {
     protected $links;
 
-    public function setLinks(array $links): self
+    /**
+     * Undocumented function
+     *
+     * @param array $links
+     * @return static
+     */
+    public function setLinks(array $links)
     {
         $this->links = $links;
 
         return $this;
     }
 
-    public function addLinks(array $links): self
+    /**
+     * Undocumented function
+     *
+     * @param array $links
+     * @return static
+     */
+    public function addLinks(array $links)
     {
         foreach ($links as $name => $link) {
             $this->addLink($name, $link);
@@ -23,9 +35,16 @@ trait HasLinks
         return $this;
     }
 
-    public function addLink(string $name, $link): self
+    /**
+     * Undocumented function
+     *
+     * @param string $name
+     * @param array|string|null $link
+     * @return static
+     */
+    public function addLink(string $name, $link)
     {
-        $this->addMemberToObject('links', $name, $link);
+        $this->addToObject('links', $name, $link);
 
         return $this;
     }

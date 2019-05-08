@@ -11,27 +11,27 @@ trait AssertResource
      * Asserts that a resource object correspond to a given model.
      *
      * @param array $expected
-     * @param array $resource
+     * @param array $json
      */
-    public static function assertResourceObjectEquals($expected, $resource)
+    public static function assertResourceObjectEquals($expected, $json)
     {
-        PHPUnit::assertSame($expected, $resource);
+        PHPUnit::assertSame($expected, $json);
     }
 
     /**
      * Asserts that an array of resource objects correspond to a given collection.
      *
      * @param array $expected
-     * @param array $collection
+     * @param array $json
      */
-    public static function assertResourceCollectionEquals($expected, $collection)
+    public static function assertResourceCollectionEquals($expected, $json)
     {
-        static::assertIsArrayOfObjects($collection);
-        PHPUnit::assertEquals(count($expected), count($collection));
+        static::assertIsArrayOfObjects($json);
+        PHPUnit::assertEquals(count($expected), count($json));
 
         $index = 0;
         foreach ($expected as $resource) {
-            static::assertResourceObjectEquals($resource, $collection[$index]);
+            static::assertResourceObjectEquals($resource, $json[$index]);
             $index++;
         }
     }
