@@ -9,26 +9,7 @@ class RelationshipFactory extends BaseFactory
 {
     use HasMeta;
     use HasLinks;
-
-    /**
-     * Undocumented variable
-     *
-     * @var ResourceIdentifierFactory|CollectionFactory|null
-     */
-    protected $data = null;
-
-    /**
-     * Undocumented function
-     *
-     * @param ResourceIdentifierFactory|CollectionFactory|null $data
-     * @return static
-     */
-    public function setData($data)
-    {
-        $this->data = $data;
-
-        return $this;
-    }
+    use HasData;
 
     public function toArray(): array
     {
