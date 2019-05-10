@@ -7,9 +7,9 @@ use VGirol\JsonApiAssert\Members;
 
 trait HasIdentification
 {
-    protected $id;
+    use HasResourceType;
 
-    protected $resourceType;
+    protected $id;
 
     /**
      * Undocumented function
@@ -20,19 +20,6 @@ trait HasIdentification
     public function setId($id)
     {
         $this->id = $id;
-
-        return $this;
-    }
-
-    /**
-     * Undocumented function
-     *
-     * @param string|null $resourceType
-     * @return static
-     */
-    public function setResourceType(?string $resourceType)
-    {
-        $this->resourceType = $resourceType;
 
         return $this;
     }

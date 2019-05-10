@@ -10,7 +10,6 @@ class ResourceObjectFactory extends BaseFactory
     use HasIdentification;
     use HasMeta;
     use HasLinks;
-    use HasRelationships;
 
     /**
      * Undocumented variable
@@ -18,6 +17,13 @@ class ResourceObjectFactory extends BaseFactory
      * @var array
      */
     protected $attributes;
+
+    /**
+     * Undocumented variable
+     *
+     * @var array<string, RelationshipFactory>
+     */
+    protected $relationships;
 
     /**
      * Undocumented function
@@ -61,6 +67,25 @@ class ResourceObjectFactory extends BaseFactory
         return $this;
     }
 
+    /**
+     * Undocumented function
+     *
+     * @param string $name
+     * @param RelationshipFactory $relationship
+     * @return static
+     */
+    public function addRelationship(string $name, $relationship)
+    {
+        $this->addToObject('relationships', $name, $relationship);
+
+        return $this;
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @return array
+     */
     public function toArray(): array
     {
         $resource = $this->getIdentification();
