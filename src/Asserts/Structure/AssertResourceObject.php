@@ -108,12 +108,11 @@ trait AssertResourceObject
             Messages::RESOURCE_ID_MEMBER_IS_NOT_STRING
         );
 
-        if (intval($resource[Members::ID]) !== 0) {
-            PHPUnit::assertNotEmpty(
-                $resource[Members::ID],
-                Messages::RESOURCE_ID_MEMBER_IS_EMPTY
-            );
-        }
+        PHPUnit::assertNotEmpty(
+            // PHP treats 0 and '0' as empty.
+            str_replace('0', 'zero', $resource[Members::ID]),
+            Messages::RESOURCE_ID_MEMBER_IS_EMPTY
+        );
     }
 
     /**

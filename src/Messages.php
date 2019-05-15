@@ -119,4 +119,8 @@ abstract class Messages
     'Failed asserting that an array is an array of objects.';
     const INCLUDED_RESOURCE_NOT_LINKED =
     'An included resource MUST correspond to an existing resource linkage.';
+    const ERRORS_OBJECT_CONTAINS_NOT_ENOUGH_ERRORS =
+    'Errors array must be greater or equal than the expected errors array.';
+    const ERRORS_OBJECT_DOES_NOT_CONTAIN_EXPECTED_ERROR =
+    'Failed asserting that "errors" member %s contains the expected error %s.';
 }

@@ -15,10 +15,10 @@ trait HasResourceType
     /**
      * Undocumented function
      *
-     * @param string $type
+     * @param string|null $type
      * @return static
      */
-    public function setResourceType(string $type)
+    public function setResourceType(?string $type)
     {
         $this->resourceType = $type;
 

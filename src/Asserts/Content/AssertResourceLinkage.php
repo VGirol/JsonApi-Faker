@@ -22,7 +22,7 @@ trait AssertResourceLinkage
      * Asserts that an array of resource identifer objects correspond to an expected collection.
      *
      * @param array $expected
-     * @param array $collection
+     * @param array $json
      */
     public static function assertResourceIdentifierCollectionEquals($expected, $json)
     {
@@ -68,6 +68,6 @@ trait AssertResourceLinkage
             return;
         }
 
-        static::assertResourceIdentifierCollectionEquals($expected, $json, $strict);
+        static::assertResourceIdentifierCollectionEquals($expected, $json);
     }
 }

@@ -15,11 +15,8 @@ class RelationshipFactory extends BaseFactory
     {
         $resource = [];
 
-        if (!is_null($this->data)) {
-            $resource[Members::DATA] = $this->data->toArray();
-        } else {
-            $resource[Members::DATA] = $this->data;
-        }
+        $resource[Members::DATA] = is_null($this->data) ? $this->data : $this->data->toArray();
+
         if (isset($this->meta)) {
             $resource[Members::META] = $this->meta;
         }

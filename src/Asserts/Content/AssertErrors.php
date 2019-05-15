@@ -5,6 +5,7 @@ namespace VGirol\JsonApiAssert\Asserts\Content;
 use DMS\PHPUnitExtensions\ArraySubset\Constraint\ArraySubset;
 use PHPUnit\Framework\Assert as PHPUnit;
 use PHPUnit\Framework\ExpectationFailedException;
+use VGirol\JsonApiAssert\Messages;
 
 trait AssertErrors
 {
@@ -30,7 +31,7 @@ trait AssertErrors
         PHPUnit::assertGreaterThanOrEqual(
             count($expectedErrors),
             count($errors),
-            'Errors array must be greater or equal than the expected errors array.'
+            Messages::ERRORS_OBJECT_CONTAINS_NOT_ENOUGH_ERRORS
         );
 
         foreach ($expectedErrors as $expectedError) {
@@ -43,7 +44,7 @@ trait AssertErrors
             PHPUnit::assertTrue(
                 $test,
                 sprintf(
-                    'Failed asserting that "errors" member %s contains the expected error %s.',
+                    Messages::ERRORS_OBJECT_DOES_NOT_CONTAIN_EXPECTED_ERROR,
                     var_export($errors, true),
                     var_export($expectedError, true)
                 )

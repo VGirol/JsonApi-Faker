@@ -14,12 +14,12 @@ trait HasIdentification
     /**
      * Undocumented function
      *
-     * @param int|string|null $id
+     * @param int|string|null $resourceId
      * @return static
      */
-    public function setId($id)
+    public function setId($resourceId)
     {
-        $this->id = $id;
+        $this->id = $resourceId;
 
         return $this;
     }

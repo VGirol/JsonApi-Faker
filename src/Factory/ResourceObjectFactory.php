@@ -62,7 +62,7 @@ class ResourceObjectFactory extends BaseFactory
      */
     public function addAttribute(string $name, $value)
     {
-        $this->addMemberToObject('attributes', $name, $value);
+        $this->addToObject('attributes', $name, $value);
 
         return $this;
     }

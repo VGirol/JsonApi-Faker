@@ -37,7 +37,7 @@ class ArrayTest extends TestCase
 
     /**
      * @test
-     * @dataProvider notArrayOfObjectsProvider
+     * @dataProvider assertIsArrayOfObjectsFailedProvider
      */
     public function assertIsArrayOfObjectsFailed($data, $message, $failureMessage)
     {
@@ -45,7 +45,7 @@ class ArrayTest extends TestCase
         JsonApiAssert::assertIsArrayOfObjects($data, $message);
     }
 
-    public function notArrayOfObjectsProvider()
+    public function assertIsArrayOfObjectsFailedProvider()
     {
         return [
             'associative array' => [
@@ -110,5 +110,18 @@ class ArrayTest extends TestCase
 
         $this->setFailureException($failureMessage);
         JsonApiAssert::assertIsNotArrayOfObjects($data);
+    }
+
+    /**
+     * @test
+     */
+    public function assertIsNotArrayOfObjectsWithInvalidArguments()
+    {
+
+        $json = null;
+
+        $this->setInvalidArgumentException(1, 'array', $json);
+
+        JsonApiAssert::assertIsNotArrayOfObjects($json);
     }
 }

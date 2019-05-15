@@ -28,12 +28,12 @@ trait HasErrors
     /**
      * Undocumented function
      *
-     * @param [type] $error
+     * @param array $error
      * @return static
      */
     public function addError($error)
     {
-        $this->addToObject('errors', $error);
+        $this->addToArray('errors', $error);
 
         return $this;
     }
