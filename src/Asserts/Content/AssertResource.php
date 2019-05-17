@@ -15,7 +15,7 @@ trait AssertResource
      */
     public static function assertResourceObjectEquals($expected, $json)
     {
-        PHPUnit::assertSame($expected, $json);
+        PHPUnit::assertEquals($expected, $json);
     }
 
     /**
