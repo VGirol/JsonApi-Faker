@@ -15,7 +15,7 @@ class CollectionFactory extends BaseFactory
     /**
      * Undocumented function
      *
-     * @param array<ResourceObjectFactory>|array<ResourceObjectFactory> $collection
+     * @param array<ResourceIdentifierFactory>|array<ResourceObjectFactory> $collection
      * @return static
      */
     public function setCollection($collection)
@@ -38,9 +38,17 @@ class CollectionFactory extends BaseFactory
         );
     }
 
-    public function each($callback): void
+    /**
+     * Undocumented function
+     *
+     * @param callable $callback
+     * @return static
+     */
+    public function each($callback)
     {
         array_walk($this->array, $callback);
+
+        return $this;
     }
 
     public function map($callback): array

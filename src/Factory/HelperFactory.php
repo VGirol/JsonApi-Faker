@@ -7,6 +7,11 @@ class HelperFactory
 {
     public static function getAliases(): array
     {
+        return [];
+    }
+
+    private static function getDefaultAliases(): array
+    {
         return [
             'collection' => CollectionFactory::class,
             'jsonapi' => JsonapiFactory::class,
@@ -18,7 +23,7 @@ class HelperFactory
 
     public static function getClassName(string $key): string
     {
-        $aliases = static::getAliases();
+        $aliases = array_merge(static::getDefaultAliases(), static::getAliases());
         if (!isset($aliases[$key])) {
             throw new \Exception(
                 sprintf('Inexistant key "%s".', $key)
