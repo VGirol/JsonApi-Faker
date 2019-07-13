@@ -1,5 +1,6 @@
 <?php
-declare (strict_types = 1);
+
+declare(strict_types=1);
 
 namespace VGirol\JsonApiAssert\Factory;
 
@@ -14,7 +15,7 @@ class JsonapiFactory extends BaseFactory
      *
      * @var string
      */
-    protected $version;
+    public $version;
 
     /**
      * Undocumented function

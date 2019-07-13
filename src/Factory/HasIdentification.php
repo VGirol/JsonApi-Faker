@@ -1,5 +1,6 @@
 <?php
-declare (strict_types = 1);
+
+declare(strict_types=1);
 
 namespace VGirol\JsonApiAssert\Factory;
 
@@ -9,7 +10,7 @@ trait HasIdentification
 {
     use HasResourceType;
 
-    protected $id;
+    public $id;
 
     /**
      * Undocumented function

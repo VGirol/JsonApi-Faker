@@ -1,5 +1,6 @@
 <?php
-declare (strict_types = 1);
+
+declare(strict_types=1);
 
 namespace VGirol\JsonApiAssert\Asserts\Content;
 
@@ -19,7 +20,7 @@ trait AssertResource
     }
 
     /**
-     * Asserts that an array of resource objects correspond to a given collection.
+     * Asserts that an array of resource objects is equal to a given collection (same values and same order).
      *
      * @param array $expected
      * @param array $json
@@ -33,6 +34,23 @@ trait AssertResource
         foreach ($expected as $resource) {
             static::assertResourceObjectEquals($resource, $json[$index]);
             $index++;
+        }
+    }
+
+    /**
+     * Asserts that an array of resource objects contains a given collection.
+     *
+     * @param array $expected
+     * @param array $json
+     */
+    public static function assertResourceCollectionContains($expected, $json)
+    {
+        if (!static::isArrayOfObjects($expected)) {
+            $expected = [$expected];
+        }
+
+        foreach ($expected as $resource) {
+            PHPUnit::assertContains($resource, $json);
         }
     }
 }

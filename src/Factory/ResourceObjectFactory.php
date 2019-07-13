@@ -1,5 +1,6 @@
 <?php
-declare (strict_types = 1);
+
+declare(strict_types=1);
 
 namespace VGirol\JsonApiAssert\Factory;
 
@@ -16,14 +17,14 @@ class ResourceObjectFactory extends BaseFactory
      *
      * @var array
      */
-    protected $attributes;
+    public $attributes;
 
     /**
      * Undocumented variable
      *
      * @var array<string, RelationshipFactory>
      */
-    protected $relationships;
+    public $relationships;
 
     /**
      * Undocumented function

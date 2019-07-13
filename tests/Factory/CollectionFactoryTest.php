@@ -1,4 +1,5 @@
 <?php
+
 namespace VGirol\JsonApiAssert\Tests\Factory;
 
 use PHPUnit\Framework\Assert as PHPUnit;
@@ -67,6 +68,52 @@ class CollectionFactoryTest extends TestCase
         $factory = HelperFactory::create('collection');
         $factory->setCollection($collection);
 
+        $result = $factory->toArray();
+
+        PHPUnit::assertSame($expected, $result);
+    }
+
+    /**
+     * @test
+     */
+    public function changeEachItemOfTheCollection()
+    {
+        $expected = [];
+        $collection = [];
+        for ($i = 1; $i < 5; $i++) {
+            $id = strval($i * 10);
+            $type = 'test';
+            array_push(
+                $expected,
+                [
+                    'type' => $type,
+                    'id' => $id
+                ]
+            );
+
+            $factory = HelperFactory::create('resource-identifier');
+            $factory->setId($id);
+            $factory->setResourceType($type);
+            array_push(
+                $collection,
+                $factory
+            );
+        }
+
+        $factory = HelperFactory::create('collection');
+        $factory->setCollection($collection);
+
+        $result = $factory->toArray();
+
+        PHPUnit::assertSame($expected, $result);
+
+        array_walk($expected, function (&$item) {
+            $item['meta'] = ['new' => $item['id']];
+        });
+
+        $factory->each(function ($item) {
+            $item->addToMeta('new', $item->id);
+        });
         $result = $factory->toArray();
 
         PHPUnit::assertSame($expected, $result);

@@ -4,6 +4,7 @@ declare (strict_types = 1);
 namespace VGirol\JsonApiAssert;
 
 use VGirol\JsonApiAssert\Asserts\Content\AssertErrors;
+use VGirol\JsonApiAssert\Asserts\Content\AssertInclude;
 use VGirol\JsonApiAssert\Asserts\Content\AssertJsonapi;
 use VGirol\JsonApiAssert\Asserts\Content\AssertLinks;
 use VGirol\JsonApiAssert\Asserts\Content\AssertPagination;
@@ -48,6 +49,7 @@ trait HasJsonApiAssert
     use AssertResource;
     use AssertLinkage;
     use AssertErrors;
+    use AssertInclude;
 
     /**
      * Throws an InvalidArgumentException because of an invalid argument passed to a method.

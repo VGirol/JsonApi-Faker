@@ -1,5 +1,6 @@
 <?php
-declare (strict_types=1);
+
+declare(strict_types=1);
 
 namespace VGirol\JsonApiAssert;
 
@@ -78,6 +79,8 @@ abstract class Messages
     'Primary data MUST be an array or an arrayable object with a "toArray" method.';
     const PRIMARY_DATA_SAME_TYPE =
     'All elements of resource collection MUST be of same type (resource object or resource identifier object).';
+    const RESOURCE_COLLECTION_NOT_ARRAY =
+    'Resource collection MUST be represented as an empty array or an array of resource objects.';
     const RESOURCE_ID_MEMBER_IS_ABSENT =
     'A resource object MUST contain the "id" top-level members.';
     const RESOURCE_ID_MEMBER_IS_EMPTY =

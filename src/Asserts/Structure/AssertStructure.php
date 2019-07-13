@@ -1,5 +1,6 @@
 <?php
-declare (strict_types = 1);
+
+declare(strict_types=1);
 
 namespace VGirol\JsonApiAssert\Asserts\Structure;
 
@@ -210,10 +211,7 @@ trait AssertStructure
      */
     public static function assertIsValidIncludedCollection($included, $data, bool $strict): void
     {
-        static::assertIsArrayOfObjects($included);
-        foreach ($included as $resource) {
-            static::assertIsValidResourceObject($resource, $strict);
-        }
+        static::assertIsValidResourceObjectCollection($included, $strict);
 
         $resIdentifiers = array_merge(
             static::getAllResourceIdentifierObjects($data),

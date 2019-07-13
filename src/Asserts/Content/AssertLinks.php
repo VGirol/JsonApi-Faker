@@ -1,9 +1,11 @@
 <?php
-declare (strict_types = 1);
+
+declare(strict_types=1);
 
 namespace VGirol\JsonApiAssert\Asserts\Content;
 
 use PHPUnit\Framework\Assert as PHPUnit;
+use VGirol\JsonApiAssert\Constraint\LinkEqualsConstraint;
 
 /**
  * Assertions relating to the pagination
@@ -49,8 +51,20 @@ trait AssertLinks
      * @return void
      * @throws \PHPUnit\Framework\ExpectationFailedException
      */
-    public static function assertLinkObjectEquals($expected, $link): void
+    public static function assertLinkObjectEquals($expected, $link, string $message = ''): void
     {
-        PHPUnit::assertSame($expected, $link);
+        PHPUnit::assertThat($link, self::linkEqualsConstraint($expected), $message);
+    }
+
+    /**
+     * Returns a new instance of the \VGirol\JsonApiAssert\Constraint\LinkEqualsConstraint class.
+     *
+     * @param string $expected   The expected link
+     *
+     * @return \VGirol\JsonApiAssert\Constraint\LinkEqualsConstraint
+     */
+    private static function linkEqualsConstraint($expected): LinkEqualsConstraint
+    {
+        return new LinkEqualsConstraint($expected);
     }
 }

@@ -1,5 +1,6 @@
 <?php
-declare (strict_types = 1);
+
+declare(strict_types=1);
 
 namespace VGirol\JsonApiAssert\Asserts\Structure;
 
@@ -12,6 +13,32 @@ use VGirol\JsonApiAssert\Messages;
  */
 trait AssertResourceObject
 {
+    /**
+     * Asserts that a json fragment is a valid collection of resource objects.
+     *
+     * @param array|null    $json
+     * @param boolean       $strict     If true, unsafe characters are not allowed when checking members name.
+     * @return void
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     */
+    public static function assertIsValidResourceObjectCollection($json, bool $strict): void
+    {
+        PHPUnit::assertIsArray(
+            $json,
+            Messages::RESOURCE_COLLECTION_NOT_ARRAY
+        );
+
+        if (empty($json)) {
+            return;
+        }
+
+        static::assertIsArrayOfObjects($json);
+
+        foreach ($json as $resource) {
+            static::assertIsValidResourceObject($resource, $strict);
+        }
+    }
+
     /**
      * Asserts that a json fragment is a valid resource.
      *

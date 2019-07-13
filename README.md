@@ -765,6 +765,24 @@ It will do the following checks :
 - if presents, asserts that the "meta" member is valid ([assertIsValidMetaObject](#assertIsValidMetaObject)).
 - asserts that the resource has valid fields ([assertHasValidFields](#assertHasValidFields)).
 
+### assertIsValidResourceObjectCollection
+
+Asserts that a json fragment is a valid collection of resource objects.
+
+Definition :
+
+`assertIsValidResourceObjectCollection($json, $strict)`
+
+Parameters :
+
+- `array` `$json`
+- `boolean` `$strict` if true, unsafe characters are not allowed when checking members name.
+
+It will do the following checks :
+
+- asserts that the provided resource collection is either an empty array or an array of objects.
+- asserts that the collection of resources is valid ([assertIsValidResourceObject](#assertIsValidResourceObject)).
+
 ### assertIsValidTopLevelLinksMember
 
 Asserts that a json fragment is a valid top-level links member.

@@ -10,7 +10,7 @@
         "dms/phpunit-arraysubset-asserts": "^0.1"
     },
     "require-dev": {
-        "infection/infection": "dev-master"
+        "infection/infection": "^0.13"
     },
     "authors": [
         {

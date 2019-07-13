@@ -1,11 +1,12 @@
 <?php
-declare (strict_types = 1);
+
+declare(strict_types=1);
 
 namespace VGirol\JsonApiAssert\Factory;
 
 trait HasLinks
 {
-    protected $links;
+    public $links;
 
     /**
      * Undocumented function

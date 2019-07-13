@@ -1,5 +1,6 @@
 <?php
-declare (strict_types = 1);
+
+declare(strict_types=1);
 
 namespace VGirol\JsonApiAssert\Factory;
 
@@ -10,7 +11,7 @@ trait HasErrors
      *
      * @var array
      */
-    protected $errors;
+    public $errors;
 
     /**
      * Undocumented function
