@@ -1,4 +1,5 @@
 <?php
+
 namespace VGirol\JsonApiAssert\Tests\Asserts\Content;
 
 use VGirol\JsonApiAssert\Assert;
@@ -10,7 +11,7 @@ class ErrorsTest extends TestCase
     /**
      * @test
      */
-    public function errorContains()
+    public function errorsContains()
     {
         $expectedErrors = [
             [
@@ -75,8 +76,8 @@ class ErrorsTest extends TestCase
                         'details' => 'description'
                     ],
                     [
-                        'status' => '415',
-                        'title' => 'Not Acceptable',
+                        'status' => '409',
+                        'title' => 'Conflict',
                         'details' => 'description'
                     ]
                 ],
@@ -111,15 +112,15 @@ class ErrorsTest extends TestCase
                     ]
                 ],
                 false,
-                'Failed asserting that "errors" member'
+                null
             ],
             'expected error not the same' => [
                 [
                     [
-                        'id' => 6,
+                        'id' => '6',
                         'status' => '409',
                         'title' => 'Conflict',
-                        'details' => 'description'
+                        'details' => 'description is different'
                     ]
                 ],
                 [
@@ -136,7 +137,7 @@ class ErrorsTest extends TestCase
                     ]
                 ],
                 false,
-                'Failed asserting that "errors" member'
+                null
             ]
         ];
     }

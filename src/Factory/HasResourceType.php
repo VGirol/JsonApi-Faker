@@ -9,7 +9,7 @@ trait HasResourceType
     /**
      * Undocumented variable
      *
-     * @var string
+     * @var string|null
      */
     public $resourceType;
 

@@ -15,3 +15,7 @@ All notable changes to `jsonapi-assert` will be documented in this file.
 - Linted many files
 - Refactored some unit tests
 - Updated the README file
+
+## 1.1.0 - 2019-07-20
+
+- Added Factory classes for tests

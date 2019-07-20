@@ -46,7 +46,7 @@ trait AssertLinks
     /**
      * Asserts that a link object equals an expected value.
      *
-     * @param array $expected
+     * @param string|null $expected
      * @param array $link
      * @return void
      * @throws \PHPUnit\Framework\ExpectationFailedException
@@ -59,7 +59,7 @@ trait AssertLinks
     /**
      * Returns a new instance of the \VGirol\JsonApiAssert\Constraint\LinkEqualsConstraint class.
      *
-     * @param string $expected   The expected link
+     * @param string|null $expected   The expected link
      *
      * @return \VGirol\JsonApiAssert\Constraint\LinkEqualsConstraint
      */

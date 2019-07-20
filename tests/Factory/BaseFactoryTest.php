@@ -4,7 +4,6 @@ namespace VGirol\JsonApiAssert\Tests\Factory;
 
 use PHPUnit\Framework\Assert as PHPUnit;
 use VGirol\JsonApiAssert\Factory\BaseFactory;
-use VGirol\JsonApiAssert\Factory\HelperFactory;
 use VGirol\JsonApiAssert\Tests\TestCase;
 
 class BaseFactoryTest extends TestCase
@@ -15,18 +14,22 @@ class BaseFactoryTest extends TestCase
     public function addToObject()
     {
         $object = 'test';
-        $key = 'key';
-        $value = 'value';
+        $values = [
+            'key1' => 'value1',
+            'key2' => 'value2'
+        ];
 
         $factory = $this->getMockForAbstractClass(BaseFactory::class);
 
         PHPUnit::assertObjectNotHasAttribute($object, $factory);
 
-        $factory->addToObject($object, $key, $value);
+        foreach ($values as $key => $value) {
+            $factory->addToObject($object, $key, $value);
+        }
 
         PHPUnit::assertObjectHasAttribute($object, $factory);
         PHPUnit::assertEquals(
-            [$key => $value],
+            $values,
             $factory->{$object}
         );
     }

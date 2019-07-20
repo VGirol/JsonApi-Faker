@@ -8,10 +8,10 @@ use VGirol\JsonApiAssert\Members;
 
 class DocumentFactory extends BaseFactory
 {
-    use HasMeta;
+    use HasData;
     use HasErrors;
     use HasLinks;
-    use HasData;
+    use HasMeta;
 
     /**
      * Undocumented variable
@@ -67,10 +67,10 @@ class DocumentFactory extends BaseFactory
             $json[Members::ERRORS] = $this->errors;
         }
         if (isset($this->data)) {
-            $json[Members::DATA] = $this->data;
+            $json[Members::DATA] = $this->data->toArray();
         }
         if (isset($this->included)) {
-            $json[Members::INCLUDED] = $this->included;
+            $json[Members::INCLUDED] = $this->included->toArray();
         }
         if (isset($this->jsonapi)) {
             $json[Members::JSONAPI] = $this->jsonapi;

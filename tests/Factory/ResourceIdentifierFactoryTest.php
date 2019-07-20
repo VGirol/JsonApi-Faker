@@ -1,8 +1,9 @@
 <?php
+
 namespace VGirol\JsonApiAssert\Tests\Factory;
 
 use PHPUnit\Framework\Assert as PHPUnit;
-use VGirol\JsonApiAssert\Factory\HelperFactory;
+use VGirol\JsonApiAssert\Factory\ResourceIdentifierFactory;
 use VGirol\JsonApiAssert\Tests\TestCase;
 
 class ResourceIdentifierFactoryTest extends TestCase
@@ -14,7 +15,7 @@ class ResourceIdentifierFactoryTest extends TestCase
     {
         $expected = null;
 
-        $factory = HelperFactory::create('resource-identifier');
+        $factory = new ResourceIdentifierFactory;
 
         $result = $factory->toArray();
 
@@ -34,7 +35,7 @@ class ResourceIdentifierFactoryTest extends TestCase
             ]
         ];
 
-        $factory = HelperFactory::create('resource-identifier');
+        $factory = new ResourceIdentifierFactory;
         $factory->addToMeta($key, $value);
 
         $result = $factory->toArray();
@@ -59,7 +60,7 @@ class ResourceIdentifierFactoryTest extends TestCase
             ]
         ];
 
-        $factory = HelperFactory::create('resource-identifier');
+        $factory = new ResourceIdentifierFactory;
         $factory->setId($id);
         $factory->setResourceType($type);
         $factory->addToMeta($key, $value);

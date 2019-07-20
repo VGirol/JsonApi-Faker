@@ -1,9 +1,11 @@
 <?php
-declare (strict_types = 1);
+
+declare(strict_types=1);
 
 namespace VGirol\JsonApiAssert\Asserts\Content;
 
 use PHPUnit\Framework\Assert as PHPUnit;
+use VGirol\JsonApiAssert\Constraint\PaginationLinksEqualConstraint;
 use VGirol\JsonApiAssert\Members;
 
 /**
@@ -11,6 +13,21 @@ use VGirol\JsonApiAssert\Members;
  */
 trait AssertPagination
 {
+    /**
+     * Gets the list of allowed members for pagination links
+     *
+     * @return array
+     */
+    private static function allowedMembers(): array
+    {
+        return [
+            Members::FIRST,
+            Members::LAST,
+            Members::PREV,
+            Members::NEXT
+        ];
+    }
+
     /**
      * Asserts that a links object has pagination links.
      *
@@ -20,13 +37,10 @@ trait AssertPagination
      */
     public static function assertHasPaginationLinks($links): void
     {
-        $members = [
-            Members::FIRST,
-            Members::LAST,
-            Members::PREV,
-            Members::NEXT
-        ];
-        static::assertContainsAtLeastOneMember($members, $links);
+        static::assertContainsAtLeastOneMember(
+            static::allowedMembers(),
+            $links
+        );
     }
 
     /**
@@ -38,13 +52,7 @@ trait AssertPagination
      */
     public static function assertHasNoPaginationLinks($links): void
     {
-        $members = [
-            Members::FIRST,
-            Members::LAST,
-            Members::PREV,
-            Members::NEXT
-        ];
-        foreach ($members as $name) {
+        foreach (static::allowedMembers() as $name) {
             static::assertNotHasMember($name, $links);
         }
     }
@@ -59,18 +67,18 @@ trait AssertPagination
      */
     public static function assertPaginationLinksEquals($expected, $json): void
     {
-        foreach ($expected as $name => $expectedLink) {
-            if ($expectedLink === false) {
-                PHPUnit::assertNotHasMember($name, $json);
-                continue;
-            }
-            static::assertHasMember($name, $json);
+        PHPUnit::assertThat($json, self::paginationLinksEqualConstraint($expected));
+    }
 
-            if ($expectedLink === true) {
-                continue;
-            }
-
-            static::assertLinksObjectContains($name, $expectedLink, $json);
-        }
+    /**
+     * Returns a new instance of the \VGirol\JsonApiAssert\Constraint\PaginationLinksEqualConstraint class.
+     *
+     * @param array $expected   The expected links
+     *
+     * @return \VGirol\JsonApiAssert\Constraint\PaginationLinksEqualConstraint
+     */
+    private static function paginationLinksEqualConstraint($expected): PaginationLinksEqualConstraint
+    {
+        return new PaginationLinksEqualConstraint($expected);
     }
 }

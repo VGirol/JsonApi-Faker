@@ -1,14 +1,12 @@
 <?php
+
 namespace VGirol\JsonApiAssert\Tests\Constraints;
 
 use VGirol\JsonApiAssert\Constraint\ContainsOnlyAllowedMembersConstraint;
-use VGirol\JsonApiAssert\SetExceptionsTrait;
 use VGirol\JsonApiAssert\Tests\TestCase;
 
 class ContainsOnlyAllowedMembersTest extends TestCase
 {
-    use SetExceptionsTrait;
-
     /**
      * @test
      */

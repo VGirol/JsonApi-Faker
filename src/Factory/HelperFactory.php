@@ -5,7 +5,9 @@ namespace VGirol\JsonApiAssert\Factory;
 
 class HelperFactory
 {
-    public static function getAliases(): array
+    const ERROR_INEXISTANT_KEY = 'Inexistant key "%s".';
+
+    protected static function getAliases(): array
     {
         return [];
     }
@@ -26,7 +28,7 @@ class HelperFactory
         $aliases = array_merge(static::getDefaultAliases(), static::getAliases());
         if (!isset($aliases[$key])) {
             throw new \Exception(
-                sprintf('Inexistant key "%s".', $key)
+                sprintf(static::ERROR_INEXISTANT_KEY, $key)
             );
         }
 

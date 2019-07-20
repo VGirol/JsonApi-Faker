@@ -32,8 +32,8 @@ class LinkEqualsConstraint extends Constraint
     public function toString(): string
     {
         return \sprintf(
-            'equals "%s"',
-            $this->expected
+            'equals %s',
+            $this->exporter()->export($this->expected)
         );
     }
 
@@ -78,5 +78,17 @@ class LinkEqualsConstraint extends Constraint
         $diff = array_diff($expectedQuery, $linkQuery);
 
         return count($diff) === 0;
+    }
+
+    /**
+     * Evaluates the constraint for parameter $other. Returns true if the
+     * constraint is met, false otherwise.
+     *
+     * @param mixed $other value or object to evaluate
+     * @return boolean
+     */
+    public function check($other): bool
+    {
+        return $this->matches($other);
     }
 }

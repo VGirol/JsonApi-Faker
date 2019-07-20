@@ -1,14 +1,12 @@
 <?php
+
 namespace VGirol\JsonApiAssert\Tests\Constraints;
 
 use VGirol\JsonApiAssert\Constraint\ContainsAtLeastOneConstraint;
-use VGirol\JsonApiAssert\SetExceptionsTrait;
 use VGirol\JsonApiAssert\Tests\TestCase;
 
 class ContainsAtLeastOneTest extends TestCase
 {
-    use SetExceptionsTrait;
-
     /**
      * @test
      */

@@ -1,4 +1,5 @@
 <?php
+
 namespace VGirol\JsonApiAssert\Tests\Asserts\Structure;
 
 use VGirol\JsonApiAssert\Assert as JsonApiAssert;
@@ -156,6 +157,11 @@ class RelationshipsObjectTest extends TestCase
     public function notValidRelationshipObjectProvider()
     {
         return [
+            'not an array' => [
+                'not valid',
+                false,
+                sprintf('\'%s\' is of type "array".', 'not valid')
+            ],
             'mandatory member miss' => [
                 [
                     'anything' => [

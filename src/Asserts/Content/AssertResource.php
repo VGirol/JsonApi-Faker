@@ -27,7 +27,7 @@ trait AssertResource
      */
     public static function assertResourceCollectionEquals($expected, $json)
     {
-        static::assertIsArrayOfObjects($json);
+        static::assertIsArrayOfObjects($expected);
         PHPUnit::assertEquals(count($expected), count($json));
 
         $index = 0;

@@ -1,8 +1,11 @@
 <?php
+
 namespace VGirol\JsonApiAssert\Tests\Factory;
 
 use PHPUnit\Framework\Assert as PHPUnit;
-use VGirol\JsonApiAssert\Factory\HelperFactory;
+use VGirol\JsonApiAssert\Factory\CollectionFactory;
+use VGirol\JsonApiAssert\Factory\RelationshipFactory;
+use VGirol\JsonApiAssert\Factory\ResourceIdentifierFactory;
 use VGirol\JsonApiAssert\Tests\TestCase;
 
 class RelationshipFactoryTest extends TestCase
@@ -12,11 +15,21 @@ class RelationshipFactoryTest extends TestCase
      */
     public function dataIsnull()
     {
+        $meta = [
+            'metaKey' => 'test'
+        ];
+        $links = [
+            'self' => 'url'
+        ];
         $expected = [
-            'data' => null
+            'data' => null,
+            'meta' => $meta,
+            'links' => $links
         ];
 
-        $factory = HelperFactory::create('relationship');
+        $factory = new RelationshipFactory;
+        $factory->setMeta($meta)
+            ->setLinks($links);
 
         $result = $factory->toArray();
 
@@ -37,11 +50,11 @@ class RelationshipFactoryTest extends TestCase
             ]
         ];
 
-        $data = HelperFactory::create('resource-identifier');
-        $data->setId($id);
-        $data->setResourceType($type);
+        $data = new ResourceIdentifierFactory;
+        $data->setId($id)
+            ->setResourceType($type);
 
-        $factory = HelperFactory::create('relationship');
+        $factory = new RelationshipFactory;
         $factory->setData($data);
 
         $result = $factory->toArray();
@@ -59,10 +72,10 @@ class RelationshipFactoryTest extends TestCase
             'data' => []
         ];
 
-        $data = HelperFactory::create('collection');
+        $data = new CollectionFactory;
         $data->setCollection($collection);
 
-        $factory = HelperFactory::create('relationship');
+        $factory = new RelationshipFactory;
         $factory->setData($data);
 
         $result = $factory->toArray();
@@ -88,7 +101,7 @@ class RelationshipFactoryTest extends TestCase
                 ]
             );
 
-            $factory = HelperFactory::create('resource-identifier');
+            $factory = new ResourceIdentifierFactory;
             $factory->setId($id);
             $factory->setResourceType($type);
             array_push(
@@ -101,10 +114,10 @@ class RelationshipFactoryTest extends TestCase
             'data' => $array
         ];
 
-        $data = HelperFactory::create('collection');
+        $data = new CollectionFactory;
         $data->setCollection($collection);
 
-        $factory = HelperFactory::create('relationship');
+        $factory = new RelationshipFactory;
         $factory->setData($data);
 
         $result = $factory->toArray();

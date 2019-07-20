@@ -25,7 +25,7 @@ trait HasIdentification
         return $this;
     }
 
-    protected function getIdentification(): ?array
+    public function getIdentification(): ?array
     {
         if (!isset($this->id) && !isset($this->resourceType)) {
             return null;

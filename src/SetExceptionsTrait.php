@@ -1,5 +1,6 @@
 <?php
-declare (strict_types = 1);
+
+declare(strict_types=1);
 
 namespace VGirol\JsonApiAssert;
 
@@ -45,7 +46,7 @@ trait SetExceptionsTrait
      * @param string|null $message
      * @return void
      */
-    protected function setFailureException($message)
+    protected function setFailureException($message = null)
     {
         $this->expectException(ExpectationFailedException::class);
         if (!is_null($message)) {
@@ -59,7 +60,7 @@ trait SetExceptionsTrait
      * @param string|null $message
      * @return void
      */
-    protected function setFailureExceptionRegex($message)
+    protected function setFailureExceptionRegex($message = null)
     {
         $this->expectException(ExpectationFailedException::class);
         if (!is_null($message)) {

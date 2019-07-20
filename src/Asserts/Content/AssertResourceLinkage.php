@@ -1,5 +1,6 @@
 <?php
-declare (strict_types = 1);
+
+declare(strict_types=1);
 
 namespace VGirol\JsonApiAssert\Asserts\Content;
 
@@ -54,6 +55,9 @@ trait AssertResourceLinkage
 
             return;
         }
+
+        PHPUnit::assertNotNull($json);
+        /** @var array $json */
 
         if (!static::isArrayOfObjects($expected)) {
             static::assertIsNotArrayOfObjects($json);

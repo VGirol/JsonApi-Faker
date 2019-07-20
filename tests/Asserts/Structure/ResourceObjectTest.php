@@ -1,4 +1,5 @@
 <?php
+
 namespace VGirol\JsonApiAssert\Tests\Asserts\Structure;
 
 use VGirol\JsonApiAssert\Assert as JsonApiAssert;
@@ -550,6 +551,82 @@ class ResourceObjectTest extends TestCase
                 ],
                 true,
                 Messages::ONLY_ALLOWED_MEMBERS
+            ]
+        ];
+    }
+
+    /**
+     * @test
+     */
+    public function emptyResourceObjectCollectionIsValid()
+    {
+        $data = [];
+        $strict = false;
+
+        JsonApiAssert::assertIsValidResourceObjectCollection($data, $strict);
+    }
+
+    /**
+     * @test
+     */
+    public function resourceObjectCollectionIsValid()
+    {
+        $data = [];
+        for ($i = 1; $i < 3; $i++) {
+            $data[] = [
+                'id' => (string) $i,
+                'type' => 'articles',
+                'attributes' => [
+                    'title' => 'test'
+                ]
+            ];
+        }
+        $strict = false;
+
+        JsonApiAssert::assertIsValidResourceObjectCollection($data, $strict);
+    }
+
+    /**
+     * @test
+     * @dataProvider resourceObjectCollectionIsNotValidProvider
+     */
+    public function resourceObjectCollectionIsNotValid($json, $strict, $failureMessage)
+    {
+        $this->setFailureException($failureMessage);
+        JsonApiAssert::assertIsValidResourceObjectCollection($json, $strict);
+    }
+
+    public function resourceObjectCollectionIsNotValidProvider()
+    {
+        return [
+            'not an array' => [
+                'failed',
+                false,
+                Messages::RESOURCE_COLLECTION_NOT_ARRAY
+            ],
+            'not an array of objects' => [
+                [
+                    'id' => '1',
+                    'type' => 'articles',
+                    'attributes' => [
+                        'title' => 'test'
+                    ]
+                ],
+                false,
+                Messages::MUST_BE_ARRAY_OF_OBJECTS
+            ],
+            'not valid collection' => [
+                [
+                    [
+                        'id' => 1,
+                        'type' => 'articles',
+                        'attributes' => [
+                            'title' => 'test'
+                        ]
+                    ]
+                ],
+                false,
+                Messages::RESOURCE_ID_MEMBER_IS_NOT_STRING
             ]
         ];
     }

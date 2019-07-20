@@ -1,20 +1,37 @@
 <?php
+
 namespace VGirol\JsonApiAssert\Tests\Factory;
 
 use PHPUnit\Framework\Assert as PHPUnit;
-use VGirol\JsonApiAssert\Factory\HelperFactory;
+use VGirol\JsonApiAssert\Factory\JsonapiFactory;
 use VGirol\JsonApiAssert\Tests\TestCase;
 
 class JsonapiFactoryTest extends TestCase
 {
+    use CheckMethods;
+
     /**
      * @test
      */
-    public function jsonapiFactoryEmpty()
+    public function setVersion()
+    {
+        $this->checkSetMethod(
+            new JsonapiFactory,
+            'setVersion',
+            'version',
+            'version1',
+            'version2'
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function toArrayEmpty()
     {
         $expected = [];
 
-        $factory = HelperFactory::create('jsonapi');
+        $factory = new JsonapiFactory;
 
         $result = $factory->toArray();
 
@@ -24,14 +41,14 @@ class JsonapiFactoryTest extends TestCase
     /**
      * @test
      */
-    public function jsonapiFactoryWithoutMeta()
+    public function toArrayWithoutMeta()
     {
         $version = '1.0';
         $expected = [
             'version' => $version
         ];
 
-        $factory = HelperFactory::create('jsonapi');
+        $factory = new JsonapiFactory;
         $factory->setVersion($version);
 
         $result = $factory->toArray();
@@ -42,7 +59,7 @@ class JsonapiFactoryTest extends TestCase
     /**
      * @test
      */
-    public function jsonapiFactoryWithMeta()
+    public function toArrayWithMeta()
     {
         $key = 'key';
         $value = 'value';
@@ -52,7 +69,7 @@ class JsonapiFactoryTest extends TestCase
             ]
         ];
 
-        $factory = HelperFactory::create('jsonapi');
+        $factory = new JsonapiFactory;
         $factory->addToMeta($key, $value);
 
         $result = $factory->toArray();
