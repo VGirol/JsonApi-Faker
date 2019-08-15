@@ -49,7 +49,7 @@ Then create a factory.
 $factory = $faker->resourceObject();
 ```
 
-Next you can fill the factory factory ...
+Next you can fill the factory ...
 
 ```php
 $factory->setResourceType('test')
