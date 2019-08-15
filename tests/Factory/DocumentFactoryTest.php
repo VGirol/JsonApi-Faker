@@ -1,13 +1,14 @@
 <?php
 
-namespace VGirol\JsonApiAssert\Tests\Factory;
+namespace VGirol\JsonApiFaker\Tests\Factory;
 
 use PHPUnit\Framework\Assert as PHPUnit;
-use VGirol\JsonApiAssert\Factory\DocumentFactory;
-use VGirol\JsonApiAssert\Factory\RelationshipFactory;
-use VGirol\JsonApiAssert\Factory\ResourceIdentifierFactory;
-use VGirol\JsonApiAssert\Factory\ResourceObjectFactory;
-use VGirol\JsonApiAssert\Tests\TestCase;
+use VGirol\JsonApiFaker\Factory\DocumentFactory;
+use VGirol\JsonApiFaker\Factory\RelationshipFactory;
+use VGirol\JsonApiFaker\Factory\ResourceIdentifierFactory;
+use VGirol\JsonApiFaker\Factory\ResourceObjectFactory;
+use VGirol\JsonApiFaker\Testing\CheckMethods;
+use VGirol\JsonApiFaker\Tests\TestCase;
 
 class DocumentFactoryTest extends TestCase
 {

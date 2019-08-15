@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace VGirol\JsonApiAssert\Factory;
+namespace VGirol\JsonApiFaker\Factory;
 
 trait HasLinks
 {
@@ -48,5 +48,35 @@ trait HasLinks
         $this->addToObject('links', $name, $link);
 
         return $this;
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @param array $keys
+     *
+     * @return static
+     */
+    public function fakeLinks($links = ['self' => ['url']])
+    {
+        $this->setLinks(
+            $this->fakeMembers($links)
+        );
+
+        return $this;
+    }
+
+    protected function fakeLinksIf($options = null, $links = ['self' => ['url']])
+    {
+        if ($options & self::FAKE_NO_LINKS) {
+            return $this;
+        }
+
+        $faker = \Faker\Factory::create();
+        if (($options & self::FAKE_RANDOM_LINKS) && ($faker->boolean === false)) {
+            return $this;
+        }
+
+        return $this->fakeLinks($links);
     }
 }

@@ -1,10 +1,11 @@
 <?php
 
-namespace VGirol\JsonApiAssert\Tests\Factory;
+namespace VGirol\JsonApiFaker\Tests\Factory;
 
 use PHPUnit\Framework\Assert as PHPUnit;
-use VGirol\JsonApiAssert\Factory\BaseFactory;
-use VGirol\JsonApiAssert\Tests\TestCase;
+use VGirol\JsonApiFaker\Factory\BaseFactory;
+use VGirol\JsonApiFaker\Messages;
+use VGirol\JsonApiFaker\Tests\TestCase;
 
 class BaseFactoryTest extends TestCase
 {
@@ -40,26 +41,81 @@ class BaseFactoryTest extends TestCase
     public function addToArray()
     {
         $object = 'test';
-        $value1 = 'value1';
-        $value2 = 'value2';
+        $values = [
+            'value1',
+            'value2'
+        ];
 
         $factory = $this->getMockForAbstractClass(BaseFactory::class);
 
         PHPUnit::assertObjectNotHasAttribute($object, $factory);
 
-        $factory->addToArray($object, $value1);
+        foreach ($values as $key => $value) {
+            $factory->addToArray($object, $value);
+        }
 
         PHPUnit::assertObjectHasAttribute($object, $factory);
         PHPUnit::assertEquals(
-            [$value1],
+            $values,
             $factory->{$object}
         );
+    }
 
-        $factory->addToArray($object, $value2);
+    /**
+     * @test
+     */
+    public function toJson()
+    {
+        $obj = new class extends BaseFactory
+        {
+            public function toArray(): ?array
+            {
+                return [
+                    'attr' => 'value',
+                    'arr' => [
+                        'first',
+                        'second'
+                    ]
+                ];
+            }
 
-        PHPUnit::assertEquals(
-            [$value1, $value2],
-            $factory->{$object}
+            public function fake()
+            {
+                return $this;
+            }
+        };
+
+        $json = $obj->toJson();
+        $expected = '{"attr":"value","arr":["first","second"]}';
+
+        PHPUnit::assertEquals($expected, $json);
+    }
+
+    /**
+     * @test
+     */
+    public function toJsonFailed()
+    {
+        $obj = new class extends BaseFactory
+        {
+            public function toArray(): ?array
+            {
+                return [
+                    'stream' => tmpfile()
+                ];
+            }
+
+            public function fake()
+            {
+                return $this;
+            }
+        };
+
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage(
+            sprintf(Messages::JSON_ENCODE_ERROR, 'Type is not supported')
         );
+
+        $obj->toJson();
     }
 }

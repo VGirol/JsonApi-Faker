@@ -1,11 +1,11 @@
 <?php
 
-namespace VGirol\JsonApiAssert\Tests\Factory;
+namespace VGirol\JsonApiFaker\Tests\Factory;
 
 use PHPUnit\Framework\Assert as PHPUnit;
-use VGirol\JsonApiAssert\Factory\CollectionFactory;
-use VGirol\JsonApiAssert\Factory\ResourceIdentifierFactory;
-use VGirol\JsonApiAssert\Tests\TestCase;
+use VGirol\JsonApiFaker\Factory\CollectionFactory;
+use VGirol\JsonApiFaker\Factory\ResourceIdentifierFactory;
+use VGirol\JsonApiFaker\Tests\TestCase;
 
 class CollectionFactoryTest extends TestCase
 {

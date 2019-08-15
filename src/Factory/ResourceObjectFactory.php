@@ -2,85 +2,17 @@
 
 declare(strict_types=1);
 
-namespace VGirol\JsonApiAssert\Factory;
+namespace VGirol\JsonApiFaker\Factory;
 
-use VGirol\JsonApiAssert\Members;
+use VGirol\JsonApiFaker\Members;
 
 class ResourceObjectFactory extends BaseFactory
 {
     use HasIdentification;
     use HasMeta;
     use HasLinks;
-
-    /**
-     * Undocumented variable
-     *
-     * @var array
-     */
-    public $attributes;
-
-    /**
-     * Undocumented variable
-     *
-     * @var array<string, RelationshipFactory>
-     */
-    public $relationships;
-
-    /**
-     * Undocumented function
-     *
-     * @param array $attributes
-     * @return static
-     */
-    public function setAttributes(array $attributes)
-    {
-        $this->attributes = $attributes;
-
-        return $this;
-    }
-
-    /**
-     * Undocumented function
-     *
-     * @param array $attributes
-     * @return static
-     */
-    public function addAttributes(array $attributes)
-    {
-        foreach ($attributes as $name => $value) {
-            $this->addAttribute($name, $value);
-        }
-
-        return $this;
-    }
-
-    /**
-     * Undocumented function
-     *
-     * @param string $name
-     * @param mixed $value
-     * @return static
-     */
-    public function addAttribute(string $name, $value)
-    {
-        $this->addToObject('attributes', $name, $value);
-
-        return $this;
-    }
-
-    /**
-     * Undocumented function
-     *
-     * @param string $name
-     * @param RelationshipFactory $relationship
-     * @return static
-     */
-    public function addRelationship(string $name, $relationship)
-    {
-        $this->addToObject('relationships', $name, $relationship);
-
-        return $this;
-    }
+    use HasAttributes;
+    use HasRelationships;
 
     /**
      * Undocumented function
@@ -90,9 +22,13 @@ class ResourceObjectFactory extends BaseFactory
     public function toArray(): array
     {
         $resource = $this->getIdentification();
+        if (is_null($resource)) {
+            $resource = [];
+        }
 
-        $resource[Members::ATTRIBUTES] = $this->attributes;
-
+        if (isset($this->attributes)) {
+            $resource[Members::ATTRIBUTES] = $this->attributes;
+        }
         if (isset($this->meta)) {
             $resource[Members::META] = $this->meta;
         }
@@ -109,5 +45,23 @@ class ResourceObjectFactory extends BaseFactory
         }
 
         return $resource;
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @return static
+     */
+    public function fake($options = null, $countAttr = 5, $countMeta = 5, $links = ['self' => ['url']])
+    {
+        if (is_null($options)) {
+            $options = self::FAKE_RANDOM_META | self::FAKE_RANDOM_LINKS;
+        }
+
+        return $this->fakeIdentification()
+            ->fakeAttributes($countAttr)
+            ->fakeMetaIf($options, $countMeta)
+            ->fakeLinksIf($options, $links);
+        // ->fakeRelationships();
     }
 }

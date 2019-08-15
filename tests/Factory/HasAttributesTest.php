@@ -5,28 +5,28 @@ namespace VGirol\JsonApiFaker\Tests\Factory;
 use PHPUnit\Framework\Assert as PHPUnit;
 use VGirol\JsonApiAssert\Assert;
 use VGirol\JsonApiFaker\Factory\BaseFactory;
-use VGirol\JsonApiFaker\Factory\HasLinks;
+use VGirol\JsonApiFaker\Factory\HasAttributes;
 use VGirol\JsonApiFaker\Testing\CheckMethods;
 use VGirol\JsonApiFaker\Tests\TestCase;
 
-class HasLinksTest extends TestCase
+class HasAttributesTest extends TestCase
 {
     use CheckMethods;
 
     /**
      * @test
      */
-    public function setLinks()
+    public function setAttributes()
     {
         $this->checkSetMethod(
-            $this->getMockForTrait(HasLinks::class),
-            'setLinks',
-            'links',
+            $this->getMockForTrait(HasAttributes::class),
+            'setAttributes',
+            'attributes',
             [
-                'self' => 'test'
+                'attr1' => 'value1'
             ],
             [
-                'related' => 'another test'
+                'attr2' => 'value2'
             ]
         );
     }
@@ -34,12 +34,12 @@ class HasLinksTest extends TestCase
     /**
      * @test
      */
-    public function addLink()
+    public function addAttribute()
     {
         $this->checkAddSingle(
             new class extends BaseFactory
             {
-                use HasLinks;
+                use HasAttributes;
 
                 public function toArray(): ?array
                 {
@@ -51,13 +51,13 @@ class HasLinksTest extends TestCase
                     return $this;
                 }
             },
-            'addLink',
-            'links',
+            'addAttribute',
+            'attributes',
             [
-                'self' => 'test'
+                'attr1' => 'value1'
             ],
             [
-                'related' => 'another test'
+                'attr2' => 'value2'
             ]
         );
     }
@@ -65,12 +65,12 @@ class HasLinksTest extends TestCase
     /**
      * @test
      */
-    public function addLinks()
+    public function addAttributes()
     {
         $this->checkAddMulti(
             new class extends BaseFactory
             {
-                use HasLinks;
+                use HasAttributes;
 
                 public function toArray(): ?array
                 {
@@ -82,14 +82,15 @@ class HasLinksTest extends TestCase
                     return $this;
                 }
             },
-            'addLinks',
-            'links',
+            'addAttributes',
+            'attributes',
             [
-                'self' => 'test',
-                'related' => 'another test'
+                'attr1' => 'value1',
+                'attr2' => 'value2'
             ],
             [
-                'other' => 'anything'
+                'attr3' => 'value3',
+                'attr4' => 'value4'
             ]
         );
     }
@@ -101,7 +102,7 @@ class HasLinksTest extends TestCase
     {
         $mock = new class extends BaseFactory
         {
-            use HasLinks;
+            use HasAttributes;
 
             public function toArray(): ?array
             {
@@ -114,15 +115,14 @@ class HasLinksTest extends TestCase
             }
         };
 
-        PHPUnit::assertEmpty($mock->links);
+        PHPUnit::assertEmpty($mock->attributes);
 
-        $obj = $mock->fakeLinks();
+        $obj = $mock->fakeAttributes();
 
         PHPUnit::assertSame($obj, $mock);
-        PHPUnit::assertNotEmpty($mock->links);
-        PHPUnit::assertEquals(1, count($mock->links));
-        PHPUnit::assertEquals(['self'], array_keys($mock->links));
+        PHPUnit::assertNotEmpty($mock->attributes);
+        PHPUnit::assertEquals(5, count($mock->attributes));
 
-        Assert::assertIsValidLinksObject($mock->links, ['self'], true);
+        Assert::assertIsValidAttributesObject($mock->attributes, true);
     }
 }

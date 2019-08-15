@@ -1,7 +1,8 @@
 <?php
-declare (strict_types = 1);
 
-namespace VGirol\JsonApiAssert;
+declare(strict_types=1);
+
+namespace VGirol\JsonApiFaker;
 
 /**
  * All the member's names

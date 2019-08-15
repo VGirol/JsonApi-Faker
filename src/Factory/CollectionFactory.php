@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace VGirol\JsonApiAssert\Factory;
+namespace VGirol\JsonApiFaker\Factory;
 
 class CollectionFactory extends BaseFactory
 {
@@ -17,6 +17,7 @@ class CollectionFactory extends BaseFactory
      * Undocumented function
      *
      * @param array<ResourceIdentifierFactory>|array<ResourceObjectFactory> $collection
+     *
      * @return static
      */
     public function setCollection($collection)
@@ -26,6 +27,11 @@ class CollectionFactory extends BaseFactory
         return $this;
     }
 
+    /**
+     * Undocumented function
+     *
+     * @return array|null
+     */
     public function toArray(): ?array
     {
         if (!isset($this->array)) {
@@ -52,8 +58,36 @@ class CollectionFactory extends BaseFactory
         return $this;
     }
 
+    /**
+     * Undocumented function
+     *
+     * @param Callable $callback
+     *
+     * @return array
+     */
     public function map($callback): array
     {
         return array_map($callback, $this->array);
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @return static
+     */
+    public function fake($options = null, $count = 5)
+    {
+        if (is_null($options)) {
+            $options = self::FAKE_RESOURCE_OBJECT;
+        }
+        $class = $options & self::FAKE_RESOURCE_IDENTIFIER ?
+            ResourceIdentifierFactory::class : ResourceObjectFactory::class;
+
+        $collection = [];
+        for ($i = 0; $i < $count; $i++) {
+            $collection[] = (new $class)->fake();
+        }
+
+        return $this;
     }
 }

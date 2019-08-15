@@ -1,11 +1,8 @@
 <?php
 
-namespace VGirol\JsonApiAssert\Tests;
+namespace VGirol\JsonApiFaker\Tests;
 
 use PHPUnit\Framework\TestCase as BaseTestCase;
-use VGirol\JsonApiAssert\SetExceptionsTrait;
 
 abstract class TestCase extends BaseTestCase
-{
-    use SetExceptionsTrait;
-}
+{ }

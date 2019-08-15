@@ -5,41 +5,41 @@ namespace VGirol\JsonApiFaker\Tests\Factory;
 use PHPUnit\Framework\Assert as PHPUnit;
 use VGirol\JsonApiAssert\Assert;
 use VGirol\JsonApiFaker\Factory\BaseFactory;
-use VGirol\JsonApiFaker\Factory\HasResourceType;
+use VGirol\JsonApiFaker\Factory\HasIdentifier;
 use VGirol\JsonApiFaker\Testing\CheckMethods;
 use VGirol\JsonApiFaker\Tests\TestCase;
 
-class HasResourceTypeTest extends TestCase
+class HasIdentifierTest extends TestCase
 {
     use CheckMethods;
 
     /**
      * @test
      */
-    public function setResourceType()
+    public function setId()
     {
         $this->checkSetMethod(
-            $this->getMockForTrait(HasResourceType::class),
-            'setResourceType',
-            'resourceType',
-            'first',
-            'second'
+            $this->getMockForTrait(HasIdentifier::class),
+            'setId',
+            'id',
+            'test',
+            'test2'
         );
     }
 
     /**
      * @test
      */
-    public function fakeResourceType()
+    public function fakeIdentifier()
     {
         $mock = new class extends BaseFactory
         {
-            use HasResourceType;
+            use HasIdentifier;
 
             public function toArray(): ?array
             {
                 return [
-                    'type' => $this->resourceType
+                    'id' => strval($this->id)
                 ];
             }
 
@@ -49,13 +49,15 @@ class HasResourceTypeTest extends TestCase
             }
         };
 
-        PHPUnit::assertEmpty($mock->resourceType);
+        PHPUnit::assertEmpty($mock->id);
 
-        $obj = $mock->fakeResourceType();
+        $obj = $mock->fakeIdentifier();
 
         PHPUnit::assertSame($obj, $mock);
-        PHPUnit::assertNotEmpty($mock->resourceType);
+        PHPUnit::assertNotEmpty($mock->id);
+        PHPUnit::assertGreaterThanOrEqual(0, $mock->id);
+        PHPUnit::assertLessThan(100, $mock->id);
 
-        Assert::assertResourceTypeMember($obj->toArray(), true);
+        Assert::assertResourceIdMember($obj->toArray());
     }
 }

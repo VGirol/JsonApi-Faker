@@ -4,24 +4,26 @@ declare(strict_types=1);
 
 namespace VGirol\JsonApiFaker\Factory;
 
-trait HasResourceType
+use VGirol\JsonApiFaker\Members;
+
+trait HasIdentifier
 {
     /**
      * Undocumented variable
      *
-     * @var string|null
+     * @var int|string|null
      */
-    public $resourceType;
+    public $id;
 
     /**
      * Undocumented function
      *
-     * @param string|null $type
+     * @param int|string|null $resourceId
      * @return static
      */
-    public function setResourceType(?string $type)
+    public function setId($resourceId)
     {
-        $this->resourceType = $type;
+        $this->id = $resourceId;
 
         return $this;
     }
@@ -31,10 +33,10 @@ trait HasResourceType
      *
      * @return static
      */
-    public function fakeResourceType()
+    public function fakeIdentifier()
     {
         $faker = \Faker\Factory::create();
 
-        return $this->setResourceType($faker->word);
+        return $this->setId($faker->randomNumber(2));
     }
 }

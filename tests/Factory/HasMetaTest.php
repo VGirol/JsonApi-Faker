@@ -1,10 +1,13 @@
 <?php
 
-namespace VGirol\JsonApiAssert\Tests\Factory;
+namespace VGirol\JsonApiFaker\Tests\Factory;
 
-use VGirol\JsonApiAssert\Factory\BaseFactory;
-use VGirol\JsonApiAssert\Factory\HasMeta;
-use VGirol\JsonApiAssert\Tests\TestCase;
+use PHPUnit\Framework\Assert as PHPUnit;
+use VGirol\JsonApiAssert\Assert;
+use VGirol\JsonApiFaker\Factory\BaseFactory;
+use VGirol\JsonApiFaker\Factory\HasMeta;
+use VGirol\JsonApiFaker\Testing\CheckMethods;
+use VGirol\JsonApiFaker\Tests\TestCase;
 
 class HasMetaTest extends TestCase
 {
@@ -42,11 +45,47 @@ class HasMetaTest extends TestCase
                 {
                     return null;
                 }
+
+                public function fake()
+                {
+                    return $this;
+                }
             },
             'addToMeta',
             'meta',
             ['first' => 'test'],
             ['second' => 'another test']
         );
+    }
+
+    /**
+     * @test
+     */
+    public function fakeAttributes()
+    {
+        $mock = new class extends BaseFactory
+        {
+            use HasMeta;
+
+            public function toArray(): ?array
+            {
+                return null;
+            }
+
+            public function fake()
+            {
+                return $this;
+            }
+        };
+
+        PHPUnit::assertEmpty($mock->meta);
+
+        $obj = $mock->fakeMeta();
+
+        PHPUnit::assertSame($obj, $mock);
+        PHPUnit::assertNotEmpty($mock->meta);
+        PHPUnit::assertEquals(5, count($mock->meta));
+
+        Assert::assertIsValidMetaObject($mock->meta, true);
     }
 }

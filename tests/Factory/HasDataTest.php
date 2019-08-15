@@ -1,9 +1,12 @@
 <?php
 
-namespace VGirol\JsonApiAssert\Tests\Factory;
+namespace VGirol\JsonApiFaker\Tests\Factory;
 
-use VGirol\JsonApiAssert\Factory\HasData;
-use VGirol\JsonApiAssert\Tests\TestCase;
+use PHPUnit\Framework\Assert as PHPUnit;
+use VGirol\JsonApiFaker\Factory\BaseFactory;
+use VGirol\JsonApiFaker\Factory\HasData;
+use VGirol\JsonApiFaker\Testing\CheckMethods;
+use VGirol\JsonApiFaker\Tests\TestCase;
 
 class HasDataTest extends TestCase
 {
@@ -21,5 +24,37 @@ class HasDataTest extends TestCase
             'test',
             'another test'
         );
+    }
+
+    /**
+     * @test
+     */
+    public function fakeData()
+    {
+        $mock = new class extends BaseFactory
+        {
+            use HasData;
+
+            public function toArray(): ?array
+            {
+                return null;
+            }
+
+            public function fake()
+            {
+                return $this;
+            }
+        };
+
+        PHPUnit::assertEmpty($mock->data);
+
+        $obj = $mock->fakeData();
+
+        PHPUnit::assertSame($obj, $mock);
+        // PHPUnit::assertNotEmpty('links', $mock);
+        // PHPUnit::assertEquals(1, count($mock->links));
+        // PHPUnit::assertEquals(['self'], array_keys($mock->links));
+
+        // Assert::assertIsValidLinksObject($mock->links, ['self'], true);
     }
 }

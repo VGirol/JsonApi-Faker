@@ -1,6 +1,6 @@
 <?php
 
-namespace VGirol\JsonApiAssert\Tests\Factory;
+namespace VGirol\JsonApiFaker\Testing;
 
 use PHPUnit\Framework\Assert as PHPUnit;
 

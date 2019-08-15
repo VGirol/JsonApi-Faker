@@ -2,34 +2,20 @@
 
 declare(strict_types=1);
 
-namespace VGirol\JsonApiAssert\Factory;
+namespace VGirol\JsonApiFaker\Factory;
 
-use VGirol\JsonApiAssert\Members;
+use VGirol\JsonApiFaker\Members;
 
 class JsonapiFactory extends BaseFactory
 {
     use HasMeta;
-
-    /**
-     * Undocumented variable
-     *
-     * @var string
-     */
-    public $version;
+    use HasVersion;
 
     /**
      * Undocumented function
      *
-     * @param string $version
-     * @return static
+     * @return array|null
      */
-    public function setVersion(string $version)
-    {
-        $this->version = $version;
-
-        return $this;
-    }
-
     public function toArray(): ?array
     {
         $json = [];
@@ -42,5 +28,16 @@ class JsonapiFactory extends BaseFactory
         }
 
         return $json;
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @return static
+     */
+    public function fake()
+    {
+        return $this->fakeMeta()
+            ->fakeVersion();
     }
 }

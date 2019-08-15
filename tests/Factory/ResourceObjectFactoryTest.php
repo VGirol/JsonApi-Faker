@@ -1,91 +1,16 @@
 <?php
 
-namespace VGirol\JsonApiAssert\Tests\Factory;
+namespace VGirol\JsonApiFaker\Tests\Factory;
 
 use PHPUnit\Framework\Assert as PHPUnit;
-use VGirol\JsonApiAssert\Factory\RelationshipFactory;
-use VGirol\JsonApiAssert\Factory\ResourceIdentifierFactory;
-use VGirol\JsonApiAssert\Factory\ResourceObjectFactory;
-use VGirol\JsonApiAssert\Tests\TestCase;
+use VGirol\JsonApiAssert\Assert;
+use VGirol\JsonApiFaker\Factory\RelationshipFactory;
+use VGirol\JsonApiFaker\Factory\ResourceIdentifierFactory;
+use VGirol\JsonApiFaker\Factory\ResourceObjectFactory;
+use VGirol\JsonApiFaker\Tests\TestCase;
 
 class ResourceObjectFactoryTest extends TestCase
 {
-    use CheckMethods;
-
-    /**
-     * @test
-     */
-    public function setAttributes()
-    {
-        $this->checkSetMethod(
-            new ResourceObjectFactory,
-            'setAttributes',
-            'attributes',
-            [
-                'attr1' => 'value1'
-            ],
-            [
-                'attr2' => 'value2'
-            ]
-        );
-    }
-
-    /**
-     * @test
-     */
-    public function addAttribute()
-    {
-        $this->checkAddSingle(
-            new ResourceObjectFactory,
-            'addAttribute',
-            'attributes',
-            [
-                'attr1' => 'value1'
-            ],
-            [
-                'attr2' => 'value2'
-            ]
-        );
-    }
-
-    /**
-     * @test
-     */
-    public function addAttributes()
-    {
-        $this->checkAddMulti(
-            new ResourceObjectFactory,
-            'addAttributes',
-            'attributes',
-            [
-                'attr1' => 'value1',
-                'attr2' => 'value2'
-            ],
-            [
-                'attr3' => 'value3',
-                'attr4' => 'value4'
-            ]
-        );
-    }
-
-    /**
-     * @test
-     */
-    public function addRelationship()
-    {
-        $this->checkAddSingle(
-            new ResourceObjectFactory,
-            'addRelationship',
-            'relationships',
-            [
-                'relation1' => 'value1'
-            ],
-            [
-                'relation2' => 'value2'
-            ]
-        );
-    }
-
     /**
      * @test
      */
@@ -166,5 +91,93 @@ class ResourceObjectFactoryTest extends TestCase
         $result = $factory->toArray();
 
         PHPUnit::assertSame($expected, $result);
+    }
+
+    /**
+     * @test
+     */
+    public function emptyResourceObjectFactory()
+    {
+        $meta = [
+            'metaKey' => 'test'
+        ];
+
+        $expected = [
+            'meta' => $meta,
+        ];
+
+        $factory = new ResourceObjectFactory;
+        $factory->setMeta($meta);
+
+        $result = $factory->toArray();
+
+        PHPUnit::assertSame($expected, $result);
+    }
+
+    /**
+     * @test
+     */
+    public function fake()
+    {
+        $factory = new ResourceObjectFactory;
+
+        PHPUnit::assertEmpty($factory->id);
+        PHPUnit::assertEmpty($factory->resourceType);
+        PHPUnit::assertEmpty($factory->attributes);
+        PHPUnit::assertEmpty($factory->meta);
+        PHPUnit::assertEmpty($factory->links);
+        PHPUnit::assertEmpty($factory->relationships);
+
+        $obj = $factory->fake();
+
+        PHPUnit::assertSame($obj, $factory);
+        PHPUnit::assertNotEmpty($factory->id);
+        PHPUnit::assertNotEmpty($factory->resourceType);
+        PHPUnit::assertNotEmpty($factory->attributes);
+        PHPUnit::assertEquals(5, count($factory->attributes));
+
+        Assert::assertIsValidResourceObject($factory->toArray(), true);
+    }
+
+    /**
+     * @test
+     */
+    public function fakeWithoutAnything()
+    {
+        $factory = new ResourceObjectFactory;
+
+        PHPUnit::assertEmpty($factory->meta);
+
+        $factory->fake(ResourceObjectFactory::FAKE_NO_META | ResourceObjectFactory::FAKE_NO_LINKS);
+
+        PHPUnit::assertEmpty($factory->meta);
+        PHPUnit::assertEmpty($factory->links);
+
+        Assert::assertIsValidResourceObject($factory->toArray(), true);
+    }
+
+    /**
+     * @test
+     */
+    public function fakeWithAll()
+    {
+        $factory = new ResourceObjectFactory;
+
+        PHPUnit::assertEmpty($factory->meta);
+
+        $factory->fake(
+            ResourceObjectFactory::FAKE_WITH_META | ResourceObjectFactory::FAKE_WITH_LINKS,
+            3,
+            2
+        );
+
+        PHPUnit::assertEquals(3, count($factory->attributes));
+        PHPUnit::assertNotEmpty($factory->meta);
+        PHPUnit::assertEquals(2, count($factory->meta));
+        PHPUnit::assertNotEmpty($factory->links);
+        PHPUnit::assertEquals(1, count($factory->links));
+        PHPUnit::assertEquals(['self'], array_keys($factory->links));
+
+        Assert::assertIsValidResourceObject($factory->toArray(), true);
     }
 }

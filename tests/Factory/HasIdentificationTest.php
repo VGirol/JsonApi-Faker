@@ -1,29 +1,15 @@
 <?php
 
-namespace VGirol\JsonApiAssert\Tests\Factory;
+namespace VGirol\JsonApiFaker\Tests\Factory;
 
 use PHPUnit\Framework\Assert as PHPUnit;
-use VGirol\JsonApiAssert\Factory\HasIdentification;
-use VGirol\JsonApiAssert\Tests\TestCase;
+use VGirol\JsonApiAssert\Assert;
+use VGirol\JsonApiFaker\Factory\BaseFactory;
+use VGirol\JsonApiFaker\Factory\HasIdentification;
+use VGirol\JsonApiFaker\Tests\TestCase;
 
 class HasIdentificationTest extends TestCase
 {
-    use CheckMethods;
-
-    /**
-     * @test
-     */
-    public function setId()
-    {
-        $this->checkSetMethod(
-            $this->getMockForTrait(HasIdentification::class),
-            'setId',
-            'id',
-            'test',
-            'test2'
-        );
-    }
-
     /**
      * @test
      * @dataProvider getIdentificationProvider
@@ -82,5 +68,43 @@ class HasIdentificationTest extends TestCase
         $result = $factory->getIdentification();
 
         PHPUnit::assertNull($result);
+    }
+
+    /**
+     * @test
+     */
+    public function fakeIdentification()
+    {
+        $mock = new class extends BaseFactory
+        {
+            use HasIdentification;
+
+            public function toArray(): ?array
+            {
+                return [
+                    'id' => strval($this->id),
+                    'type' => $this->resourceType
+                ];
+            }
+
+            public function fake()
+            {
+                return $this;
+            }
+        };
+
+        PHPUnit::assertEmpty($mock->resourceType);
+        PHPUnit::assertEmpty($mock->id);
+
+        $obj = $mock->fakeIdentification();
+
+        PHPUnit::assertSame($obj, $mock);
+        PHPUnit::assertNotEmpty($mock->resourceType);
+        PHPUnit::assertNotEmpty($mock->id);
+        PHPUnit::assertGreaterThanOrEqual(0, $mock->id);
+        PHPUnit::assertLessThan(100, $mock->id);
+
+        Assert::assertResourceTypeMember($obj->toArray(), true);
+        Assert::assertResourceIdMember($obj->toArray());
     }
 }

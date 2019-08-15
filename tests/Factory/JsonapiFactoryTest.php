@@ -1,29 +1,14 @@
 <?php
 
-namespace VGirol\JsonApiAssert\Tests\Factory;
+namespace VGirol\JsonApiFaker\Tests\Factory;
 
 use PHPUnit\Framework\Assert as PHPUnit;
-use VGirol\JsonApiAssert\Factory\JsonapiFactory;
-use VGirol\JsonApiAssert\Tests\TestCase;
+use VGirol\JsonApiAssert\Assert;
+use VGirol\JsonApiFaker\Factory\JsonapiFactory;
+use VGirol\JsonApiFaker\Tests\TestCase;
 
 class JsonapiFactoryTest extends TestCase
 {
-    use CheckMethods;
-
-    /**
-     * @test
-     */
-    public function setVersion()
-    {
-        $this->checkSetMethod(
-            new JsonapiFactory,
-            'setVersion',
-            'version',
-            'version1',
-            'version2'
-        );
-    }
-
     /**
      * @test
      */
@@ -75,5 +60,24 @@ class JsonapiFactoryTest extends TestCase
         $result = $factory->toArray();
 
         PHPUnit::assertSame($expected, $result);
+    }
+
+    /**
+     * @test
+     */
+    public function fake()
+    {
+        $factory = new JsonapiFactory;
+
+        PHPUnit::assertEmpty($factory->version);
+        PHPUnit::assertEmpty($factory->meta);
+
+        $obj = $factory->fake();
+
+        PHPUnit::assertSame($obj, $factory);
+        PHPUnit::assertNotEmpty($factory->version);
+        PHPUnit::assertNotEmpty($factory->meta);
+
+        Assert::assertIsValidJsonapiObject($obj->toArray(), true);
     }
 }

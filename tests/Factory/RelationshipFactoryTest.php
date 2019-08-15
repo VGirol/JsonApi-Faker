@@ -1,12 +1,13 @@
 <?php
 
-namespace VGirol\JsonApiAssert\Tests\Factory;
+namespace VGirol\JsonApiFaker\Tests\Factory;
 
 use PHPUnit\Framework\Assert as PHPUnit;
-use VGirol\JsonApiAssert\Factory\CollectionFactory;
-use VGirol\JsonApiAssert\Factory\RelationshipFactory;
-use VGirol\JsonApiAssert\Factory\ResourceIdentifierFactory;
-use VGirol\JsonApiAssert\Tests\TestCase;
+use VGirol\JsonApiAssert\Assert;
+use VGirol\JsonApiFaker\Factory\CollectionFactory;
+use VGirol\JsonApiFaker\Factory\RelationshipFactory;
+use VGirol\JsonApiFaker\Factory\ResourceIdentifierFactory;
+use VGirol\JsonApiFaker\Tests\TestCase;
 
 class RelationshipFactoryTest extends TestCase
 {
@@ -124,4 +125,25 @@ class RelationshipFactoryTest extends TestCase
 
         PHPUnit::assertSame($expected, $result);
     }
+
+    /**
+     * @test
+     */
+    // public function fake()
+    // {
+    //     $factory = new RelationshipFactory;
+
+    //     PHPUnit::assertEmpty($factory->meta);
+    //     PHPUnit::assertEmpty($factory->links);
+    //     PHPUnit::assertEmpty($factory->data);
+
+    //     $obj = $factory->fake();
+
+    //     PHPUnit::assertSame($obj, $factory);
+    //     PHPUnit::assertNotEmpty($factory->meta);
+    //     PHPUnit::assertNotEmpty($factory->links);
+    //     PHPUnit::assertNotEmpty($factory->data);
+
+    //     Assert::assertIsValidResourceObject($obj->toArray(), true);
+    // }
 }

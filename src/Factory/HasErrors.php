@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace VGirol\JsonApiAssert\Factory;
+namespace VGirol\JsonApiFaker\Factory;
 
 trait HasErrors
 {
@@ -36,6 +36,16 @@ trait HasErrors
     {
         $this->addToArray('errors', $error);
 
+        return $this;
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @return static
+     */
+    public function fakeErrors()
+    {
         return $this;
     }
 }

@@ -1,15 +1,21 @@
 <?php
-declare (strict_types = 1);
 
-namespace VGirol\JsonApiAssert\Factory;
+declare(strict_types=1);
 
-use VGirol\JsonApiAssert\Members;
+namespace VGirol\JsonApiFaker\Factory;
+
+use VGirol\JsonApiFaker\Members;
 
 class ResourceIdentifierFactory extends BaseFactory
 {
     use HasIdentification;
     use HasMeta;
 
+    /**
+     * Undocumented function
+     *
+     * @return array|null
+     */
     public function toArray(): ?array
     {
         $resource = $this->getIdentification();
@@ -19,5 +25,20 @@ class ResourceIdentifierFactory extends BaseFactory
         }
 
         return $resource;
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @return static
+     */
+    public function fake($options = null, $countMeta = 5)
+    {
+        if (is_null($options)) {
+            $options = self::FAKE_RANDOM_META;
+        }
+
+        return $this->fakeIdentification()
+            ->fakeMetaIf($options, $countMeta);
     }
 }

@@ -1,16 +1,27 @@
 {
-    "name": "vgirol/jsonapi-assert",
-    "description": "This package provides a set of assertions to test documents using the JSON:API specification.",
+    "name": "vgirol/jsonapi-faker",
+    "description": "This package provides a factory to generate fake data using the JSON:API specification.",
     "type": "library",
-    "homepage": "http://github.com/VGirol/JsonApi-Assert",
+    "homepage": "http://github.com/VGirol/JsonApi-Faker",
     "license": "MIT",
     "require": {
         "php": "^7.2",
-        "phpunit/phpunit": "^8.0"
+        "fzaninotto/faker": "^1.8"
     },
     "require-dev": {
-        "infection/infection": "^0.13"
+        "phpunit/phpunit": "^8.0",
+        "infection/infection": "^0.13",
+        "vgirol/jsonapi-assert": "dev-master"
     },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../JsonApi-Assert",
+            "options": {
+                "symlink": true
+            }
+        }
+    ],
     "authors": [
         {
             "name": "Vincent Girol",
@@ -20,12 +31,12 @@
     "minimum-stability": "stable",
     "autoload": {
         "psr-4": {
-            "VGirol\\JsonApiAssert\\": "src/"
+            "VGirol\\JsonApiFaker\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "VGirol\\JsonApiAssert\\Tests\\": "tests/"
+            "VGirol\\JsonApiFaker\\Tests\\": "tests/"
         }
     },
     "scripts": {

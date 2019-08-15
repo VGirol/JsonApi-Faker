@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace VGirol\JsonApiAssert\Factory;
+namespace VGirol\JsonApiFaker\Factory;
 
-use VGirol\JsonApiAssert\Members;
+use VGirol\JsonApiFaker\Members;
 
 class DocumentFactory extends BaseFactory
 {
@@ -77,5 +77,15 @@ class DocumentFactory extends BaseFactory
         }
 
         return $json;
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @return static
+     */
+    public function fake()
+    {
+        return $this;
     }
 }

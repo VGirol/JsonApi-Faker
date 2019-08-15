@@ -12,11 +12,8 @@
         processIsolation="false"
         stopOnFailure="false">
     <testsuites>
-        <testsuite name="Asserts">
-            <directory suffix="Test.php">./tests/Asserts</directory>
-        </testsuite>
-        <testsuite name="Constraints">
-            <directory suffix="Test.php">./tests/Constraints</directory>
+        <testsuite name="Factory">
+            <directory suffix="Test.php">./tests</directory>
         </testsuite>
     </testsuites>
     <filter>

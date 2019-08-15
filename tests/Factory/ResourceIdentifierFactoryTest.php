@@ -1,10 +1,11 @@
 <?php
 
-namespace VGirol\JsonApiAssert\Tests\Factory;
+namespace VGirol\JsonApiFaker\Tests\Factory;
 
 use PHPUnit\Framework\Assert as PHPUnit;
-use VGirol\JsonApiAssert\Factory\ResourceIdentifierFactory;
-use VGirol\JsonApiAssert\Tests\TestCase;
+use VGirol\JsonApiAssert\Assert;
+use VGirol\JsonApiFaker\Factory\ResourceIdentifierFactory;
+use VGirol\JsonApiFaker\Tests\TestCase;
 
 class ResourceIdentifierFactoryTest extends TestCase
 {
@@ -68,5 +69,57 @@ class ResourceIdentifierFactoryTest extends TestCase
         $result = $factory->toArray();
 
         PHPUnit::assertSame($expected, $result);
+    }
+
+    /**
+     * @test
+     */
+    public function fake()
+    {
+        $factory = new ResourceIdentifierFactory;
+
+        PHPUnit::assertEmpty($factory->id);
+        PHPUnit::assertEmpty($factory->resourceType);
+
+        $obj = $factory->fake();
+
+        PHPUnit::assertSame($obj, $factory);
+        PHPUnit::assertNotEmpty($factory->id);
+        PHPUnit::assertNotEmpty($factory->resourceType);
+
+        Assert::assertIsValidResourceIdentifierObject($factory->toArray(), true);
+    }
+
+    /**
+     * @test
+     */
+    public function fakeWithoutMeta()
+    {
+        $factory = new ResourceIdentifierFactory;
+
+        PHPUnit::assertEmpty($factory->meta);
+
+        $factory->fake(ResourceIdentifierFactory::FAKE_NO_META);
+
+        PHPUnit::assertEmpty($factory->meta);
+
+        Assert::assertIsValidResourceIdentifierObject($factory->toArray(), true);
+    }
+
+    /**
+     * @test
+     */
+    public function fakeWithMeta()
+    {
+        $factory = new ResourceIdentifierFactory;
+
+        PHPUnit::assertEmpty($factory->meta);
+
+        $factory->fake(ResourceIdentifierFactory::FAKE_WITH_META, 3);
+
+        PHPUnit::assertNotEmpty($factory->meta);
+        PHPUnit::assertEquals(3, count($factory->meta));
+
+        Assert::assertIsValidResourceIdentifierObject($factory->toArray(), true);
     }
 }

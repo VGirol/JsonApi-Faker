@@ -4,24 +4,24 @@ declare(strict_types=1);
 
 namespace VGirol\JsonApiFaker\Factory;
 
-trait HasResourceType
+trait HasVersion
 {
     /**
      * Undocumented variable
      *
-     * @var string|null
+     * @var string
      */
-    public $resourceType;
+    public $version;
 
     /**
      * Undocumented function
      *
-     * @param string|null $type
+     * @param string $version
      * @return static
      */
-    public function setResourceType(?string $type)
+    public function setVersion(string $version)
     {
-        $this->resourceType = $type;
+        $this->version = $version;
 
         return $this;
     }
@@ -31,10 +31,12 @@ trait HasResourceType
      *
      * @return static
      */
-    public function fakeResourceType()
+    public function fakeVersion()
     {
         $faker = \Faker\Factory::create();
 
-        return $this->setResourceType($faker->word);
+        return $this->setVersion(
+            $faker->randomDigitNotNull . '.' . $faker->randomDigit
+        );
     }
 }
