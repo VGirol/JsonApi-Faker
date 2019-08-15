@@ -4,7 +4,7 @@ php:
 before_script:
   - composer self-update
   - composer install --prefer-source --no-interaction
-  - mkdir -p build/coverage
+  - mkdir -p ./build/coverage
   - wget https://github.com/infection/infection/releases/download/0.13.0/infection.phar
   - wget https://github.com/infection/infection/releases/download/0.13.0/infection.phar.asc
   - gpg --keyserver hkps.pool.sks-keyservers.net --recv-keys 493B4AA0
