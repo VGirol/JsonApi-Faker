@@ -129,21 +129,24 @@ class RelationshipFactoryTest extends TestCase
     /**
      * @test
      */
-    // public function fake()
-    // {
-    //     $factory = new RelationshipFactory;
+    public function fake()
+    {
+        $factory = new RelationshipFactory;
 
-    //     PHPUnit::assertEmpty($factory->meta);
-    //     PHPUnit::assertEmpty($factory->links);
-    //     PHPUnit::assertEmpty($factory->data);
+        PHPUnit::assertEmpty($factory->meta);
+        PHPUnit::assertEmpty($factory->links);
+        PHPUnit::assertEmpty($factory->data);
 
-    //     $obj = $factory->fake();
+        $obj = $factory->fake();
 
-    //     PHPUnit::assertSame($obj, $factory);
-    //     PHPUnit::assertNotEmpty($factory->meta);
-    //     PHPUnit::assertNotEmpty($factory->links);
-    //     PHPUnit::assertNotEmpty($factory->data);
+        PHPUnit::assertSame($obj, $factory);
+        PHPUnit::assertNotEmpty($factory->meta);
+        PHPUnit::assertNotEmpty($factory->links);
+        PHPUnit::assertNotEmpty($factory->data);
 
-    //     Assert::assertIsValidResourceObject($obj->toArray(), true);
-    // }
+        $relationship = $obj->toArray();
+        Assert::assertIsArrayOfObjects($relationship['data']);
+        PHPUnit::assertEquals(5, count($relationship['data']));
+        Assert::assertIsValidRelationshipObject($relationship, true);
+    }
 }

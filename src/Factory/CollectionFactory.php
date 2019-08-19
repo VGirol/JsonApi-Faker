@@ -80,7 +80,7 @@ class CollectionFactory extends BaseFactory
         if (is_null($options)) {
             $options = self::FAKE_RESOURCE_OBJECT;
         }
-        $class = $options & self::FAKE_RESOURCE_IDENTIFIER ?
+        $class = (($options & self::FAKE_RESOURCE_IDENTIFIER) == self::FAKE_RESOURCE_IDENTIFIER) ?
             ResourceIdentifierFactory::class : ResourceObjectFactory::class;
 
         $collection = [];
@@ -88,6 +88,6 @@ class CollectionFactory extends BaseFactory
             $collection[] = (new $class)->fake();
         }
 
-        return $this;
+        return $this->setCollection($collection);
     }
 }

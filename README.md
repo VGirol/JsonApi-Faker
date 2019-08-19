@@ -5,7 +5,7 @@
 [![Infection MSI](https://badge.stryker-mutator.io/github.com/VGirol/JsonApi-Faker/master)](https://infection.github.io)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/VGirol/JsonApi-Faker/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/VGirol/JsonApi-Faker/?branch=master)
 
-This package provides a set of factories to build fake data in order to test documents using the [JSON:API specification](https://jsonapi.org/).
+This package provides a set of factories to build fake data using the [JSON:API specification](https://jsonapi.org/).
 
 ## Technologies
 
