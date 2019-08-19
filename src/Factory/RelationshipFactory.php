@@ -36,18 +36,21 @@ class RelationshipFactory extends BaseFactory
     /**
      * Undocumented function
      *
+     * @param integer $options
+     * @param integer $count
+     *
      * @return static
      */
-    public function fake($options = null, $count = 5, $countMeta = 5, $links = ['self' => ['url']])
+    public function fake($options = null, $count = 5)
     {
         if (is_null($options)) {
-            $options = self::FAKE_RESOURCE_IDENTIFIER | self::FAKE_COLLECTION | self::FAKE_CAN_BE_NULL |
-                self::FAKE_RANDOM_META | self::FAKE_RANDOM_LINKS;
+            $options = self::FAKE_COLLECTION;
         }
-        $options = $options ^ FAKE_RESOURCE_OBJECT;
+        $options |= self::FAKE_RESOURCE_IDENTIFIER;
+        $options &= ~self::FAKE_RESOURCE_OBJECT;
 
-        return $this->fakeMetaIf($options, $countMeta)
-            ->fakeLinksIf($options, $links)
-            ->fakeData($options, $count);
+        return $this->fakeData($options, $count)
+            ->fakeMeta()
+            ->fakeLinks();
     }
 }

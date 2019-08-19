@@ -3,6 +3,7 @@
 namespace VGirol\JsonApiFaker\Tests\Factory;
 
 use PHPUnit\Framework\Assert as PHPUnit;
+use VGirol\JsonApiAssert\Assert;
 use VGirol\JsonApiFaker\Factory\CollectionFactory;
 use VGirol\JsonApiFaker\Factory\ResourceIdentifierFactory;
 use VGirol\JsonApiFaker\Tests\TestCase;
@@ -160,5 +161,25 @@ class CollectionFactoryTest extends TestCase
         });
 
         PHPUnit::assertSame($expected, $result);
+    }
+
+    /**
+     * @test
+     */
+    public function fake()
+    {
+        $factory = new CollectionFactory;
+
+        PHPUnit::assertEmpty($factory->array);
+
+        $obj = $factory->fake();
+
+        PHPUnit::assertSame($obj, $factory);
+        PHPUnit::assertNotEmpty($factory->array);
+        PHPUnit::assertIsArray($factory->array);
+        PHPUnit::assertEquals(5, count($factory->array));
+
+        Assert::assertIsArrayOfObjects($factory->array);
+        // Assert::assertIsVal($factory->array, true);
     }
 }

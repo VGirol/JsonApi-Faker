@@ -15,14 +15,6 @@ abstract class BaseFactory
     const FAKE_COLLECTION = 8;
     const FAKE_CAN_BE_NULL = 16;
 
-    const FAKE_WITH_META = 32;
-    const FAKE_NO_META = 64;
-    const FAKE_RANDOM_META = 128;
-
-    const FAKE_WITH_LINKS = 256;
-    const FAKE_NO_LINKS = 512;
-    const FAKE_RANDOM_LINKS = 1024;
-
     /**
      * Undocumented function
      *

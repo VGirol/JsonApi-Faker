@@ -97,7 +97,7 @@ class HasLinksTest extends TestCase
     /**
      * @test
      */
-    public function fakeAttributes()
+    public function fakeLinks()
     {
         $mock = new class extends BaseFactory
         {

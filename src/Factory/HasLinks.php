@@ -65,18 +65,4 @@ trait HasLinks
 
         return $this;
     }
-
-    protected function fakeLinksIf($options = null, $links = ['self' => ['url']])
-    {
-        if ($options & self::FAKE_NO_LINKS) {
-            return $this;
-        }
-
-        $faker = \Faker\Factory::create();
-        if (($options & self::FAKE_RANDOM_LINKS) && ($faker->boolean === false)) {
-            return $this;
-        }
-
-        return $this->fakeLinks($links);
-    }
 }

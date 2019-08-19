@@ -31,15 +31,21 @@ trait HasRelationships
     /**
      * Undocumented function
      *
+     * @param integer $count
+     *
      * @return static
      */
-    public function fakeRelationships()
+    public function fakeRelationships($count = 2)
     {
         $faker = \Faker\Factory::create();
 
-        return $this->addRelationship(
-            $faker->word,
-            (new RelationshipFactory)->fake()
-        );
+        for ($i = 0; $i < $count; $i++) {
+            $this->addRelationship(
+                $faker->unique()->numerify('relationship##'),
+                (new RelationshipFactory)->fake()
+            );
+        }
+
+        return $this;
     }
 }

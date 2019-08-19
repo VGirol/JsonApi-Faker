@@ -87,38 +87,8 @@ class ResourceIdentifierFactoryTest extends TestCase
         PHPUnit::assertNotEmpty($factory->id);
         PHPUnit::assertNotEmpty($factory->resourceType);
 
-        Assert::assertIsValidResourceIdentifierObject($factory->toArray(), true);
-    }
-
-    /**
-     * @test
-     */
-    public function fakeWithoutMeta()
-    {
-        $factory = new ResourceIdentifierFactory;
-
-        PHPUnit::assertEmpty($factory->meta);
-
-        $factory->fake(ResourceIdentifierFactory::FAKE_NO_META);
-
-        PHPUnit::assertEmpty($factory->meta);
-
-        Assert::assertIsValidResourceIdentifierObject($factory->toArray(), true);
-    }
-
-    /**
-     * @test
-     */
-    public function fakeWithMeta()
-    {
-        $factory = new ResourceIdentifierFactory;
-
-        PHPUnit::assertEmpty($factory->meta);
-
-        $factory->fake(ResourceIdentifierFactory::FAKE_WITH_META, 3);
-
         PHPUnit::assertNotEmpty($factory->meta);
-        PHPUnit::assertEquals(3, count($factory->meta));
+        PHPUnit::assertEquals(5, count($factory->meta));
 
         Assert::assertIsValidResourceIdentifierObject($factory->toArray(), true);
     }

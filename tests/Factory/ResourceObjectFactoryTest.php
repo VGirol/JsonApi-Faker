@@ -135,45 +135,8 @@ class ResourceObjectFactoryTest extends TestCase
         PHPUnit::assertNotEmpty($factory->resourceType);
         PHPUnit::assertNotEmpty($factory->attributes);
         PHPUnit::assertEquals(5, count($factory->attributes));
-
-        Assert::assertIsValidResourceObject($factory->toArray(), true);
-    }
-
-    /**
-     * @test
-     */
-    public function fakeWithoutAnything()
-    {
-        $factory = new ResourceObjectFactory;
-
-        PHPUnit::assertEmpty($factory->meta);
-
-        $factory->fake(ResourceObjectFactory::FAKE_NO_META | ResourceObjectFactory::FAKE_NO_LINKS);
-
-        PHPUnit::assertEmpty($factory->meta);
-        PHPUnit::assertEmpty($factory->links);
-
-        Assert::assertIsValidResourceObject($factory->toArray(), true);
-    }
-
-    /**
-     * @test
-     */
-    public function fakeWithAll()
-    {
-        $factory = new ResourceObjectFactory;
-
-        PHPUnit::assertEmpty($factory->meta);
-
-        $factory->fake(
-            ResourceObjectFactory::FAKE_WITH_META | ResourceObjectFactory::FAKE_WITH_LINKS,
-            3,
-            2
-        );
-
-        PHPUnit::assertEquals(3, count($factory->attributes));
         PHPUnit::assertNotEmpty($factory->meta);
-        PHPUnit::assertEquals(2, count($factory->meta));
+        PHPUnit::assertEquals(5, count($factory->meta));
         PHPUnit::assertNotEmpty($factory->links);
         PHPUnit::assertEquals(1, count($factory->links));
         PHPUnit::assertEquals(['self'], array_keys($factory->links));

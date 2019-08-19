@@ -52,16 +52,12 @@ class ResourceObjectFactory extends BaseFactory
      *
      * @return static
      */
-    public function fake($options = null, $countAttr = 5, $countMeta = 5, $links = ['self' => ['url']])
+    public function fake()
     {
-        if (is_null($options)) {
-            $options = self::FAKE_RANDOM_META | self::FAKE_RANDOM_LINKS;
-        }
-
         return $this->fakeIdentification()
-            ->fakeAttributes($countAttr)
-            ->fakeMetaIf($options, $countMeta)
-            ->fakeLinksIf($options, $links);
-        // ->fakeRelationships();
+            ->fakeAttributes()
+            ->fakeMeta()
+            ->fakeLinks()
+            ->fakeRelationships();
     }
 }

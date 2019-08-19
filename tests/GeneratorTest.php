@@ -3,24 +3,17 @@
 namespace VGirol\JsonApiFaker\Tests;
 
 use PHPUnit\Framework\Assert as PHPUnit;
+use VGirol\JsonApiFaker\Factory\CollectionFactory;
 use VGirol\JsonApiFaker\Factory\JsonapiFactory;
+use VGirol\JsonApiFaker\Factory\RelationshipFactory;
+use VGirol\JsonApiFaker\Factory\ResourceIdentifierFactory;
+use VGirol\JsonApiFaker\Factory\ResourceObjectFactory;
 use VGirol\JsonApiFaker\Generator;
 use VGirol\JsonApiFaker\Messages;
 use VGirol\JsonApiFaker\Tests\TestCase;
 
 class FakerFactoryTest extends TestCase
 {
-    // /**
-    //  * @test
-    //  */
-    // public function getClassName()
-    // {
-    //     $name = HelperFactory::getClassName('resource-object');
-
-    //     PHPUnit::assertIsString($name);
-    //     PHPUnit::assertEquals(ResourceObjectFactory::class, $name);
-    // }
-
     /**
      * @test
      */
@@ -63,6 +56,45 @@ class FakerFactoryTest extends TestCase
 
         PHPUnit::assertIsObject($obj);
         PHPUnit::assertInstanceOf(DummyFactory::class, $obj);
+    }
+
+    /**
+     * @test
+     * @dataProvider createObjectProvider
+     */
+    public function createObject($method, $class)
+    {
+        $faker = new Generator;
+        $obj = $faker->{$method}();
+
+        PHPUnit::assertIsObject($obj);
+        PHPUnit::assertInstanceOf($class, $obj);
+    }
+
+    public function createObjectProvider()
+    {
+        return [
+            'collection' => [
+                'collection',
+                CollectionFactory::class
+            ],
+            'jsonapiObject' => [
+                'jsonapiObject',
+                JsonapiFactory::class
+            ],
+            'relationship' => [
+                'relationship',
+                RelationshipFactory::class
+            ],
+            'resourceIdentifier' => [
+                'resourceIdentifier',
+                ResourceIdentifierFactory::class
+            ],
+            'resourceObject' => [
+                'resourceObject',
+                ResourceObjectFactory::class
+            ]
+        ];
     }
 }
 

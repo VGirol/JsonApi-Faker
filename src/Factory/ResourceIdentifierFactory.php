@@ -32,13 +32,9 @@ class ResourceIdentifierFactory extends BaseFactory
      *
      * @return static
      */
-    public function fake($options = null, $countMeta = 5)
+    public function fake()
     {
-        if (is_null($options)) {
-            $options = self::FAKE_RANDOM_META;
-        }
-
         return $this->fakeIdentification()
-            ->fakeMetaIf($options, $countMeta);
+            ->fakeMeta();
     }
 }

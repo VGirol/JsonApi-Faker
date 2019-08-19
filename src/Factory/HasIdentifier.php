@@ -37,6 +37,6 @@ trait HasIdentifier
     {
         $faker = \Faker\Factory::create();
 
-        return $this->setId($faker->randomNumber(2));
+        return $this->setId($faker->numberBetween(1, 100));
     }
 }

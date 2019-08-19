@@ -61,7 +61,7 @@ class HasMetaTest extends TestCase
     /**
      * @test
      */
-    public function fakeAttributes()
+    public function fakeMeta()
     {
         $mock = new class extends BaseFactory
         {

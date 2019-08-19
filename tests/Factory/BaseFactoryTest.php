@@ -71,7 +71,7 @@ class BaseFactoryTest extends TestCase
             public function toArray(): ?array
             {
                 return [
-                    'attr' => 'value',
+                    'attr' => 'value with <, &, \' and ".',
                     'arr' => [
                         'first',
                         'second'
@@ -86,7 +86,7 @@ class BaseFactoryTest extends TestCase
         };
 
         $json = $obj->toJson();
-        $expected = '{"attr":"value","arr":["first","second"]}';
+        $expected = '{"attr":"value with <, &, \' and \".","arr":["first","second"]}';
 
         PHPUnit::assertEquals($expected, $json);
     }
@@ -117,5 +117,93 @@ class BaseFactoryTest extends TestCase
         );
 
         $obj->toJson();
+    }
+
+    /**
+     * @test
+     */
+    public function fakeMemberName()
+    {
+        $obj = new class extends BaseFactory
+        {
+            public function toArray(): ?array
+            {
+                return [];
+            }
+
+            public function fake()
+            {
+                return $this;
+            }
+
+            public function test($name)
+            {
+                $faker = \Faker\Factory::create();
+
+                return $this->fakeMemberName($faker, $name);
+            }
+        };
+
+        $in = 'test';
+        $expected = 'test';
+        $name = $obj->test($in);
+        PHPUnit::assertEquals($expected, $name);
+
+        $in = null;
+        $name = $obj->test($in);
+        PHPUnit::assertNotNull($name);
+        PHPUnit::assertIsString($name);
+
+        $in = 123;
+        $name = $obj->test($in);
+        PHPUnit::assertNotNull($name);
+        PHPUnit::assertIsString($name);
+        PHPUnit::assertNotEquals(strval($in), $name);
+
+        $in = '/test[0-9]{3}/';
+        $name = $obj->test($in);
+        PHPUnit::assertNotNull($name);
+        PHPUnit::assertIsString($name);
+        PHPUnit::assertNotEquals($in, $name);
+        PHPUnit::assertRegExp($in, $name);
+    }
+
+    /**
+     * @test
+     */
+    public function fakeValue()
+    {
+        $obj = new class extends BaseFactory
+        {
+            public function toArray(): ?array
+            {
+                return [];
+            }
+
+            public function fake()
+            {
+                return $this;
+            }
+
+            public function test($providers)
+            {
+                $faker = \Faker\Factory::create();
+
+                return $this->fakeValue($faker, $providers);
+            }
+        };
+
+        $in = null;
+        $value = $obj->test($in);
+        PHPUnit::assertNull($value);
+
+        $in = ['boolean'];
+        $value = $obj->test($in);
+        PHPUnit::assertNotNull($value);
+        PHPUnit::assertIsBool($value);
+
+        $in = [];
+        $value = $obj->test($in);
+        PHPUnit::assertNotNull($value);
     }
 }

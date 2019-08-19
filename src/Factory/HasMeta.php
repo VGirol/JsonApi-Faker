@@ -57,18 +57,4 @@ trait HasMeta
 
         return $this;
     }
-
-    protected function fakeMetaIf($options = null, $count = 5)
-    {
-        if ($options & self::FAKE_NO_META) {
-            return $this;
-        }
-
-        $faker = \Faker\Factory::create();
-        if (($options & self::FAKE_RANDOM_META) && ($faker->boolean === false)) {
-            return $this;
-        }
-
-        return $this->fakeMeta($count);
-    }
 }
