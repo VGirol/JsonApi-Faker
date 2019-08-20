@@ -6,17 +6,20 @@ namespace VGirol\JsonApiFaker\Factory;
 
 use VGirol\JsonApiFaker\Members;
 
+/**
+ * Add identification ("type" and "id" members) to a factory.
+ */
 trait HasIdentification
 {
     use HasResourceType;
     use HasIdentifier;
 
     /**
-     * Undocumented function
+     * Get the identification ("type" and "id" members) as array
      *
-     * @return array|null
+     * @return array<string,string>|null
      */
-    public function getIdentification(): ?array
+    public function getIdentification()
     {
         if (!isset($this->id) && !isset($this->resourceType)) {
             return null;
@@ -29,7 +32,7 @@ trait HasIdentification
     }
 
     /**
-     * Undocumented function
+     * Fill "type" and "id" members with fake values.
      *
      * @return static
      */

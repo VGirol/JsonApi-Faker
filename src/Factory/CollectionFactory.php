@@ -4,17 +4,21 @@ declare(strict_types=1);
 
 namespace VGirol\JsonApiFaker\Factory;
 
+/**
+ * Factory for collection of resource object (@see ResourceObjectFactory)
+ * or resource identifier (@see ResourceIdentifierFactory).
+ */
 class CollectionFactory extends BaseFactory
 {
     /**
      * Array of ResourceObjectFactory or ResourceIdentifierFactory objects
      *
-     * @var array
+     * @var array<ResourceObjectFactory>|array<ResourceIdentifierFactory>
      */
     public $array;
 
     /**
-     * Undocumented function
+     * Sets the collection.
      *
      * @param array<ResourceIdentifierFactory>|array<ResourceObjectFactory> $collection
      *
@@ -28,9 +32,8 @@ class CollectionFactory extends BaseFactory
     }
 
     /**
-     * Undocumented function
-     *
-     * @return array|null
+     * @inheritDoc
+     * @return array<array>|null
      */
     public function toArray(): ?array
     {
@@ -39,6 +42,11 @@ class CollectionFactory extends BaseFactory
         }
 
         return $this->map(
+            /**
+             * @param ResourceObjectFactory|ResourceIdentifierFactory $resource
+             *
+             * @return array<string,mixed>|null
+             */
             function ($resource) {
                 return $resource->toArray();
             }
@@ -46,7 +54,7 @@ class CollectionFactory extends BaseFactory
     }
 
     /**
-     * Undocumented function
+     * Apply a supplied function to every element of the collection.
      *
      * @param callable $callback
      * @return static
@@ -59,7 +67,7 @@ class CollectionFactory extends BaseFactory
     }
 
     /**
-     * Undocumented function
+     * Applies the callback to the elements of the collection.
      *
      * @param Callable $callback
      *
@@ -71,7 +79,10 @@ class CollectionFactory extends BaseFactory
     }
 
     /**
-     * Undocumented function
+     * Fill the collection with fake values (resource identifers or resource objects).
+     *
+     * @param integer $options
+     * @param integer $count
      *
      * @return static
      */

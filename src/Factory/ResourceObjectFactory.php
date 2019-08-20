@@ -6,6 +6,9 @@ namespace VGirol\JsonApiFaker\Factory;
 
 use VGirol\JsonApiFaker\Members;
 
+/**
+ * A factory for resource object
+ */
 class ResourceObjectFactory extends BaseFactory
 {
     use HasIdentification;
@@ -15,15 +18,15 @@ class ResourceObjectFactory extends BaseFactory
     use HasRelationships;
 
     /**
-     * Undocumented function
-     *
-     * @return array
+     * @inheritDoc
+     * @return array<string,mixed>
      */
     public function toArray(): array
     {
-        $resource = $this->getIdentification();
-        if (is_null($resource)) {
-            $resource = [];
+        $resource = [];
+        $identification = $this->getIdentification();
+        if (!is_null($identification)) {
+            $resource = array_merge($resource, $identification);
         }
 
         if (isset($this->attributes)) {
@@ -37,6 +40,10 @@ class ResourceObjectFactory extends BaseFactory
         }
         if (isset($this->relationships)) {
             $resource[Members::RELATIONSHIPS] = array_map(
+                /**
+                 * @param RelationshipFactory $relationship
+                 * @return array<string,mixed>
+                 */
                 function ($relationship) {
                     return $relationship->toArray();
                 },
@@ -48,7 +55,7 @@ class ResourceObjectFactory extends BaseFactory
     }
 
     /**
-     * Undocumented function
+     * Fill the resource object with fake values ("type", "id", "attributes", "meta", "links" and "relationships").
      *
      * @return static
      */

@@ -6,19 +6,25 @@ namespace VGirol\JsonApiFaker\Factory;
 
 use VGirol\JsonApiFaker\Members;
 
+/**
+ * A factory for resource identifier object
+ */
 class ResourceIdentifierFactory extends BaseFactory
 {
     use HasIdentification;
     use HasMeta;
 
     /**
-     * Undocumented function
-     *
-     * @return array|null
+     * @inheritDoc
+     * @return array<string,mixed>
      */
-    public function toArray(): ?array
+    public function toArray(): array
     {
-        $resource = $this->getIdentification();
+        $resource = [];
+        $identification = $this->getIdentification();
+        if (!is_null($identification)) {
+            $resource = array_merge($resource, $identification);
+        }
 
         if (isset($this->meta)) {
             $resource[Members::META] = $this->meta;
@@ -28,7 +34,7 @@ class ResourceIdentifierFactory extends BaseFactory
     }
 
     /**
-     * Undocumented function
+     * Fill the resource identifier object with fake values ("type", "id" and "meta").
      *
      * @return static
      */

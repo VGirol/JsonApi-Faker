@@ -5,6 +5,7 @@ namespace VGirol\JsonApiFaker\Tests\Factory;
 use PHPUnit\Framework\Assert as PHPUnit;
 use VGirol\JsonApiAssert\Assert;
 use VGirol\JsonApiFaker\Factory\BaseFactory;
+use VGirol\JsonApiFaker\Factory\ErrorFactory;
 use VGirol\JsonApiFaker\Factory\HasErrors;
 use VGirol\JsonApiFaker\Testing\CheckMethods;
 use VGirol\JsonApiFaker\Tests\TestCase;
@@ -75,31 +76,34 @@ class HasErrorsTest extends TestCase
     /**
      * @test
      */
-    // public function fakeErrors()
-    // {
-    //     $mock = new class extends BaseFactory
-    //     {
-    //         use HasErrors;
+    public function fakeErrors()
+    {
+        $mock = new class extends BaseFactory
+        {
+            use HasErrors;
 
-    //         public function toArray(): ?array
-    //         {
-    //             return null;
-    //         }
+            public function toArray(): ?array
+            {
+                return null;
+            }
 
-    //         public function fake()
-    //         {
-    //             return $this;
-    //         }
-    //     };
+            public function fake()
+            {
+                return $this;
+            }
+        };
 
-    //     PHPUnit::assertEmpty($mock->errors);
+        PHPUnit::assertEmpty($mock->errors);
 
-    //     $obj = $mock->fakeErrors();
+        $obj = $mock->fakeErrors();
 
-    //     PHPUnit::assertSame($obj, $mock);
-    //     PHPUnit::assertNotEmpty($mock->errors);
-    //     PHPUnit::assertEquals(3, count($mock->errors));
+        PHPUnit::assertSame($obj, $mock);
+        PHPUnit::assertNotEmpty($mock->errors);
+        PHPUnit::assertEquals(2, count($mock->errors));
 
-    //     Assert::assertIsValidErrorsObject($mock->errors, true);
-    // }
+        foreach ($mock->errors as $error) {
+            PHPUnit::assertInstanceOf(ErrorFactory::class, $error);
+            Assert::assertIsValidErrorObject($error->toArray(), true);
+        }
+    }
 }

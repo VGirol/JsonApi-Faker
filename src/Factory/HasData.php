@@ -4,18 +4,29 @@ declare(strict_types=1);
 
 namespace VGirol\JsonApiFaker\Factory;
 
+/**
+ * Add "data" member to a factory.
+ */
 trait HasData
 {
 
     /**
-     * Undocumented variable
+     * The "data" member
      *
      * @var ResourceIdentifierFactory|ResourceObjectFactory|CollectionFactory|null
      */
-    public $data = null;
+    public $data;
 
     /**
-     * Undocumented function
+     * Flag to indicate that "data" member has been set.
+     * This can distinguish "data" member set to null to unset "data" member.
+     *
+     * @var boolean
+     */
+    private $hasBeenSet = false;
+
+    /**
+     * Set "data" member
      *
      * @param ResourceIdentifierFactory|ResourceObjectFactory|CollectionFactory|null $data
      * @return static
@@ -23,15 +34,27 @@ trait HasData
     public function setData($data)
     {
         $this->data = $data;
+        $this->hasBeenSet = true;
 
         return $this;
     }
 
     /**
+     * Check if the "data" member has been set.
+     *
+     * @return boolean
+     */
+    public function dataHasBeenSet(): bool
+    {
+        return $this->hasBeenSet;
+    }
+
+    /**
      * Undocumented function
      *
-     * @param integer $options
-     * @param integer $count
+     * @param integer $options Bitmask
+     * @param integer $count In case of collection, it represents the number of resource object
+     *                       or resource identifier to generate
      *
      * @return static
      */
@@ -42,22 +65,24 @@ trait HasData
             $count = 5;
         }
 
-        $faker = \Faker\Factory::create();
+        $canBeNull = (($options & self::FAKE_CAN_BE_NULL) == self::FAKE_CAN_BE_NULL);
+        $isCollection = (($options & self::FAKE_COLLECTION) == self::FAKE_COLLECTION);
+        $isRI = (($options & self::FAKE_RESOURCE_IDENTIFIER) == self::FAKE_RESOURCE_IDENTIFIER);
 
-        if ($options & self::FAKE_CAN_BE_NULL) {
+        if ($canBeNull) {
+            $faker = \Faker\Factory::create();
+
             if ($faker->boolean) {
                 $this->setData(null);
+
                 return $this;
             }
         }
 
-        $class = (($options & self::FAKE_RESOURCE_IDENTIFIER) == self::FAKE_RESOURCE_IDENTIFIER) ?
-            ResourceIdentifierFactory::class : ResourceObjectFactory::class;
-
-        if ($options & self::FAKE_COLLECTION) {
+        if ($isCollection) {
             $data = (new CollectionFactory)->fake($options, $count);
         } else {
-            $data = (new $class)->fake();
+            $data = $isRI ? (new ResourceIdentifierFactory)->fake() : (new ResourceObjectFactory)->fake();
         }
         $this->setData($data);
 

@@ -6,6 +6,9 @@ namespace VGirol\JsonApiFaker\Factory;
 
 use VGirol\JsonApiFaker\Members;
 
+/**
+ * A factory for "relationship" object
+ */
 class RelationshipFactory extends BaseFactory
 {
     use HasMeta;
@@ -13,15 +16,14 @@ class RelationshipFactory extends BaseFactory
     use HasData;
 
     /**
-     * Undocumented function
-     *
-     * @return array
+     * @inheritDoc
+     * @return array<string,mixed>
      */
     public function toArray(): array
     {
         $resource = [];
 
-        $resource[Members::DATA] = is_null($this->data) ? $this->data : $this->data->toArray();
+        $resource[Members::DATA] = is_null($this->data) ? null : $this->data->toArray();
 
         if (isset($this->meta)) {
             $resource[Members::META] = $this->meta;
@@ -34,10 +36,10 @@ class RelationshipFactory extends BaseFactory
     }
 
     /**
-     * Undocumented function
+     * Fill the relationship with fake values ("data", "meta" and "links").
      *
      * @param integer $options
-     * @param integer $count
+     * @param integer $count In case of collection, it represents the number of resource identifier to generate
      *
      * @return static
      */

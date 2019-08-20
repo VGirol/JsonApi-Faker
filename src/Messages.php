@@ -13,4 +13,6 @@ abstract class Messages
     "An error occurs while encoding to JSON.\n%s";
 
     const FACTORY_INEXISTANT_KEY = 'Inexistant key "%s".';
+
+    const ERROR_OBJECT_INEXISTANT_KEY = 'Inexistant key "%s".';
 }

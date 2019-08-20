@@ -4,19 +4,22 @@ declare(strict_types=1);
 
 namespace VGirol\JsonApiFaker\Factory;
 
+/**
+ * Add "meta" member to a factory.
+ */
 trait HasMeta
 {
     /**
-     * Undocumented variable
+     * The "meta" member
      *
-     * @var array
+     * @var array<string,mixed>
      */
     public $meta;
 
     /**
-     * Undocumented function
+     * Set the "meta" member.
      *
-     * @param array $meta
+     * @param array<string,mixed> $meta
      *
      * @return static
      */
@@ -28,7 +31,7 @@ trait HasMeta
     }
 
     /**
-     * Undocumented function
+     * Add a single value to the "meta" member
      *
      * @param string $name
      * @param mixed $value
@@ -43,13 +46,13 @@ trait HasMeta
     }
 
     /**
-     * Undocumented function
+     * Fill the "meta" member with fake values.
      *
-     * @param integer $count
+     * @param integer $count The number of values to generate.
      *
      * @return static
      */
-    public function fakeMeta($count = 5)
+    public function fakeMeta(int $count = 5)
     {
         $this->setMeta(
             $this->fakeMembers($count)

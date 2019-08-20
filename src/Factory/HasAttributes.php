@@ -4,19 +4,22 @@ declare(strict_types=1);
 
 namespace VGirol\JsonApiFaker\Factory;
 
+/**
+ * Add "attributes" member to a factory.
+ */
 trait HasAttributes
 {
     /**
-     * Undocumented variable
+     * The "attributes" object.
      *
-     * @var array
+     * @var array<string,mixed>
      */
     public $attributes;
 
     /**
-     * Undocumented function
+     * Set all the attributes.
      *
-     * @param array $attributes
+     * @param array<string,mixed> $attributes
      *
      * @return static
      */
@@ -28,9 +31,9 @@ trait HasAttributes
     }
 
     /**
-     * Undocumented function
+     * Add many attributes.
      *
-     * @param array $attributes
+     * @param array<string,mixed> $attributes
      *
      * @return static
      */
@@ -44,7 +47,7 @@ trait HasAttributes
     }
 
     /**
-     * Undocumented function
+     * Add a single attribute.
      *
      * @param string $name
      * @param mixed $value
@@ -59,9 +62,9 @@ trait HasAttributes
     }
 
     /**
-     * Undocumented function
+     * Fill the "attributes" object with fake members and values.
      *
-     * @param integer $count
+     * @param integer $count The number of attributes to generate.
      *
      * @return static
      */

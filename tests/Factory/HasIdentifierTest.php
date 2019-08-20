@@ -56,7 +56,7 @@ class HasIdentifierTest extends TestCase
         PHPUnit::assertSame($obj, $mock);
         PHPUnit::assertNotEmpty($mock->id);
         PHPUnit::assertGreaterThanOrEqual(0, $mock->id);
-        PHPUnit::assertLessThan(100, $mock->id);
+        PHPUnit::assertLessThanOrEqual(100, $mock->id);
 
         Assert::assertResourceIdMember($obj->toArray());
     }

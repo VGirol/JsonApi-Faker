@@ -4,14 +4,23 @@ declare(strict_types=1);
 
 namespace VGirol\JsonApiFaker\Factory;
 
+/**
+ * Add "links" member to a factory.
+ */
 trait HasLinks
 {
+    /**
+     * The "links" member
+     *
+     * @var array<string,string>|array<string,array>
+     */
     public $links;
 
     /**
-     * Undocumented function
+     * Set the "links" member.
      *
-     * @param array $links
+     * @param array<string,string>|array<string,array> $links
+     *
      * @return static
      */
     public function setLinks(array $links)
@@ -22,9 +31,10 @@ trait HasLinks
     }
 
     /**
-     * Undocumented function
+     * Add some links to the "links" member.
      *
-     * @param array $links
+     * @param array<string,string>|array<string,array> $links
+     *
      * @return static
      */
     public function addLinks(array $links)
@@ -37,10 +47,11 @@ trait HasLinks
     }
 
     /**
-     * Undocumented function
+     * Add a single link to the "links" member
      *
      * @param string $name
-     * @param array|string|null $link
+     * @param array<string,mixed>|string|null $link
+     *
      * @return static
      */
     public function addLink(string $name, $link)
@@ -51,9 +62,9 @@ trait HasLinks
     }
 
     /**
-     * Undocumented function
+     * Fill the "links" member with fake values.
      *
-     * @param array $keys
+     * @param array<string,array> $links
      *
      * @return static
      */

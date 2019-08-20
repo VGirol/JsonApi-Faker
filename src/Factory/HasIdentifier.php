@@ -4,19 +4,20 @@ declare(strict_types=1);
 
 namespace VGirol\JsonApiFaker\Factory;
 
-use VGirol\JsonApiFaker\Members;
-
+/**
+ * Add "id" member to a factory
+ */
 trait HasIdentifier
 {
     /**
-     * Undocumented variable
+     * "id" member"
      *
      * @var int|string|null
      */
     public $id;
 
     /**
-     * Undocumented function
+     * Set the "id" member.
      *
      * @param int|string|null $resourceId
      * @return static
@@ -29,7 +30,7 @@ trait HasIdentifier
     }
 
     /**
-     * Undocumented function
+     * Fill the "id" member with a fake value.
      *
      * @return static
      */

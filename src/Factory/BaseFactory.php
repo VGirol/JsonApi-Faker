@@ -7,37 +7,22 @@ namespace VGirol\JsonApiFaker\Factory;
 use Faker\Generator;
 use VGirol\JsonApiFaker\Messages;
 
-abstract class BaseFactory
+/**
+ * This class implements some methods of the FactoryContract interface.
+ */
+abstract class BaseFactory implements FactoryContract
 {
     const FAKE_RESOURCE_OBJECT = 1;
     const FAKE_RESOURCE_IDENTIFIER = 2;
     const FAKE_SINGLE = 4;
     const FAKE_COLLECTION = 8;
     const FAKE_CAN_BE_NULL = 16;
+    const FAKE_ERRORS = 32;
 
-    /**
-     * Undocumented function
-     *
-     * @return array|null
-     */
     abstract public function toArray(): ?array;
 
-    /**
-     * Undocumented function
-     *
-     * @return static
-     */
     abstract public function fake();
 
-    /**
-     * Undocumented function
-     *
-     * @param string $object
-     * @param string $name
-     * @param mixed $value
-     *
-     * @return void
-     */
     public function addToObject(string $object, string $name, $value): void
     {
         if (!isset($this->{$object})) {
@@ -47,14 +32,6 @@ abstract class BaseFactory
         $this->{$object}[$name] = $value;
     }
 
-    /**
-     * Undocumented function
-     *
-     * @param string $object
-     * @param mixed $value
-     *
-     * @return void
-     */
     public function addToArray(string $object, $value): void
     {
         if (!isset($this->{$object})) {
@@ -65,11 +42,8 @@ abstract class BaseFactory
     }
 
     /**
-     * Undocumented function
-     *
-     * @param integer $options
-     *
-     * @return string
+     * @inheritDoc
+     * @throws \Exception
      */
     public function toJson($options = 0): string
     {
@@ -85,7 +59,7 @@ abstract class BaseFactory
     }
 
     /**
-     * Undocumented function
+     * This methods creates some members with fake names and values.
      *
      * The fake member is filled with the null value :
      * $options = [
@@ -111,7 +85,7 @@ abstract class BaseFactory
      *
      * @param integer|array $options The number of keys to generate or an array of keys to use.
      *
-     * @return array
+     * @return array<string,mixed>
      */
     protected function fakeMembers($options): array
     {
@@ -137,7 +111,7 @@ abstract class BaseFactory
     }
 
     /**
-     * Undocumented function
+     * Returns a fake member's name.
      *
      * @param Generator $faker
      * @param string|integer|null $name
@@ -161,10 +135,10 @@ abstract class BaseFactory
     }
 
     /**
-     * Undocumented function
+     * Returns a fake member's value.
      *
      * @param Generator $faker
-     * @param array|null $providers
+     * @param array<string>|null $providers
      * @return mixed
      */
     protected function fakeValue(Generator $faker, $providers = [])

@@ -4,17 +4,20 @@ declare(strict_types=1);
 
 namespace VGirol\JsonApiFaker\Factory;
 
+/**
+ * Add "relationships" member to a factory.
+ */
 trait HasRelationships
 {
     /**
-     * Undocumented variable
+     * The "relationships" member
      *
      * @var array<string, RelationshipFactory>
      */
     public $relationships;
 
     /**
-     * Undocumented function
+     * Add a single relationship
      *
      * @param string $name
      * @param RelationshipFactory $relationship
@@ -29,9 +32,9 @@ trait HasRelationships
     }
 
     /**
-     * Undocumented function
+     * Fill the "relationships" member with fake values.
      *
-     * @param integer $count
+     * @param integer $count The number of relationships to generate.
      *
      * @return static
      */

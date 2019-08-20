@@ -6,6 +6,9 @@ namespace VGirol\JsonApiFaker\Factory;
 
 use VGirol\JsonApiFaker\Members;
 
+/**
+ * Factory for an entire document.
+ */
 class DocumentFactory extends BaseFactory
 {
     use HasData;
@@ -14,23 +17,24 @@ class DocumentFactory extends BaseFactory
     use HasMeta;
 
     /**
-     * Undocumented variable
+     * The collection of included resources
      *
      * @var CollectionFactory
      */
     public $included;
 
     /**
-     * Undocumented variable
+     * The jsonapi object
      *
      * @var JsonapiFactory
      */
     public $jsonapi;
 
     /**
-     * Undocumented function
+     * Sets the included collection.
      *
      * @param CollectionFactory $included
+     *
      * @return static
      */
     public function setIncluded($included)
@@ -41,9 +45,10 @@ class DocumentFactory extends BaseFactory
     }
 
     /**
-     * Undocumented function
+     * Sets the jsonapi object.
      *
      * @param JsonapiFactory $jsonapi
+     *
      * @return static
      */
     public function setJsonapi($jsonapi)
@@ -53,6 +58,10 @@ class DocumentFactory extends BaseFactory
         return $this;
     }
 
+    /**
+     * @inheritDoc
+     * @return array<string,mixed>
+     */
     public function toArray(): array
     {
         $json = [];
@@ -66,14 +75,14 @@ class DocumentFactory extends BaseFactory
         if (isset($this->errors)) {
             $json[Members::ERRORS] = $this->errors;
         }
-        if (isset($this->data)) {
-            $json[Members::DATA] = $this->data->toArray();
+        if ($this->dataHasBeenSet()) {
+            $json[Members::DATA] = is_null($this->data) ? null : $this->data->toArray();
         }
         if (isset($this->included)) {
             $json[Members::INCLUDED] = $this->included->toArray();
         }
         if (isset($this->jsonapi)) {
-            $json[Members::JSONAPI] = $this->jsonapi;
+            $json[Members::JSONAPI] = $this->jsonapi->toArray();
         }
 
         return $json;
@@ -82,10 +91,23 @@ class DocumentFactory extends BaseFactory
     /**
      * Undocumented function
      *
+     * @param integer $options
+     *
      * @return static
      */
-    public function fake()
+    public function fake($options = null, $count = null)
     {
-        return $this;
+        if (is_null($options)) {
+            $options = self::FAKE_SINGLE | self::FAKE_RESOURCE_OBJECT;
+        }
+
+        $withErrors = (($options & self::FAKE_ERRORS) == self::FAKE_ERRORS);
+
+        $this->fakeLinks()
+            ->fakeMeta()
+            ->setJsonapi(new JsonapiFactory)
+            ->jsonapi->fake();
+
+        return $withErrors ? $this->fakeErrors($count) : $this->fakeData($options, $count);
     }
 }

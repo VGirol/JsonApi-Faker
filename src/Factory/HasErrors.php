@@ -4,19 +4,23 @@ declare(strict_types=1);
 
 namespace VGirol\JsonApiFaker\Factory;
 
+/**
+ * Add "errors" member
+ */
 trait HasErrors
 {
     /**
-     * Undocumented variable
+     * The "errors" member
      *
-     * @var array
+     * @var array<ErrorFactory>
      */
     public $errors;
 
     /**
-     * Undocumented function
+     * Set the "errors" member
      *
-     * @param array $errors
+     * @param array<ErrorFactory> $errors
+     *
      * @return static
      */
     public function setErrors(array $errors)
@@ -27,9 +31,10 @@ trait HasErrors
     }
 
     /**
-     * Undocumented function
+     * Add a single error to the "errors" member
      *
-     * @param array $error
+     * @param ErrorFactory $error
+     *
      * @return static
      */
     public function addError($error)
@@ -40,12 +45,19 @@ trait HasErrors
     }
 
     /**
-     * Undocumented function
+     * Fill the "errors" member with fake values
+     *
+     * @param integer $count
      *
      * @return static
      */
-    public function fakeErrors()
+    public function fakeErrors($count = 2)
     {
-        return $this;
+        $collection = [];
+        for ($i = 0; $i < $count; $i++) {
+            $collection[] = (new ErrorFactory)->fake();
+        }
+
+        return $this->setErrors($collection);
     }
 }

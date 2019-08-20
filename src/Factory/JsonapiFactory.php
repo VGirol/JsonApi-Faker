@@ -6,15 +6,17 @@ namespace VGirol\JsonApiFaker\Factory;
 
 use VGirol\JsonApiFaker\Members;
 
+/**
+ * A Factory for the "jsonapi" object.
+ */
 class JsonapiFactory extends BaseFactory
 {
     use HasMeta;
     use HasVersion;
 
     /**
-     * Undocumented function
-     *
-     * @return array|null
+     * @inheritDoc
+     * @return array<string,mixed>|null
      */
     public function toArray(): ?array
     {
@@ -31,7 +33,7 @@ class JsonapiFactory extends BaseFactory
     }
 
     /**
-     * Undocumented function
+     * Fill the jsonapi object with fake values ("version" and "meta").
      *
      * @return static
      */

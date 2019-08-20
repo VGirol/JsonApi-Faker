@@ -14,7 +14,7 @@ class ResourceIdentifierFactoryTest extends TestCase
      */
     public function resourceIdentifierFactoryEmpty()
     {
-        $expected = null;
+        $expected = [];
 
         $factory = new ResourceIdentifierFactory;
 

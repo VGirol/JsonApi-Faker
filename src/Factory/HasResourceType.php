@@ -4,19 +4,23 @@ declare(strict_types=1);
 
 namespace VGirol\JsonApiFaker\Factory;
 
+/**
+ * Add "type" member to a factory.
+ */
 trait HasResourceType
 {
     /**
-     * Undocumented variable
+     * The "type" member
      *
      * @var string|null
      */
     public $resourceType;
 
     /**
-     * Undocumented function
+     * Set the "type" member.
      *
      * @param string|null $type
+     *
      * @return static
      */
     public function setResourceType(?string $type)
@@ -27,7 +31,7 @@ trait HasResourceType
     }
 
     /**
-     * Undocumented function
+     * Fill the "type" member with a fake value.
      *
      * @return static
      */

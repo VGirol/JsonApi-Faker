@@ -159,6 +159,7 @@ class HasDataTest extends TestCase
             PHPUnit::assertSame($obj, $mock);
 
             if (is_null($mock->data)) {
+                PHPUnit::assertTrue($mock->dataHasBeenSet());
                 $count++;
             }
         }

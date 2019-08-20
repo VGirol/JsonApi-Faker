@@ -180,6 +180,5 @@ class CollectionFactoryTest extends TestCase
         PHPUnit::assertEquals(5, count($factory->array));
 
         Assert::assertIsArrayOfObjects($factory->array);
-        // Assert::assertIsVal($factory->array, true);
     }
 }

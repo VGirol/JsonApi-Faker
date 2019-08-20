@@ -4,6 +4,7 @@ namespace VGirol\JsonApiFaker\Tests\Factory;
 
 use PHPUnit\Framework\Assert as PHPUnit;
 use VGirol\JsonApiFaker\Factory\DocumentFactory;
+use VGirol\JsonApiFaker\Factory\JsonapiFactory;
 use VGirol\JsonApiFaker\Factory\RelationshipFactory;
 use VGirol\JsonApiFaker\Factory\ResourceIdentifierFactory;
 use VGirol\JsonApiFaker\Factory\ResourceObjectFactory;
@@ -61,9 +62,7 @@ class DocumentFactoryTest extends TestCase
         $links = [
             'self' => 'url'
         ];
-        $jsonapi = [
-            'version' => 'test'
-        ];
+        $jsonapi = (new JsonapiFactory)->setVersion('test');
         $errors = [
             [
                 'id' => 'errorId',
@@ -75,7 +74,9 @@ class DocumentFactoryTest extends TestCase
             'meta' => $meta,
             'links' => $links,
             'errors' => $errors,
-            'jsonapi' => $jsonapi
+            'jsonapi' => [
+                'version' => 'test'
+            ]
         ];
 
         $factory = new DocumentFactory;
@@ -100,9 +101,7 @@ class DocumentFactoryTest extends TestCase
         $links = [
             'self' => 'url'
         ];
-        $jsonapi = [
-            'version' => 'test'
-        ];
+        $jsonapi = (new JsonapiFactory)->setVersion('test');
 
         $rel_id = '456';
         $rel_type = 'test';
@@ -157,7 +156,9 @@ class DocumentFactoryTest extends TestCase
             'links' => $links,
             'data' => $data,
             'included' => $included,
-            'jsonapi' => $jsonapi
+            'jsonapi' => [
+                'version' => 'test'
+            ]
         ];
 
         $factory = new DocumentFactory;
@@ -170,5 +171,31 @@ class DocumentFactoryTest extends TestCase
         $result = $factory->toArray();
 
         PHPUnit::assertSame($expected, $result);
+    }
+
+    /**
+     * @test
+     */
+    public function fake()
+    {
+        $factory = new DocumentFactory;
+
+        PHPUnit::assertEmpty($factory->data);
+        PHPUnit::assertEmpty($factory->errors);
+        PHPUnit::assertEmpty($factory->links);
+        PHPUnit::assertEmpty($factory->meta);
+        PHPUnit::assertEmpty($factory->included);
+        PHPUnit::assertEmpty($factory->jsonapi);
+
+        $obj = $factory->fake();
+
+        PHPUnit::assertSame($obj, $factory);
+
+        PHPUnit::assertNotEmpty($factory->data);
+        PHPUnit::assertEmpty($factory->errors);
+        PHPUnit::assertNotEmpty($factory->links);
+        PHPUnit::assertNotEmpty($factory->meta);
+        PHPUnit::assertEmpty($factory->included);
+        PHPUnit::assertNotEmpty($factory->jsonapi);
     }
 }
