@@ -167,7 +167,7 @@ abstract class BaseFactory
      * @param array|null $providers
      * @return mixed
      */
-    protected function fakeValue(Generator $faker, ?array $providers = [])
+    protected function fakeValue(Generator $faker, $providers = [])
     {
         $allowed = [
             'word',
