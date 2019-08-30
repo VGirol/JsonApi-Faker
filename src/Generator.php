@@ -68,7 +68,6 @@ class Generator
      * @param mixed ...$args
      *
      * @return FactoryContract
-     * @throws \Exception
      */
     public function collection(...$args)
     {
@@ -81,7 +80,6 @@ class Generator
      * @param mixed ...$args
      *
      * @return FactoryContract
-     * @throws \Exception
      */
     public function jsonapiObject(...$args)
     {
@@ -94,7 +92,6 @@ class Generator
      * @param mixed ...$args
      *
      * @return FactoryContract
-     * @throws \Exception
      */
     public function relationship(...$args)
     {
@@ -107,7 +104,6 @@ class Generator
      * @param mixed ...$args
      *
      * @return FactoryContract
-     * @throws \Exception
      */
     public function resourceIdentifier(...$args)
     {
@@ -120,7 +116,6 @@ class Generator
      * @param mixed ...$args
      *
      * @return FactoryContract
-     * @throws \Exception
      */
     public function resourceObject(...$args)
     {

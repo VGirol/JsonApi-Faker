@@ -13,6 +13,15 @@
         "infection/infection": "^0.13",
         "vgirol/jsonapi-assert": "dev-master"
     },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../JsonApi-Assert",
+            "options": {
+                "symlink": true
+            }
+        }
+    ],
     "authors": [
         {
             "name": "Vincent Girol",
