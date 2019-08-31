@@ -13,14 +13,14 @@ class CollectionFactory extends BaseFactory
     /**
      * Array of ResourceObjectFactory or ResourceIdentifierFactory objects
      *
-     * @var array<ResourceObjectFactory>|array<ResourceIdentifierFactory>
+     * @var array<ResourceObjectFactory>|array<ResourceIdentifierFactory>|null
      */
     public $array;
 
     /**
      * Sets the collection.
      *
-     * @param array<ResourceIdentifierFactory>|array<ResourceObjectFactory> $collection
+     * @param array<ResourceIdentifierFactory>|array<ResourceObjectFactory>|null $collection
      *
      * @return static
      */
@@ -33,6 +33,7 @@ class CollectionFactory extends BaseFactory
 
     /**
      * @inheritDoc
+     *
      * @return array<array>|null
      */
     public function toArray(): ?array
@@ -57,10 +58,15 @@ class CollectionFactory extends BaseFactory
      * Apply a supplied function to every element of the collection.
      *
      * @param callable $callback
+     *
      * @return static
+     * @throws \Exception
      */
     public function each($callback)
     {
+        if (!isset($this->array)) {
+            throw new \Exception('The collection is not set.');
+        }
         array_walk($this->array, $callback);
 
         return $this;
@@ -72,9 +78,14 @@ class CollectionFactory extends BaseFactory
      * @param Callable $callback
      *
      * @return array
+     * @throws \Exception
      */
     public function map($callback): array
     {
+        if (!isset($this->array)) {
+            throw new \Exception('The collection is not set.');
+        }
+
         return array_map($callback, $this->array);
     }
 
