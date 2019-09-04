@@ -39,6 +39,6 @@ trait HasResourceType
     {
         $faker = \Faker\Factory::create();
 
-        return $this->setResourceType($faker->word);
+        return $this->setResourceType($faker->word());
     }
 }

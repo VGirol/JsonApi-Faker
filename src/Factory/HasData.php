@@ -58,21 +58,21 @@ trait HasData
      *
      * @return static
      */
-    public function fakeData($options = null, $count = null)
+    public function fakeData($options = null, $count = 3)
     {
-        if (is_null($options)) {
-            $options = self::FAKE_RESOURCE_OBJECT | self::FAKE_COLLECTION;
+        if ($options === null) {
+            $options = Options::FAKE_RESOURCE_OBJECT | Options::FAKE_COLLECTION;
             $count = 5;
         }
 
-        $canBeNull = (($options & self::FAKE_CAN_BE_NULL) == self::FAKE_CAN_BE_NULL);
-        $isCollection = (($options & self::FAKE_COLLECTION) == self::FAKE_COLLECTION);
-        $isRI = (($options & self::FAKE_RESOURCE_IDENTIFIER) == self::FAKE_RESOURCE_IDENTIFIER);
+        $canBeNull = (($options & Options::FAKE_CAN_BE_NULL) == Options::FAKE_CAN_BE_NULL);
+        $isCollection = (($options & Options::FAKE_COLLECTION) == Options::FAKE_COLLECTION);
+        $isRI = (($options & Options::FAKE_RESOURCE_IDENTIFIER) == Options::FAKE_RESOURCE_IDENTIFIER);
 
         if ($canBeNull) {
             $faker = \Faker\Factory::create();
 
-            if ($faker->boolean) {
+            if ($faker->boolean()) {
                 $this->setData(null);
 
                 return $this;

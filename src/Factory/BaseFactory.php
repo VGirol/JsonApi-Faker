@@ -14,13 +14,6 @@ use VGirol\JsonApiFaker\Messages;
  */
 abstract class BaseFactory implements FactoryContract
 {
-    const FAKE_RESOURCE_OBJECT = 1;
-    const FAKE_RESOURCE_IDENTIFIER = 2;
-    const FAKE_SINGLE = 4;
-    const FAKE_COLLECTION = 8;
-    const FAKE_CAN_BE_NULL = 16;
-    const FAKE_ERRORS = 32;
-
     /**
      * The factory generator
      *
@@ -143,7 +136,7 @@ abstract class BaseFactory implements FactoryContract
      */
     protected function fakeMemberName(Generator $faker, $name = null): string
     {
-        if (\is_null($name) || \is_int($name)) {
+        if (($name === null) || \is_int($name)) {
             $forbidden = ['id', 'type'];
             do {
                 $name = $faker->unique()->word;
@@ -175,7 +168,7 @@ abstract class BaseFactory implements FactoryContract
             'date'
         ];
 
-        if (is_null($providers)) {
+        if ($providers === null) {
             return null;
         }
 

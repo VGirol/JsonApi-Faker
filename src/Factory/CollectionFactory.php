@@ -64,7 +64,7 @@ class CollectionFactory extends BaseFactory
      */
     public function each($callback)
     {
-        if (!isset($this->array)) {
+        if ($this->array === null) {
             throw new \Exception('The collection is not set.');
         }
         array_walk($this->array, $callback);
@@ -82,7 +82,7 @@ class CollectionFactory extends BaseFactory
      */
     public function map($callback): array
     {
-        if (!isset($this->array)) {
+        if ($this->array === null) {
             throw new \Exception('The collection is not set.');
         }
 
@@ -99,10 +99,10 @@ class CollectionFactory extends BaseFactory
      */
     public function fake($options = null, $count = 5)
     {
-        if (is_null($options)) {
-            $options = self::FAKE_RESOURCE_OBJECT;
+        if ($options === null) {
+            $options = Options::FAKE_RESOURCE_OBJECT;
         }
-        $class = (($options & self::FAKE_RESOURCE_IDENTIFIER) == self::FAKE_RESOURCE_IDENTIFIER) ?
+        $class = (($options & Options::FAKE_RESOURCE_IDENTIFIER) == Options::FAKE_RESOURCE_IDENTIFIER) ?
             ResourceIdentifierFactory::class : ResourceObjectFactory::class;
 
         $collection = [];

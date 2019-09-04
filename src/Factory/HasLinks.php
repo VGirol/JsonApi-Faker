@@ -33,7 +33,7 @@ trait HasLinks
     /**
      * Add some links to the "links" member.
      *
-     * @param array<string,string>|array<string,array> $links
+     * @param array<string,mixed> $links
      *
      * @return static
      */

@@ -36,7 +36,7 @@ class DocumentFactory extends BaseFactory
             $json[Members::ERRORS] = $this->errors;
         }
         if ($this->dataHasBeenSet()) {
-            $json[Members::DATA] = is_null($this->data) ? null : $this->data->toArray();
+            $json[Members::DATA] = ($this->data === null) ? null : $this->data->toArray();
         }
         if (isset($this->included)) {
             $json[Members::INCLUDED] = $this->included->toArray();
@@ -57,11 +57,11 @@ class DocumentFactory extends BaseFactory
      */
     public function fake($options = null, $count = null)
     {
-        if (is_null($options)) {
-            $options = self::FAKE_SINGLE | self::FAKE_RESOURCE_OBJECT;
+        if ($options === null) {
+            $options = Options::FAKE_SINGLE | Options::FAKE_RESOURCE_OBJECT;
         }
 
-        $withErrors = (($options & self::FAKE_ERRORS) == self::FAKE_ERRORS);
+        $withErrors = (($options & Options::FAKE_ERRORS) == Options::FAKE_ERRORS);
 
         $this->fakeLinks()
             ->fakeMeta()

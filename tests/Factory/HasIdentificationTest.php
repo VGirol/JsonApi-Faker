@@ -102,7 +102,7 @@ class HasIdentificationTest extends TestCase
         PHPUnit::assertNotEmpty($mock->resourceType);
         PHPUnit::assertNotEmpty($mock->id);
         PHPUnit::assertGreaterThanOrEqual(0, $mock->id);
-        PHPUnit::assertLessThan(100, $mock->id);
+        PHPUnit::assertLessThanOrEqual(100, $mock->id);
 
         Assert::assertResourceTypeMember($obj->toArray(), true);
         Assert::assertResourceIdMember($obj->toArray());

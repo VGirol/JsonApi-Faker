@@ -7,6 +7,7 @@ use VGirol\JsonApiAssert\Assert;
 use VGirol\JsonApiFaker\Factory\BaseFactory;
 use VGirol\JsonApiFaker\Factory\CollectionFactory;
 use VGirol\JsonApiFaker\Factory\HasData;
+use VGirol\JsonApiFaker\Factory\Options;
 use VGirol\JsonApiFaker\Factory\ResourceIdentifierFactory;
 use VGirol\JsonApiFaker\Testing\CheckMethods;
 use VGirol\JsonApiFaker\Tests\TestCase;
@@ -85,7 +86,7 @@ class HasDataTest extends TestCase
 
         PHPUnit::assertEmpty($mock->data);
 
-        $obj = $mock->fakeData($mock::FAKE_RESOURCE_OBJECT | $mock::FAKE_COLLECTION, 3);
+        $obj = $mock->fakeData(Options::FAKE_RESOURCE_OBJECT | Options::FAKE_COLLECTION, 3);
 
         PHPUnit::assertSame($obj, $mock);
         PHPUnit::assertNotEmpty($mock->data);
@@ -120,7 +121,7 @@ class HasDataTest extends TestCase
 
         PHPUnit::assertEmpty($mock->data);
 
-        $obj = $mock->fakeData($mock::FAKE_RESOURCE_IDENTIFIER | $mock::FAKE_SINGLE);
+        $obj = $mock->fakeData(Options::FAKE_RESOURCE_IDENTIFIER | Options::FAKE_SINGLE);
 
         PHPUnit::assertSame($obj, $mock);
         PHPUnit::assertNotEmpty($mock->data);
@@ -154,11 +155,12 @@ class HasDataTest extends TestCase
 
         $count = 0;
         for ($i = 0; $i < 10; $i++) {
-            $obj = $mock->fakeData($mock::FAKE_RESOURCE_IDENTIFIER | $mock::FAKE_SINGLE | $mock::FAKE_CAN_BE_NULL);
+            $options = Options::FAKE_RESOURCE_IDENTIFIER | Options::FAKE_SINGLE | Options::FAKE_CAN_BE_NULL;
+            $obj = $mock->fakeData($options);
 
             PHPUnit::assertSame($obj, $mock);
 
-            if (is_null($mock->data)) {
+            if ($mock->data === null) {
                 PHPUnit::assertTrue($mock->dataHasBeenSet());
                 $count++;
             }
