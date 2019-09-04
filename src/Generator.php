@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace VGirol\JsonApiFaker;
 
+use VGirol\JsonApiFaker\Contract\GeneratorContract;
 use VGirol\JsonApiFaker\Factory\CollectionFactory;
-use VGirol\JsonApiFaker\Factory\FactoryContract;
+use VGirol\JsonApiFaker\Factory\DocumentFactory;
+use VGirol\JsonApiFaker\Factory\ErrorFactory;
 use VGirol\JsonApiFaker\Factory\JsonapiFactory;
 use VGirol\JsonApiFaker\Factory\RelationshipFactory;
 use VGirol\JsonApiFaker\Factory\ResourceIdentifierFactory;
@@ -14,7 +16,7 @@ use VGirol\JsonApiFaker\Factory\ResourceObjectFactory;
 /**
  * This class is an helper to generate factories.
  */
-class Generator
+class Generator implements GeneratorContract
 {
     /**
      * All the available factories
@@ -32,14 +34,9 @@ class Generator
     }
 
     /**
-     * Set a factory
-     *
-     * @param string $key
-     * @param string $class
-     *
-     * @return static
+     * @inheritDoc
      */
-    public function setFactory(string $key, string $class)
+    public function setFactory(string $key, ?string $class)
     {
         $this->factories[$key] = $class;
 
@@ -47,27 +44,19 @@ class Generator
     }
 
     /**
-     * Create a factory
-     *
-     * @param string $alias
-     * @param mixed ...$args
-     *
-     * @return FactoryContract
-     * @throws \Exception
+     * @inheritDoc
      */
     public function create(string $alias, ...$args)
     {
         $className = $this->getClassName($alias);
+        $factory = new $className(...$args);
+        $factory->setGenerator($this);
 
-        return new $className(...$args);
+        return $factory;
     }
 
     /**
-     * Create a collection factory
-     *
-     * @param mixed ...$args
-     *
-     * @return FactoryContract
+     * @inheritDoc
      */
     public function collection(...$args)
     {
@@ -75,11 +64,23 @@ class Generator
     }
 
     /**
-     * Create a jsonapi object factory
-     *
-     * @param mixed ...$args
-     *
-     * @return FactoryContract
+     * @inheritDoc
+     */
+    public function document(...$args)
+    {
+        return $this->create('document', ...$args);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function error(...$args)
+    {
+        return $this->create('error', ...$args);
+    }
+
+    /**
+     * @inheritDoc
      */
     public function jsonapiObject(...$args)
     {
@@ -87,11 +88,7 @@ class Generator
     }
 
     /**
-     * Create a relationship object factory
-     *
-     * @param mixed ...$args
-     *
-     * @return FactoryContract
+     * @inheritDoc
      */
     public function relationship(...$args)
     {
@@ -99,11 +96,7 @@ class Generator
     }
 
     /**
-     * Create a resource identifier factory
-     *
-     * @param mixed ...$args
-     *
-     * @return FactoryContract
+     * @inheritDoc
      */
     public function resourceIdentifier(...$args)
     {
@@ -111,11 +104,7 @@ class Generator
     }
 
     /**
-     * Create a resource object factory
-     *
-     * @param mixed ...$args
-     *
-     * @return FactoryContract
+     * @inheritDoc
      */
     public function resourceObject(...$args)
     {
@@ -131,6 +120,8 @@ class Generator
     {
         $this->factories = [
             'collection' => CollectionFactory::class,
+            'document' => DocumentFactory::class,
+            'error' => ErrorFactory::class,
             'jsonapi' => JsonapiFactory::class,
             'relationship' => RelationshipFactory::class,
             'resource-identifier' => ResourceIdentifierFactory::class,
@@ -148,9 +139,15 @@ class Generator
      */
     private function getClassName(string $key): string
     {
-        if (!isset($this->factories[$key])) {
+        if (!array_key_exists($key, $this->factories)) {
             throw new \Exception(
                 sprintf(Messages::FACTORY_INEXISTANT_KEY, $key)
+            );
+        }
+
+        if ($this->factories[$key] === null) {
+            throw new \Exception(
+                sprintf(Messages::FACTORY_FORBIDDEN_KEY, $key)
             );
         }
 

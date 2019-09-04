@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace VGirol\JsonApiFaker\Factory;
+namespace VGirol\JsonApiFaker\Contract;
 
 /**
  * Interface for all factory classes.

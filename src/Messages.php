@@ -14,5 +14,7 @@ abstract class Messages
 
     const FACTORY_INEXISTANT_KEY = 'Inexistant key "%s".';
 
+    const FACTORY_FORBIDDEN_KEY = 'The key "%s" is forbidden.';
+
     const ERROR_OBJECT_INEXISTANT_KEY = 'Inexistant key "%s".';
 }

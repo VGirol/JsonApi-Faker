@@ -4,11 +4,29 @@ namespace VGirol\JsonApiFaker\Tests\Factory;
 
 use PHPUnit\Framework\Assert as PHPUnit;
 use VGirol\JsonApiFaker\Factory\BaseFactory;
+use VGirol\JsonApiFaker\Generator;
 use VGirol\JsonApiFaker\Messages;
 use VGirol\JsonApiFaker\Tests\TestCase;
 
 class BaseFactoryTest extends TestCase
 {
+    /**
+     * @test
+     */
+    public function setGenerator()
+    {
+        $generator = new Generator;
+
+        $factory = $this->getMockForAbstractClass(BaseFactory::class);
+
+        PHPUnit::assertNull($factory->generator);
+
+        $obj = $factory->setGenerator($generator);
+
+        PHPUnit::assertSame($obj, $factory);
+        PHPUnit::assertSame($generator, $factory->generator);
+    }
+
     /**
      * @test
      */
