@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace VGirol\JsonApiFaker\Factory;
 
-use VGirol\JsonApiFaker\Factory\JsonapiFactory;
-
 /**
  * Add "jsonapi" member to a factory.
  */
@@ -41,6 +39,6 @@ trait HasJsonapi
      */
     public function fakeJsonapi(int $countMeta = 5)
     {
-        return $this->setJsonapi((new JsonapiFactory)->fake());
+        return $this->setJsonapi((new JsonapiFactory)->fake($countMeta));
     }
 }

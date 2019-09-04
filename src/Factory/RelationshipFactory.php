@@ -23,7 +23,7 @@ class RelationshipFactory extends BaseFactory
     {
         $resource = [];
 
-        $resource[Members::DATA] = is_null($this->data) ? null : $this->data->toArray();
+        $resource[Members::DATA] = ($this->data === null) ? null : $this->data->toArray();
 
         if (isset($this->meta)) {
             $resource[Members::META] = $this->meta;
@@ -45,11 +45,11 @@ class RelationshipFactory extends BaseFactory
      */
     public function fake($options = null, $count = 5)
     {
-        if (is_null($options)) {
-            $options = self::FAKE_COLLECTION;
+        if ($options === null) {
+            $options = Options::FAKE_COLLECTION;
         }
-        $options |= self::FAKE_RESOURCE_IDENTIFIER;
-        $options &= ~self::FAKE_RESOURCE_OBJECT;
+        $options |= Options::FAKE_RESOURCE_IDENTIFIER;
+        $options &= ~Options::FAKE_RESOURCE_OBJECT;
 
         return $this->fakeData($options, $count)
             ->fakeMeta()

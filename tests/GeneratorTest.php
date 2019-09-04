@@ -123,11 +123,3 @@ class FakerFactoryTest extends TestCase
         ];
     }
 }
-
-class DummyFactory
-{
-    public function setGenerator($generator)
-    {
-        $this->generator = $generator;
-    }
-}

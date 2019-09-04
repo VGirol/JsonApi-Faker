@@ -40,7 +40,7 @@ trait HasVersion
         $faker = \Faker\Factory::create();
 
         return $this->setVersion(
-            $faker->randomDigitNotNull . '.' . $faker->randomDigit
+            $faker->randomDigitNotNull() . '.' . $faker->randomDigit()
         );
     }
 }

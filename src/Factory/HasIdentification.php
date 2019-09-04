@@ -17,7 +17,7 @@ trait HasIdentification
     /**
      * Get the identification ("type" and "id" members) as array
      *
-     * @return array<string,string>|null
+     * @return array<string,string|null>|null
      */
     public function getIdentification()
     {
@@ -27,7 +27,7 @@ trait HasIdentification
 
         return [
             Members::TYPE => $this->resourceType,
-            Members::ID => strval($this->id)
+            Members::ID => ($this->id === null) ? null : strval($this->id)
         ];
     }
 

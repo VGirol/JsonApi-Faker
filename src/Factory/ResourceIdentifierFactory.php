@@ -22,7 +22,7 @@ class ResourceIdentifierFactory extends BaseFactory
     {
         $resource = [];
         $identification = $this->getIdentification();
-        if (!is_null($identification)) {
+        if ($identification !== null) {
             $resource = array_merge($resource, $identification);
         }
 

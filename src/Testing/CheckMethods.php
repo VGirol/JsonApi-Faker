@@ -10,16 +10,25 @@ trait CheckMethods
     {
         PHPUnit::assertEmpty($factory->{$attrName});
 
+        if (empty($data1)) {
+            throw new \Exception('You must provide data for first run.');
+        }
+
         foreach ($data1 as $key => $value) {
             $obj = $factory->{$fnName}($key, $value);
+
+            PHPUnit::assertSame($obj, $factory);
         }
 
         PHPUnit::assertObjectHasAttribute($attrName, $factory);
         PHPUnit::assertEquals($data1, $factory->{$attrName});
-        PHPUnit::assertSame($obj, $factory);
+
+        if (empty($data2)) {
+            throw new \Exception('You must provide data for second run.');
+        }
 
         foreach ($data2 as $key => $value) {
-            $obj = $factory->{$fnName}($key, $value);
+            $factory->{$fnName}($key, $value);
         }
 
         PHPUnit::assertEquals(
@@ -38,7 +47,7 @@ trait CheckMethods
         PHPUnit::assertEquals($data1, $factory->{$attrName});
         PHPUnit::assertSame($obj, $factory);
 
-        $obj = $factory->{$fnName}($data2);
+        $factory->{$fnName}($data2);
 
         PHPUnit::assertEquals(
             array_merge($data1, $data2),
