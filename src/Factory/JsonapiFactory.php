@@ -35,11 +35,13 @@ class JsonapiFactory extends BaseFactory
     /**
      * Fill the jsonapi object with fake values ("version" and "meta").
      *
+     * @param int $countMeta
+     *
      * @return static
      */
-    public function fake()
+    public function fake(int $countMeta = 5)
     {
-        return $this->fakeMeta()
+        return $this->fakeMeta($countMeta)
             ->fakeVersion();
     }
 }

@@ -4,6 +4,8 @@ namespace VGirol\JsonApiFaker\Tests;
 
 use PHPUnit\Framework\Assert as PHPUnit;
 use VGirol\JsonApiFaker\Factory\CollectionFactory;
+use VGirol\JsonApiFaker\Factory\DocumentFactory;
+use VGirol\JsonApiFaker\Factory\ErrorFactory;
 use VGirol\JsonApiFaker\Factory\JsonapiFactory;
 use VGirol\JsonApiFaker\Factory\RelationshipFactory;
 use VGirol\JsonApiFaker\Factory\ResourceIdentifierFactory;
@@ -43,6 +45,21 @@ class FakerFactoryTest extends TestCase
     /**
      * @test
      */
+    public function createForbiddenKey()
+    {
+        $key = 'forbidden';
+
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage(sprintf(Messages::FACTORY_FORBIDDEN_KEY, $key));
+
+        $faker = new Generator;
+        $faker->setFactory($key, null);
+        $faker->create($key);
+    }
+
+    /**
+     * @test
+     */
     public function createWithCustomizedClass()
     {
 
@@ -69,6 +86,7 @@ class FakerFactoryTest extends TestCase
 
         PHPUnit::assertIsObject($obj);
         PHPUnit::assertInstanceOf($class, $obj);
+        PHPUnit::assertSame($faker, $obj->generator);
     }
 
     public function createObjectProvider()
@@ -77,6 +95,14 @@ class FakerFactoryTest extends TestCase
             'collection' => [
                 'collection',
                 CollectionFactory::class
+            ],
+            'document' => [
+                'document',
+                DocumentFactory::class
+            ],
+            'error' => [
+                'error',
+                ErrorFactory::class
             ],
             'jsonapiObject' => [
                 'jsonapiObject',
@@ -99,4 +125,9 @@ class FakerFactoryTest extends TestCase
 }
 
 class DummyFactory
-{ }
+{
+    public function setGenerator($generator)
+    {
+        $this->generator = $generator;
+    }
+}

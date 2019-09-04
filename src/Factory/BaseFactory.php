@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace VGirol\JsonApiFaker\Factory;
 
 use Faker\Generator;
+use VGirol\JsonApiFaker\Contract\FactoryContract;
+use VGirol\JsonApiFaker\Contract\GeneratorContract;
 use VGirol\JsonApiFaker\Messages;
 
 /**
@@ -19,9 +21,30 @@ abstract class BaseFactory implements FactoryContract
     const FAKE_CAN_BE_NULL = 16;
     const FAKE_ERRORS = 32;
 
+    /**
+     * The factory generator
+     *
+     * @var GeneratorContract
+     */
+    public $generator;
+
     abstract public function toArray(): ?array;
 
     abstract public function fake();
+
+    /**
+     * Set the Generator instance
+     *
+     * @param GeneratorContract $generator
+     *
+     * @return static
+     */
+    public function setGenerator($generator)
+    {
+        $this->generator = $generator;
+
+        return $this;
+    }
 
     public function addToObject(string $object, string $name, $value): void
     {

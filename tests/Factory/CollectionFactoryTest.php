@@ -15,13 +15,11 @@ class CollectionFactoryTest extends TestCase
      */
     public function noCollection()
     {
-        $expected = null;
-
         $factory = new CollectionFactory;
 
         $result = $factory->toArray();
 
-        PHPUnit::assertSame($expected, $result);
+        PHPUnit::assertNull($result);
     }
 
     /**
@@ -126,6 +124,20 @@ class CollectionFactoryTest extends TestCase
     /**
      * @test
      */
+    public function changeEachItemOfAnEmptyCollection()
+    {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The collection is not set.');
+
+        $factory = new CollectionFactory;
+        $factory->each(function ($item) {
+            $item->addToMeta('new', $item->id);
+        });
+    }
+
+    /**
+     * @test
+     */
     public function mapEachItemOfTheCollection()
     {
         $expected = [];
@@ -161,6 +173,23 @@ class CollectionFactoryTest extends TestCase
         });
 
         PHPUnit::assertSame($expected, $result);
+    }
+
+    /**
+     * @test
+     */
+    public function mapEachItemOfAnEmptyCollection()
+    {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The collection is not set.');
+
+        $factory = new CollectionFactory;
+        $factory->map(function ($item) {
+            return [
+                'type' => "new{$item->resourceType}",
+                'id' => $item->id
+            ];
+        });
     }
 
     /**

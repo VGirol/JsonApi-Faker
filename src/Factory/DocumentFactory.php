@@ -15,48 +15,8 @@ class DocumentFactory extends BaseFactory
     use HasErrors;
     use HasLinks;
     use HasMeta;
-
-    /**
-     * The collection of included resources
-     *
-     * @var CollectionFactory
-     */
-    public $included;
-
-    /**
-     * The jsonapi object
-     *
-     * @var JsonapiFactory
-     */
-    public $jsonapi;
-
-    /**
-     * Sets the included collection.
-     *
-     * @param CollectionFactory $included
-     *
-     * @return static
-     */
-    public function setIncluded($included)
-    {
-        $this->included = $included;
-
-        return $this;
-    }
-
-    /**
-     * Sets the jsonapi object.
-     *
-     * @param JsonapiFactory $jsonapi
-     *
-     * @return static
-     */
-    public function setJsonapi($jsonapi)
-    {
-        $this->jsonapi = $jsonapi;
-
-        return $this;
-    }
+    use HasJsonapi;
+    use HasIncluded;
 
     /**
      * @inheritDoc
@@ -105,8 +65,7 @@ class DocumentFactory extends BaseFactory
 
         $this->fakeLinks()
             ->fakeMeta()
-            ->setJsonapi(new JsonapiFactory)
-            ->jsonapi->fake();
+            ->fakeJsonapi();
 
         return $withErrors ? $this->fakeErrors($count) : $this->fakeData($options, $count);
     }
