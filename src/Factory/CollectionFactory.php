@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace VGirol\JsonApiFaker\Factory;
 
+use VGirol\JsonApiFaker\Messages;
+
 /**
  * Factory for collection of resource object (@see ResourceObjectFactory)
  * or resource identifier (@see ResourceIdentifierFactory).
@@ -65,7 +67,7 @@ class CollectionFactory extends BaseFactory
     public function each($callback)
     {
         if ($this->array === null) {
-            throw new \Exception('The collection is not set.');
+            throw new \Exception(Messages::ERROR_COLLECTION_NOT_SET);
         }
         array_walk($this->array, $callback);
 
@@ -83,7 +85,7 @@ class CollectionFactory extends BaseFactory
     public function map($callback): array
     {
         if ($this->array === null) {
-            throw new \Exception('The collection is not set.');
+            throw new \Exception(Messages::ERROR_COLLECTION_NOT_SET);
         }
 
         return array_map($callback, $this->array);
