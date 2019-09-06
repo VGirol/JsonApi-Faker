@@ -17,4 +17,6 @@ abstract class Messages
     const FACTORY_FORBIDDEN_KEY = 'The key "%s" is forbidden.';
 
     const ERROR_OBJECT_INEXISTANT_KEY = 'Inexistant key "%s".';
+
+    const ERROR_COLLECTION_NOT_SET = 'The collection is not set.';
 }
