@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace VGirol\JsonApiFaker;
 
 use VGirol\JsonApiFaker\Contract\GeneratorContract;
+use VGirol\JsonApiFaker\Exception\JsonApiFakerException;
 use VGirol\JsonApiFaker\Factory\CollectionFactory;
 use VGirol\JsonApiFaker\Factory\DocumentFactory;
 use VGirol\JsonApiFaker\Factory\ErrorFactory;
@@ -135,18 +136,18 @@ class Generator implements GeneratorContract
      * @param string $key
      *
      * @return string
-     * @throws \Exception
+     * @throws JsonApiFakerException
      */
     private function getClassName(string $key): string
     {
         if (!array_key_exists($key, $this->factories)) {
-            throw new \Exception(
+            throw new JsonApiFakerException(
                 sprintf(Messages::FACTORY_INEXISTANT_KEY, $key)
             );
         }
 
         if ($this->factories[$key] === null) {
-            throw new \Exception(
+            throw new JsonApiFakerException(
                 sprintf(Messages::FACTORY_FORBIDDEN_KEY, $key)
             );
         }

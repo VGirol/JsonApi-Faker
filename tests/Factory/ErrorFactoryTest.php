@@ -4,6 +4,7 @@ namespace VGirol\JsonApiFaker\Tests\Factory;
 
 use PHPUnit\Framework\Assert as PHPUnit;
 use VGirol\JsonApiAssert\Assert;
+use VGirol\JsonApiFaker\Exception\JsonApiFakerException;
 use VGirol\JsonApiFaker\Factory\ErrorFactory;
 use VGirol\JsonApiFaker\Messages;
 use VGirol\JsonApiFaker\Tests\TestCase;
@@ -51,7 +52,7 @@ class ErrorFactoryTest extends TestCase
     public function setterFailed()
     {
         $key = 'badKey';
-        $this->expectException(\Exception::class);
+        $this->expectException(JsonApiFakerException::class);
         $this->expectExceptionMessage(
             sprintf(Messages::ERROR_OBJECT_INEXISTANT_KEY, $key)
         );

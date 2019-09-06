@@ -7,6 +7,7 @@ namespace VGirol\JsonApiFaker\Factory;
 use Faker\Generator;
 use VGirol\JsonApiFaker\Contract\FactoryContract;
 use VGirol\JsonApiFaker\Contract\GeneratorContract;
+use VGirol\JsonApiFaker\Exception\JsonApiFakerException;
 use VGirol\JsonApiFaker\Messages;
 
 /**
@@ -59,14 +60,14 @@ abstract class BaseFactory implements FactoryContract
 
     /**
      * @inheritDoc
-     * @throws \Exception
+     * @throws JsonApiFakerException
      */
     public function toJson($options = 0): string
     {
         $json = json_encode($this->toArray(), $options);
 
         if ($json === false) {
-            throw new \Exception(
+            throw new JsonApiFakerException(
                 sprintf(Messages::JSON_ENCODE_ERROR, json_last_error_msg())
             );
         }

@@ -3,6 +3,7 @@
 namespace VGirol\JsonApiFaker\Tests;
 
 use PHPUnit\Framework\Assert as PHPUnit;
+use VGirol\JsonApiFaker\Exception\JsonApiFakerException;
 use VGirol\JsonApiFaker\Factory\CollectionFactory;
 use VGirol\JsonApiFaker\Factory\DocumentFactory;
 use VGirol\JsonApiFaker\Factory\ErrorFactory;
@@ -35,7 +36,7 @@ class FakerFactoryTest extends TestCase
     {
         $key = 'inexistant';
 
-        $this->expectException(\Exception::class);
+        $this->expectException(JsonApiFakerException::class);
         $this->expectExceptionMessage(sprintf(Messages::FACTORY_INEXISTANT_KEY, $key));
 
         $faker = new Generator;
@@ -49,7 +50,7 @@ class FakerFactoryTest extends TestCase
     {
         $key = 'forbidden';
 
-        $this->expectException(\Exception::class);
+        $this->expectException(JsonApiFakerException::class);
         $this->expectExceptionMessage(sprintf(Messages::FACTORY_FORBIDDEN_KEY, $key));
 
         $faker = new Generator;

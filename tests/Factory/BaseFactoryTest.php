@@ -3,6 +3,7 @@
 namespace VGirol\JsonApiFaker\Tests\Factory;
 
 use PHPUnit\Framework\Assert as PHPUnit;
+use VGirol\JsonApiFaker\Exception\JsonApiFakerException;
 use VGirol\JsonApiFaker\Factory\BaseFactory;
 use VGirol\JsonApiFaker\Generator;
 use VGirol\JsonApiFaker\Messages;
@@ -129,7 +130,7 @@ class BaseFactoryTest extends TestCase
             }
         };
 
-        $this->expectException(\Exception::class);
+        $this->expectException(JsonApiFakerException::class);
         $this->expectExceptionMessage(
             sprintf(Messages::JSON_ENCODE_ERROR, 'Type is not supported')
         );

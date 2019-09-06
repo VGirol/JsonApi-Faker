@@ -4,6 +4,7 @@ namespace VGirol\JsonApiFaker\Tests\Factory;
 
 use PHPUnit\Framework\Assert as PHPUnit;
 use VGirol\JsonApiAssert\Assert;
+use VGirol\JsonApiFaker\Exception\JsonApiFakerException;
 use VGirol\JsonApiFaker\Factory\CollectionFactory;
 use VGirol\JsonApiFaker\Factory\ResourceIdentifierFactory;
 use VGirol\JsonApiFaker\Messages;
@@ -127,7 +128,7 @@ class CollectionFactoryTest extends TestCase
      */
     public function changeEachItemOfAnEmptyCollection()
     {
-        $this->expectException(\Exception::class);
+        $this->expectException(JsonApiFakerException::class);
         $this->expectExceptionMessage(Messages::ERROR_COLLECTION_NOT_SET);
 
         $factory = new CollectionFactory;
@@ -181,7 +182,7 @@ class CollectionFactoryTest extends TestCase
      */
     public function mapEachItemOfAnEmptyCollection()
     {
-        $this->expectException(\Exception::class);
+        $this->expectException(JsonApiFakerException::class);
         $this->expectExceptionMessage(Messages::ERROR_COLLECTION_NOT_SET);
 
         $factory = new CollectionFactory;
