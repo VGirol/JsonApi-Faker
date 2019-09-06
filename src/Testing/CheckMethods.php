@@ -3,6 +3,7 @@
 namespace VGirol\JsonApiFaker\Testing;
 
 use PHPUnit\Framework\Assert as PHPUnit;
+use VGirol\JsonApiFaker\Exception\JsonApiFakerException;
 
 trait CheckMethods
 {
@@ -11,7 +12,7 @@ trait CheckMethods
         PHPUnit::assertEmpty($factory->{$attrName});
 
         if (empty($data1)) {
-            throw new \Exception('You must provide data for first run.');
+            throw new JsonApiFakerException('You must provide data for first run.');
         }
 
         foreach ($data1 as $key => $value) {
@@ -24,7 +25,7 @@ trait CheckMethods
         PHPUnit::assertEquals($data1, $factory->{$attrName});
 
         if (empty($data2)) {
-            throw new \Exception('You must provide data for second run.');
+            throw new JsonApiFakerException('You must provide data for second run.');
         }
 
         foreach ($data2 as $key => $value) {

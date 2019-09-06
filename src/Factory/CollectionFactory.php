@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace VGirol\JsonApiFaker\Factory;
 
+use VGirol\JsonApiFaker\Exception\JsonApiFakerException;
 use VGirol\JsonApiFaker\Messages;
 
 /**
@@ -62,12 +63,12 @@ class CollectionFactory extends BaseFactory
      * @param callable $callback
      *
      * @return static
-     * @throws \Exception
+     * @throws JsonApiFakerException
      */
     public function each($callback)
     {
         if ($this->array === null) {
-            throw new \Exception(Messages::ERROR_COLLECTION_NOT_SET);
+            throw new JsonApiFakerException(Messages::ERROR_COLLECTION_NOT_SET);
         }
         array_walk($this->array, $callback);
 
@@ -80,12 +81,12 @@ class CollectionFactory extends BaseFactory
      * @param Callable $callback
      *
      * @return array
-     * @throws \Exception
+     * @throws JsonApiFakerException
      */
     public function map($callback): array
     {
         if ($this->array === null) {
-            throw new \Exception(Messages::ERROR_COLLECTION_NOT_SET);
+            throw new JsonApiFakerException(Messages::ERROR_COLLECTION_NOT_SET);
         }
 
         return array_map($callback, $this->array);

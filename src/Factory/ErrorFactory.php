@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace VGirol\JsonApiFaker\Factory;
 
+use VGirol\JsonApiFaker\Exception\JsonApiFakerException;
 use VGirol\JsonApiFaker\Members;
 use VGirol\JsonApiFaker\Messages;
 
@@ -58,12 +59,12 @@ class ErrorFactory extends BaseFactory
      * @param string $value
      *
      * @return static
-     * @throws \Exception
+     * @throws JsonApiFakerException
      */
     public function set(string $key, string $value)
     {
         if (!property_exists($this, $key)) {
-            throw new \Exception(sprintf(Messages::ERROR_OBJECT_INEXISTANT_KEY, $key));
+            throw new JsonApiFakerException(sprintf(Messages::ERROR_OBJECT_INEXISTANT_KEY, $key));
         }
 
         $this->{$key} = $value;
