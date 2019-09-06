@@ -145,7 +145,7 @@ class ErrorFactory extends BaseFactory
      */
     private function fakeStatus()
     {
-        $status = [
+        $allowedStatus = [
             '200', '201', '202', '203', '204', '205', '206', '207', '208', '226',
             '300', '301', '302', '303', '304', '305', '307', '308',
             '400', '401', '402', '403', '404', '405', '406', '407', '408', '409',
@@ -154,7 +154,7 @@ class ErrorFactory extends BaseFactory
         ];
         $faker = \Faker\Factory::create();
 
-        return $this->set('status', strval($faker->randomElement($status)));
+        return $this->set('status', strval($faker->randomElement($allowedStatus)));
     }
 
     /**
