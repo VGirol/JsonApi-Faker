@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace VGirol\JsonApiFaker\Factory;
 
+use VGirol\JsonApiFaker\Contract\FactoryContract;
+
 /**
  * Add "data" member to a factory.
  */
@@ -50,7 +52,7 @@ trait HasData
     }
 
     /**
-     * Undocumented function
+     * Fill the "data" member with fake values
      *
      * @param integer $options Bitmask
      * @param integer $count In case of collection, it represents the number of resource object
@@ -66,8 +68,6 @@ trait HasData
         }
 
         $canBeNull = (($options & Options::FAKE_CAN_BE_NULL) == Options::FAKE_CAN_BE_NULL);
-        $isCollection = (($options & Options::FAKE_COLLECTION) == Options::FAKE_COLLECTION);
-        $isRI = (($options & Options::FAKE_RESOURCE_IDENTIFIER) == Options::FAKE_RESOURCE_IDENTIFIER);
 
         if ($canBeNull) {
             $faker = \Faker\Factory::create();
@@ -79,13 +79,34 @@ trait HasData
             }
         }
 
-        if ($isCollection) {
-            $data = (new CollectionFactory)->fake($options, $count);
-        } else {
-            $data = $isRI ? (new ResourceIdentifierFactory)->fake() : (new ResourceObjectFactory)->fake();
-        }
-        $this->setData($data);
+        $dataFactory = $this->fakeCreateFactoryForData($options, $count);
+        $this->setData($dataFactory);
 
         return $this;
+    }
+
+    /**
+     * Get the factory used to fill the "data" member when creating fake values
+     *
+     * @param integer $options Bitmask
+     * @param integer $count In case of collection, it represents the number of resource object
+     *                       or resource identifier to generate
+     *
+     * @return FactoryContract
+     */
+    private function fakeCreateFactoryForData($options, $count)
+    {
+        $isCollection = (($options & Options::FAKE_COLLECTION) == Options::FAKE_COLLECTION);
+        $isRI = (($options & Options::FAKE_RESOURCE_IDENTIFIER) == Options::FAKE_RESOURCE_IDENTIFIER);
+
+        if ($isCollection) {
+            return (new CollectionFactory)->fake($options, $count);
+        }
+
+        if ($isRI) {
+            return (new ResourceIdentifierFactory)->fake();
+        }
+
+        return (new ResourceObjectFactory)->fake();
     }
 }
