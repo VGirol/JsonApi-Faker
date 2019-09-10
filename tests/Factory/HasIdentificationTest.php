@@ -75,8 +75,7 @@ class HasIdentificationTest extends TestCase
      */
     public function fakeIdentification()
     {
-        $mock = new class extends BaseFactory
-        {
+        $mock = new class extends BaseFactory {
             use HasIdentification;
 
             public function toArray(): ?array

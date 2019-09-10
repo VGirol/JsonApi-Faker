@@ -37,8 +37,7 @@ class HasMetaTest extends TestCase
     public function addToMeta()
     {
         $this->checkAddSingle(
-            new class extends BaseFactory
-            {
+            new class extends BaseFactory {
                 use HasMeta;
 
                 public function toArray(): ?array
@@ -63,8 +62,7 @@ class HasMetaTest extends TestCase
      */
     public function fakeMeta()
     {
-        $mock = new class extends BaseFactory
-        {
+        $mock = new class extends BaseFactory {
             use HasMeta;
 
             public function toArray(): ?array

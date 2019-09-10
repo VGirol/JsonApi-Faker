@@ -85,8 +85,7 @@ class BaseFactoryTest extends TestCase
      */
     public function toJson()
     {
-        $obj = new class extends BaseFactory
-        {
+        $obj = new class extends BaseFactory {
             public function toArray(): ?array
             {
                 return [
@@ -115,8 +114,7 @@ class BaseFactoryTest extends TestCase
      */
     public function toJsonFailed()
     {
-        $obj = new class extends BaseFactory
-        {
+        $obj = new class extends BaseFactory {
             public function toArray(): ?array
             {
                 return [
@@ -143,8 +141,7 @@ class BaseFactoryTest extends TestCase
      */
     public function fakeMemberName()
     {
-        $obj = new class extends BaseFactory
-        {
+        $obj = new class extends BaseFactory {
             public function toArray(): ?array
             {
                 return [];
@@ -192,8 +189,7 @@ class BaseFactoryTest extends TestCase
      */
     public function fakeValue()
     {
-        $obj = new class extends BaseFactory
-        {
+        $obj = new class extends BaseFactory {
             public function toArray(): ?array
             {
                 return [];

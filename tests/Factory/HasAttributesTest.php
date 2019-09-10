@@ -37,8 +37,7 @@ class HasAttributesTest extends TestCase
     public function addAttribute()
     {
         $this->checkAddSingle(
-            new class extends BaseFactory
-            {
+            new class extends BaseFactory {
                 use HasAttributes;
 
                 public function toArray(): ?array
@@ -68,8 +67,7 @@ class HasAttributesTest extends TestCase
     public function addAttributes()
     {
         $this->checkAddMulti(
-            new class extends BaseFactory
-            {
+            new class extends BaseFactory {
                 use HasAttributes;
 
                 public function toArray(): ?array
@@ -100,8 +98,7 @@ class HasAttributesTest extends TestCase
      */
     public function fakeAttributes()
     {
-        $mock = new class extends BaseFactory
-        {
+        $mock = new class extends BaseFactory {
             use HasAttributes;
 
             public function toArray(): ?array
