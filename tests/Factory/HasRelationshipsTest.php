@@ -19,8 +19,7 @@ class HasRelationshipsTest extends TestCase
     public function addRelationship()
     {
         $this->checkAddSingle(
-            new class extends BaseFactory
-            {
+            new class extends BaseFactory {
                 use HasRelationships;
 
                 public function toArray(): ?array
@@ -49,8 +48,7 @@ class HasRelationshipsTest extends TestCase
      */
     public function fakeRelationships()
     {
-        $mock = new class extends BaseFactory
-        {
+        $mock = new class extends BaseFactory {
             use HasRelationships;
 
             public function toArray(): ?array

@@ -32,8 +32,7 @@ class HasResourceTypeTest extends TestCase
      */
     public function fakeResourceType()
     {
-        $mock = new class extends BaseFactory
-        {
+        $mock = new class extends BaseFactory {
             use HasResourceType;
 
             public function toArray(): ?array

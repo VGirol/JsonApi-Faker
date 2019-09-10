@@ -35,8 +35,7 @@ class HasDataTest extends TestCase
      */
     public function fakeData()
     {
-        $mock = new class extends BaseFactory
-        {
+        $mock = new class extends BaseFactory {
             use HasData;
 
             public function toArray(): ?array
@@ -69,8 +68,7 @@ class HasDataTest extends TestCase
      */
     public function fakeDataResourceObjectCollection()
     {
-        $mock = new class extends BaseFactory
-        {
+        $mock = new class extends BaseFactory {
             use HasData;
 
             public function toArray(): ?array
@@ -104,8 +102,7 @@ class HasDataTest extends TestCase
      */
     public function fakeDataSingleResourceIdentifier()
     {
-        $mock = new class extends BaseFactory
-        {
+        $mock = new class extends BaseFactory {
             use HasData;
 
             public function toArray(): ?array
@@ -136,8 +133,7 @@ class HasDataTest extends TestCase
      */
     public function fakeDataNull()
     {
-        $mock = new class extends BaseFactory
-        {
+        $mock = new class extends BaseFactory {
             use HasData;
 
             public function toArray(): ?array

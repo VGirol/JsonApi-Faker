@@ -15,7 +15,7 @@ use VGirol\JsonApiFaker\Generator;
 use VGirol\JsonApiFaker\Messages;
 use VGirol\JsonApiFaker\Tests\TestCase;
 
-class FakerFactoryTest extends TestCase
+class GeneratorTest extends TestCase
 {
     /**
      * @test
@@ -63,7 +63,6 @@ class FakerFactoryTest extends TestCase
      */
     public function createWithCustomizedClass()
     {
-
         $key = 'dummy';
         $faker = new Generator;
         $ret = $faker->setFactory($key, DummyFactory::class);
