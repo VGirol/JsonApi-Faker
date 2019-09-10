@@ -8,11 +8,6 @@
 [![Infection MSI][ico-mutation]][link-mutation]
 [![Total Downloads][ico-downloads]][link-downloads]
 
-[![Build Status](https://travis-ci.org/VGirol/JsonApi-Faker.svg?branch=master)](https://travis-ci.org/VGirol/JsonApi-Faker)
-[![Code Coverage](https://scrutinizer-ci.com/g/VGirol/JsonApi-Faker/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/VGirol/JsonApi-Faker/?branch=master)
-[![Infection MSI](https://badge.stryker-mutator.io/github.com/VGirol/JsonApi-Faker/master)](https://infection.github.io)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/VGirol/JsonApi-Faker/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/VGirol/JsonApi-Faker/?branch=master)
-
 This package provides a set of factories to build fake data using the [JSON:API specification](https://jsonapi.org/).
 
 ## Technologies
