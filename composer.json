@@ -1,9 +1,22 @@
 {
     "name": "vgirol/jsonapi-faker",
-    "description": "This package provides a factory to generate fake data using the JSON:API specification.",
     "type": "library",
+    "description": "This package provides a factory to generate fake data using the JSON:API specification.",
+    "keywords": [
+        "vgirol",
+        "jsonapi-faker",
+        "json api",
+        "fake data"
+    ],
     "homepage": "http://github.com/VGirol/JsonApi-Faker",
     "license": "MIT",
+    "authors": [
+        {
+            "name": "Vincent Girol",
+            "email": "vincent@girol.fr",
+            "role": "Developer"
+        }
+    ],
     "require": {
         "php": "^7.2",
         "fzaninotto/faker": "^1.8"
@@ -13,10 +26,13 @@
         "infection/infection": "^0.13",
         "vgirol/jsonapi-assert": "dev-master"
     },
-    "authors": [
+    "repositories": [
         {
-            "name": "Vincent Girol",
-            "email": "vincent@girol.fr"
+            "type": "path",
+            "url": "../JsonApi-Assert",
+            "options": {
+                "symlink": true
+            }
         }
     ],
     "minimum-stability": "stable",
@@ -36,7 +52,7 @@
             "@setup"
         ],
         "test": "./vendor/bin/phpunit tests ",
-        "infection": "./vendor/bin/infection --coverage=build/coverage --threads=$(nproc) --configuration=infection.json.dist --min-msi=70 --min-covered-msi=70",
+        "infection": "./vendor/bin/infection --coverage=build/coverage --threads=$(nproc) --configuration=infection.json --min-msi=70 --min-covered-msi=70",
         "travis": [
             "@test",
             "@infection"
@@ -49,5 +65,8 @@
         "branch-alias": {
             "dev-master": "1.0-dev"
         }
+    },
+    "config": {
+        "sort-packages": true
     }
 }
