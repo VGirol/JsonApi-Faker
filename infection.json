@@ -1,5 +1,5 @@
 {
-    "timeout": 15,
+    "timeout": 10,
     "source": {
         "directories": [
             "src"
@@ -24,5 +24,6 @@
     "testFramework":"phpunit",
     "phpUnit": {
         "configDir": "."
-    }
+    },
+    "testFrameworkOptions": "-vvv"
 }

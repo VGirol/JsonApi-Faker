@@ -1,5 +1,13 @@
 # JsonApi-Faker
 
+[![Latest Version on Packagist][ico-version]][link-packagist]
+[![Software License][ico-license]](LICENSE.md)
+[![Build Status][ico-travis]][link-travis]
+[![Coverage Status][ico-scrutinizer]][link-scrutinizer]
+[![Quality Score][ico-code-quality]][link-code-quality]
+[![Infection MSI][ico-mutation]][link-mutation]
+[![Total Downloads][ico-downloads]][link-downloads]
+
 [![Build Status](https://travis-ci.org/VGirol/JsonApi-Faker.svg?branch=master)](https://travis-ci.org/VGirol/JsonApi-Faker)
 [![Code Coverage](https://scrutinizer-ci.com/g/VGirol/JsonApi-Faker/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/VGirol/JsonApi-Faker/?branch=master)
 [![Infection MSI](https://badge.stryker-mutator.io/github.com/VGirol/JsonApi-Faker/master)](https://infection.github.io)
@@ -88,24 +96,46 @@ $json = new JsonApiFaker()
     ->toJson();
 ```
 
-## Changelog
+## Change log
 
-Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
+Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
 
 ## Testing
 
-```sh
+``` bash
 composer test
 ```
 
 ## Contributing
 
-Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
+Please see [CONTRIBUTING](CONTRIBUTING.md) and [CODE_OF_CONDUCT](CODE_OF_CONDUCT.md) for details.
+
+## Security
+
+If you discover any security related issues, please email [vincent@girol.fr](vincent@girol.fr) instead of using the issue tracker.
 
 ## Credits
 
-[Vincent Girol](mailto:vincent@girol.fr)
+- [Girol Vincent][link-author]
+- [All Contributors][link-contributors]
 
 ## License
 
-This project is licensed under the [MIT](https://choosealicense.com/licenses/mit/) License.
+The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+
+[ico-version]: https://img.shields.io/packagist/v/VGirol/JsonApi-Faker.svg?style=flat-square
+[ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
+[ico-travis]: https://img.shields.io/travis/VGirol/JsonApi-Faker/master.svg?style=flat-square
+[ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/VGirol/JsonApi-Faker.svg?style=flat-square
+[ico-code-quality]: https://img.shields.io/scrutinizer/g/VGirol/JsonApi-Faker.svg?style=flat-square
+[ico-mutation]: https://badge.stryker-mutator.io/github.com/VGirol/JsonApi-Faker/master
+[ico-downloads]: https://img.shields.io/packagist/dt/VGirol/JsonApi-Faker.svg?style=flat-square
+
+[link-packagist]: https://packagist.org/packages/VGirol/JsonApi-Faker
+[link-travis]: https://travis-ci.org/VGirol/JsonApi-Faker
+[link-scrutinizer]: https://scrutinizer-ci.com/g/VGirol/JsonApi-Faker/code-structure
+[link-code-quality]: https://scrutinizer-ci.com/g/VGirol/JsonApi-Faker
+[link-downloads]: https://packagist.org/packages/VGirol/JsonApi-Faker
+[link-author]: https://github.com/VGirol
+[link-mutation]: https://infection.github.io
+[link-contributors]: ../../contributors
