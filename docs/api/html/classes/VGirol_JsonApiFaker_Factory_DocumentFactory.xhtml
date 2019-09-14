@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <title>phpDox - VGirol\JsonApiFaker\Factory\DocumentFactory</title>
+    <link rel="stylesheet" type="text/css" href="../css/style.css" media="screen"/>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+  </head>
+  <body>
+    <nav class="topnav">
+      <ul>
+        <li>
+          <div class="logo"><span>/**</span>phpDox</div>
+        </li>
+        <li class="separator">
+          <a href="../index.xhtml">Overview</a>
+        </li>
+        <li class="separator">
+          <a href="../namespaces.xhtml">Namespaces</a>
+        </li>
+        <li>
+          <a href="../interfaces.xhtml">Interfaces</a>
+        </li>
+        <li>
+          <a href="../classes.xhtml">Classes</a>
+        </li>
+        <li>
+          <a href="../traits.xhtml">Traits</a>
+        </li>
+        <li class="separator">
+          <a href="../source/index.xhtml">Source</a>
+        </li>
+      </ul>
+    </nav>
+    <div id="mainstage">
+      <div class="box">
+        <ul class="breadcrumb">
+          <li>
+            <a href="../index.xhtml">Overview</a>
+          </li>
+          <li class="separator">
+            <a href="../classes.xhtml">Classes</a>
+          </li>
+          <li class="separator">
+            <a href="../classes.xhtml#VGirol_JsonApiFaker_Factory">VGirol\JsonApiFaker\Factory</a>
+          </li>
+          <li class="separator">DocumentFactory</li>
+        </ul>
+      </div>
+      <nav class="box">
+        <ul>
+          <li>
+            <a href="#introduction">Introduction</a>
+          </li>
+          <li>
+            <a href="#synopsis">Synopsis</a>
+          </li>
+          <li>
+            <a href="#hierarchy">Hierarchy</a>
+          </li>
+          <li>
+            <a href="#coverage">Coverage</a>
+          </li>
+          <li>
+            <a href="#members">Members</a>
+          </li>
+          <li>
+            <a href="#methods">Methods</a>
+          </li>
+          <li>
+            <a href="#history">History</a>
+          </li>
+          <li>
+            <a href="../source/Factory/DocumentFactory.php.xhtml#line12">Source</a>
+          </li>
+        </ul>
+      </nav>
+      <section>
+        <h1 id="introduction"><small>VGirol\JsonApiFaker\Factory\</small>DocumentFactory</h1>
+        <h4>Factory for an entire document.</h4>
+        <p/>
+        <ul/>
+        <h2 id="synopsis">Synopsis</h2>
+        <div class="synopsis">class DocumentFactory
+                extends <a title="VGirol\JsonApiFaker\Factory\BaseFactory" href="../classes/VGirol_JsonApiFaker_Factory_BaseFactory.xhtml">BaseFactory</a>
+            {<br/><ul class="none"><li>// Inherited members from <span title="VGirol\JsonApiFaker\Factory\BaseFactory">BaseFactory</span></li><li>public <span title="VGirol\JsonApiFaker\Contract\GeneratorContract">GeneratorContract</span> <a href="#members">$generator</a>;
+                        </li></ul><ul class="none"><li>// methods</li><li>public array <a title="VGirol\JsonApiFaker\Factory\DocumentFactory" href="../classes/VGirol_JsonApiFaker_Factory_DocumentFactory/toArray.xhtml">toArray</a>()
+                    </li><li>public DocumentFactory <a title="VGirol\JsonApiFaker\Factory\DocumentFactory" href="../classes/VGirol_JsonApiFaker_Factory_DocumentFactory/fake.xhtml">fake</a>()
+                    </li></ul><ul class="none"><li>// Inherited methods from <span title="VGirol\JsonApiFaker\Factory\BaseFactory">BaseFactory</span></li><li>public abstract void <a title="VGirol\JsonApiFaker\Factory\BaseFactory" href="../classes/VGirol_JsonApiFaker_Factory_BaseFactory/toArray.xhtml">toArray</a>()
+                        </li><li>public abstract void <a title="VGirol\JsonApiFaker\Factory\BaseFactory" href="../classes/VGirol_JsonApiFaker_Factory_BaseFactory/fake.xhtml">fake</a>()
+                        </li><li>public DocumentFactory <a title="VGirol\JsonApiFaker\Factory\BaseFactory" href="../classes/VGirol_JsonApiFaker_Factory_BaseFactory/setGenerator.xhtml">setGenerator</a>()
+                        </li><li>public void <a title="VGirol\JsonApiFaker\Factory\BaseFactory" href="../classes/VGirol_JsonApiFaker_Factory_BaseFactory/addToObject.xhtml">addToObject</a>()
+                        </li><li>public void <a title="VGirol\JsonApiFaker\Factory\BaseFactory" href="../classes/VGirol_JsonApiFaker_Factory_BaseFactory/addToArray.xhtml">addToArray</a>()
+                        </li><li>public void <a title="VGirol\JsonApiFaker\Factory\BaseFactory" href="../classes/VGirol_JsonApiFaker_Factory_BaseFactory/toJson.xhtml">toJson</a>()
+                        </li><li>protected array&lt;string <a title="VGirol\JsonApiFaker\Factory\BaseFactory" href="../classes/VGirol_JsonApiFaker_Factory_BaseFactory/fakeMembers.xhtml">fakeMembers</a>()
+                        </li><li>protected string <a title="VGirol\JsonApiFaker\Factory\BaseFactory" href="../classes/VGirol_JsonApiFaker_Factory_BaseFactory/fakeMemberName.xhtml">fakeMemberName</a>()
+                        </li><li>protected mixed <a title="VGirol\JsonApiFaker\Factory\BaseFactory" href="../classes/VGirol_JsonApiFaker_Factory_BaseFactory/fakeValue.xhtml">fakeValue</a>()
+                        </li></ul><ul class="none"><li>// Inherited methods from <span title="VGirol\JsonApiFaker\Factory\HasData">HasData</span></li><li>public DocumentFactory <a title="VGirol\JsonApiFaker\Factory\HasData" href="../traits/VGirol_JsonApiFaker_Factory_HasData/setData.xhtml">setData</a>()
+                        </li><li>public boolean <a title="VGirol\JsonApiFaker\Factory\HasData" href="../traits/VGirol_JsonApiFaker_Factory_HasData/dataHasBeenSet.xhtml">dataHasBeenSet</a>()
+                        </li><li>public DocumentFactory <a title="VGirol\JsonApiFaker\Factory\HasData" href="../traits/VGirol_JsonApiFaker_Factory_HasData/fakeData.xhtml">fakeData</a>()
+                        </li></ul><ul class="none"><li>// Inherited methods from <span title="VGirol\JsonApiFaker\Factory\HasErrors">HasErrors</span></li><li>public DocumentFactory <a title="VGirol\JsonApiFaker\Factory\HasErrors" href="../traits/VGirol_JsonApiFaker_Factory_HasErrors/setErrors.xhtml">setErrors</a>()
+                        </li><li>public DocumentFactory <a title="VGirol\JsonApiFaker\Factory\HasErrors" href="../traits/VGirol_JsonApiFaker_Factory_HasErrors/addError.xhtml">addError</a>()
+                        </li><li>public DocumentFactory <a title="VGirol\JsonApiFaker\Factory\HasErrors" href="../traits/VGirol_JsonApiFaker_Factory_HasErrors/fakeErrors.xhtml">fakeErrors</a>()
+                        </li></ul><ul class="none"><li>// Inherited methods from <span title="VGirol\JsonApiFaker\Factory\HasLinks">HasLinks</span></li><li>public DocumentFactory <a title="VGirol\JsonApiFaker\Factory\HasLinks" href="../traits/VGirol_JsonApiFaker_Factory_HasLinks/setLinks.xhtml">setLinks</a>()
+                        </li><li>public DocumentFactory <a title="VGirol\JsonApiFaker\Factory\HasLinks" href="../traits/VGirol_JsonApiFaker_Factory_HasLinks/addLinks.xhtml">addLinks</a>()
+                        </li><li>public DocumentFactory <a title="VGirol\JsonApiFaker\Factory\HasLinks" href="../traits/VGirol_JsonApiFaker_Factory_HasLinks/addLink.xhtml">addLink</a>()
+                        </li><li>public DocumentFactory <a title="VGirol\JsonApiFaker\Factory\HasLinks" href="../traits/VGirol_JsonApiFaker_Factory_HasLinks/fakeLinks.xhtml">fakeLinks</a>()
+                        </li></ul><ul class="none"><li>// Inherited methods from <span title="VGirol\JsonApiFaker\Factory\HasMeta">HasMeta</span></li><li>public DocumentFactory <a title="VGirol\JsonApiFaker\Factory\HasMeta" href="../traits/VGirol_JsonApiFaker_Factory_HasMeta/setMeta.xhtml">setMeta</a>()
+                        </li><li>public DocumentFactory <a title="VGirol\JsonApiFaker\Factory\HasMeta" href="../traits/VGirol_JsonApiFaker_Factory_HasMeta/addToMeta.xhtml">addToMeta</a>()
+                        </li><li>public DocumentFactory <a title="VGirol\JsonApiFaker\Factory\HasMeta" href="../traits/VGirol_JsonApiFaker_Factory_HasMeta/fakeMeta.xhtml">fakeMeta</a>()
+                        </li></ul><ul class="none"><li>// Inherited methods from <span title="VGirol\JsonApiFaker\Factory\HasJsonapi">HasJsonapi</span></li><li>public DocumentFactory <a title="VGirol\JsonApiFaker\Factory\HasJsonapi" href="../traits/VGirol_JsonApiFaker_Factory_HasJsonapi/setJsonapi.xhtml">setJsonapi</a>()
+                        </li><li>public DocumentFactory <a title="VGirol\JsonApiFaker\Factory\HasJsonapi" href="../traits/VGirol_JsonApiFaker_Factory_HasJsonapi/fakeJsonapi.xhtml">fakeJsonapi</a>()
+                        </li></ul><ul class="none"><li>// Inherited methods from <span title="VGirol\JsonApiFaker\Factory\HasIncluded">HasIncluded</span></li><li>public DocumentFactory <a title="VGirol\JsonApiFaker\Factory\HasIncluded" href="../traits/VGirol_JsonApiFaker_Factory_HasIncluded/setIncluded.xhtml">setIncluded</a>()
+                        </li></ul>
+
+            }<br/></div>
+        <h2 id="hierarchy">Hierarchy</h2>
+        <div class="styled">
+          <h4>Extends</h4>
+          <ul>
+            <li>
+              <a title="VGirol\JsonApiFaker\Factory\BaseFactory" href="../classes/VGirol_JsonApiFaker_Factory_BaseFactory.xhtml">VGirol\JsonApiFaker\Factory\BaseFactory</a>
+            </li>
+          </ul>
+          <h4>Uses</h4>
+          <ul>
+            <li>
+              <a title="VGirol\JsonApiFaker\Factory\HasData" href="../traits/VGirol_JsonApiFaker_Factory_HasData.xhtml">VGirol\JsonApiFaker\Factory\HasData</a>
+            </li>
+            <li>
+              <a title="VGirol\JsonApiFaker\Factory\HasErrors" href="../traits/VGirol_JsonApiFaker_Factory_HasErrors.xhtml">VGirol\JsonApiFaker\Factory\HasErrors</a>
+            </li>
+            <li>
+              <a title="VGirol\JsonApiFaker\Factory\HasLinks" href="../traits/VGirol_JsonApiFaker_Factory_HasLinks.xhtml">VGirol\JsonApiFaker\Factory\HasLinks</a>
+            </li>
+            <li>
+              <a title="VGirol\JsonApiFaker\Factory\HasMeta" href="../traits/VGirol_JsonApiFaker_Factory_HasMeta.xhtml">VGirol\JsonApiFaker\Factory\HasMeta</a>
+            </li>
+            <li>
+              <a title="VGirol\JsonApiFaker\Factory\HasJsonapi" href="../traits/VGirol_JsonApiFaker_Factory_HasJsonapi.xhtml">VGirol\JsonApiFaker\Factory\HasJsonapi</a>
+            </li>
+            <li>
+              <a title="VGirol\JsonApiFaker\Factory\HasIncluded" href="../traits/VGirol_JsonApiFaker_Factory_HasIncluded.xhtml">VGirol\JsonApiFaker\Factory\HasIncluded</a>
+            </li>
+          </ul>
+        </div>
+        <h2 id="coverage">Coverage</h2>
+        <table class="styled">
+          <tr>
+            <td>Methods</td>
+            <td class="percent">0%</td>
+            <td class="nummeric">0 / 2</td>
+          </tr>
+          <tr>
+            <td>Lines</td>
+            <td class="percent">0%</td>
+            <td class="nummeric"> / </td>
+          </tr>
+        </table>
+        <h2 id="members">Members</h2>
+        <div class="styled members">
+          <h4>public</h4>
+          <ul class="members">
+            <li id="data"><strong>$data</strong>
+                —
+                <a title="VGirol\JsonApiFaker\Factory\ResourceIdentifierFactory|ResourceObjectFactory|CollectionFactory|null" href="../classes/VGirol_JsonApiFaker_Factory_ResourceIdentifierFactory|ResourceObjectFactory|CollectionFactory|null.xhtml">VGirol\JsonApiFaker\Factory\ResourceIdentifierFactory|ResourceObjectFactory|CollectionFactory|null</a><br/><span class="indent">The "data" member</span></li>
+            <li id="errors"><strong>$errors</strong>
+                —
+                <a title="VGirol\JsonApiFaker\Factory\array&lt;ErrorFactory&gt;" href="../classes/VGirol_JsonApiFaker_Factory_array&lt;ErrorFactory&gt;.xhtml">VGirol\JsonApiFaker\Factory\array&lt;ErrorFactory&gt;</a><br/><span class="indent">The "errors" member</span></li>
+            <li id="generator"><strong>$generator</strong>
+                —
+                <a title="VGirol\JsonApiFaker\Contract\GeneratorContract" href="../classes/VGirol_JsonApiFaker_Contract_GeneratorContract.xhtml">VGirol\JsonApiFaker\Contract\GeneratorContract</a><br/><span class="indent">The factory generator</span></li>
+            <li id="included"><strong>$included</strong>
+                —
+                <a title="VGirol\JsonApiFaker\Factory\CollectionFactory" href="../classes/VGirol_JsonApiFaker_Factory_CollectionFactory.xhtml">VGirol\JsonApiFaker\Factory\CollectionFactory</a><br/><span class="indent">The collection of included resources</span></li>
+            <li id="jsonapi"><strong>$jsonapi</strong>
+                —
+                <a title="VGirol\JsonApiFaker\Factory\JsonapiFactory" href="../classes/VGirol_JsonApiFaker_Factory_JsonapiFactory.xhtml">VGirol\JsonApiFaker\Factory\JsonapiFactory</a><br/><span class="indent">The jsonapi object</span></li>
+            <li id="links"><strong>$links</strong>
+                —
+                <a title="VGirol\JsonApiFaker\Factory\array&lt;string" href="../classes/VGirol_JsonApiFaker_Factory_array&lt;string.xhtml">VGirol\JsonApiFaker\Factory\array&lt;string</a><br/><span class="indent">The "links" member</span></li>
+            <li id="meta"><strong>$meta</strong>
+                —
+                <a title="VGirol\JsonApiFaker\Factory\array&lt;string" href="../classes/VGirol_JsonApiFaker_Factory_array&lt;string.xhtml">VGirol\JsonApiFaker\Factory\array&lt;string</a><br/><span class="indent">The "meta" member</span></li>
+          </ul>
+        </div>
+        <h2 id="methods">Methods</h2>
+        <div class="styled">
+          <h4>public</h4>
+          <ul>
+            <li id="fake"><a title="VGirol\JsonApiFaker\Factory\DocumentFactory" href="../classes/VGirol_JsonApiFaker_Factory_DocumentFactory/fake.xhtml">fake()</a>
+                — Undocumented function</li>
+            <li id="toArray">
+              <a title="VGirol\JsonApiFaker\Factory\DocumentFactory" href="../classes/VGirol_JsonApiFaker_Factory_DocumentFactory/toArray.xhtml">toArray()</a>
+            </li>
+          </ul>
+          <h3>Inherited from <a title="VGirol\JsonApiFaker\Factory\BaseFactory" href="../classes/VGirol_JsonApiFaker_Factory_BaseFactory.xhtml">VGirol\JsonApiFaker\Factory\BaseFactory</a></h3>
+          <h4>protected</h4>
+          <ul>
+            <li id="fakeMemberName"><a title="VGirol\JsonApiFaker\Factory\BaseFactory" href="../classes/VGirol_JsonApiFaker_Factory_BaseFactory/fakeMemberName.xhtml">fakeMemberName()</a>
+                — Returns a fake member's name.</li>
+            <li id="fakeMembers"><a title="VGirol\JsonApiFaker\Factory\BaseFactory" href="../classes/VGirol_JsonApiFaker_Factory_BaseFactory/fakeMembers.xhtml">fakeMembers()</a>
+                — This methods creates some members with fake names and values.</li>
+            <li id="fakeValue"><a title="VGirol\JsonApiFaker\Factory\BaseFactory" href="../classes/VGirol_JsonApiFaker_Factory_BaseFactory/fakeValue.xhtml">fakeValue()</a>
+                — Returns a fake member's value.</li>
+          </ul>
+          <h4>public</h4>
+          <ul>
+            <li id="addToArray">
+              <a title="VGirol\JsonApiFaker\Factory\BaseFactory" href="../classes/VGirol_JsonApiFaker_Factory_BaseFactory/addToArray.xhtml">addToArray()</a>
+            </li>
+            <li id="addToObject">
+              <a title="VGirol\JsonApiFaker\Factory\BaseFactory" href="../classes/VGirol_JsonApiFaker_Factory_BaseFactory/addToObject.xhtml">addToObject()</a>
+            </li>
+            <li id="fake">
+              <a title="VGirol\JsonApiFaker\Factory\BaseFactory" href="../classes/VGirol_JsonApiFaker_Factory_BaseFactory/fake.xhtml">fake()</a>
+            </li>
+            <li id="setGenerator"><a title="VGirol\JsonApiFaker\Factory\BaseFactory" href="../classes/VGirol_JsonApiFaker_Factory_BaseFactory/setGenerator.xhtml">setGenerator()</a>
+                — Set the Generator instance</li>
+            <li id="toArray">
+              <a title="VGirol\JsonApiFaker\Factory\BaseFactory" href="../classes/VGirol_JsonApiFaker_Factory_BaseFactory/toArray.xhtml">toArray()</a>
+            </li>
+            <li id="toJson">
+              <a title="VGirol\JsonApiFaker\Factory\BaseFactory" href="../classes/VGirol_JsonApiFaker_Factory_BaseFactory/toJson.xhtml">toJson()</a>
+            </li>
+          </ul>
+          <h3>Inherited from <a title="VGirol\JsonApiFaker\Factory\HasData" href="../traits/VGirol_JsonApiFaker_Factory_HasData.xhtml">VGirol\JsonApiFaker\Factory\HasData</a></h3>
+          <h4>public</h4>
+          <ul>
+            <li id="dataHasBeenSet"><a title="VGirol\JsonApiFaker\Factory\HasData" href="../traits/VGirol_JsonApiFaker_Factory_HasData/dataHasBeenSet.xhtml">dataHasBeenSet()</a>
+                — Check if the "data" member has been set.</li>
+            <li id="fakeData"><a title="VGirol\JsonApiFaker\Factory\HasData" href="../traits/VGirol_JsonApiFaker_Factory_HasData/fakeData.xhtml">fakeData()</a>
+                — Fill the "data" member with fake values</li>
+            <li id="setData"><a title="VGirol\JsonApiFaker\Factory\HasData" href="../traits/VGirol_JsonApiFaker_Factory_HasData/setData.xhtml">setData()</a>
+                — Set "data" member</li>
+          </ul>
+          <h3>Inherited from <a title="VGirol\JsonApiFaker\Factory\HasErrors" href="../traits/VGirol_JsonApiFaker_Factory_HasErrors.xhtml">VGirol\JsonApiFaker\Factory\HasErrors</a></h3>
+          <h4>public</h4>
+          <ul>
+            <li id="addError"><a title="VGirol\JsonApiFaker\Factory\HasErrors" href="../traits/VGirol_JsonApiFaker_Factory_HasErrors/addError.xhtml">addError()</a>
+                — Add a single error to the "errors" member</li>
+            <li id="fakeErrors"><a title="VGirol\JsonApiFaker\Factory\HasErrors" href="../traits/VGirol_JsonApiFaker_Factory_HasErrors/fakeErrors.xhtml">fakeErrors()</a>
+                — Fill the "errors" member with fake values</li>
+            <li id="setErrors"><a title="VGirol\JsonApiFaker\Factory\HasErrors" href="../traits/VGirol_JsonApiFaker_Factory_HasErrors/setErrors.xhtml">setErrors()</a>
+                — Set the "errors" member</li>
+          </ul>
+          <h3>Inherited from <a title="VGirol\JsonApiFaker\Factory\HasLinks" href="../traits/VGirol_JsonApiFaker_Factory_HasLinks.xhtml">VGirol\JsonApiFaker\Factory\HasLinks</a></h3>
+          <h4>public</h4>
+          <ul>
+            <li id="addLink"><a title="VGirol\JsonApiFaker\Factory\HasLinks" href="../traits/VGirol_JsonApiFaker_Factory_HasLinks/addLink.xhtml">addLink()</a>
+                — Add a single link to the "links" member</li>
+            <li id="addLinks"><a title="VGirol\JsonApiFaker\Factory\HasLinks" href="../traits/VGirol_JsonApiFaker_Factory_HasLinks/addLinks.xhtml">addLinks()</a>
+                — Add some links to the "links" member.</li>
+            <li id="fakeLinks"><a title="VGirol\JsonApiFaker\Factory\HasLinks" href="../traits/VGirol_JsonApiFaker_Factory_HasLinks/fakeLinks.xhtml">fakeLinks()</a>
+                — Fill the "links" member with fake values.</li>
+            <li id="setLinks"><a title="VGirol\JsonApiFaker\Factory\HasLinks" href="../traits/VGirol_JsonApiFaker_Factory_HasLinks/setLinks.xhtml">setLinks()</a>
+                — Set the "links" member.</li>
+          </ul>
+          <h3>Inherited from <a title="VGirol\JsonApiFaker\Factory\HasMeta" href="../traits/VGirol_JsonApiFaker_Factory_HasMeta.xhtml">VGirol\JsonApiFaker\Factory\HasMeta</a></h3>
+          <h4>public</h4>
+          <ul>
+            <li id="addToMeta"><a title="VGirol\JsonApiFaker\Factory\HasMeta" href="../traits/VGirol_JsonApiFaker_Factory_HasMeta/addToMeta.xhtml">addToMeta()</a>
+                — Add a single value to the "meta" member</li>
+            <li id="fakeMeta"><a title="VGirol\JsonApiFaker\Factory\HasMeta" href="../traits/VGirol_JsonApiFaker_Factory_HasMeta/fakeMeta.xhtml">fakeMeta()</a>
+                — Fill the "meta" member with fake values.</li>
+            <li id="setMeta"><a title="VGirol\JsonApiFaker\Factory\HasMeta" href="../traits/VGirol_JsonApiFaker_Factory_HasMeta/setMeta.xhtml">setMeta()</a>
+                — Set the "meta" member.</li>
+          </ul>
+          <h3>Inherited from <a title="VGirol\JsonApiFaker\Factory\HasJsonapi" href="../traits/VGirol_JsonApiFaker_Factory_HasJsonapi.xhtml">VGirol\JsonApiFaker\Factory\HasJsonapi</a></h3>
+          <h4>public</h4>
+          <ul>
+            <li id="fakeJsonapi"><a title="VGirol\JsonApiFaker\Factory\HasJsonapi" href="../traits/VGirol_JsonApiFaker_Factory_HasJsonapi/fakeJsonapi.xhtml">fakeJsonapi()</a>
+                — Fill the "jsonapi" object with fake members and values.</li>
+            <li id="setJsonapi"><a title="VGirol\JsonApiFaker\Factory\HasJsonapi" href="../traits/VGirol_JsonApiFaker_Factory_HasJsonapi/setJsonapi.xhtml">setJsonapi()</a>
+                — Sets the jsonapi object.</li>
+          </ul>
+          <h3>Inherited from <a title="VGirol\JsonApiFaker\Factory\HasIncluded" href="../traits/VGirol_JsonApiFaker_Factory_HasIncluded.xhtml">VGirol\JsonApiFaker\Factory\HasIncluded</a></h3>
+          <h4>public</h4>
+          <ul>
+            <li id="setIncluded"><a title="VGirol\JsonApiFaker\Factory\HasIncluded" href="../traits/VGirol_JsonApiFaker_Factory_HasIncluded/setIncluded.xhtml">setIncluded()</a>
+                — Sets the included collection.</li>
+          </ul>
+        </div>
+        <h2 id="history">History</h2>
+        <ul class="styled history">
+          <li>
+            <h3>2019-09-04T21:29:20+00:00 (commit #<span title="83de9d5086544ee86b9eb5704c41e2d5718b8f7e">83de9d5</span>)</h3>
+            <div>
+              <p>
+                        Author: Crapo (vincent@girol.fr) /
+                        Commiter: Crapo (vincent@girol.fr)
+                    </p>
+              <pre class="wrapped">Some linting</pre>
+            </div>
+          </li>
+          <li>
+            <h3>2019-09-04T15:07:01+00:00 (commit #<span title="c26723b63b8f13109fa17103ead46eaf3ff879e4">c26723b</span>)</h3>
+            <div>
+              <p>
+                        Author: Crapo (vincent@girol.fr) /
+                        Commiter: Crapo (vincent@girol.fr)
+                    </p>
+              <pre class="wrapped">Changed generator access</pre>
+            </div>
+          </li>
+          <li>
+            <h3>2019-08-20T23:22:44+00:00 (commit #<span title="c54dd11760759a999662df5bc9f81b876f66fb55">c54dd11</span>)</h3>
+            <div>
+              <p>
+                        Author: Crapo (vincent@girol.fr) /
+                        Commiter: Crapo (vincent@girol.fr)
+                    </p>
+              <pre class="wrapped">Added ErrorFactory</pre>
+            </div>
+          </li>
+          <li>
+            <h3>2019-08-15T17:45:11+00:00 (commit #<span title="ed71f96ea289349321539ff7b6f9d286a98619b6">ed71f96</span>)</h3>
+            <div>
+              <p>
+                        Author: Crapo (vincent@girol.fr) /
+                        Commiter: Crapo (vincent@girol.fr)
+                    </p>
+              <pre class="wrapped">Adding fake methods</pre>
+            </div>
+          </li>
+          <li>
+            <h3>2019-07-20T17:21:48+00:00 (commit #<span title="dc9af5f3e10efd4d02145f9117b96d1f0f326e4e">dc9af5f</span>)</h3>
+            <div>
+              <p>
+                        Author: Crapo (vincent@girol.fr) /
+                        Commiter: Crapo (vincent@girol.fr)
+                    </p>
+              <pre class="wrapped">New minor version</pre>
+            </div>
+          </li>
+          <li>
+            <h3>2019-07-13T08:38:21+00:00 (commit #<span title="a33aaf9a44d8e1488005996d6451b877acade51b">a33aaf9</span>)</h3>
+            <div>
+              <p>
+                        Author: Crapo (vincent@girol.fr) /
+                        Commiter: Crapo (vincent@girol.fr)
+                    </p>
+              <pre class="wrapped">Many changes</pre>
+            </div>
+          </li>
+          <li>
+            <h3>2019-05-09T22:19:20+00:00 (commit #<span title="6d5829fd9ada6d8deff1e27326b30ccf668345ef">6d5829f</span>)</h3>
+            <div>
+              <p>
+                        Author: Crapo (vincent@girol.fr) /
+                        Commiter: Crapo (vincent@girol.fr)
+                    </p>
+              <pre class="wrapped">Added scripts</pre>
+            </div>
+          </li>
+          <li>
+            <h3>2019-05-08T22:46:07+00:00 (commit #<span title="e5fbc0deb39c96809587101e76e1fa894000dad1">e5fbc0d</span>)</h3>
+            <div>
+              <p>
+                        Author: Crapo (vincent@girol.fr) /
+                        Commiter: Crapo (vincent@girol.fr)
+                    </p>
+              <pre class="wrapped">Factories</pre>
+            </div>
+          </li>
+        </ul>
+      </section>
+    </div>
+    <footer>
+      <span>Generated using phpDox 0.12.0-dev - Copyright (C) 2010 - 2019 by Arne Blankerts and Contributors</span>
+    </footer>
+  </body>
+</html>

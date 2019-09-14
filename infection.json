@@ -14,12 +14,7 @@
         }
     },
     "mutators": {
-        "@default": true,
-        "@number": {
-            "ignore": [
-                "VGirol\\JsonApiFaker\\Factory\\HasIdentifier::fakeIdentifier"
-            ]
-        }
+        "@default": true
     },
     "testFramework":"phpunit",
     "phpUnit": {

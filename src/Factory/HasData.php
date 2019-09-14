@@ -60,11 +60,10 @@ trait HasData
      *
      * @return static
      */
-    public function fakeData($options = null, $count = 3)
+    public function fakeData($options = null, int $count = 5)
     {
         if ($options === null) {
             $options = Options::FAKE_RESOURCE_OBJECT | Options::FAKE_COLLECTION;
-            $count = 5;
         }
 
         $canBeNull = (($options & Options::FAKE_CAN_BE_NULL) == Options::FAKE_CAN_BE_NULL);
@@ -94,7 +93,7 @@ trait HasData
      *
      * @return FactoryContract
      */
-    private function fakeCreateFactoryForData($options, $count)
+    private function fakeCreateFactoryForData($options, int $count)
     {
         $isCollection = (($options & Options::FAKE_COLLECTION) == Options::FAKE_COLLECTION);
         $isRI = (($options & Options::FAKE_RESOURCE_IDENTIFIER) == Options::FAKE_RESOURCE_IDENTIFIER);
