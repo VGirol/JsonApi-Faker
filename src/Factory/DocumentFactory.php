@@ -51,11 +51,12 @@ class DocumentFactory extends BaseFactory
     /**
      * Undocumented function
      *
-     * @param integer $options
+     * @param integer|null $options
+     * @param integer|null $count
      *
      * @return static
      */
-    public function fake($options = null, $count = null)
+    public function fake($options = null, $count = 3)
     {
         if ($options === null) {
             $options = Options::FAKE_SINGLE | Options::FAKE_RESOURCE_OBJECT;
