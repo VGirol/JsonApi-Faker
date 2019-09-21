@@ -93,7 +93,7 @@ $json = new JsonApiFaker()
 
 ## Documentation
 
-The API documentation is available in XHTML format at the url [jsonapi-faker.girol.fr](http://jsonapi-faker.girol.fr/index.xhtml).
+The API documentation is available in XHTML format at the url [[jsonapi-faker.girol.fr](http://jsonapi-faker.girol.fr/docs/index.xhtml)](http://jsonapi-faker.girol.fr/docs/index.xhtml).
 
 ## Change log
 
