@@ -91,6 +91,10 @@ $json = new JsonApiFaker()
     ->toJson();
 ```
 
+## Documentation
+
+The API documentation is available in XHTML format at the url [jsonapi-faker.girol.fr](http://jsonapi-faker.girol.fr/index.xhtml).
+
 ## Change log
 
 Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
