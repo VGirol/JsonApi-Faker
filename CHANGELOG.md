@@ -13,3 +13,9 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Added
 
 - Added JsonApiFakerException class
+
+## 1.0.2 - 2019-09-28
+
+### Fixed
+
+- Fix bug when arraying "errors" of a DocumentFactory
