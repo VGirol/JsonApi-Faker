@@ -85,7 +85,8 @@ class BaseFactoryTest extends TestCase
      */
     public function toJson()
     {
-        $obj = new class extends BaseFactory {
+        $obj = new class extends BaseFactory
+        {
             public function toArray(): ?array
             {
                 return [
@@ -93,7 +94,8 @@ class BaseFactoryTest extends TestCase
                     'arr' => [
                         'first',
                         'second'
-                    ]
+                    ],
+                    'float' => 3.0
                 ];
             }
 
@@ -104,7 +106,7 @@ class BaseFactoryTest extends TestCase
         };
 
         $json = $obj->toJson();
-        $expected = '{"attr":"value with <, &, \' and \".","arr":["first","second"]}';
+        $expected = '{"attr":"value with <, &, \' and \".","arr":["first","second"],"float":3.0}';
 
         PHPUnit::assertEquals($expected, $json);
     }
@@ -114,7 +116,8 @@ class BaseFactoryTest extends TestCase
      */
     public function toJsonFailed()
     {
-        $obj = new class extends BaseFactory {
+        $obj = new class extends BaseFactory
+        {
             public function toArray(): ?array
             {
                 return [
@@ -141,7 +144,8 @@ class BaseFactoryTest extends TestCase
      */
     public function fakeMemberName()
     {
-        $obj = new class extends BaseFactory {
+        $obj = new class extends BaseFactory
+        {
             public function toArray(): ?array
             {
                 return [];
@@ -189,7 +193,8 @@ class BaseFactoryTest extends TestCase
      */
     public function fakeValue()
     {
-        $obj = new class extends BaseFactory {
+        $obj = new class extends BaseFactory
+        {
             public function toArray(): ?array
             {
                 return [];

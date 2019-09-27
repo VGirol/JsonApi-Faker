@@ -64,6 +64,7 @@ abstract class BaseFactory implements FactoryContract
      */
     public function toJson($options = 0): string
     {
+        $options = $options | JSON_PRESERVE_ZERO_FRACTION;
         $json = json_encode($this->toArray(), $options);
 
         if ($json === false) {
