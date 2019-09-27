@@ -4,6 +4,7 @@ namespace VGirol\JsonApiFaker\Tests\Factory;
 
 use PHPUnit\Framework\Assert as PHPUnit;
 use VGirol\JsonApiFaker\Factory\DocumentFactory;
+use VGirol\JsonApiFaker\Factory\ErrorFactory;
 use VGirol\JsonApiFaker\Factory\JsonapiFactory;
 use VGirol\JsonApiFaker\Factory\RelationshipFactory;
 use VGirol\JsonApiFaker\Factory\ResourceIdentifierFactory;
@@ -63,11 +64,9 @@ class DocumentFactoryTest extends TestCase
             'self' => 'url'
         ];
         $jsonapi = (new JsonapiFactory)->setVersion('test');
+        $error = (new ErrorFactory)->setId('errorId')->set('code', 'secret');
         $errors = [
-            [
-                'id' => 'errorId',
-                'code' => 'secret'
-            ]
+            $error->toArray()
         ];
 
         $expected = [
@@ -83,7 +82,7 @@ class DocumentFactoryTest extends TestCase
         $factory->setMeta($meta)
             ->setLinks($links)
             ->setJsonapi($jsonapi)
-            ->setErrors($errors);
+            ->addError($error);
 
         $result = $factory->toArray();
 

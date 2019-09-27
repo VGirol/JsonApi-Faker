@@ -33,7 +33,12 @@ class DocumentFactory extends BaseFactory
             $json[Members::LINKS] = $this->links;
         }
         if (isset($this->errors)) {
-            $json[Members::ERRORS] = $this->errors;
+            $json[Members::ERRORS] = array_map(
+                function ($error) {
+                    return $error->toArray();
+                },
+                $this->errors
+            );
         }
         if ($this->dataHasBeenSet()) {
             $json[Members::DATA] = ($this->data === null) ? null : $this->data->toArray();
