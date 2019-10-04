@@ -12,5 +12,4 @@ interface JsonapiContract extends
     HasMetaContract,
     HasVersionContract
 {
-
 }

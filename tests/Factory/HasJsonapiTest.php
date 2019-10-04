@@ -33,8 +33,7 @@ class HasJsonapiTest extends TestCase
      */
     public function fakeJsonapi()
     {
-        $mock = new class extends BaseFactory
-        {
+        $mock = new class extends BaseFactory {
             use HasJsonapi;
 
             public function toArray(): ?array

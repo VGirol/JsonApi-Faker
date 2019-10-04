@@ -13,5 +13,4 @@ interface RelationshipContract extends
     HasLinksContract,
     HasMetaContract
 {
- 
 }
