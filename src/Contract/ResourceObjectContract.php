@@ -15,5 +15,4 @@ interface ResourceObjectContract extends
     HasMetaContract,
     HasRelationshipsContract
 {
- 
 }

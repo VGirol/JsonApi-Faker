@@ -37,8 +37,7 @@ class HasLinksTest extends TestCase
     public function addLink()
     {
         $this->checkAddSingle(
-            new class extends BaseFactory
-            {
+            new class extends BaseFactory {
                 use HasLinks;
 
                 public function toArray(): ?array
@@ -68,8 +67,7 @@ class HasLinksTest extends TestCase
     public function addLinks()
     {
         $this->checkAddMulti(
-            new class extends BaseFactory
-            {
+            new class extends BaseFactory {
                 use HasLinks;
 
                 public function toArray(): ?array
@@ -99,8 +97,7 @@ class HasLinksTest extends TestCase
      */
     public function fakeLinks()
     {
-        $mock = new class extends BaseFactory
-        {
+        $mock = new class extends BaseFactory {
             use HasLinks;
 
             public function toArray(): ?array

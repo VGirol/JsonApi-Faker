@@ -58,8 +58,7 @@ class HasErrorsTest extends TestCase
         ];
         $errors2 = (new Generator)->error()->fake();
 
-        $factory = new class extends BaseFactory
-        {
+        $factory = new class extends BaseFactory {
             use HasErrors;
 
             public function toArray(): ?array
@@ -93,8 +92,7 @@ class HasErrorsTest extends TestCase
      */
     public function fakeErrors()
     {
-        $mock = new class extends BaseFactory
-        {
+        $mock = new class extends BaseFactory {
             use HasErrors;
 
             public function toArray(): ?array

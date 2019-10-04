@@ -24,6 +24,6 @@ abstract class Messages
     'The data must be an instance of ResourceIdentifierContract, ResourceObjectContract or CollectionContract
      or null value.';
 
-     const SET_ERRORS_BAD_TYPE =
+    const SET_ERRORS_BAD_TYPE =
      'Each item of the array must be an instance of ErrorContract.';
 }

@@ -16,5 +16,4 @@ interface DocumentContract extends
     HasLinksContract,
     HasMetaContract
 {
- 
 }

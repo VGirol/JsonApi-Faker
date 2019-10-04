@@ -12,5 +12,4 @@ interface ResourceIdentifierContract extends
     HasIdentificationContract,
     HasMetaContract
 {
- 
 }
