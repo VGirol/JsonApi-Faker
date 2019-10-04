@@ -21,7 +21,7 @@ class HasResourceTypeTest extends TestCase
         $this->checkSetMethod(
             $this->getMockForTrait(HasResourceType::class),
             'setResourceType',
-            'resourceType',
+            'getResourceType',
             'first',
             'second'
         );
@@ -48,12 +48,12 @@ class HasResourceTypeTest extends TestCase
             }
         };
 
-        PHPUnit::assertEmpty($mock->resourceType);
+        PHPUnit::assertEmpty($mock->getResourceType());
 
         $obj = $mock->fakeResourceType();
 
         PHPUnit::assertSame($obj, $mock);
-        PHPUnit::assertNotEmpty($mock->resourceType);
+        PHPUnit::assertNotEmpty($mock->getResourceType());
 
         Assert::assertResourceTypeMember($obj->toArray(), true);
     }

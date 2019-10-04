@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace VGirol\JsonApiFaker\Factory;
 
+use VGirol\JsonApiFaker\Contract\CollectionContract;
+
 /**
  * Add "included" member to a factory.
  */
@@ -12,14 +14,14 @@ trait HasIncluded
     /**
      * The collection of included resources
      *
-     * @var CollectionFactory
+     * @var CollectionContract
      */
-    public $included;
+    protected $included;
 
     /**
      * Sets the included collection.
      *
-     * @param CollectionFactory $included
+     * @param CollectionContract $included
      *
      * @return static
      */
@@ -28,5 +30,15 @@ trait HasIncluded
         $this->included = $included;
 
         return $this;
+    }
+
+    /**
+     * Gets the included collection.
+     *
+     * @return CollectionContract $included
+     */
+    public function getIncluded()
+    {
+        return $this->included;
     }
 }

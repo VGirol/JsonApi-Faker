@@ -3,71 +3,110 @@
 namespace VGirol\JsonApiFaker\Testing;
 
 use PHPUnit\Framework\Assert as PHPUnit;
+use VGirol\JsonApiFaker\Contract\FactoryContract;
 use VGirol\JsonApiFaker\Exception\JsonApiFakerException;
 
+/**
+ * Add the ability to unit test some usual methods like getter, setter, ...
+ */
 trait CheckMethods
 {
-    protected function checkAddSingle($factory, string $fnName, string $attrName, array $data1, array $data2)
+    /**
+     * Undocumented function
+     *
+     * @param FactoryContract $factory
+     * @param string          $setter
+     * @param string          $getter
+     * @param array           $data1
+     * @param array           $data2
+     *
+     * @return void
+     * @throws JsonApiFakerException
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     */
+    protected function checkAddSingle($factory, string $setter, string $getter, array $data1, array $data2)
     {
-        PHPUnit::assertEmpty($factory->{$attrName});
+        PHPUnit::assertEmpty($factory->{$getter}());
 
         if (empty($data1)) {
             throw new JsonApiFakerException('You must provide data for first run.');
         }
 
         foreach ($data1 as $key => $value) {
-            $obj = $factory->{$fnName}($key, $value);
+            $obj = $factory->{$setter}($key, $value);
 
             PHPUnit::assertSame($obj, $factory);
         }
 
-        PHPUnit::assertObjectHasAttribute($attrName, $factory);
-        PHPUnit::assertEquals($data1, $factory->{$attrName});
+        PHPUnit::assertEquals($data1, $factory->{$getter}());
 
         if (empty($data2)) {
             throw new JsonApiFakerException('You must provide data for second run.');
         }
 
         foreach ($data2 as $key => $value) {
-            $factory->{$fnName}($key, $value);
+            $factory->{$setter}($key, $value);
         }
 
         PHPUnit::assertEquals(
             array_merge($data1, $data2),
-            $factory->{$attrName}
+            $factory->{$getter}()
         );
     }
 
-    protected function checkAddMulti($factory, string $fnName, string $attrName, array $data1, array $data2)
+    /**
+     * Undocumented function
+     *
+     * @param FactoryContract $factory
+     * @param string          $setter
+     * @param string          $getter
+     * @param array           $data1
+     * @param array           $data2
+     *
+     * @return void
+     * @throws JsonApiFakerException
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     */
+    protected function checkAddMulti($factory, string $setter, string $getter, array $data1, array $data2)
     {
-        PHPUnit::assertEmpty($factory->{$attrName});
+        PHPUnit::assertEmpty($factory->{$getter}());
 
-        $obj = $factory->{$fnName}($data1);
+        $obj = $factory->{$setter}($data1);
 
-        PHPUnit::assertObjectHasAttribute($attrName, $factory);
-        PHPUnit::assertEquals($data1, $factory->{$attrName});
+        PHPUnit::assertEquals($data1, $factory->{$getter}());
         PHPUnit::assertSame($obj, $factory);
 
-        $factory->{$fnName}($data2);
+        $factory->{$setter}($data2);
 
         PHPUnit::assertEquals(
             array_merge($data1, $data2),
-            $factory->{$attrName}
+            $factory->{$getter}()
         );
     }
 
-    protected function checkSetMethod($factory, string $fnName, string $attrName, $data1, $data2)
+    /**
+     * Undocumented function
+     *
+     * @param FactoryContract $factory
+     * @param string $setter
+     * @param string $getter
+     * @param mixed $data1
+     * @param mixed $data2
+     *
+     * @return void
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     */
+    protected function checkSetMethod($factory, string $setter, string $getter, $data1, $data2)
     {
-        PHPUnit::assertEmpty($factory->{$attrName});
+        PHPUnit::assertEmpty($factory->{$getter}());
 
-        $obj = $factory->{$fnName}($data1);
+        $obj = $factory->{$setter}($data1);
 
-        PHPUnit::assertObjectHasAttribute($attrName, $factory);
-        PHPUnit::assertEquals($data1, $factory->{$attrName});
+        PHPUnit::assertEquals($data1, $factory->{$getter}());
         PHPUnit::assertSame($obj, $factory);
 
-        $factory->{$fnName}($data2);
+        $factory->{$setter}($data2);
 
-        PHPUnit::assertEquals($data2, $factory->{$attrName});
+        PHPUnit::assertEquals($data2, $factory->{$getter}());
     }
 }

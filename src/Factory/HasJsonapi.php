@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace VGirol\JsonApiFaker\Factory;
 
+use VGirol\JsonApiFaker\Contract\JsonapiContract;
+
 /**
  * Add "jsonapi" member to a factory.
  */
@@ -12,14 +14,14 @@ trait HasJsonapi
     /**
      * The jsonapi object
      *
-     * @var JsonapiFactory
+     * @var JsonapiContract
      */
-    public $jsonapi;
+    protected $jsonapi;
 
     /**
      * Sets the jsonapi object.
      *
-     * @param JsonapiFactory $jsonapi
+     * @param JsonapiContract $jsonapi
      *
      * @return static
      */
@@ -31,6 +33,16 @@ trait HasJsonapi
     }
 
     /**
+     * Gets the jsonapi object.
+     *
+     * @return JsonapiContract
+     */
+    public function getJsonapi()
+    {
+        return $this->jsonapi;
+    }
+
+    /**
      * Fill the "jsonapi" object with fake members and values.
      *
      * @param integer $countMeta The number of meta members to generate.
@@ -39,6 +51,10 @@ trait HasJsonapi
      */
     public function fakeJsonapi(int $countMeta = 5)
     {
-        return $this->setJsonapi((new JsonapiFactory)->fake($countMeta));
+        return $this->setJsonapi(
+            $this->generator
+                ->jsonapiObject()
+                ->fake($countMeta)
+        );
     }
 }

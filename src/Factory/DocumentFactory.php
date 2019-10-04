@@ -4,23 +4,24 @@ declare(strict_types=1);
 
 namespace VGirol\JsonApiFaker\Factory;
 
-use VGirol\JsonApiFaker\Members;
+use VGirol\JsonApiConstant\Members;
+use VGirol\JsonApiFaker\Contract\DocumentContract;
+use VGirol\JsonApiFaker\Exception\JsonApiFakerException;
 
 /**
  * Factory for an entire document.
  */
-class DocumentFactory extends BaseFactory
+class DocumentFactory extends BaseFactory implements DocumentContract
 {
     use HasData;
     use HasErrors;
+    use HasIncluded;
+    use HasJsonapi;
     use HasLinks;
     use HasMeta;
-    use HasJsonapi;
-    use HasIncluded;
 
     /**
-     * @inheritDoc
-     * @return array<string,mixed>
+     * @throws JsonApiFakerException
      */
     public function toArray(): array
     {
@@ -34,6 +35,11 @@ class DocumentFactory extends BaseFactory
         }
         if (isset($this->errors)) {
             $json[Members::ERRORS] = array_map(
+                /**
+                 * @param \VGirol\JsonApiFaker\Contract\ErrorContract $error
+                 *
+                 * @return array|null
+                 */
                 function ($error) {
                     return $error->toArray();
                 },
@@ -54,16 +60,17 @@ class DocumentFactory extends BaseFactory
     }
 
     /**
-     * Undocumented function
+     * Fill the document with fake values (links, meta, jsonapi and errors or data).
      *
-     * @param integer|null $options
-     * @param integer|null $count
+     * @param integer $options
+     * @param integer $count
      *
      * @return static
+     * @throws JsonApiFakerException
      */
-    public function fake($options = null, $count = 3)
+    public function fake(int $options = 0, int $count = 3)
     {
-        if ($options === null) {
+        if ($options === 0) {
             $options = Options::FAKE_SINGLE | Options::FAKE_RESOURCE_OBJECT;
         }
 

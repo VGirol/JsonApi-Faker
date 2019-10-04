@@ -19,6 +19,7 @@
     ],
     "require": {
         "php": "^7.2",
+        "vgirol/jsonapi-constant": "dev-master",
         "fzaninotto/faker": "^1.8"
     },
     "require-dev": {
@@ -27,6 +28,13 @@
         "vgirol/jsonapi-assert": "dev-master"
     },
     "repositories": [
+        {
+            "type": "path",
+            "url": "../JsonApi-Constant",
+            "options": {
+                "symlink": true
+            }
+        },
         {
             "type": "path",
             "url": "../JsonApi-Assert",

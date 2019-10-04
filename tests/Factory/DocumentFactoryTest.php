@@ -3,12 +3,15 @@
 namespace VGirol\JsonApiFaker\Tests\Factory;
 
 use PHPUnit\Framework\Assert as PHPUnit;
+use VGirol\JsonApiFaker\Factory\CollectionFactory;
 use VGirol\JsonApiFaker\Factory\DocumentFactory;
 use VGirol\JsonApiFaker\Factory\ErrorFactory;
 use VGirol\JsonApiFaker\Factory\JsonapiFactory;
+use VGirol\JsonApiFaker\Factory\Options;
 use VGirol\JsonApiFaker\Factory\RelationshipFactory;
 use VGirol\JsonApiFaker\Factory\ResourceIdentifierFactory;
 use VGirol\JsonApiFaker\Factory\ResourceObjectFactory;
+use VGirol\JsonApiFaker\Generator;
 use VGirol\JsonApiFaker\Testing\CheckMethods;
 use VGirol\JsonApiFaker\Tests\TestCase;
 
@@ -24,7 +27,7 @@ class DocumentFactoryTest extends TestCase
         $this->checkSetMethod(
             new DocumentFactory,
             'setIncluded',
-            'included',
+            'getIncluded',
             [
                 'included1'
             ],
@@ -42,7 +45,7 @@ class DocumentFactoryTest extends TestCase
         $this->checkSetMethod(
             new DocumentFactory,
             'setJsonapi',
-            'jsonapi',
+            'getJsonapi',
             [
                 'attr1' => 'value1'
             ],
@@ -175,26 +178,59 @@ class DocumentFactoryTest extends TestCase
     /**
      * @test
      */
-    public function fake()
+    public function fakeSingleResource()
     {
-        $factory = new DocumentFactory;
+        $factory = (new DocumentFactory)->setGenerator(new Generator);
 
-        PHPUnit::assertEmpty($factory->data);
-        PHPUnit::assertEmpty($factory->errors);
-        PHPUnit::assertEmpty($factory->links);
-        PHPUnit::assertEmpty($factory->meta);
-        PHPUnit::assertEmpty($factory->included);
-        PHPUnit::assertEmpty($factory->jsonapi);
+        PHPUnit::assertEmpty($factory->getData());
+        PHPUnit::assertEmpty($factory->getErrors());
+        PHPUnit::assertEmpty($factory->getLinks());
+        PHPUnit::assertEmpty($factory->getMeta());
+        PHPUnit::assertEmpty($factory->getIncluded());
+        PHPUnit::assertEmpty($factory->getJsonapi());
 
         $obj = $factory->fake();
 
         PHPUnit::assertSame($obj, $factory);
 
-        PHPUnit::assertNotEmpty($factory->data);
-        PHPUnit::assertEmpty($factory->errors);
-        PHPUnit::assertNotEmpty($factory->links);
-        PHPUnit::assertNotEmpty($factory->meta);
-        PHPUnit::assertEmpty($factory->included);
-        PHPUnit::assertNotEmpty($factory->jsonapi);
+        PHPUnit::assertEmpty($factory->getErrors());
+        PHPUnit::assertNotEmpty($factory->getLinks());
+        PHPUnit::assertNotEmpty($factory->getMeta());
+        PHPUnit::assertEmpty($factory->getIncluded());
+        PHPUnit::assertNotEmpty($factory->getJsonapi());
+
+        $data = $factory->getData();
+        PHPUnit::assertNotEmpty($data);
+        PHPUnit::assertInstanceOf(ResourceObjectFactory::class, $data);
+    }
+
+    /**
+     * @test
+     */
+    public function fakeResourceCollection()
+    {
+        $factory = (new DocumentFactory)->setGenerator(new Generator);
+
+        PHPUnit::assertEmpty($factory->getData());
+        PHPUnit::assertEmpty($factory->getErrors());
+        PHPUnit::assertEmpty($factory->getLinks());
+        PHPUnit::assertEmpty($factory->getMeta());
+        PHPUnit::assertEmpty($factory->getIncluded());
+        PHPUnit::assertEmpty($factory->getJsonapi());
+
+        $obj = $factory->fake(Options::FAKE_COLLECTION | Options::FAKE_RESOURCE_IDENTIFIER);
+
+        PHPUnit::assertSame($obj, $factory);
+
+        PHPUnit::assertEmpty($factory->getErrors());
+        PHPUnit::assertNotEmpty($factory->getLinks());
+        PHPUnit::assertNotEmpty($factory->getMeta());
+        PHPUnit::assertEmpty($factory->getIncluded());
+        PHPUnit::assertNotEmpty($factory->getJsonapi());
+
+        $data = $factory->getData();
+        PHPUnit::assertNotEmpty($data);
+        PHPUnit::assertInstanceOf(CollectionFactory::class, $data);
+        PHPUnit::assertCount(3, $data->getCollection());
     }
 }

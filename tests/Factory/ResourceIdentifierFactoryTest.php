@@ -78,17 +78,17 @@ class ResourceIdentifierFactoryTest extends TestCase
     {
         $factory = new ResourceIdentifierFactory;
 
-        PHPUnit::assertEmpty($factory->id);
-        PHPUnit::assertEmpty($factory->resourceType);
+        PHPUnit::assertEmpty($factory->getId());
+        PHPUnit::assertEmpty($factory->getResourceType());
 
         $obj = $factory->fake();
 
         PHPUnit::assertSame($obj, $factory);
-        PHPUnit::assertNotEmpty($factory->id);
-        PHPUnit::assertNotEmpty($factory->resourceType);
+        PHPUnit::assertNotEmpty($factory->getId());
+        PHPUnit::assertNotEmpty($factory->getResourceType());
 
-        PHPUnit::assertNotEmpty($factory->meta);
-        PHPUnit::assertEquals(5, count($factory->meta));
+        PHPUnit::assertNotEmpty($factory->getMeta());
+        PHPUnit::assertEquals(5, count($factory->getMeta()));
 
         Assert::assertIsValidResourceIdentifierObject($factory->toArray(), true);
     }

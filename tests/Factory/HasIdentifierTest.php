@@ -21,7 +21,7 @@ class HasIdentifierTest extends TestCase
         $this->checkSetMethod(
             $this->getMockForTrait(HasIdentifier::class),
             'setId',
-            'id',
+            'getId',
             'test',
             'test2'
         );
@@ -32,7 +32,8 @@ class HasIdentifierTest extends TestCase
      */
     public function fakeIdentifier()
     {
-        $mock = new class extends BaseFactory {
+        $mock = new class extends BaseFactory
+        {
             use HasIdentifier;
 
             public function toArray(): ?array
@@ -48,14 +49,14 @@ class HasIdentifierTest extends TestCase
             }
         };
 
-        PHPUnit::assertEmpty($mock->id);
+        PHPUnit::assertEmpty($mock->getId());
 
         $obj = $mock->fakeIdentifier();
 
         PHPUnit::assertSame($obj, $mock);
-        PHPUnit::assertNotEmpty($mock->id);
-        PHPUnit::assertGreaterThanOrEqual(0, $mock->id);
-        PHPUnit::assertLessThanOrEqual(100, $mock->id);
+        PHPUnit::assertNotEmpty($mock->getId());
+        PHPUnit::assertGreaterThanOrEqual(0, $mock->getId());
+        PHPUnit::assertLessThanOrEqual(100, $mock->getId());
 
         Assert::assertResourceIdMember($obj->toArray());
     }

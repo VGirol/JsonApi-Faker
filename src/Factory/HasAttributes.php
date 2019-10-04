@@ -12,14 +12,14 @@ trait HasAttributes
     /**
      * The "attributes" object.
      *
-     * @var array<string,mixed>
+     * @var array
      */
-    public $attributes;
+    protected $attributes;
 
     /**
      * Set all the attributes.
      *
-     * @param array<string,mixed> $attributes
+     * @param array $attributes
      *
      * @return static
      */
@@ -31,9 +31,19 @@ trait HasAttributes
     }
 
     /**
+     * Get all the attributes.
+     *
+     * @return array|null
+     */
+    public function getAttributes(): ?array
+    {
+        return $this->attributes;
+    }
+
+    /**
      * Add many attributes.
      *
-     * @param array<string,mixed> $attributes
+     * @param array $attributes
      *
      * @return static
      */

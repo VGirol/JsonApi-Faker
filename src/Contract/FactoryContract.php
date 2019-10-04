@@ -10,9 +10,25 @@ namespace VGirol\JsonApiFaker\Contract;
 interface FactoryContract
 {
     /**
+     * Set the Generator instance
+     *
+     * @param GeneratorContract $generator
+     *
+     * @return static
+     */
+    public function setGenerator(GeneratorContract $generator);
+
+    /**
+     * Get the Generator instance
+     *
+     * @return GeneratorContract|null
+     */
+    public function getGenerator(): ?GeneratorContract;
+
+    /**
      * Exports the factory as an array.
      *
-     * @return array<array>|array<string,mixed>|null
+     * @return array|null
      */
     public function toArray(): ?array;
 
@@ -30,9 +46,9 @@ interface FactoryContract
      * @param string $name
      * @param mixed $value
      *
-     * @return void
+     * @return static
      */
-    public function addToObject(string $object, string $name, $value): void;
+    public function addToObject(string $object, string $name, $value);
 
     /**
      * Add an object to an internal array (such as the "errors" array).
@@ -40,9 +56,9 @@ interface FactoryContract
      * @param string $object
      * @param mixed $value
      *
-     * @return void
+     * @return static
      */
-    public function addToArray(string $object, $value): void;
+    public function addToArray(string $object, $value);
 
     /**
      * Exports the factory as a JSON string.

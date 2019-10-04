@@ -14,7 +14,7 @@ trait HasVersion
      *
      * @var string
      */
-    public $version;
+    protected $version;
 
     /**
      * Set the "version" member
@@ -28,6 +28,16 @@ trait HasVersion
         $this->version = $version;
 
         return $this;
+    }
+
+    /**
+     * Get the "version" member
+     *
+     * @return string|null
+     */
+    public function getVersion(): ?string
+    {
+        return $this->version;
     }
 
     /**

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace VGirol\JsonApiFaker\Factory;
 
+use VGirol\JsonApiFaker\Contract\CollectionContract;
 use VGirol\JsonApiFaker\Exception\JsonApiFakerException;
 use VGirol\JsonApiFaker\Messages;
 
@@ -11,19 +12,20 @@ use VGirol\JsonApiFaker\Messages;
  * Factory for collection of resource object (@see ResourceObjectFactory)
  * or resource identifier (@see ResourceIdentifierFactory).
  */
-class CollectionFactory extends BaseFactory
+class CollectionFactory extends BaseFactory implements CollectionContract
 {
     /**
-     * Array of ResourceObjectFactory or ResourceIdentifierFactory objects
+     * Array of objects implementing ResourceObjectContract or ResourceIdentifierContract
      *
-     * @var array<ResourceObjectFactory>|array<ResourceIdentifierFactory>|null
+     * @var array|null
      */
-    public $array;
+    protected $array;
 
     /**
      * Sets the collection.
      *
-     * @param array<ResourceIdentifierFactory>|array<ResourceObjectFactory>|null $collection
+     * @param array|null $collection An array of objects implementing ResourceObjectContract
+     *                               or ResourceIdentifierContract
      *
      * @return static
      */
@@ -35,9 +37,22 @@ class CollectionFactory extends BaseFactory
     }
 
     /**
-     * @inheritDoc
+     * Get the collection.
      *
-     * @return array<array>|null
+     * The collection is an array of objects implementing ResourceObjectContract or ResourceIdentifierContract
+     *
+     * @return array|null
+     */
+    public function getCollection(): ?array
+    {
+        return $this->array;
+    }
+
+    /**
+     * Exports the factory as an array.
+     *
+     * @return array|null
+     * @throws JsonApiFakerException
      */
     public function toArray(): ?array
     {
@@ -49,7 +64,7 @@ class CollectionFactory extends BaseFactory
             /**
              * @param ResourceObjectFactory|ResourceIdentifierFactory $resource
              *
-             * @return array<string,mixed>|null
+             * @return array|null
              */
             function ($resource) {
                 return $resource->toArray();
@@ -100,17 +115,17 @@ class CollectionFactory extends BaseFactory
      *
      * @return static
      */
-    public function fake($options = null, $count = 5)
+    public function fake(int $options = 0, int $count = 5)
     {
-        if ($options === null) {
+        if ($options === 0) {
             $options = Options::FAKE_RESOURCE_OBJECT;
         }
-        $class = (($options & Options::FAKE_RESOURCE_IDENTIFIER) == Options::FAKE_RESOURCE_IDENTIFIER) ?
-            ResourceIdentifierFactory::class : ResourceObjectFactory::class;
+        $fn = (($options & Options::FAKE_RESOURCE_IDENTIFIER) == Options::FAKE_RESOURCE_IDENTIFIER) ?
+            'resourceIdentifier' : 'resourceObject';
 
         $collection = [];
         for ($i = 0; $i < $count; $i++) {
-            $collection[] = (new $class)->fake();
+            $collection[] = $this->generator->{$fn}()->fake();
         }
 
         return $this->setCollection($collection);

@@ -4,14 +4,15 @@ declare(strict_types=1);
 
 namespace VGirol\JsonApiFaker\Factory;
 
+use VGirol\JsonApiConstant\Members;
+use VGirol\JsonApiFaker\Contract\ErrorContract;
 use VGirol\JsonApiFaker\Exception\JsonApiFakerException;
-use VGirol\JsonApiFaker\Members;
 use VGirol\JsonApiFaker\Messages;
 
 /**
  * A factory for error object
  */
-class ErrorFactory extends BaseFactory
+class ErrorFactory extends BaseFactory implements ErrorContract
 {
     use HasIdentifier;
     use HasLinks;
@@ -48,7 +49,7 @@ class ErrorFactory extends BaseFactory
     /**
      * The "source" member
      *
-     * @var array<string,mixed>
+     * @var array
      */
     public $source;
 
@@ -75,7 +76,7 @@ class ErrorFactory extends BaseFactory
     /**
      * Set the "source" member
      *
-     * @param array<string,mixed> $source
+     * @param array $source
      *
      * @return static
      */
@@ -87,8 +88,7 @@ class ErrorFactory extends BaseFactory
     }
 
     /**
-     * @inheritDoc
-     * @return array<string,mixed>
+     * @return array
      */
     public function toArray(): array
     {
@@ -100,19 +100,19 @@ class ErrorFactory extends BaseFactory
             $resource[Members::LINKS] = $this->links;
         }
         if (isset($this->status)) {
-            $resource[Members::STATUS] = $this->status;
+            $resource[Members::ERROR_STATUS] = $this->status;
         }
         if (isset($this->code)) {
-            $resource[Members::CODE] = $this->code;
+            $resource[Members::ERROR_CODE] = $this->code;
         }
         if (isset($this->title)) {
-            $resource[Members::TITLE] = $this->title;
+            $resource[Members::ERROR_TITLE] = $this->title;
         }
         if (isset($this->details)) {
-            $resource[Members::DETAILS] = $this->details;
+            $resource[Members::ERROR_DETAILS] = $this->details;
         }
         if (isset($this->source)) {
-            $resource[Members::SOURCE] = $this->source;
+            $resource[Members::ERROR_SOURCE] = $this->source;
         }
         if (isset($this->meta)) {
             $resource[Members::META] = $this->meta;
@@ -126,6 +126,7 @@ class ErrorFactory extends BaseFactory
      * ("id", "links", "meta", "status", "code", "title", "details" and "source").
      *
      * @return static
+     * @throws JsonApiFakerException
      */
     public function fake()
     {
@@ -143,6 +144,7 @@ class ErrorFactory extends BaseFactory
      * Fill the "status" member with fake value
      *
      * @return static
+     * @throws JsonApiFakerException
      */
     private function fakeStatus()
     {
@@ -162,6 +164,7 @@ class ErrorFactory extends BaseFactory
      * Fill the "code" member with fake value
      *
      * @return static
+     * @throws JsonApiFakerException
      */
     private function fakeCode()
     {
@@ -174,6 +177,7 @@ class ErrorFactory extends BaseFactory
      * Fill the "title" member with fake value
      *
      * @return static
+     * @throws JsonApiFakerException
      */
     private function fakeTitle()
     {
@@ -186,6 +190,7 @@ class ErrorFactory extends BaseFactory
      * Fill the "details" member with fake value
      *
      * @return static
+     * @throws JsonApiFakerException
      */
     private function fakeDetails()
     {

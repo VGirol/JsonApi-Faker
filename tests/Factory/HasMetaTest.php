@@ -21,7 +21,7 @@ class HasMetaTest extends TestCase
         $this->checkSetMethod(
             $this->getMockForTrait(HasMeta::class),
             'setMeta',
-            'meta',
+            'getMeta',
             [
                 'first' => 'test'
             ],
@@ -51,7 +51,7 @@ class HasMetaTest extends TestCase
                 }
             },
             'addToMeta',
-            'meta',
+            'getMeta',
             ['first' => 'test'],
             ['second' => 'another test']
         );
@@ -76,14 +76,14 @@ class HasMetaTest extends TestCase
             }
         };
 
-        PHPUnit::assertEmpty($mock->meta);
+        PHPUnit::assertEmpty($mock->getMeta());
 
         $obj = $mock->fakeMeta();
 
         PHPUnit::assertSame($obj, $mock);
-        PHPUnit::assertNotEmpty($mock->meta);
-        PHPUnit::assertEquals(5, count($mock->meta));
+        PHPUnit::assertNotEmpty($mock->getMeta());
+        PHPUnit::assertEquals(5, count($mock->getMeta()));
 
-        Assert::assertIsValidMetaObject($mock->meta, true);
+        Assert::assertIsValidMetaObject($mock->getMeta(), true);
     }
 }

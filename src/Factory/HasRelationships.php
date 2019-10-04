@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace VGirol\JsonApiFaker\Factory;
 
+use VGirol\JsonApiFaker\Contract\RelationshipContract;
+
 /**
  * Add "relationships" member to a factory.
  */
@@ -12,15 +14,25 @@ trait HasRelationships
     /**
      * The "relationships" member
      *
-     * @var array<string, RelationshipFactory>
+     * @var array An array of RelationshipFactory
      */
-    public $relationships;
+    protected $relationships;
+
+    /**
+     * Get the relationships collection
+     *
+     * @return array|null
+     */
+    public function getRelationships(): ?array
+    {
+        return $this->relationships;
+    }
 
     /**
      * Add a single relationship
      *
      * @param string $name
-     * @param RelationshipFactory $relationship
+     * @param RelationshipContract $relationship
      *
      * @return static
      */
@@ -45,7 +57,7 @@ trait HasRelationships
         for ($i = 0; $i < $count; $i++) {
             $this->addRelationship(
                 $faker->unique()->numerify('relationship##'),
-                (new RelationshipFactory)->fake()
+                $this->generator->relationship()->fake()
             );
         }
 

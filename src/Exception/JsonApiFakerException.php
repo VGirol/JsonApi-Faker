@@ -9,5 +9,5 @@ namespace VGirol\JsonApiFaker\Exception;
  */
 class JsonApiFakerException extends \Exception
 {
-    // Empty
+ 
 }

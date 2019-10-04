@@ -21,7 +21,7 @@ class HasLinksTest extends TestCase
         $this->checkSetMethod(
             $this->getMockForTrait(HasLinks::class),
             'setLinks',
-            'links',
+            'getLinks',
             [
                 'self' => 'test'
             ],
@@ -37,7 +37,8 @@ class HasLinksTest extends TestCase
     public function addLink()
     {
         $this->checkAddSingle(
-            new class extends BaseFactory {
+            new class extends BaseFactory
+            {
                 use HasLinks;
 
                 public function toArray(): ?array
@@ -51,7 +52,7 @@ class HasLinksTest extends TestCase
                 }
             },
             'addLink',
-            'links',
+            'getLinks',
             [
                 'self' => 'test'
             ],
@@ -67,7 +68,8 @@ class HasLinksTest extends TestCase
     public function addLinks()
     {
         $this->checkAddMulti(
-            new class extends BaseFactory {
+            new class extends BaseFactory
+            {
                 use HasLinks;
 
                 public function toArray(): ?array
@@ -81,7 +83,7 @@ class HasLinksTest extends TestCase
                 }
             },
             'addLinks',
-            'links',
+            'getLinks',
             [
                 'self' => 'test',
                 'related' => 'another test'
@@ -97,7 +99,8 @@ class HasLinksTest extends TestCase
      */
     public function fakeLinks()
     {
-        $mock = new class extends BaseFactory {
+        $mock = new class extends BaseFactory
+        {
             use HasLinks;
 
             public function toArray(): ?array
@@ -111,15 +114,15 @@ class HasLinksTest extends TestCase
             }
         };
 
-        PHPUnit::assertEmpty($mock->links);
+        PHPUnit::assertEmpty($mock->getLinks());
 
         $obj = $mock->fakeLinks();
 
         PHPUnit::assertSame($obj, $mock);
-        PHPUnit::assertNotEmpty($mock->links);
-        PHPUnit::assertEquals(1, count($mock->links));
-        PHPUnit::assertEquals(['self'], array_keys($mock->links));
+        PHPUnit::assertNotEmpty($mock->getLinks());
+        PHPUnit::assertEquals(1, count($mock->getLinks()));
+        PHPUnit::assertEquals(['self'], array_keys($mock->getLinks()));
 
-        Assert::assertIsValidLinksObject($mock->links, ['self'], true);
+        Assert::assertIsValidLinksObject($mock->getLinks(), ['self'], true);
     }
 }

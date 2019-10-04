@@ -12,14 +12,14 @@ trait HasLinks
     /**
      * The "links" member
      *
-     * @var array<string,string>|array<string,array>
+     * @var array
      */
-    public $links;
+    protected $links;
 
     /**
      * Set the "links" member.
      *
-     * @param array<string,string>|array<string,array> $links
+     * @param array $links
      *
      * @return static
      */
@@ -31,9 +31,19 @@ trait HasLinks
     }
 
     /**
+     * Set the "links" member.
+     *
+     * @return array|null
+     */
+    public function getLinks(): ?array
+    {
+        return $this->links;
+    }
+
+    /**
      * Add some links to the "links" member.
      *
-     * @param array<string,mixed> $links
+     * @param array $links
      *
      * @return static
      */
@@ -50,7 +60,7 @@ trait HasLinks
      * Add a single link to the "links" member
      *
      * @param string $name
-     * @param array<string,mixed>|string|null $link
+     * @param array|string|null $link
      *
      * @return static
      */
@@ -64,7 +74,7 @@ trait HasLinks
     /**
      * Fill the "links" member with fake values.
      *
-     * @param array<string,array> $links
+     * @param array $links
      *
      * @return static
      */

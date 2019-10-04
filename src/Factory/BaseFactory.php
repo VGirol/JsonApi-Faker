@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace VGirol\JsonApiFaker\Factory;
 
 use Faker\Generator;
+use VGirol\JsonApiConstant\Members;
 use VGirol\JsonApiFaker\Contract\FactoryContract;
 use VGirol\JsonApiFaker\Contract\GeneratorContract;
 use VGirol\JsonApiFaker\Exception\JsonApiFakerException;
@@ -20,7 +21,7 @@ abstract class BaseFactory implements FactoryContract
      *
      * @var GeneratorContract
      */
-    public $generator;
+    protected $generator;
 
     abstract public function toArray(): ?array;
 
@@ -33,33 +34,68 @@ abstract class BaseFactory implements FactoryContract
      *
      * @return static
      */
-    public function setGenerator($generator)
+    public function setGenerator(GeneratorContract $generator)
     {
         $this->generator = $generator;
 
         return $this;
     }
 
-    public function addToObject(string $object, string $name, $value): void
+    /**
+     * Get the Generator instance
+     *
+     * @return GeneratorContract|null
+     */
+    public function getGenerator(): ?GeneratorContract
+    {
+        return $this->generator;
+    }
+
+    /**
+     * Add a member to an internal object (such as the "attributes" object of a resource).
+     *
+     * @param string $object
+     * @param string $name
+     * @param mixed $value
+     *
+     * @return static
+     */
+    public function addToObject(string $object, string $name, $value)
     {
         if (!isset($this->{$object})) {
             $this->{$object} = [];
         }
 
         $this->{$object}[$name] = $value;
+
+        return $this;
     }
 
-    public function addToArray(string $object, $value): void
+    /**
+     * Add an object to an internal array (such as the "errors" array).
+     *
+     * @param string $object
+     * @param mixed $value
+     *
+     * @return static
+     */
+    public function addToArray(string $object, $value)
     {
         if (!isset($this->{$object})) {
             $this->{$object} = [];
         }
 
         $this->{$object}[] = $value;
+
+        return $this;
     }
 
     /**
-     * @inheritDoc
+     * Exports the factory as a JSON string.
+     *
+     * @param integer $options Bitmask (@see https://www.php.net/manual/en/function.json-encode.php)
+     *
+     * @return string
      * @throws JsonApiFakerException
      */
     public function toJson($options = 0): string
@@ -103,7 +139,7 @@ abstract class BaseFactory implements FactoryContract
      *
      * @param integer|array $options The number of keys to generate or an array of keys to use.
      *
-     * @return array<string,mixed>
+     * @return array
      */
     protected function fakeMembers($options): array
     {
@@ -139,9 +175,9 @@ abstract class BaseFactory implements FactoryContract
     protected function fakeMemberName(Generator $faker, $name = null): string
     {
         if (($name === null) || \is_int($name)) {
-            $forbidden = ['id', 'type'];
+            $forbidden = [Members::ID, Members::TYPE];
             do {
-                $name = $faker->unique()->word;
+                $name = $faker->unique()->word();
             } while (in_array($name, $forbidden));
         }
 
@@ -156,7 +192,7 @@ abstract class BaseFactory implements FactoryContract
      * Returns a fake member's value.
      *
      * @param Generator $faker
-     * @param array<string>|null $providers
+     * @param array|null $providers
      * @return mixed
      */
     protected function fakeValue(Generator $faker, $providers = [])

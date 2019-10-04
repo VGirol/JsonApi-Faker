@@ -92,16 +92,16 @@ class HasIdentificationTest extends TestCase
             }
         };
 
-        PHPUnit::assertEmpty($mock->resourceType);
-        PHPUnit::assertEmpty($mock->id);
+        PHPUnit::assertEmpty($mock->getResourceType());
+        PHPUnit::assertEmpty($mock->getId());
 
         $obj = $mock->fakeIdentification();
 
         PHPUnit::assertSame($obj, $mock);
-        PHPUnit::assertNotEmpty($mock->resourceType);
-        PHPUnit::assertNotEmpty($mock->id);
-        PHPUnit::assertGreaterThanOrEqual(0, $mock->id);
-        PHPUnit::assertLessThanOrEqual(100, $mock->id);
+        PHPUnit::assertNotEmpty($mock->getResourceType());
+        PHPUnit::assertNotEmpty($mock->getId());
+        PHPUnit::assertGreaterThanOrEqual(0, $mock->getId());
+        PHPUnit::assertLessThanOrEqual(100, $mock->getId());
 
         Assert::assertResourceTypeMember($obj->toArray(), true);
         Assert::assertResourceIdMember($obj->toArray());

@@ -20,12 +20,12 @@ class BaseFactoryTest extends TestCase
 
         $factory = $this->getMockForAbstractClass(BaseFactory::class);
 
-        PHPUnit::assertNull($factory->generator);
+        PHPUnit::assertNull($factory->getGenerator());
 
         $obj = $factory->setGenerator($generator);
 
         PHPUnit::assertSame($obj, $factory);
-        PHPUnit::assertSame($generator, $factory->generator);
+        PHPUnit::assertSame($generator, $factory->getGenerator());
     }
 
     /**
@@ -44,7 +44,8 @@ class BaseFactoryTest extends TestCase
         PHPUnit::assertObjectNotHasAttribute($object, $factory);
 
         foreach ($values as $key => $value) {
-            $factory->addToObject($object, $key, $value);
+            $obj = $factory->addToObject($object, $key, $value);
+            PHPUnit::assertSame($obj, $factory);
         }
 
         PHPUnit::assertObjectHasAttribute($object, $factory);
@@ -70,7 +71,8 @@ class BaseFactoryTest extends TestCase
         PHPUnit::assertObjectNotHasAttribute($object, $factory);
 
         foreach ($values as $key => $value) {
-            $factory->addToArray($object, $value);
+            $obj = $factory->addToArray($object, $value);
+            PHPUnit::assertSame($obj, $factory);
         }
 
         PHPUnit::assertObjectHasAttribute($object, $factory);

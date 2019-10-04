@@ -4,26 +4,26 @@ declare(strict_types=1);
 
 namespace VGirol\JsonApiFaker\Factory;
 
-use VGirol\JsonApiFaker\Members;
+use VGirol\JsonApiConstant\Members;
+use VGirol\JsonApiFaker\Contract\ResourceIdentifierContract;
 
 /**
  * A factory for resource identifier object
  */
-class ResourceIdentifierFactory extends BaseFactory
+class ResourceIdentifierFactory extends BaseFactory implements ResourceIdentifierContract
 {
     use HasIdentification;
     use HasMeta;
 
     /**
-     * @inheritDoc
-     * @return array<string,mixed>
+     * @return array
      */
     public function toArray(): array
     {
         $resource = [];
         $identification = $this->getIdentification();
         if ($identification !== null) {
-            $resource = array_merge($resource, $identification);
+            $resource = $identification;
         }
 
         if (isset($this->meta)) {

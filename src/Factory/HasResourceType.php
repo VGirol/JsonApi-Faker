@@ -14,7 +14,7 @@ trait HasResourceType
      *
      * @var string|null
      */
-    public $resourceType;
+    protected $resourceType;
 
     /**
      * Set the "type" member.
@@ -28,6 +28,16 @@ trait HasResourceType
         $this->resourceType = $type;
 
         return $this;
+    }
+
+    /**
+     * Get the "type" member.
+     *
+     * @return string|null
+     */
+    public function getResourceType(): ?string
+    {
+        return $this->resourceType;
     }
 
     /**

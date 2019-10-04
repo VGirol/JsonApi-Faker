@@ -4,7 +4,14 @@ declare(strict_types=1);
 
 namespace VGirol\JsonApiFaker;
 
+use VGirol\JsonApiFaker\Contract\CollectionContract;
+use VGirol\JsonApiFaker\Contract\DocumentContract;
+use VGirol\JsonApiFaker\Contract\ErrorContract;
 use VGirol\JsonApiFaker\Contract\GeneratorContract;
+use VGirol\JsonApiFaker\Contract\JsonapiContract;
+use VGirol\JsonApiFaker\Contract\RelationshipContract;
+use VGirol\JsonApiFaker\Contract\ResourceIdentifierContract;
+use VGirol\JsonApiFaker\Contract\ResourceObjectContract;
 use VGirol\JsonApiFaker\Exception\JsonApiFakerException;
 use VGirol\JsonApiFaker\Factory\CollectionFactory;
 use VGirol\JsonApiFaker\Factory\DocumentFactory;
@@ -22,7 +29,7 @@ class Generator implements GeneratorContract
     /**
      * All the available factories
      *
-     * @var array<string,string|null>
+     * @var array
      */
     private $factories;
 
@@ -34,9 +41,6 @@ class Generator implements GeneratorContract
         $this->setDefaultFactories();
     }
 
-    /**
-     * @inheritDoc
-     */
     public function setFactory(string $key, ?string $class)
     {
         $this->factories[$key] = $class;
@@ -45,7 +49,13 @@ class Generator implements GeneratorContract
     }
 
     /**
-     * @inheritDoc
+     * Create a factory
+     *
+     * @param string $alias
+     * @param mixed ...$args
+     *
+     * @return mixed
+     * @throws JsonApiFakerException
      */
     public function create(string $alias, ...$args)
     {
@@ -57,7 +67,8 @@ class Generator implements GeneratorContract
     }
 
     /**
-     * @inheritDoc
+     * @return CollectionContract
+     * @throws JsonApiFakerException
      */
     public function collection(...$args)
     {
@@ -65,7 +76,8 @@ class Generator implements GeneratorContract
     }
 
     /**
-     * @inheritDoc
+     * @return DocumentContract
+     * @throws JsonApiFakerException
      */
     public function document(...$args)
     {
@@ -73,7 +85,8 @@ class Generator implements GeneratorContract
     }
 
     /**
-     * @inheritDoc
+     * @return ErrorContract
+     * @throws JsonApiFakerException
      */
     public function error(...$args)
     {
@@ -81,7 +94,8 @@ class Generator implements GeneratorContract
     }
 
     /**
-     * @inheritDoc
+     * @return JsonapiContract
+     * @throws JsonApiFakerException
      */
     public function jsonapiObject(...$args)
     {
@@ -89,7 +103,8 @@ class Generator implements GeneratorContract
     }
 
     /**
-     * @inheritDoc
+     * @return RelationshipContract
+     * @throws JsonApiFakerException
      */
     public function relationship(...$args)
     {
@@ -97,7 +112,8 @@ class Generator implements GeneratorContract
     }
 
     /**
-     * @inheritDoc
+     * @return ResourceIdentifierContract
+     * @throws JsonApiFakerException
      */
     public function resourceIdentifier(...$args)
     {
@@ -105,7 +121,8 @@ class Generator implements GeneratorContract
     }
 
     /**
-     * @inheritDoc
+     * @return ResourceObjectContract
+     * @throws JsonApiFakerException
      */
     public function resourceObject(...$args)
     {

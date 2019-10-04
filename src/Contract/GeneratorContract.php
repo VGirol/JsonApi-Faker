@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace VGirol\JsonApiFaker\Contract;
 
-use VGirol\JsonApiFaker\Exception\JsonApiFakerException;
-
 /**
  * This class is an helper to generate factories.
  */
@@ -28,7 +26,6 @@ interface GeneratorContract
      * @param mixed ...$args
      *
      * @return FactoryContract
-     * @throws JsonApiFakerException
      */
     public function create(string $alias, ...$args);
 

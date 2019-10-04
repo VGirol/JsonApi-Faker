@@ -86,7 +86,7 @@ class GeneratorTest extends TestCase
 
         PHPUnit::assertIsObject($obj);
         PHPUnit::assertInstanceOf($class, $obj);
-        PHPUnit::assertSame($faker, $obj->generator);
+        PHPUnit::assertSame($faker, $obj->getGenerator());
     }
 
     public function createObjectProvider()

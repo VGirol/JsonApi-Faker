@@ -4,29 +4,31 @@ declare(strict_types=1);
 
 namespace VGirol\JsonApiFaker\Factory;
 
-use VGirol\JsonApiFaker\Members;
+use VGirol\JsonApiConstant\Members;
+use VGirol\JsonApiFaker\Contract\ResourceObjectContract;
 
 /**
  * A factory for resource object
  */
-class ResourceObjectFactory extends BaseFactory
+class ResourceObjectFactory extends BaseFactory implements ResourceObjectContract
 {
-    use HasIdentification;
-    use HasMeta;
-    use HasLinks;
     use HasAttributes;
+    use HasIdentification;
+    use HasLinks;
+    use HasMeta;
     use HasRelationships;
 
     /**
-     * @inheritDoc
-     * @return array<string,mixed>
+     * Exports the factory as an array.
+     *
+     * @return array
      */
     public function toArray(): array
     {
         $resource = [];
         $identification = $this->getIdentification();
         if ($identification !== null) {
-            $resource = array_merge($resource, $identification);
+            $resource = $identification;
         }
 
         if (isset($this->attributes)) {
@@ -42,7 +44,7 @@ class ResourceObjectFactory extends BaseFactory
             $resource[Members::RELATIONSHIPS] = array_map(
                 /**
                  * @param RelationshipFactory $relationship
-                 * @return array<string,mixed>
+                 * @return array
                  */
                 function ($relationship) {
                     return $relationship->toArray();

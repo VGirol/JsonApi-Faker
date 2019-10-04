@@ -4,22 +4,22 @@ declare(strict_types=1);
 
 namespace VGirol\JsonApiFaker\Factory;
 
-use VGirol\JsonApiFaker\Members;
+use VGirol\JsonApiConstant\Members;
 
 /**
  * Add identification ("type" and "id" members) to a factory.
  */
 trait HasIdentification
 {
-    use HasResourceType;
     use HasIdentifier;
+    use HasResourceType;
 
     /**
      * Get the identification ("type" and "id" members) as array
      *
-     * @return array<string,string|null>|null
+     * @return array|null
      */
-    public function getIdentification()
+    public function getIdentification(): ?array
     {
         if (!isset($this->id) && !isset($this->resourceType)) {
             return null;

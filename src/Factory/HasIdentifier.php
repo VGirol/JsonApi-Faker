@@ -14,7 +14,7 @@ trait HasIdentifier
      *
      * @var int|string|null
      */
-    public $id;
+    protected $id;
 
     /**
      * Set the "id" member.
@@ -27,6 +27,16 @@ trait HasIdentifier
         $this->id = $resourceId;
 
         return $this;
+    }
+
+    /**
+     * Get the "id" member.
+     *
+     * @return int|string|null
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 
     /**

@@ -21,7 +21,7 @@ class HasAttributesTest extends TestCase
         $this->checkSetMethod(
             $this->getMockForTrait(HasAttributes::class),
             'setAttributes',
-            'attributes',
+            'getAttributes',
             [
                 'attr1' => 'value1'
             ],
@@ -51,7 +51,7 @@ class HasAttributesTest extends TestCase
                 }
             },
             'addAttribute',
-            'attributes',
+            'getAttributes',
             [
                 'attr1' => 'value1'
             ],
@@ -81,7 +81,7 @@ class HasAttributesTest extends TestCase
                 }
             },
             'addAttributes',
-            'attributes',
+            'getAttributes',
             [
                 'attr1' => 'value1',
                 'attr2' => 'value2'
@@ -112,14 +112,14 @@ class HasAttributesTest extends TestCase
             }
         };
 
-        PHPUnit::assertEmpty($mock->attributes);
+        PHPUnit::assertEmpty($mock->getAttributes());
 
         $obj = $mock->fakeAttributes();
 
         PHPUnit::assertSame($obj, $mock);
-        PHPUnit::assertNotEmpty($mock->attributes);
-        PHPUnit::assertEquals(5, count($mock->attributes));
+        PHPUnit::assertNotEmpty($mock->getAttributes());
+        PHPUnit::assertEquals(5, count($mock->getAttributes()));
 
-        Assert::assertIsValidAttributesObject($mock->attributes, true);
+        Assert::assertIsValidAttributesObject($mock->getAttributes(), true);
     }
 }

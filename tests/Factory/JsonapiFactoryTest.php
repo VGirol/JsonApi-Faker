@@ -69,14 +69,15 @@ class JsonapiFactoryTest extends TestCase
     {
         $factory = new JsonapiFactory;
 
-        PHPUnit::assertEmpty($factory->version);
-        PHPUnit::assertEmpty($factory->meta);
+        PHPUnit::assertEmpty($factory->getVersion());
+        PHPUnit::assertEmpty($factory->getMeta());
 
         $obj = $factory->fake();
 
         PHPUnit::assertSame($obj, $factory);
-        PHPUnit::assertNotEmpty($factory->version);
-        PHPUnit::assertNotEmpty($factory->meta);
+        PHPUnit::assertNotEmpty($factory->getVersion());
+        PHPUnit::assertNotEmpty($factory->getMeta());
+        PHPUnit::assertCount(5, $factory->getMeta());
 
         Assert::assertIsValidJsonapiObject($obj->toArray(), true);
     }

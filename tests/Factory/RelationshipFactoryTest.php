@@ -7,6 +7,7 @@ use VGirol\JsonApiAssert\Assert;
 use VGirol\JsonApiFaker\Factory\CollectionFactory;
 use VGirol\JsonApiFaker\Factory\RelationshipFactory;
 use VGirol\JsonApiFaker\Factory\ResourceIdentifierFactory;
+use VGirol\JsonApiFaker\Generator;
 use VGirol\JsonApiFaker\Tests\TestCase;
 
 class RelationshipFactoryTest extends TestCase
@@ -131,18 +132,18 @@ class RelationshipFactoryTest extends TestCase
      */
     public function fake()
     {
-        $factory = new RelationshipFactory;
+        $factory = (new RelationshipFactory)->setGenerator(new Generator);
 
-        PHPUnit::assertEmpty($factory->meta);
-        PHPUnit::assertEmpty($factory->links);
-        PHPUnit::assertEmpty($factory->data);
+        PHPUnit::assertEmpty($factory->getMeta());
+        PHPUnit::assertEmpty($factory->getLinks());
+        PHPUnit::assertEmpty($factory->getData());
 
         $obj = $factory->fake();
 
         PHPUnit::assertSame($obj, $factory);
-        PHPUnit::assertNotEmpty($factory->meta);
-        PHPUnit::assertNotEmpty($factory->links);
-        PHPUnit::assertNotEmpty($factory->data);
+        PHPUnit::assertNotEmpty($factory->getMeta());
+        PHPUnit::assertNotEmpty($factory->getLinks());
+        PHPUnit::assertNotEmpty($factory->getData());
 
         $relationship = $obj->toArray();
         Assert::assertIsArrayOfObjects($relationship['data']);

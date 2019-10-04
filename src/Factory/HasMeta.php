@@ -12,14 +12,14 @@ trait HasMeta
     /**
      * The "meta" member
      *
-     * @var array<string,mixed>
+     * @var array
      */
-    public $meta;
+    protected $meta;
 
     /**
      * Set the "meta" member.
      *
-     * @param array<string,mixed> $meta
+     * @param array $meta
      *
      * @return static
      */
@@ -28,6 +28,16 @@ trait HasMeta
         $this->meta = $meta;
 
         return $this;
+    }
+
+    /**
+     * Get the "meta" member.
+     *
+     * @return array|null
+     */
+    public function getMeta(): ?array
+    {
+        return $this->meta;
     }
 
     /**

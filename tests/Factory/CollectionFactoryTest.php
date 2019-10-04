@@ -7,6 +7,7 @@ use VGirol\JsonApiAssert\Assert;
 use VGirol\JsonApiFaker\Exception\JsonApiFakerException;
 use VGirol\JsonApiFaker\Factory\CollectionFactory;
 use VGirol\JsonApiFaker\Factory\ResourceIdentifierFactory;
+use VGirol\JsonApiFaker\Generator;
 use VGirol\JsonApiFaker\Messages;
 use VGirol\JsonApiFaker\Tests\TestCase;
 
@@ -114,9 +115,14 @@ class CollectionFactoryTest extends TestCase
             $item['meta'] = ['new' => $item['id']];
         });
 
-        $obj = $factory->each(function ($item) {
-            $item->addToMeta('new', $item->id);
-        });
+        $obj = $factory->each(
+            /**
+             * @param ResourceIdentifierFactory $item
+             */
+            function ($item) {
+                $item->addToMeta('new', $item->getId());
+            }
+        );
         $result = $factory->toArray();
 
         PHPUnit::assertSame($expected, $result);
@@ -167,12 +173,17 @@ class CollectionFactoryTest extends TestCase
         $factory = new CollectionFactory;
         $factory->setCollection($collection);
 
-        $result = $factory->map(function ($item) {
-            return [
-                'type' => "new{$item->resourceType}",
-                'id' => $item->id
-            ];
-        });
+        $result = $factory->map(
+            /**
+             * @param ResourceIdentifierFactory $item
+             */
+            function ($item) {
+                return [
+                    'type' => 'new' . $item->getResourceType(),
+                    'id' => $item->getId()
+                ];
+            }
+        );
 
         PHPUnit::assertSame($expected, $result);
     }
@@ -199,17 +210,19 @@ class CollectionFactoryTest extends TestCase
      */
     public function fake()
     {
-        $factory = new CollectionFactory;
+        $factory = (new CollectionFactory)->setGenerator(new Generator);
 
-        PHPUnit::assertEmpty($factory->array);
+        PHPUnit::assertEmpty($factory->getCollection());
 
         $obj = $factory->fake();
 
         PHPUnit::assertSame($obj, $factory);
-        PHPUnit::assertNotEmpty($factory->array);
-        PHPUnit::assertIsArray($factory->array);
-        PHPUnit::assertEquals(5, count($factory->array));
 
-        Assert::assertIsArrayOfObjects($factory->array);
+        $collection = $factory->getCollection();
+        PHPUnit::assertNotEmpty($collection);
+        PHPUnit::assertIsArray($collection);
+        PHPUnit::assertEquals(5, count($collection));
+
+        Assert::assertIsArrayOfObjects($collection);
     }
 }

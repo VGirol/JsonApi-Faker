@@ -19,7 +19,7 @@ class HasVersionTest extends TestCase
         $this->checkSetMethod(
             $this->getMockForTrait(HasVersion::class),
             'setVersion',
-            'version',
+            'getVersion',
             'version1',
             'version2'
         );
@@ -32,14 +32,14 @@ class HasVersionTest extends TestCase
     {
         $mock = $this->getMockForTrait(HasVersion::class);
 
-        PHPUnit::assertEmpty($mock->version);
+        PHPUnit::assertEmpty($mock->getVersion());
 
         $obj = $mock->fakeVersion();
 
         PHPUnit::assertSame($obj, $mock);
-        PHPUnit::assertNotEmpty($mock->version);
-        PHPUnit::assertIsString($mock->version);
+        PHPUnit::assertNotEmpty($mock->getVersion());
+        PHPUnit::assertIsString($mock->getVersion());
 
-        PHPUnit::assertRegExp('/[1-9]\.[0-9]/', $mock->version);
+        PHPUnit::assertRegExp('/[1-9]\.[0-9]/', $mock->getVersion());
     }
 }

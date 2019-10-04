@@ -6,6 +6,7 @@ use PHPUnit\Framework\Assert as PHPUnit;
 use VGirol\JsonApiAssert\Assert;
 use VGirol\JsonApiFaker\Factory\BaseFactory;
 use VGirol\JsonApiFaker\Factory\HasRelationships;
+use VGirol\JsonApiFaker\Generator;
 use VGirol\JsonApiFaker\Testing\CheckMethods;
 use VGirol\JsonApiFaker\Tests\TestCase;
 
@@ -19,7 +20,8 @@ class HasRelationshipsTest extends TestCase
     public function addRelationship()
     {
         $this->checkAddSingle(
-            new class extends BaseFactory {
+            new class extends BaseFactory
+            {
                 use HasRelationships;
 
                 public function toArray(): ?array
@@ -33,7 +35,7 @@ class HasRelationshipsTest extends TestCase
                 }
             },
             'addRelationship',
-            'relationships',
+            'getRelationships',
             [
                 'relation1' => 'value1'
             ],
@@ -48,7 +50,8 @@ class HasRelationshipsTest extends TestCase
      */
     public function fakeRelationships()
     {
-        $mock = new class extends BaseFactory {
+        $mock = new class extends BaseFactory
+        {
             use HasRelationships;
 
             public function toArray(): ?array
@@ -67,13 +70,15 @@ class HasRelationshipsTest extends TestCase
             }
         };
 
-        PHPUnit::assertEmpty($mock->relationships);
+        $mock->setGenerator(new Generator);
+
+        PHPUnit::assertEmpty($mock->getRelationships());
 
         $obj = $mock->fakeRelationships();
 
         PHPUnit::assertSame($obj, $mock);
-        PHPUnit::assertNotEmpty($mock->relationships);
-        PHPUnit::assertEquals(2, count($mock->relationships));
+        PHPUnit::assertNotEmpty($mock->getRelationships());
+        PHPUnit::assertEquals(2, count($mock->getRelationships()));
 
         Assert::assertIsValidRelationshipsObject($mock->toArray(), true);
     }

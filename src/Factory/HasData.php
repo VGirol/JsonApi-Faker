@@ -4,20 +4,23 @@ declare(strict_types=1);
 
 namespace VGirol\JsonApiFaker\Factory;
 
-use VGirol\JsonApiFaker\Contract\FactoryContract;
+use VGirol\JsonApiFaker\Contract\CollectionContract;
+use VGirol\JsonApiFaker\Contract\ResourceIdentifierContract;
+use VGirol\JsonApiFaker\Contract\ResourceObjectContract;
+use VGirol\JsonApiFaker\Exception\JsonApiFakerException;
+use VGirol\JsonApiFaker\Messages;
 
 /**
  * Add "data" member to a factory.
  */
 trait HasData
 {
-
     /**
      * The "data" member
      *
-     * @var ResourceIdentifierFactory|ResourceObjectFactory|CollectionFactory|null
+     * @var ResourceIdentifierContract|ResourceObjectContract|CollectionContract|null
      */
-    public $data;
+    protected $data;
 
     /**
      * Flag to indicate that "data" member has been set.
@@ -30,15 +33,35 @@ trait HasData
     /**
      * Set "data" member
      *
-     * @param ResourceIdentifierFactory|ResourceObjectFactory|CollectionFactory|null $data
+     * @param ResourceIdentifierContract|ResourceObjectContract|CollectionContract|null $data
+     *
      * @return static
+     * @throws JsonApiFakerException
      */
     public function setData($data)
     {
+        if (($data !== null)
+            && (is_a($data, ResourceIdentifierContract::class) === false)
+            && (is_a($data, ResourceObjectContract::class) === false)
+            && (is_a($data, CollectionContract::class) === false)
+            ) {
+            throw new JsonApiFakerException(Messages::SET_DATA_BAD_TYPE);
+        }
+
         $this->data = $data;
         $this->hasBeenSet = true;
 
         return $this;
+    }
+
+    /**
+     * Get "data" member
+     *
+     * @return ResourceIdentifierContract|ResourceObjectContract|CollectionContract|null
+     */
+    public function getData()
+    {
+        return $this->data;
     }
 
     /**
@@ -55,14 +78,15 @@ trait HasData
      * Fill the "data" member with fake values
      *
      * @param integer $options Bitmask
-     * @param integer $count In case of collection, it represents the number of resource object
-     *                       or resource identifier to generate
+     * @param integer $count   In case of collection, it represents the number of resource object
+     *                         or resource identifier to generate
      *
      * @return static
+     * @throws JsonApiFakerException
      */
-    public function fakeData($options = null, int $count = 5)
+    public function fakeData(int $options = 0, int $count = 5)
     {
-        if ($options === null) {
+        if ($options === 0) {
             $options = Options::FAKE_RESOURCE_OBJECT | Options::FAKE_COLLECTION;
         }
 
@@ -91,21 +115,27 @@ trait HasData
      * @param integer $count In case of collection, it represents the number of resource object
      *                       or resource identifier to generate
      *
-     * @return FactoryContract
+     * @return ResourceIdentifierContract|ResourceObjectContract|CollectionContract
      */
-    private function fakeCreateFactoryForData($options, int $count)
+    private function fakeCreateFactoryForData(int $options, int $count)
     {
         $isCollection = (($options & Options::FAKE_COLLECTION) == Options::FAKE_COLLECTION);
         $isRI = (($options & Options::FAKE_RESOURCE_IDENTIFIER) == Options::FAKE_RESOURCE_IDENTIFIER);
 
         if ($isCollection) {
-            return (new CollectionFactory)->fake($options, $count);
+            return $this->generator
+                ->collection()
+                ->fake($options, $count);
         }
 
         if ($isRI) {
-            return (new ResourceIdentifierFactory)->fake();
+            return $this->generator
+                ->resourceIdentifier()
+                ->fake();
         }
 
-        return (new ResourceObjectFactory)->fake();
+        return $this->generator
+            ->resourceObject()
+            ->fake();
     }
 }

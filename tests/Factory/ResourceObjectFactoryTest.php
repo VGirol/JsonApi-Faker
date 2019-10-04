@@ -7,6 +7,7 @@ use VGirol\JsonApiAssert\Assert;
 use VGirol\JsonApiFaker\Factory\RelationshipFactory;
 use VGirol\JsonApiFaker\Factory\ResourceIdentifierFactory;
 use VGirol\JsonApiFaker\Factory\ResourceObjectFactory;
+use VGirol\JsonApiFaker\Generator;
 use VGirol\JsonApiFaker\Tests\TestCase;
 
 class ResourceObjectFactoryTest extends TestCase
@@ -119,27 +120,27 @@ class ResourceObjectFactoryTest extends TestCase
      */
     public function fake()
     {
-        $factory = new ResourceObjectFactory;
+        $factory = (new ResourceObjectFactory)->setGenerator(new Generator);
 
-        PHPUnit::assertEmpty($factory->id);
-        PHPUnit::assertEmpty($factory->resourceType);
-        PHPUnit::assertEmpty($factory->attributes);
-        PHPUnit::assertEmpty($factory->meta);
-        PHPUnit::assertEmpty($factory->links);
-        PHPUnit::assertEmpty($factory->relationships);
+        PHPUnit::assertEmpty($factory->getId());
+        PHPUnit::assertEmpty($factory->getResourceType());
+        PHPUnit::assertEmpty($factory->getAttributes());
+        PHPUnit::assertEmpty($factory->getMeta());
+        PHPUnit::assertEmpty($factory->getLinks());
+        PHPUnit::assertEmpty($factory->getRelationships());
 
         $obj = $factory->fake();
 
         PHPUnit::assertSame($obj, $factory);
-        PHPUnit::assertNotEmpty($factory->id);
-        PHPUnit::assertNotEmpty($factory->resourceType);
-        PHPUnit::assertNotEmpty($factory->attributes);
-        PHPUnit::assertEquals(5, count($factory->attributes));
-        PHPUnit::assertNotEmpty($factory->meta);
-        PHPUnit::assertEquals(5, count($factory->meta));
-        PHPUnit::assertNotEmpty($factory->links);
-        PHPUnit::assertEquals(1, count($factory->links));
-        PHPUnit::assertEquals(['self'], array_keys($factory->links));
+        PHPUnit::assertNotEmpty($factory->getId());
+        PHPUnit::assertNotEmpty($factory->getResourceType());
+        PHPUnit::assertNotEmpty($factory->getAttributes());
+        PHPUnit::assertEquals(5, count($factory->getAttributes()));
+        PHPUnit::assertNotEmpty($factory->getMeta());
+        PHPUnit::assertEquals(5, count($factory->getMeta()));
+        PHPUnit::assertNotEmpty($factory->getLinks());
+        PHPUnit::assertEquals(1, count($factory->getLinks()));
+        PHPUnit::assertEquals(['self'], array_keys($factory->getLinks()));
 
         Assert::assertIsValidResourceObject($factory->toArray(), true);
     }

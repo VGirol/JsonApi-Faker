@@ -148,9 +148,9 @@ class ErrorFactoryTest extends TestCase
     {
         $factory = new ErrorFactory;
 
-        PHPUnit::assertEmpty($factory->id);
-        PHPUnit::assertEmpty($factory->links);
-        PHPUnit::assertEmpty($factory->meta);
+        PHPUnit::assertEmpty($factory->getId());
+        PHPUnit::assertEmpty($factory->getLinks());
+        PHPUnit::assertEmpty($factory->getMeta());
         PHPUnit::assertEmpty($factory->status);
         PHPUnit::assertEmpty($factory->code);
         PHPUnit::assertEmpty($factory->title);
@@ -160,14 +160,14 @@ class ErrorFactoryTest extends TestCase
         $obj = $factory->fake();
 
         PHPUnit::assertSame($obj, $factory);
-        PHPUnit::assertNotEmpty($factory->id);
+        PHPUnit::assertNotEmpty($factory->getId());
 
-        PHPUnit::assertNotEmpty($factory->links);
-        PHPUnit::assertEquals(1, count($factory->links));
-        PHPUnit::assertEquals('about', array_keys($factory->links)[0]);
+        PHPUnit::assertNotEmpty($factory->getLinks());
+        PHPUnit::assertEquals(1, count($factory->getLinks()));
+        PHPUnit::assertEquals('about', array_keys($factory->getLinks())[0]);
 
-        PHPUnit::assertNotEmpty($factory->meta);
-        PHPUnit::assertEquals(5, count($factory->meta));
+        PHPUnit::assertNotEmpty($factory->getMeta());
+        PHPUnit::assertEquals(5, count($factory->getMeta()));
 
         PHPUnit::assertNotEmpty($factory->status);
         PHPUnit::assertIsString($factory->status);
