@@ -19,3 +19,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Fixed
 
 - Fix bug when arraying "errors" of a DocumentFactory
+
+## 1.0.3 - 2019-10-04
+
+- Many enhancements, bug fixes and code lint
