@@ -10,12 +10,6 @@ plugins:
     enabled: true
     config:
       file_extensions: "php"
-      directory_list: 
-        "src"
-        "vendor"
-      exclude_analysis_directory_list:
-        "tests/"
-        "vendor/"
   phpcodesniffer:
     enabled: true
   phpmd:
