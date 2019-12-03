@@ -27,22 +27,6 @@
         "infection/infection": "^0.14|^0.15",
         "vgirol/jsonapi-assert": "dev-master"
     },
-    "repositories": [
-        {
-            "type": "path",
-            "url": "../JsonApi-Constant",
-            "options": {
-                "symlink": true
-            }
-        },
-        {
-            "type": "path",
-            "url": "../JsonApi-Assert",
-            "options": {
-                "symlink": true
-            }
-        }
-    ],
     "minimum-stability": "stable",
     "autoload": {
         "psr-4": {
