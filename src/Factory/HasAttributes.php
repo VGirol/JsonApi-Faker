@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace VGirol\JsonApiFaker\Factory;
 
+use VGirol\JsonApiConstant\Members;
+
 /**
  * Add "attributes" member to a factory.
  */
@@ -66,7 +68,7 @@ trait HasAttributes
      */
     public function addAttribute(string $name, $value)
     {
-        $this->addToObject('attributes', $name, $value);
+        $this->addToObject(Members::ATTRIBUTES, $name, $value);
 
         return $this;
     }

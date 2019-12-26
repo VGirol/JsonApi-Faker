@@ -157,7 +157,7 @@ class ErrorFactory extends BaseFactory implements ErrorContract
         ];
         $faker = \Faker\Factory::create();
 
-        return $this->set('status', strval($faker->randomElement($allowedStatus)));
+        return $this->set(Members::ERROR_STATUS, strval($faker->randomElement($allowedStatus)));
     }
 
     /**
@@ -170,7 +170,7 @@ class ErrorFactory extends BaseFactory implements ErrorContract
     {
         $faker = \Faker\Factory::create();
 
-        return $this->set('code', strval($faker->numberBetween(1, 100)));
+        return $this->set(Members::ERROR_CODE, strval($faker->numberBetween(1, 100)));
     }
 
     /**
@@ -183,7 +183,7 @@ class ErrorFactory extends BaseFactory implements ErrorContract
     {
         $faker = \Faker\Factory::create();
 
-        return $this->set('title', $faker->sentence);
+        return $this->set(Members::ERROR_TITLE, $faker->sentence);
     }
 
     /**
@@ -196,7 +196,7 @@ class ErrorFactory extends BaseFactory implements ErrorContract
     {
         $faker = \Faker\Factory::create();
 
-        return $this->set('details', $faker->paragraph);
+        return $this->set(Members::ERROR_DETAILS, $faker->paragraph);
     }
 
     /**

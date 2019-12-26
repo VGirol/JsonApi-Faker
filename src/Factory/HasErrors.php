@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace VGirol\JsonApiFaker\Factory;
 
+use VGirol\JsonApiConstant\Members;
 use VGirol\JsonApiFaker\Contract\ErrorContract;
 use VGirol\JsonApiFaker\Exception\JsonApiFakerException;
 use VGirol\JsonApiFaker\Messages;
@@ -62,7 +63,7 @@ trait HasErrors
      */
     public function addError(ErrorContract $error)
     {
-        $this->addToArray('errors', $error);
+        $this->addToArray(Members::ERRORS, $error);
 
         return $this;
     }

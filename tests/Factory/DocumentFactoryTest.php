@@ -3,6 +3,7 @@
 namespace VGirol\JsonApiFaker\Tests\Factory;
 
 use PHPUnit\Framework\Assert as PHPUnit;
+use VGirol\JsonApiConstant\Members;
 use VGirol\JsonApiFaker\Factory\CollectionFactory;
 use VGirol\JsonApiFaker\Factory\DocumentFactory;
 use VGirol\JsonApiFaker\Factory\ErrorFactory;
@@ -64,20 +65,20 @@ class DocumentFactoryTest extends TestCase
             'metaKey' => 'test'
         ];
         $links = [
-            'self' => 'url'
+            Members::LINK_SELF => 'url'
         ];
         $jsonapi = (new JsonapiFactory)->setVersion('test');
-        $error = (new ErrorFactory)->setId('errorId')->set('code', 'secret');
+        $error = (new ErrorFactory)->setId('errorId')->set(Members::ERROR_CODE, 'secret');
         $errors = [
             $error->toArray()
         ];
 
         $expected = [
-            'meta' => $meta,
-            'links' => $links,
-            'errors' => $errors,
-            'jsonapi' => [
-                'version' => 'test'
+            Members::META => $meta,
+            Members::LINKS => $links,
+            Members::ERRORS => $errors,
+            Members::JSONAPI => [
+                Members::JSONAPI_VERSION => 'test'
             ]
         ];
 
@@ -101,7 +102,7 @@ class DocumentFactoryTest extends TestCase
             'metaKey' => 'test'
         ];
         $links = [
-            'self' => 'url'
+            Members::LINK_SELF => 'url'
         ];
         $jsonapi = (new JsonapiFactory)->setVersion('test');
 
@@ -121,14 +122,14 @@ class DocumentFactoryTest extends TestCase
         ];
         $name = 'test';
         $data = [
-            'type' => $type,
-            'id' => $id,
-            'attributes' => $attributes,
-            'relationships' => [
+            Members::TYPE => $type,
+            Members::ID => $id,
+            Members::ATTRIBUTES => $attributes,
+            Members::RELATIONSHIPS => [
                 $name => [
-                    'data' => [
-                        'type' => $rel_type,
-                        'id' => $rel_id
+                    Members::DATA => [
+                        Members::TYPE => $rel_type,
+                        Members::ID => $rel_id
                     ]
                 ]
             ]
@@ -144,9 +145,9 @@ class DocumentFactoryTest extends TestCase
             'key2' => 'value2'
         ];
         $included = [
-            'type' => $rel_type,
-            'id' => $rel_id,
-            'attributes' => $rel_attributes
+            Members::TYPE => $rel_type,
+            Members::ID => $rel_id,
+            Members::ATTRIBUTES => $rel_attributes
         ];
         $inc = new ResourceObjectFactory;
         $inc->setId($rel_id)
@@ -154,12 +155,12 @@ class DocumentFactoryTest extends TestCase
             ->setAttributes($rel_attributes);
 
         $expected = [
-            'meta' => $meta,
-            'links' => $links,
-            'data' => $data,
-            'included' => $included,
-            'jsonapi' => [
-                'version' => 'test'
+            Members::META => $meta,
+            Members::LINKS => $links,
+            Members::DATA => $data,
+            Members::INCLUDED => $included,
+            Members::JSONAPI => [
+                Members::JSONAPI_VERSION => 'test'
             ]
         ];
 
