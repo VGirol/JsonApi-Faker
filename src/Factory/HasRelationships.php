@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace VGirol\JsonApiFaker\Factory;
 
+use VGirol\JsonApiConstant\Members;
 use VGirol\JsonApiFaker\Contract\RelationshipContract;
 
 /**
@@ -38,7 +39,7 @@ trait HasRelationships
      */
     public function addRelationship(string $name, $relationship)
     {
-        $this->addToObject('relationships', $name, $relationship);
+        $this->addToObject(Members::RELATIONSHIPS, $name, $relationship);
 
         return $this;
     }

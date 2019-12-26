@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace VGirol\JsonApiFaker\Factory;
 
+use VGirol\JsonApiConstant\Members;
+
 /**
  * Add "meta" member to a factory.
  */
@@ -50,7 +52,7 @@ trait HasMeta
      */
     public function addToMeta(string $name, $value)
     {
-        $this->addToObject('meta', $name, $value);
+        $this->addToObject(Members::META, $name, $value);
 
         return $this;
     }

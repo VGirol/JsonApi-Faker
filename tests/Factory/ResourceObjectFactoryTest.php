@@ -4,6 +4,7 @@ namespace VGirol\JsonApiFaker\Tests\Factory;
 
 use PHPUnit\Framework\Assert as PHPUnit;
 use VGirol\JsonApiAssert\Assert;
+use VGirol\JsonApiConstant\Members;
 use VGirol\JsonApiFaker\Factory\RelationshipFactory;
 use VGirol\JsonApiFaker\Factory\ResourceIdentifierFactory;
 use VGirol\JsonApiFaker\Factory\ResourceObjectFactory;
@@ -26,14 +27,14 @@ class ResourceObjectFactoryTest extends TestCase
             'metaKey' => 'test'
         ];
         $links = [
-            'self' => 'url'
+            Members::LINK_SELF => 'url'
         ];
         $expected = [
-            'type' => $type,
-            'id' => $id,
-            'attributes' => $attributes,
-            'meta' => $meta,
-            'links' => $links
+            Members::TYPE => $type,
+            Members::ID => $id,
+            Members::ATTRIBUTES => $attributes,
+            Members::META => $meta,
+            Members::LINKS => $links
         ];
 
         $factory = new ResourceObjectFactory;
@@ -70,14 +71,14 @@ class ResourceObjectFactoryTest extends TestCase
         $name = 'test';
 
         $expected = [
-            'type' => $type,
-            'id' => $id,
-            'attributes' => $attributes,
-            'relationships' => [
+            Members::TYPE => $type,
+            Members::ID => $id,
+            Members::ATTRIBUTES => $attributes,
+            Members::RELATIONSHIPS => [
                 $name => [
-                    'data' => [
-                        'type' => $rel_type,
-                        'id' => $rel_id
+                    Members::DATA => [
+                        Members::TYPE => $rel_type,
+                        Members::ID => $rel_id
                     ]
                 ]
             ]
@@ -104,7 +105,7 @@ class ResourceObjectFactoryTest extends TestCase
         ];
 
         $expected = [
-            'meta' => $meta,
+            Members::META => $meta,
         ];
 
         $factory = new ResourceObjectFactory;
@@ -140,7 +141,7 @@ class ResourceObjectFactoryTest extends TestCase
         PHPUnit::assertEquals(5, count($factory->getMeta()));
         PHPUnit::assertNotEmpty($factory->getLinks());
         PHPUnit::assertEquals(1, count($factory->getLinks()));
-        PHPUnit::assertEquals(['self'], array_keys($factory->getLinks()));
+        PHPUnit::assertEquals([Members::LINK_SELF], array_keys($factory->getLinks()));
 
         Assert::assertIsValidResourceObject($factory->toArray(), true);
     }

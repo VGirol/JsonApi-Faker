@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace VGirol\JsonApiFaker\Factory;
 
+use VGirol\JsonApiConstant\Members;
+
 /**
  * Add "links" member to a factory.
  */
@@ -66,7 +68,7 @@ trait HasLinks
      */
     public function addLink(string $name, $link)
     {
-        $this->addToObject('links', $name, $link);
+        $this->addToObject(Members::LINKS, $name, $link);
 
         return $this;
     }
@@ -78,7 +80,7 @@ trait HasLinks
      *
      * @return static
      */
-    public function fakeLinks($links = ['self' => ['url']])
+    public function fakeLinks($links = [Members::LINK_SELF => ['url']])
     {
         $this->setLinks(
             $this->fakeMembers($links)
