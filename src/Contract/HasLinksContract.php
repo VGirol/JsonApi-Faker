@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace VGirol\JsonApiFaker\Contract;
 
+use VGirol\JsonApiConstant\Members;
+
 /**
  * Interface for classes having links property.
  */
@@ -51,5 +53,5 @@ interface HasLinksContract
      *
      * @return static
      */
-    public function fakeLinks($links = ['self' => ['url']]);
+    public function fakeLinks($links = [Members::LINK_SELF => ['url']]);
 }

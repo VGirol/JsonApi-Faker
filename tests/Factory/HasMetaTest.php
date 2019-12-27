@@ -23,10 +23,10 @@ class HasMetaTest extends TestCase
             'setMeta',
             'getMeta',
             [
-                'first' => 'test'
+                'key1' => 'test'
             ],
             [
-                'second' => 'another test'
+                'key2' => 'another test'
             ]
         );
     }
@@ -52,8 +52,8 @@ class HasMetaTest extends TestCase
             },
             'addToMeta',
             'getMeta',
-            ['first' => 'test'],
-            ['second' => 'another test']
+            ['key1' => 'test'],
+            ['key2' => 'another test']
         );
     }
 

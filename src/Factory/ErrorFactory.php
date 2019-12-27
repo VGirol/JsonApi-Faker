@@ -131,7 +131,7 @@ class ErrorFactory extends BaseFactory implements ErrorContract
     public function fake()
     {
         return $this->fakeIdentifier()
-            ->fakeLinks(['about' => ['url']])
+            ->fakeLinks([Members::LINK_ABOUT => ['url']])
             ->fakeMeta()
             ->fakeStatus()
             ->fakeCode()
@@ -210,7 +210,7 @@ class ErrorFactory extends BaseFactory implements ErrorContract
 
         return $this->setSource(
             [
-                'parameter' => $faker->word
+                Members::ERROR_PARAMETER => $faker->word
             ]
         );
     }

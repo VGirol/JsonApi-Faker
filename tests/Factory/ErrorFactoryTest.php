@@ -4,6 +4,7 @@ namespace VGirol\JsonApiFaker\Tests\Factory;
 
 use PHPUnit\Framework\Assert as PHPUnit;
 use VGirol\JsonApiAssert\Assert;
+use VGirol\JsonApiConstant\Members;
 use VGirol\JsonApiFaker\Exception\JsonApiFakerException;
 use VGirol\JsonApiFaker\Factory\ErrorFactory;
 use VGirol\JsonApiFaker\Messages;
@@ -27,20 +28,20 @@ class ErrorFactoryTest extends TestCase
     public function setterProvider()
     {
         return [
-            'status' => [
-                'status',
+            'error status' => [
+                Members::ERROR_STATUS,
                 'test'
             ],
-            'code' => [
-                'code',
+            'error code' => [
+                Members::ERROR_CODE,
                 'test'
             ],
-            'title' => [
-                'title',
+            'error title' => [
+                Members::ERROR_TITLE,
                 'test'
             ],
-            'details' => [
-                'details',
+            'error details' => [
+                Members::ERROR_DETAILS,
                 'test'
             ]
         ];
@@ -86,14 +87,14 @@ class ErrorFactoryTest extends TestCase
         $meta = ['key' => 'value'];
 
         $expected = [
-            'id' => $id,
-            'status' => $status,
-            'meta' => $meta
+            Members::ID => $id,
+            Members::ERROR_STATUS => $status,
+            Members::META => $meta
         ];
 
         $factory = new ErrorFactory;
         $factory->setId($id)
-            ->set('status', $status)
+            ->set(Members::ERROR_STATUS, $status)
             ->setMeta($meta);
 
         $result = $factory->toArray();
@@ -109,31 +110,31 @@ class ErrorFactoryTest extends TestCase
         $id = 'errorID';
         $status = '400';
         $meta = ['key' => 'value'];
-        $links = ['about' => 'url'];
+        $links = [Members::LINK_ABOUT => 'url'];
         $code = 'errorCode';
         $title = 'error title';
         $details = 'error explanation';
-        $source = ['parameter' => 'query'];
+        $source = [Members::ERROR_PARAMETER => 'query'];
 
         $expected = [
-            'id' => $id,
-            'status' => $status,
-            'meta' => $meta,
-            'links' => $links,
-            'code' => $code,
-            'title' => $title,
-            'details' => $details,
-            'source' => $source
+            Members::ID => $id,
+            Members::ERROR_STATUS => $status,
+            Members::META => $meta,
+            Members::LINKS => $links,
+            Members::ERROR_CODE => $code,
+            Members::ERROR_TITLE => $title,
+            Members::ERROR_DETAILS => $details,
+            Members::ERROR_SOURCE => $source
         ];
 
         $factory = new ErrorFactory;
         $factory->setId($id)
-            ->set('status', $status)
+            ->set(Members::ERROR_STATUS, $status)
             ->setMeta($meta)
             ->setLinks($links)
-            ->set('code', $code)
-            ->set('title', $title)
-            ->set('details', $details)
+            ->set(Members::ERROR_CODE, $code)
+            ->set(Members::ERROR_TITLE, $title)
+            ->set(Members::ERROR_DETAILS, $details)
             ->setSource($source);
 
         $result = $factory->toArray();
@@ -164,7 +165,7 @@ class ErrorFactoryTest extends TestCase
 
         PHPUnit::assertNotEmpty($factory->getLinks());
         PHPUnit::assertEquals(1, count($factory->getLinks()));
-        PHPUnit::assertEquals('about', array_keys($factory->getLinks())[0]);
+        PHPUnit::assertEquals(Members::LINK_ABOUT, array_keys($factory->getLinks())[0]);
 
         PHPUnit::assertNotEmpty($factory->getMeta());
         PHPUnit::assertEquals(5, count($factory->getMeta()));
@@ -186,7 +187,7 @@ class ErrorFactoryTest extends TestCase
         PHPUnit::assertNotEmpty($factory->source);
         PHPUnit::assertIsArray($factory->source);
         PHPUnit::assertEquals(1, count($factory->source));
-        PHPUnit::assertEquals('parameter', array_keys($factory->source)[0]);
+        PHPUnit::assertEquals(Members::ERROR_PARAMETER, array_keys($factory->source)[0]);
 
         Assert::assertIsValidErrorObject($factory->toArray(), true);
     }

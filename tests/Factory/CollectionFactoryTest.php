@@ -4,6 +4,7 @@ namespace VGirol\JsonApiFaker\Tests\Factory;
 
 use PHPUnit\Framework\Assert as PHPUnit;
 use VGirol\JsonApiAssert\Assert;
+use VGirol\JsonApiConstant\Members;
 use VGirol\JsonApiFaker\Exception\JsonApiFakerException;
 use VGirol\JsonApiFaker\Factory\CollectionFactory;
 use VGirol\JsonApiFaker\Factory\ResourceIdentifierFactory;
@@ -55,8 +56,8 @@ class CollectionFactoryTest extends TestCase
             array_push(
                 $expected,
                 [
-                    'type' => $type,
-                    'id' => $id
+                    Members::TYPE => $type,
+                    Members::ID => $id
                 ]
             );
 
@@ -90,8 +91,8 @@ class CollectionFactoryTest extends TestCase
             array_push(
                 $expected,
                 [
-                    'type' => $type,
-                    'id' => $id
+                    Members::TYPE => $type,
+                    Members::ID => $id
                 ]
             );
 
@@ -112,7 +113,7 @@ class CollectionFactoryTest extends TestCase
         PHPUnit::assertSame($expected, $result);
 
         array_walk($expected, function (&$item) {
-            $item['meta'] = ['new' => $item['id']];
+            $item[Members::META] = ['new' => $item[Members::ID]];
         });
 
         $obj = $factory->each(
@@ -156,8 +157,8 @@ class CollectionFactoryTest extends TestCase
             array_push(
                 $expected,
                 [
-                    'type' => "new{$type}",
-                    'id' => $id
+                    Members::TYPE => "new{$type}",
+                    Members::ID => $id
                 ]
             );
 
@@ -179,8 +180,8 @@ class CollectionFactoryTest extends TestCase
              */
             function ($item) {
                 return [
-                    'type' => 'new' . $item->getResourceType(),
-                    'id' => $item->getId()
+                    Members::TYPE => 'new' . $item->getResourceType(),
+                    Members::ID => $item->getId()
                 ];
             }
         );
@@ -199,8 +200,8 @@ class CollectionFactoryTest extends TestCase
         $factory = new CollectionFactory;
         $factory->map(function ($item) {
             return [
-                'type' => "new{$item->resourceType}",
-                'id' => $item->id
+                Members::TYPE => "new{$item->resourceType}",
+                Members::ID => $item->id
             ];
         });
     }

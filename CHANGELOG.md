@@ -23,3 +23,9 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ## 1.0.3 - 2019-10-04
 
 - Many enhancements, bug fixes and code lint
+
+## 1.0.4 - 2019-12-27
+
+### Fixed
+
+- Updated some methods to use JsonApi-Constant package

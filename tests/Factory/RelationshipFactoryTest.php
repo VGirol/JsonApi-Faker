@@ -4,6 +4,7 @@ namespace VGirol\JsonApiFaker\Tests\Factory;
 
 use PHPUnit\Framework\Assert as PHPUnit;
 use VGirol\JsonApiAssert\Assert;
+use VGirol\JsonApiConstant\Members;
 use VGirol\JsonApiFaker\Factory\CollectionFactory;
 use VGirol\JsonApiFaker\Factory\RelationshipFactory;
 use VGirol\JsonApiFaker\Factory\ResourceIdentifierFactory;
@@ -21,12 +22,12 @@ class RelationshipFactoryTest extends TestCase
             'metaKey' => 'test'
         ];
         $links = [
-            'self' => 'url'
+            Members::LINK_SELF => 'url'
         ];
         $expected = [
-            'data' => null,
-            'meta' => $meta,
-            'links' => $links
+            Members::DATA => null,
+            Members::META => $meta,
+            Members::LINKS => $links
         ];
 
         $factory = new RelationshipFactory;
@@ -46,9 +47,9 @@ class RelationshipFactoryTest extends TestCase
         $id = '456';
         $type = 'test';
         $expected = [
-            'data' => [
-                'type' => $type,
-                'id' => $id
+            Members::DATA => [
+                Members::TYPE => $type,
+                Members::ID => $id
             ]
         ];
 
@@ -71,7 +72,7 @@ class RelationshipFactoryTest extends TestCase
     {
         $collection = [];
         $expected = [
-            'data' => []
+            Members::DATA => []
         ];
 
         $data = new CollectionFactory;
@@ -98,8 +99,8 @@ class RelationshipFactoryTest extends TestCase
             array_push(
                 $array,
                 [
-                    'type' => $type,
-                    'id' => $id
+                    Members::TYPE => $type,
+                    Members::ID => $id
                 ]
             );
 
@@ -113,7 +114,7 @@ class RelationshipFactoryTest extends TestCase
         }
 
         $expected = [
-            'data' => $array
+            Members::DATA => $array
         ];
 
         $data = new CollectionFactory;
@@ -146,8 +147,8 @@ class RelationshipFactoryTest extends TestCase
         PHPUnit::assertNotEmpty($factory->getData());
 
         $relationship = $obj->toArray();
-        Assert::assertIsArrayOfObjects($relationship['data']);
-        PHPUnit::assertEquals(5, count($relationship['data']));
+        Assert::assertIsArrayOfObjects($relationship[Members::DATA]);
+        PHPUnit::assertEquals(5, count($relationship[Members::DATA]));
         Assert::assertIsValidRelationshipObject($relationship, true);
     }
 }
