@@ -4,6 +4,7 @@ namespace VGirol\JsonApiFaker\Tests\Factory;
 
 use PHPUnit\Framework\Assert as PHPUnit;
 use VGirol\JsonApiAssert\Assert;
+use VGirol\JsonApiConstant\Members;
 use VGirol\JsonApiFaker\Factory\BaseFactory;
 use VGirol\JsonApiFaker\Factory\HasIdentification;
 use VGirol\JsonApiFaker\Tests\TestCase;
@@ -33,24 +34,24 @@ class HasIdentificationTest extends TestCase
                 'idTest',
                 'typeTest',
                 [
-                    'id' => 'idTest',
-                    'type' => 'typeTest'
+                    Members::ID => 'idTest',
+                    Members::TYPE => 'typeTest'
                 ]
             ],
             'no id' => [
                 null,
                 'typeTest',
                 [
-                    'id' => null,
-                    'type' => 'typeTest'
+                    Members::ID => null,
+                    Members::TYPE => 'typeTest'
                 ]
             ],
             'no type' => [
                 'idTest',
                 null,
                 [
-                    'id' => 'idTest',
-                    'type' => null
+                    Members::ID => 'idTest',
+                    Members::TYPE => null
                 ]
             ]
         ];
@@ -81,8 +82,8 @@ class HasIdentificationTest extends TestCase
             public function toArray(): ?array
             {
                 return [
-                    'id' => strval($this->id),
-                    'type' => $this->resourceType
+                    Members::ID => strval($this->id),
+                    Members::TYPE => $this->resourceType
                 ];
             }
 

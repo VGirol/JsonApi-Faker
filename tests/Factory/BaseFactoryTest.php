@@ -93,8 +93,8 @@ class BaseFactoryTest extends TestCase
                 return [
                     'attr' => 'value with <, &, \' and ".',
                     'arr' => [
-                        'first',
-                        'second'
+                        'val1',
+                        'val2'
                     ],
                     'float' => 3.0
                 ];
@@ -107,7 +107,7 @@ class BaseFactoryTest extends TestCase
         };
 
         $json = $obj->toJson();
-        $expected = '{"attr":"value with <, &, \' and \".","arr":["first","second"],"float":3.0}';
+        $expected = '{"attr":"value with <, &, \' and \".","arr":["val1","val2"],"float":3.0}';
 
         PHPUnit::assertEquals($expected, $json);
     }

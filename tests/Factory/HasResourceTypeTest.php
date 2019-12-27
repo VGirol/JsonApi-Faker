@@ -4,6 +4,7 @@ namespace VGirol\JsonApiFaker\Tests\Factory;
 
 use PHPUnit\Framework\Assert as PHPUnit;
 use VGirol\JsonApiAssert\Assert;
+use VGirol\JsonApiConstant\Members;
 use VGirol\JsonApiFaker\Factory\BaseFactory;
 use VGirol\JsonApiFaker\Factory\HasResourceType;
 use VGirol\JsonApiFaker\Testing\CheckMethods;
@@ -22,8 +23,8 @@ class HasResourceTypeTest extends TestCase
             $this->getMockForTrait(HasResourceType::class),
             'setResourceType',
             'getResourceType',
-            'first',
-            'second'
+            'val1',
+            'val2'
         );
     }
 
@@ -38,7 +39,7 @@ class HasResourceTypeTest extends TestCase
             public function toArray(): ?array
             {
                 return [
-                    'type' => $this->resourceType
+                    Members::TYPE => $this->resourceType
                 ];
             }
 

@@ -4,6 +4,7 @@ namespace VGirol\JsonApiFaker\Tests\Factory;
 
 use PHPUnit\Framework\Assert as PHPUnit;
 use VGirol\JsonApiAssert\Assert;
+use VGirol\JsonApiConstant\Members;
 use VGirol\JsonApiFaker\Factory\ResourceIdentifierFactory;
 use VGirol\JsonApiFaker\Tests\TestCase;
 
@@ -31,7 +32,7 @@ class ResourceIdentifierFactoryTest extends TestCase
         $key = 'key';
         $value = 'value';
         $expected = [
-            'meta' => [
+            Members::META => [
                 $key => $value
             ]
         ];
@@ -54,9 +55,9 @@ class ResourceIdentifierFactoryTest extends TestCase
         $key = 'key';
         $value = 'value';
         $expected = [
-            'type' => $type,
-            'id' => $id,
-            'meta' => [
+            Members::TYPE => $type,
+            Members::ID => $id,
+            Members::META => [
                 $key => $value
             ]
         ];

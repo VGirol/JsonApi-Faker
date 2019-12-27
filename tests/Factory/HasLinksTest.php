@@ -4,6 +4,7 @@ namespace VGirol\JsonApiFaker\Tests\Factory;
 
 use PHPUnit\Framework\Assert as PHPUnit;
 use VGirol\JsonApiAssert\Assert;
+use VGirol\JsonApiConstant\Members;
 use VGirol\JsonApiFaker\Factory\BaseFactory;
 use VGirol\JsonApiFaker\Factory\HasLinks;
 use VGirol\JsonApiFaker\Testing\CheckMethods;
@@ -23,10 +24,10 @@ class HasLinksTest extends TestCase
             'setLinks',
             'getLinks',
             [
-                'self' => 'test'
+                Members::LINK_SELF => 'test'
             ],
             [
-                'related' => 'another test'
+                Members::LINK_RELATED => 'another test'
             ]
         );
     }
@@ -53,10 +54,10 @@ class HasLinksTest extends TestCase
             'addLink',
             'getLinks',
             [
-                'self' => 'test'
+                Members::LINK_SELF => 'test'
             ],
             [
-                'related' => 'another test'
+                Members::LINK_RELATED => 'another test'
             ]
         );
     }
@@ -83,8 +84,8 @@ class HasLinksTest extends TestCase
             'addLinks',
             'getLinks',
             [
-                'self' => 'test',
-                'related' => 'another test'
+                Members::LINK_SELF => 'test',
+                Members::LINK_RELATED => 'another test'
             ],
             [
                 'other' => 'anything'
@@ -118,8 +119,8 @@ class HasLinksTest extends TestCase
         PHPUnit::assertSame($obj, $mock);
         PHPUnit::assertNotEmpty($mock->getLinks());
         PHPUnit::assertEquals(1, count($mock->getLinks()));
-        PHPUnit::assertEquals(['self'], array_keys($mock->getLinks()));
+        PHPUnit::assertEquals([Members::LINK_SELF], array_keys($mock->getLinks()));
 
-        Assert::assertIsValidLinksObject($mock->getLinks(), ['self'], true);
+        Assert::assertIsValidLinksObject($mock->getLinks(), [Members::LINK_SELF], true);
     }
 }

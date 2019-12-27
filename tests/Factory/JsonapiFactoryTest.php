@@ -4,6 +4,7 @@ namespace VGirol\JsonApiFaker\Tests\Factory;
 
 use PHPUnit\Framework\Assert as PHPUnit;
 use VGirol\JsonApiAssert\Assert;
+use VGirol\JsonApiConstant\Members;
 use VGirol\JsonApiFaker\Factory\JsonapiFactory;
 use VGirol\JsonApiFaker\Tests\TestCase;
 
@@ -30,7 +31,7 @@ class JsonapiFactoryTest extends TestCase
     {
         $version = '1.0';
         $expected = [
-            'version' => $version
+            Members::JSONAPI_VERSION => $version
         ];
 
         $factory = new JsonapiFactory;
@@ -49,7 +50,7 @@ class JsonapiFactoryTest extends TestCase
         $key = 'key';
         $value = 'value';
         $expected = [
-            'meta' => [
+            Members::META => [
                 $key => $value
             ]
         ];
