@@ -41,6 +41,13 @@
             "options": {
                 "symlink": true
             }
+        },
+        {
+            "type": "path",
+            "url": "../JsonApi-Structure",
+            "options": {
+                "symlink": true
+            }
         }
     ],
     "minimum-stability": "stable",
