@@ -22,7 +22,7 @@ trait CheckMethods
      *
      * @return void
      * @throws JsonApiFakerException
-     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \PHPUnit\Framework\AssertionFailedError
      */
     protected function checkAddSingle($factory, string $setter, string $getter, array $data1, array $data2)
     {
@@ -65,7 +65,7 @@ trait CheckMethods
      *
      * @return void
      * @throws JsonApiFakerException
-     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \PHPUnit\Framework\AssertionFailedError
      */
     protected function checkAddMulti($factory, string $setter, string $getter, array $data1, array $data2)
     {
@@ -94,7 +94,7 @@ trait CheckMethods
      * @param mixed $data2
      *
      * @return void
-     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \PHPUnit\Framework\AssertionFailedError
      */
     protected function checkSetMethod($factory, string $setter, string $getter, $data1, $data2)
     {
