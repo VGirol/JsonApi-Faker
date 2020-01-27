@@ -25,7 +25,8 @@
     "require-dev": {
         "phpunit/phpunit": "^8.0",
         "infection/infection": "^0.14|^0.15",
-        "vgirol/jsonapi-assert": "dev-master"
+        "vgirol/jsonapi-assert": "dev-master",
+        "vgirol/jsonapi-structure": "@dev"
     },
     "repositories": [
         {
@@ -50,7 +51,8 @@
             }
         }
     ],
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "autoload": {
         "psr-4": {
             "VGirol\\JsonApiFaker\\": "src/"

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7954f68e3b625a9e723cd079ef1f9af0",
+    "content-hash": "b0e653ea0f6ce7b540b1c47356c035c8",
     "packages": [
         {
             "name": "fzaninotto/faker",
@@ -62,10 +62,10 @@
             "dist": {
                 "type": "path",
                 "url": "../JsonApi-Constant",
-                "reference": "7832beab14cffda62879023cc1834a6646be88e2"
+                "reference": "1f0d9fa59f40ed74c91e51245a934fcb8e99e4b2"
             },
             "require": {
-                "php": "^7.2"
+                "php": "^7.0"
             },
             "type": "library",
             "extra": {
@@ -93,6 +93,7 @@
                 {
                     "name": "Vincent Girol",
                     "email": "vincent@girol.fr",
+                    "homepage": "https://github.com/VGirol",
                     "role": "Developer"
                 }
             ],
@@ -2716,22 +2717,17 @@
         {
             "name": "vgirol/jsonapi-assert",
             "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/VGirol/JsonApi-Assert.git",
-                "reference": "38ff1d3ebb3cc837fe086e8bc638eeee47d9c20f"
-            },
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/VGirol/JsonApi-Assert/zipball/38ff1d3ebb3cc837fe086e8bc638eeee47d9c20f",
-                "reference": "38ff1d3ebb3cc837fe086e8bc638eeee47d9c20f",
-                "shasum": ""
+                "type": "path",
+                "url": "../JsonApi-Assert",
+                "reference": "7adaf5bfe6fa04881ee38a4b17c27454da69e1fd"
             },
             "require": {
                 "dms/phpunit-arraysubset-asserts": "^0.1.0",
                 "php": "~7.2.9|^7.3",
                 "phpunit/phpunit": "^8.0",
-                "vgirol/jsonapi-constant": "dev-master"
+                "vgirol/jsonapi-constant": "dev-master",
+                "vgirol/jsonapi-structure": "dev-master"
             },
             "require-dev": {
                 "infection/infection": "^0.14|^0.15"
@@ -2747,7 +2743,32 @@
                     "VGirol\\JsonApiAssert\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "psr-4": {
+                    "VGirol\\JsonApiAssert\\Tests\\": "tests/"
+                }
+            },
+            "scripts": {
+                "setup": [
+                    "bash install/setup.sh"
+                ],
+                "post-update-cmd": [
+                    "@setup"
+                ],
+                "test": [
+                    "./vendor/bin/phpunit tests"
+                ],
+                "infection": [
+                    "./vendor/bin/infection --coverage=build/coverage --threads=$(nproc) --configuration=infection.json"
+                ],
+                "travis": [
+                    "@test",
+                    "@infection"
+                ],
+                "build": [
+                    "@travis"
+                ]
+            },
             "license": [
                 "MIT"
             ],
@@ -2761,13 +2782,89 @@
             "description": "This package provides a set of assertions to test documents using the JSON:API specification.",
             "homepage": "http://github.com/VGirol/JsonApi-Assert",
             "keywords": [
+                "JSON API",
                 "assertions",
-                "json api",
                 "jsonapi-assert",
                 "unit tests",
                 "vgirol"
             ],
-            "time": "2019-12-27T09:00:53+00:00"
+            "transport-options": {
+                "symlink": true
+            }
+        },
+        {
+            "name": "vgirol/jsonapi-structure",
+            "version": "dev-master",
+            "dist": {
+                "type": "path",
+                "url": "../JsonApi-Structure",
+                "reference": "d90bb62845b27e1767efe752a67715dd98f44ae8"
+            },
+            "require": {
+                "php": "^7.2",
+                "vgirol/jsonapi-constant": "dev-master"
+            },
+            "require-dev": {
+                "infection/infection": "^0.14|^0.15",
+                "phpunit/phpunit": "^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "VGirol\\JsonApiStructure\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "VGirol\\JsonApiStructure\\Tests\\": "tests/"
+                }
+            },
+            "scripts": {
+                "setup": [
+                    "bash install/setup.sh"
+                ],
+                "post-update-cmd": [
+                    "@setup"
+                ],
+                "test": [
+                    "./vendor/bin/phpunit tests "
+                ],
+                "infection": [
+                    "./vendor/bin/infection --coverage=build/coverage --threads=$(nproc) --configuration=infection.json --min-msi=70 --min-covered-msi=70"
+                ],
+                "travis": [
+                    "@test",
+                    "@infection"
+                ],
+                "build": [
+                    "@travis"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Vincent Girol",
+                    "email": "vincent@girol.fr",
+                    "homepage": "https://github.com/VGirol",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Tools to check content of a JSON:API request",
+            "homepage": "https://github.com/VGirol/JsonApi-Structure",
+            "keywords": [
+                "JsonApi-Structure",
+                "VGirol"
+            ],
+            "transport-options": {
+                "symlink": true
+            }
         },
         {
             "name": "webmozart/assert",
@@ -2865,12 +2962,13 @@
         }
     ],
     "aliases": [],
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "stability-flags": {
         "vgirol/jsonapi-constant": 20,
-        "vgirol/jsonapi-assert": 20
+        "vgirol/jsonapi-assert": 20,
+        "vgirol/jsonapi-structure": 20
     },
-    "prefer-stable": false,
+    "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "php": "^7.2"
