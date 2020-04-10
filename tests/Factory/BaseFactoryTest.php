@@ -184,7 +184,7 @@ class BaseFactoryTest extends TestCase
         PHPUnit::assertNotNull($name);
         PHPUnit::assertIsString($name);
         PHPUnit::assertNotEquals($in, $name);
-        PHPUnit::assertRegExp($in, $name);
+        PHPUnit::assertMatchesRegularExpression($in, $name);
     }
 
     /**

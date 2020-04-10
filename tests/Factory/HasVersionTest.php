@@ -40,6 +40,6 @@ class HasVersionTest extends TestCase
         PHPUnit::assertNotEmpty($mock->getVersion());
         PHPUnit::assertIsString($mock->getVersion());
 
-        PHPUnit::assertRegExp('/[1-9]\.[0-9]/', $mock->getVersion());
+        PHPUnit::assertMatchesRegularExpression('/[1-9]\.[0-9]/', $mock->getVersion());
     }
 }

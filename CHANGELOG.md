@@ -29,3 +29,9 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Fixed
 
 - Updated some methods to use JsonApi-Constant package
+
+## 1.1.0 - 2020-04-10
+
+### Added
+
+- Added support for PHP 7.3+ et PHPUnit 9
