@@ -35,3 +35,9 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Added
 
 - Added support for PHP 7.3+ et PHPUnit 9
+
+## 1.1.1 - 2020-04-12
+
+### Added
+
+- Update branch alias

@@ -23,7 +23,7 @@
         "fzaninotto/faker": "^1.8"
     },
     "require-dev": {
-        "phpunit/phpunit": "^8.5|^9.0",
+        "phpunit/phpunit": "^8.0|^9.0",
         "infection/infection": "~0.14",
         "vgirol/jsonapi-assert": "dev-master",
         "vgirol/jsonapi-structure": "dev-master"
@@ -56,7 +56,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "1.0-dev"
+            "dev-master": "1.1-dev"
         }
     },
     "config": {
