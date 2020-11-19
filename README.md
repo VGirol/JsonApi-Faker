@@ -12,7 +12,7 @@ This package provides a set of factories to build fake data using the [JSON:API 
 
 ## Technologies
 
-- PHP 7.2+
+- PHP 7.3+
 
 ## Installation
 

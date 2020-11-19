@@ -41,3 +41,11 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Added
 
 - Update branch alias
+
+## 1.2.0 - 2020-11-19
+
+### Added
+
+- Remove support for php 7.2
+- Bump phpunit version
+- Change faker dependcy
