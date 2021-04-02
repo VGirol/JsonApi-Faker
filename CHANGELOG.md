@@ -49,3 +49,9 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - Remove support for php 7.2
 - Bump phpunit version
 - Change faker dependcy
+
+## 1.2.1 - 2021-04-02
+
+### Added
+
+- Change infection configuration
